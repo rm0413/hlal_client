@@ -8,7 +8,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import './style.css'
 
 import axios from 'axios'
-axios.defaults.baseURL = 'http://10.164.58.62/HINSEI/server/public/api/';
+axios.defaults.baseURL = 'http://10.164.58.62/hinsei/server/public/api/';
 
 const pinia = createPinia()
 const app = createApp(App)
