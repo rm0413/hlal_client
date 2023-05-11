@@ -2,9 +2,14 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 const Login = () => import('@/views/Login.vue')
 const Dashboard = () => import('@/views/Dashboard.vue')
-const Request = () => import('@/views/Request.vue')
 const Monitoring = () => import('@/views/Monitoring.vue')
 const Usermanagement = () => import('@/views/Usermanagement.vue')
+const Request = () => import('@/views/Request.vue')
+const NewRequest = () => import('@/views/request/NewRequest.vue')
+const InspectionData = () => import('@/views/request/InspectionData.vue')
+const EditItemDetails = () => import('@/views/request/EditItemDetails.vue')
+const DesignerSectionAnswer = () => import('@/views/request/DesignerSectionAnswer.vue')
+const Attachment = () => import('@/views/request/Attachment.vue')
 
 const routes = [
     {
@@ -20,7 +25,32 @@ const routes = [
     {
         path: '/request',
         name: 'request',
-        component: Request
+        component: Request,
+    },
+    {
+        path: '/new-request',
+        name: 'new-request',
+        component: NewRequest
+    },
+    {
+        path: '/inspection-data',
+        name: 'inspection-data',
+        component: InspectionData
+    },
+    {
+        path: '/edit-item-details',
+        name: 'edit-item-details',
+        component: EditItemDetails
+    },
+    {
+        path: '/designer-section-answer',
+        name: 'designer-section-answer',
+        component: DesignerSectionAnswer
+    },
+    {
+        path: '/attachment',
+        name: 'attachment',
+        component: Attachment
     },
     {
         path: '/monitoring',
@@ -36,7 +66,8 @@ const routes = [
 
 const router = createRouter({
     routes,
-    history: createWebHashHistory()
+    history: createWebHashHistory(),
+    linkActiveClass: "text-[#A10E13] ",
 })
 
 router.afterEach((to, from) => {

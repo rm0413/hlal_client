@@ -26,28 +26,28 @@ const links = [
     sub_module: [
       {
         title: 'New Request',
-        name: 'new_request',
+        name: 'new-request',
         fa: 'folder-plus'
       },
       {
         title: 'Inspection Data',
-        name: 'inspection_data',
-        fa: 'folder-plus'
+        name: 'inspection-data',
+        fa: 'magnifying-glass'
       },
       {
         title: 'Edit Item Details',
-        name: 'edit_item_details',
-        fa: 'folder-plus'
+        name: 'edit-item-details',
+        fa: 'eraser'
       },
       {
         title: 'Designer Section Answer',
-        name: 'designer_section_answer',
-        fa: 'folder-plus'
+        name: 'designer-section-answer',
+        fa: 'puzzle-piece'
       },
       {
         title: 'Attachment',
         name: 'attachment',
-        fa: 'folder-plus'
+        fa: 'tags'
       },
 
     ]
