@@ -4,9 +4,6 @@
     class="select-none fixed w-full z-30 flex shadow-lg dark:bg-[#0F172A] p-2 items-center justify-center h-16 px-10 bg-white">
     <div ref="logo"
       class="logo ml-12 dark:text-white transform ease-in-out duration-500 flex-none h-full flex items-center justify-center text-black">
-      HINSEI NI REINA
-      <!-- <img 
-      src="@/assets/images/fujitsuICO.png" alt="no logo" class="w-16 h-8" /> -->
     </div>
     <!-- SPACER -->
     <div class="grow h-full flex items-center justify-center"></div>
@@ -35,7 +32,7 @@
     </div>
   </div>
   <aside ref="caside"
-    class="select-none inset-y-0 right-0 w-[19rem] translate-x-96 fixed transition ease-in-out duration-500 flex z-10 h-[calc(25vh)] shadow-2xl bg-white">
+    class="select-none inset-y-0 right-0 w-[19rem] translate-x-96 fixed transition ease-in-out duration-500 flex z-10 h-[calc(100vh)] shadow-2xl bg-white">
     <!-- MAX ASIDE -->
     <div ref="maxAside" class="ml-2 max text-black mt-16 flex-col space-y-2 w-full h-[calc(100vh)] flex text-center">
       <div class="text-xl divide-y-2 divide-white font-bold mt-7">
@@ -51,37 +48,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="text-xl divide-y-2 divide-white font-bold mt-3">
-        SYSTEM INFORMATION
-      </div> -->
-      <!-- <div class="grid grid-rows-3 gap-10 h-40">
-        <div class="row-span-1 grid grid-cols-2 place-items-center mt-5">
-          <div class="col-span-2">
-            <button @click="changePassword()"
-              class="p-3 flex w-52 h-12 justify-center place-items-center bg-[#A10E13] text-white rounded-xl">
-              <svg class="h-5 w-5 text-white mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-              </svg>
-              Change Password
-            </button>
-          </div>
-        </div>
-        <div class="row-span-1 grid grid-cols-2 place-items-center mt-5">
-          <div class="col-span-2">
-            <button @click="changeEmail()"
-              class="p-3 flex w-52 h-12 justify-center place-items-center bg-[#A10E13] text-white rounded-xl">
-              <svg class="h-5 w-5 text-white mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-              Configure Email
-            </button>
-          </div>
-        </div>
-      </div> -->
     </div>
   </aside>
   <aside ref="sidebar"
