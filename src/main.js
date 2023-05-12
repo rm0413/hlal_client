@@ -29,10 +29,6 @@ const pinia = createPinia()
 const app = createApp(App)
 
 import Chart from "primevue/chart";
-import MultiSelect from 'primevue/multiselect';
-import Dropdown from 'primevue/dropdown';
-import InputText from 'primevue/inputtext';
-import Button from 'primevue/button';
 
 import MultiSelect from 'primevue/multiselect';
 
