@@ -248,7 +248,7 @@
     </aside>
     <div
       ref="content"
-      class="select-none content ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4"
+      class=" content ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 h-[89vh]"
     >
       <slot name="page"></slot>
     </div>
