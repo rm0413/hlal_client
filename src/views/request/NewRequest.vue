@@ -5,7 +5,7 @@
     <div class="lg:col-span-7 min-[100px]:col-span-9 h-full flex flex-col">
       <div class="flex justify-between">
         <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono">
-          <font-awesome-icon class="h-6 w-6 text-black" icon="desktop" /> New Request
+          <font-awesome-icon class="h-6 w-6 text-black" icon="file-lines" /> New Request
         </label>
         <div class="flex gap-2 mr-10">
           <div class="flex flex-row">
