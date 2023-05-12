@@ -5,9 +5,14 @@ import router from '@/router/index'
 import VueSweetalert2 from 'vue-sweetalert2';
 
 import PrimeVue from 'primevue/config';
+<<<<<<< HEAD
 import "primevue/resources/primevue.min.css";
 import "primevue/resources/themes/lara-light-indigo/theme.css"; 
 
+=======
+import "primevue/resources/themes/lara-light-indigo/theme.css";  
+import "primevue/resources/primevue.min.css";
+>>>>>>> 1f68f75218ad9e83190301a6a0b025c66a908da2
 import 'sweetalert2/dist/sweetalert2.min.css';
 import './style.css'
 
@@ -25,18 +30,22 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faUser, faInfoCircle, faBars, faAddressCard, faInfo, faAngleRight, faAngleDown, faClipboardList, faRing, faClone, faColumns,
     faChartArea, faChartPie, faChartLine, faChartBar, faSignOutAlt, faEnvelope, faWindowClose, faComments, faQuestion, faEdit, faBell, faGripLines, faUsers, faDesktop, faLock, faPlusSquare, faPencilAlt, faTrash, faFileLines, faHouse, faUserCircle, faUserPlus, faUserMinus, faSearch, faGear, faMagnifyingGlassPlus, faLayerGroup, faFolderPlus, faPenToSquare, faPuzzlePiece, faTags, faPaperclip, faCircleMinus, faUsersGear, faMagnifyingGlass, faXmark, faCloudArrowUp, faEraser, faDownload, faEye, faPen, faFloppyDisk, faRightFromBracket)
 
+<<<<<<< HEAD
 import Calendar from 'primevue/calendar';
 import Chart from "primevue/chart";
 import MultiSelect from 'primevue/multiselect';
 import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
+=======
+>>>>>>> 1f68f75218ad9e83190301a6a0b025c66a908da2
 
 const pinia = createPinia()
 const app = createApp(App)
 
+import Chart from "primevue/chart";
+
 app.component('font-awesome-icon', FontAwesomeIcon)
-app.component('prime-calendar', Calendar)
 app.component('Chart', Chart)
 app.component('multiselect', MultiSelect)
 app.component('drop-down', Dropdown)
