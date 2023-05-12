@@ -3,7 +3,10 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from '@/router/index'
 import VueSweetalert2 from 'vue-sweetalert2';
+
 import PrimeVue from 'primevue/config';
+import "primevue/resources/primevue.min.css";
+import "primevue/resources/themes/lara-light-indigo/theme.css"; 
 
 import 'sweetalert2/dist/sweetalert2.min.css';
 import './style.css'
@@ -24,6 +27,10 @@ library.add(faUser, faInfoCircle, faBars, faAddressCard, faInfo, faAngleRight, f
 
 import Calendar from 'primevue/calendar';
 import Chart from "primevue/chart";
+import MultiSelect from 'primevue/multiselect';
+import Dropdown from 'primevue/dropdown';
+import InputText from 'primevue/inputtext';
+import Button from 'primevue/button';
 
 const pinia = createPinia()
 const app = createApp(App)
@@ -31,6 +38,10 @@ const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('prime-calendar', Calendar)
 app.component('Chart', Chart)
+app.component('multiselect', MultiSelect)
+app.component('drop-down', Dropdown)
+app.component('input-text', InputText)
+app.component('Button', Button)
 
 app.use(VueSweetalert2);
 app.use(pinia)
