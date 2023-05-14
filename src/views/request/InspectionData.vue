@@ -33,7 +33,7 @@
       class="h-[86.2vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
     >
       <div
-        class="lg:col-span-7 min-[100px]:col-span-9 h-full flex flex-col mt-2 h-[70vh] bg-gray-100 overflow-y-scroll"
+        class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[70vh] bg-gray-100 overflow-y-scroll"
       >
         <c-table
           :fields="inspectionDataStore.getInspectionDataFields"

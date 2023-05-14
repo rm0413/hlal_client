@@ -10,6 +10,7 @@ const InspectionData = () => import('@/views/request/InspectionData.vue')
 const EditItemDetails = () => import('@/views/request/EditItemDetails.vue')
 const DesignerSectionAnswer = () => import('@/views/request/DesignerSectionAnswer.vue')
 const Attachment = () => import('@/views/request/Attachment.vue')
+const SavedInputs = () => import('@/views/request/SavedInputs.vue')
 
 const routes = [
     {
@@ -51,6 +52,11 @@ const routes = [
         path: '/attachment',
         name: 'attachment',
         component: Attachment
+    },
+    {
+        path: '/saved-inputs',
+        name: 'saved-inputs',
+        component: SavedInputs
     },
     {
         path: '/monitoring',

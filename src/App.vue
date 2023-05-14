@@ -47,6 +47,11 @@ const links = [
       {
         title: 'Attachment',
         name: 'attachment',
+        fa: 'paperclip'
+      },
+      {
+        title: 'Saved Inputs',
+        name: 'saved-inputs',
         fa: 'tags'
       },
 
