@@ -180,7 +180,7 @@
         class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500"
       >
         View Item Details
-      </button>
+      </Button>
     </div>
     <dialog ref="multiple_input" class="p-0 rounded transform duration-300">
       <div class="flex flex-col">
