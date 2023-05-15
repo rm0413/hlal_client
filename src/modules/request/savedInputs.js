@@ -10,7 +10,7 @@ export const useSavedInputsStore = defineStore({
             { label: 'Request Date', key: 'request_date' },
             { label: 'TRI No.', key: 'tri_no' },
             { label: 'Supplier', key: 'supplier' },
-            { label: 'Part Number}', key: 'part_number' },
+            { label: 'Part Number', key: 'part_number' },
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
             { label: 'Actual Value', key: 'actual_value' },
