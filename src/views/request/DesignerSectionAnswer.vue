@@ -20,8 +20,8 @@
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"
               ><font-awesome-icon icon="magnifying-glass"></font-awesome-icon
             ></i>
-            <input class="text-center p-1 border-2 rounded-l-md rounded-r-none" />
-            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md rounded-l-none">
+            <input class="text-center p-1 border-2 rounded-l-md" />
+            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
@@ -35,7 +35,7 @@
       class="h-[86.2vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
     >
       <div
-        class="lg:col-span-7 min-[100px]:col-span-9 h-full flex flex-col mt-2 h-[70vh] bg-gray-100 overflow-y-scroll"
+        class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 bg-gray-100 overflow-y-scroll"
       >
         <c-table
           :items="[
