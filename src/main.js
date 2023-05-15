@@ -34,6 +34,9 @@ import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import FileUpload from 'primevue/fileupload'
+import ToastService from 'primevue/toastservice';
+
+import 'primeicons/primeicons.css'; 
 
 
 app.component('font-awesome-icon', FontAwesomeIcon)
@@ -49,5 +52,6 @@ app.use(VueSweetalert2);
 app.use(pinia)
 app.use(router)
 app.use(PrimeVue);
+app.use(ToastService)
 
 app.mount('#app')
