@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 
 export const useSavedInputsStore = defineStore({
-    id: 'editItemDetails',
+    id: 'savedInputs',
     state: () => ({
         savedInputs: [],
         savedInputsFields: [
