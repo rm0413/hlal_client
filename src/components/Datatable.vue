@@ -28,7 +28,7 @@ const props = defineProps({
   fields: Array,
   thStyle: {
     type: String,
-    default: "p-2 bg-zinc-300",
+    default: "p-3 bg-[#A10E13] text-white text-[13px]",
   },
   tdStyle: {
     type: String,

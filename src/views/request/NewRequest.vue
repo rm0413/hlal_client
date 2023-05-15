@@ -182,7 +182,10 @@
         View Item Details
       </Button>
     </div>
-    <dialog ref="multiple_input" class="p-0 rounded transform duration-300">
+    <dialog
+      ref="multiple_input"
+      class="p-0 rounded transform duration-300 -translate-y-5"
+    >
       <div class="flex flex-col">
         <div
           class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
@@ -190,14 +193,38 @@
           <span>Multiple Input</span>
           <button
             class="px-3 py-2 rounded-full hover:bg-red-600"
-            @click="multiple_input.close()"
+            @click="closeModal('multiple_input')"
           >
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
         <div class="flex p-5"><FileUploader></FileUploader></div>
-        <button class="p-3 bg-green-600 text-white hover:bg-green-500">Download Format</button>
+        <button class="p-3 bg-green-600 text-white hover:bg-green-500">
+          Download Format
+        </button>
         <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Save</button>
+      </div>
+    </dialog>
+    <dialog
+      ref="view_items"
+      class="p-0 rounded transform duration-300 -translate-y-5"
+    >
+      <div class="flex flex-col">
+        <div
+          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
+        >
+          <span>View Item Details</span>
+          <button
+            class="px-3 py-2 rounded-full hover:bg-red-600"
+            @click="closeModal('view_items')"
+          >
+            <font-awesome-icon icon="xmark"></font-awesome-icon>
+          </button>
+        </div>
+        <div class="flex p-5">
+          <CTable :fields="newRequestStore.getViewItemDetailsFields"></CTable>
+        </div>
+        <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Generate</button>
       </div>
     </dialog>
   </div>
@@ -205,15 +232,30 @@
 
 <script setup>
 import FileUploader from "@/components/FileUploader.vue";
+import CTable from '@/components/Datatable.vue'
 import { useNewRequestStore } from "@/modules/request/newrequest";
 import { ref } from "vue";
 const newRequestStore = useNewRequestStore();
 const multiple_input = ref(null);
-const view_items = ref(null)
+const view_items = ref(null);
 
 const openModal = (modal) => {
   if (modal === "multiple_input") {
     multiple_input.value.showModal();
+    multiple_input.value.classList.remove("-translate-y-5");
+  } else if (modal === "view_items") {
+    view_items.value.showModal();
+    view_items.value.classList.remove("-translate-y-5");
+  }
+};
+
+const closeModal = (modal) => {
+  if (modal === "multiple_input") {
+    multiple_input.value.close();
+    multiple_input.value.classList.add("-translate-y-5");
+  } else if (modal === "view_items") {
+    view_items.value.close();
+    view_items.value.classList.add("-translate-y-5");
   }
 };
 </script>
