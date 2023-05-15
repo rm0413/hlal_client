@@ -10,7 +10,7 @@
         <div class="flex gap-2 mr-10">
           <div class="flex flex-row">
             <select class="text-center p-1 border-2 rounded w-[12rem] rounded-l-md" />
-            <button class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-r-md">
+            <button @click="openModal('new_unit')" class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-r-md hover:bg-red-600">
               <font-awesome-icon icon="plus-square"></font-awesome-icon>
               New Unit
             </button>
@@ -20,7 +20,7 @@
               ><font-awesome-icon icon="magnifying-glass"></font-awesome-icon
             ></i>
             <input class="text-center p-1 border-2 rounded-l-md" />
-            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
+            <button @click="openModal('search')" class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
@@ -182,6 +182,7 @@
         View Item Details
       </Button>
     </div>
+    <!--Multiple Input-->
     <dialog
       ref="multiple_input"
       class="p-0 rounded transform duration-300 -translate-y-5"
@@ -205,6 +206,7 @@
         <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Save</button>
       </div>
     </dialog>
+    <!--View Items-->
     <dialog
       ref="view_items"
       class="p-0 rounded transform duration-300 -translate-y-5"
@@ -227,6 +229,56 @@
         <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Generate</button>
       </div>
     </dialog>
+    <!-- New Unit -->
+    <dialog
+      ref="new_unit"
+      class="p-0 rounded transform duration-300 -translate-y-5"
+    >
+      <div class="flex flex-col">
+        <div
+          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
+        >
+          <span>Create New Unit</span>
+          <button
+            class="px-3 py-2 rounded-full hover:bg-red-600"
+            @click="closeModal('new_unit')"
+          >
+            <font-awesome-icon icon="xmark"></font-awesome-icon>
+          </button>
+        </div>
+        <div class="flex p-5">
+          <label class="flex flex-col">
+            <span>Name of Unit</span>
+            <input class="w-[20rem] h-10 border-2 p-2 hover:border-red-600 rounded"/>
+          </label>
+        </div>
+        <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Save</button>
+        <button @click="closeModal('new_unit')" class="p-3 bg-gray-600 text-white hover:bg-gray-500">Cancel</button>
+      </div>
+    </dialog>
+    <!--Search-->
+    <dialog
+      ref="search"
+      class="p-0 rounded transform duration-300 -translate-y-5"
+    >
+      <div class="flex flex-col">
+        <div
+          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
+        >
+          <span>Search</span>
+          <button
+            class="px-3 py-2 rounded-full hover:bg-red-600"
+            @click="closeModal('search')"
+          >
+            <font-awesome-icon icon="xmark"></font-awesome-icon>
+          </button>
+        </div>
+        <div class="flex p-5 h-[30vh] overflow-y-scroll">
+          <CTable :fields="newRequestStore.getViewItemDetailsFields"></CTable>
+        </div>
+        <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Add</button>
+      </div>
+    </dialog>
   </div>
 </template>
 
@@ -238,6 +290,8 @@ import { ref } from "vue";
 const newRequestStore = useNewRequestStore();
 const multiple_input = ref(null);
 const view_items = ref(null);
+const new_unit = ref(null)
+const search = ref(null)
 
 const openModal = (modal) => {
   if (modal === "multiple_input") {
@@ -246,6 +300,12 @@ const openModal = (modal) => {
   } else if (modal === "view_items") {
     view_items.value.showModal();
     view_items.value.classList.remove("-translate-y-5");
+  } else if (modal === 'new_unit'){
+    new_unit.value.showModal()
+    new_unit.value.classList.remove("-translate-y-5");
+  } else if (modal === 'search'){
+    search.value.showModal()
+    search.value.classList.remove("-translate-y-5")
   }
 };
 
@@ -256,6 +316,12 @@ const closeModal = (modal) => {
   } else if (modal === "view_items") {
     view_items.value.close();
     view_items.value.classList.add("-translate-y-5");
+  } else if (modal === 'new_unit'){
+    new_unit.value.close()
+    new_unit.value.classList.add("-translate-y-5");
+  } else if (modal === 'search'){
+    search.value.close()
+    search.value.classList.add("-translate-y-5")
   }
 };
 </script>
