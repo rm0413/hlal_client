@@ -9,15 +9,15 @@
         </label>
         <div class="flex gap-2 mr-10">
           <div class="flex flex-row">
-            <select class="text-center p-1 border-2 rounded w-[12rem]" />
-            <button class="h-full bg-[#A10E13] text-white py-1 px-3 rounded">
+            <select class="text-center p-1 border-2 rounded w-[12rem] rounded-l-md" />
+            <button class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-r-md">
                 <font-awesome-icon icon="plus-square"></font-awesome-icon>
                 New Unit</button>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded" />
-            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded">Search</button>
+            <input class="text-center p-1 border-2 rounded-l-md" />
+            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">Search</button>
           </div>
         </div>
       </div>
