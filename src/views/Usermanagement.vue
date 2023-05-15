@@ -8,26 +8,26 @@
             </div>
             <div class="mt-2">
                 <label class="">Employee Name</label>
-                <drop-down class="w-full md:w-100rem h-[4.5vh] text-center items-center justify-center"
+                <drop-down class="w-full md:w-100rem h-[4.5vh] text-center items-center justify-center rounded-md"
                     v-model="selected_employee_name" :options="options_employee_name" optionLabel="name"
                     placeholder="Select Employee Name" />
             </div>
             <div class="mt-2">
                 <label class="">Employee Role</label>
-                <drop-down class="w-full md:w-20rem h-[4.5vh] text-center items-center justify-center"
+                <drop-down class="w-full md:w-20rem h-[4.5vh] text-center items-center justify-center rounded-md"
                     v-model="selected_employee_role" :options="options_employee_role" optionLabel="name"
                     placeholder="Select Employee Role" />
             </div>
             <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
-                <Button label="Submit" severity="success" class="text-black w-[10rem]" />
-                <Button label="Clear" severity="secondary" class="text-black w-[10rem]" />
+                <Button label="Submit" severity="success" class="text-black w-[10rem] rounded-md" />
+                <Button label="Clear" severity="secondary" class="text-black w-[10rem] rounded-md" />
             </div>
         </div>
         <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col h-[89vh]">
             <div class="flex items-end justify-end">
                 <span class="p-input-icon-left">
                     <font-awesome-icon icon="magnifying-glass" />
-                    <input-text v-model="value1" placeholder="Search" class="w-[17rem] h-[4.5vh]" />
+                    <input-text v-model="value1" placeholder="Search" class="w-[17rem] h-[4.5vh] rounded-md" />
                 </span>
             </div>
             <div class="border rounded-[5px] overflow-y-scroll h-full mt-2">
