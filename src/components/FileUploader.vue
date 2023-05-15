@@ -6,7 +6,7 @@
       url="./upload.php"
       @upload="onTemplatedUpload($event)"
       :multiple="true"
-      accept=".xlsx,.xls,.csv"
+      accept=".pdf"
       :maxFileSize="5000000"
       @select="onSelectedFiles"
     >

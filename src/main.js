@@ -35,7 +35,7 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import FileUpload from 'primevue/fileupload'
 import ToastService from 'primevue/toastservice';
-
+import Dialog from 'primevue/dialog';
 import 'primeicons/primeicons.css'; 
 
 
@@ -47,6 +47,7 @@ app.component('drop-down', Dropdown)
 app.component('input-text', InputText)
 app.component('Button', Button)
 app.component('FileUpload', FileUpload)
+app.component('Dialog', Dialog)
 
 app.use(VueSweetalert2);
 app.use(pinia)
