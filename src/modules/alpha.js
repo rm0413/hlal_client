@@ -1,18 +1,11 @@
 import { defineStore } from "pinia";
 
-export const useAlphaStore = defineStore('alpha', { 
+export const useModalStore = defineStore('modal', { 
     state: () => ({
-        sidebar: false
     }),
     actions: {
-        setSidebar(){
-            this.sidebar = !this.sidebar
-        }
     },
     getters: {
-        getSidebar(){
-            return this.sidebar
-        }
 
     }
 })

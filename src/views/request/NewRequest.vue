@@ -11,13 +11,18 @@
           <div class="flex flex-row">
             <select class="text-center p-1 border-2 rounded w-[12rem] rounded-l-md" />
             <button class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-r-md">
-                <font-awesome-icon icon="plus-square"></font-awesome-icon>
-                New Unit</button>
+              <font-awesome-icon icon="plus-square"></font-awesome-icon>
+              New Unit
+            </button>
           </div>
           <div class="relative">
-            <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon icon="magnifying-glass"></font-awesome-icon></i>
+            <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"
+              ><font-awesome-icon icon="magnifying-glass"></font-awesome-icon
+            ></i>
             <input class="text-center p-1 border-2 rounded-l-md" />
-            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">Search</button>
+            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
+              Search
+            </button>
           </div>
         </div>
       </div>
@@ -127,21 +132,15 @@
         <div class="col-span-1 p-10">
           <label class="flex flex-col gap-2">
             Critical Parts
-            <select
-              class="w-full border-2 rounded p-1 hover:border-blue-300"
-            />
+            <select class="w-full border-2 rounded p-1 hover:border-blue-300" />
           </label>
           <label class="flex flex-col gap-2">
             Critical Dimension
-            <select
-              class="w-full border-2 rounded p-1 hover:border-blue-300"
-            />
+            <select class="w-full border-2 rounded p-1 hover:border-blue-300" />
           </label>
           <label class="flex flex-col gap-2">
             Kind of Request
-            <select
-              class="w-full border-2 rounded p-1 hover:border-blue-300"
-            />
+            <select class="w-full border-2 rounded p-1 hover:border-blue-300" />
           </label>
           <label class="flex flex-col gap-2">
             Request Value
@@ -170,15 +169,51 @@
     </div>
     <div class="lg:col-span-2 min-[100px]:col-span-9 h-full flex flex-col mt-10 gap-2">
       <button
-        class="w-full p-3 flex justify-center items-center bg-[#A10E13] text-white rounded"
+        @click="openModal('multiple_input')"
+        class="w-full p-3 flex justify-center items-center bg-[#A10E13] text-white rounded hover:bg-red-600"
+        data-open-modal
       >
         Multiple Input
       </button>
       <button
-        class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded"
+        @click="openModal('view_items')"
+        class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500"
       >
         View Item Details
       </button>
     </div>
+    <dialog ref="multiple_input" class="p-0 rounded transform duration-300">
+      <div class="flex flex-col">
+        <div
+          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
+        >
+          <span>Multiple Input</span>
+          <button
+            class="px-3 py-2 rounded-full hover:bg-red-600"
+            @click="multiple_input.close()"
+          >
+            <font-awesome-icon icon="xmark"></font-awesome-icon>
+          </button>
+        </div>
+        <div class="flex p-5"><FileUploader></FileUploader></div>
+        <button class="p-3 bg-green-600 text-white hover:bg-green-500">Download Format</button>
+        <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Save</button>
+      </div>
+    </dialog>
   </div>
 </template>
+
+<script setup>
+import FileUploader from "@/components/FileUploader.vue";
+import { useNewRequestStore } from "@/modules/request/newrequest";
+import { ref } from "vue";
+const newRequestStore = useNewRequestStore();
+const multiple_input = ref(null);
+const view_items = ref(null)
+
+const openModal = (modal) => {
+  if (modal === "multiple_input") {
+    multiple_input.value.showModal();
+  }
+};
+</script>

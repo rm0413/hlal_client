@@ -1,10 +1,8 @@
 <script setup>
 import CSidebar from "@/layout/CSidebar.vue"
 import { useRoute } from "vue-router"
-import { useAlphaStore } from "./modules/alpha";
 
 const route = useRoute()
-const alphaStore = useAlphaStore()
 
 const systemDetails = {
   name: "Hinsei & LSA Agreement List",
