@@ -30,7 +30,7 @@
       </div>
     </div>
     <div
-      class="h-[86.2vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
+      class="h-[80vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
     >
       <div
         class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 bg-gray-100 overflow-y-scroll"

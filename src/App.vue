@@ -1,8 +1,13 @@
 <script setup>
 import CSidebar from "@/layout/CSidebar.vue"
 import { useRoute } from "vue-router"
+import { onMounted } from 'vue'
 
 const route = useRoute()
+
+onMounted(() => {
+  console.log(route.fullPath)
+})
 
 const systemDetails = {
   name: "Hinsei & LSA Agreement List",
@@ -67,11 +72,13 @@ const links = [
   },
 ]
 
+
+
 </script>
 
 <template>
   <div class="h-screen">
-    <CSidebar :systemDetails="systemDetails" :links="links" v-if="route.fullPath !== '/'">
+    <CSidebar :systemDetails="systemDetails" :links="links" v-if="route.name !== 'login'">
       <template #page>
         <router-view />
       </template>

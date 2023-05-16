@@ -210,7 +210,7 @@
             <i v-show="navs.svg" v-html="navs.svg"></i>
             <font-awesome-icon
               v-if="navs.fa"
-              class="h-3 w-3"
+              class="h-5 w-5"
               :icon="navs.fa"
             ></font-awesome-icon>
           </router-link>
@@ -223,7 +223,7 @@
             <i v-show="navs.svg" v-html="navs.svg"></i>
             <font-awesome-icon
               v-if="navs.fa"
-              class="h-3 w-3"
+              class="h-5 w-5"
               :icon="navs.fa"
             ></font-awesome-icon>
           </div>
@@ -237,7 +237,7 @@
                 <i v-show="sub.svg" v-html="sub.svg"></i>
                 <font-awesome-icon
                   v-if="sub.fa"
-                  class="h-3 w-3"
+                  class="h-4 w-4"
                   :icon="sub.fa"
                 ></font-awesome-icon>
               </div>
