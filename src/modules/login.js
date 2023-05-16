@@ -8,7 +8,6 @@ export const useLoginStore = defineStore({
     }),
     actions: {
         setLogin(token) {
-            if (token !== '') {
                 return new Promise((resolve, reject) => {
                     axios.post(`http://10.164.58.62/FDTP-Portal/public/api/auth/profile`, {
                         token: token,
@@ -19,10 +18,6 @@ export const useLoginStore = defineStore({
                         reject(err)
                     })
                 })
-            }
-            else {
-                window.location.href = 'http://10.164.58.62/FDTP-Portal/public/login'
-            }
         },
         setUser(data, role) {
             return new Promise((resolve, reject) => {

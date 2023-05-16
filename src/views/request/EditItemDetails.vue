@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div class="h-[85vh] w-full mt-3 overflow-y-scroll">
+      <div class="h-[80vh] w-full mt-3 overflow-y-scroll">
         <c-table
           :items="[
             {

@@ -14,7 +14,7 @@ const SavedInputs = () => import('@/views/request/SavedInputs.vue')
 
 const routes = [
     {
-        path: '/',
+        path: '/login/:pathMatch(.*)*',
         name: 'login',
         component: Login
     },
@@ -77,10 +77,11 @@ const router = createRouter({
 })
 
 router.afterEach((to, from) => {
-    var checkToken = localStorage.getItem("userdata")
+    var checkToken = sessionStorage.getItem("userdata")
     if (to.fullPath !== '/') {
         if (!checkToken) {
-            window.location.href = 'http://10.164.58.62/FDTP-Portal/public/login'
+            console.log('test')
+            // window.location.href = 'http://10.164.58.62/FDTP-Portal/public/login'
         } else { console.log('authenticated') }
     }
 })

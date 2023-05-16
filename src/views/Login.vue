@@ -51,18 +51,16 @@ import { useRouter } from "vue-router";
 
 const loginStore = useLoginStore();
 const router = useRouter();
-const token = ref(
-  window.location.href.split("/")[4] === "#" ? "" : window.location.href.split("/")[4]
-);
-const role = ref(
-  window.location.href.split("/")[5] === "#" ? "" : window.location.href.split("/")[5]
-);
+const token = ref(window.location.href.split("/")[6]);
+const role = ref( window.location.href.split("/")[7].split("#")[0]);
 // const system_id = ref(window.location.href.split("/")[6].split("#")[0] === "#" ? '' : window.location.href.split("/")[6].split("#")[0])
 const swal = inject("$swal");
 
 onMounted(() => {
+  console.log(window.location.href.split('/'))
+  if(token.value){
   loginStore.setLogin(token.value).then((response) => {
-    localStorage.setItem("userdata", token.value);
+    localStorage.setItem("userdata", JSON.stringify(token.value));
     if (response.status === "success") {
       loginStore.setUser(response.data, role.value).then((response) => {
         if (response.status === "success") {
@@ -120,5 +118,15 @@ onMounted(() => {
       });
     }
   });
+} else {
+  swal({
+        icon: "warning",
+        title: "Unauthorized User",
+        text: "Redirecting to FDTP-Portal!!",
+        timer: 2000,
+      }).then(() => {
+        window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
+      });
+}
 });
 </script>

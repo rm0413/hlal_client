@@ -30,7 +30,7 @@
       </div>
     </div>
     <div
-      class="h-[86.2vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
+      class="h-[80vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
     >
       <div class="col-span-3 py-5">
           <file-uploader></file-uploader>
