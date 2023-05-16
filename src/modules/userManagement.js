@@ -6,7 +6,7 @@ export const useUserManagementStore = defineStore({
         userManagement: [],
         userManagementFields: [
             { label: 'Name', key: 'name' },
-            { label: 'Image', key: 'image' },
+            { label: 'Image', key: 'photo' },
             { label: 'Email', key: 'email' },
             { label: 'Role', key: 'role' },
             { label: 'Position', key: 'position' },
