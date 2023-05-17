@@ -11,7 +11,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import './style.css'
 
 import axios from 'axios'
-axios.defaults.baseURL = 'http://10.164.58.62/hinsei/server2/public/api/';
+axios.defaults.baseURL = 'http://10.164.58.65/hinsei/server/public/api/';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {

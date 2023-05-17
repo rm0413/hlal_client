@@ -3,7 +3,8 @@
     class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
   >
     <div class="lg:col-span-2 min-[100px]:col-span-9 h-[89vh] flex flex-col">
-      <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono"
+      <label
+        class="text-[24px] tracking-widest font-bold text-gray-600 font-mono"
         ><font-awesome-icon class="h-6 w-6 text-black" icon="users-gear" /> User
         Management</label
       >
@@ -51,76 +52,33 @@
       <div class="flex items-end justify-end">
         <span class="p-input-icon-left">
           <font-awesome-icon icon="magnifying-glass" />
-          <input-text placeholder="Search" class="w-[17rem] h-[4.5vh] rounded-md" />
+          <input-text
+            v-model="userManagementStore.search_input"
+            placeholder="Search"
+            class="w-[17rem] h-[4.5vh] rounded-md"
+          />
         </span>
       </div>
+      {{ searchFilter }}
       <div class="border rounded-[5px] overflow-y-scroll h-full mt-2">
         <c-table
           :fields="userManagementStore.getUserManagementFields"
           :thStyle="'bg-[#A10E13] text-white p-3'"
-          :items="[
-            {
-              name: 'test',
-              image: '//10.164.58.52/HINSEI/client/src/assets/images/fujitsuICO.png',
-              email: 'test',
-              role: 'ADMIN',
-            },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-            { name: 'test', image: 'test', email: 'test' },
-          ]"
+          :items="userManagementStore.getUserManagement"
         >
+          <template #cell(#)="data">
+            <div class="flex items-center justify-center">
+              {{ data.index + 1 }}
+            </div>
+          </template>
           <template #cell(photo)="data">
             <div class="flex items-center justify-center">
-               <Avatar size="large" :image="data.item.image"></Avatar>
+              <Avatar size="large" :image="data.item.emp_photo"></Avatar>
+            </div>
+          </template>
+          <template #cell(fullname)="data">
+            <div class="flex items-center justify-center">
+              {{ `${data.item.emp_last_name}, ${data.item.emp_first_name} ` }}
             </div>
           </template>
           <template #cell(action)="data">
@@ -132,20 +90,29 @@
               >
                 <font-awesome-icon icon="gear"></font-awesome-icon>
               </Button>
-              <Button severity="danger" class="w-[1rem] items-center justify-center">
+              <Button
+                severity="danger"
+                class="w-[1rem] items-center justify-center"
+              >
                 <font-awesome-icon icon="circle-minus"></font-awesome-icon>
               </Button>
             </div>
           </template>
         </c-table>
+        {{ userManagementStore.searchFilter }}
       </div>
     </div>
-    <dialog ref="edit_modal" class="p-0 rounded transform duration-300 -translate-y-5">
+    <dialog
+      ref="edit_modal"
+      class="p-0 rounded transform duration-300 -translate-y-5"
+    >
       <div class="flex flex-col">
         <div
           class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
         >
-          <span> <font-awesome-icon icon="gear"></font-awesome-icon> Action</span>
+          <span>
+            <font-awesome-icon icon="gear"></font-awesome-icon> Action</span
+          >
           <button
             class="px-3 py-2 rounded-full hover:bg-red-600"
             @click="edit_modal.close()"
@@ -184,11 +151,12 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import CTable from "@/components/Datatable.vue";
 import { useUserManagementStore } from "@/modules/userManagement";
 const userManagementStore = useUserManagementStore();
 
+const search_input = ref();
 const selected_employee_name = ref();
 const selected_employee_role = ref();
 const options_employee_name = ref([
@@ -209,4 +177,8 @@ const edit_user_modal = (data) => {
   edit_modal.value.showModal();
   edit_user_form.value = data;
 };
+onMounted(() => {
+  userManagementStore.setUserManagement();
+});
+
 </script>

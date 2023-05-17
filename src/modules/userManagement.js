@@ -1,32 +1,48 @@
 import { defineStore } from 'pinia'
-
+import axios from 'axios'
 export const useUserManagementStore = defineStore({
     id: 'usermanagement',
     state: () => ({
         userManagement: [],
         userManagementFields: [
-            { label: 'Name', key: 'name' },
+            { label: 'ID', key: '#'},
+            { label: 'EmployeeID', key: 'emp_id'},
+            { label: 'Name', key: 'fullname'},
             { label: 'Image', key: 'photo' },
-            { label: 'Email', key: 'email' },
-            { label: 'Role', key: 'role' },
+            { label: 'Email', key: 'emp_email' },
+            { label: 'Role', key: 'role_access' },
             { label: 'Position', key: 'position' },
-            { label: 'Section', key: 'section' },
-            { label: 'Status', key: 'status' },
+            { label: 'Section', key: 'section_code' },
+            { label: 'Status', key: 'emp_system_status' },
             { label: 'Action', key: 'action' },
         ],
-        userManagementForm: {
-            userManagement_name: '',
-            userManagement_image: '',
-            userManagement_email: '',
-        },
-        onEdit: false,
-        onEditIndex: null
+        // userManagementForm: {
+        //     userManagement_name: '',
+        //     userManagement_image: '',
+        //     userManagement_email: '',
+        // },
+        // onEdit: false,
+        // onEditIndex: null
     }),
     actions: {
+        setUserManagement(){
+            return new Promise((resolve, reject) =>{
+                axios.get('user').then(response =>{
+                    resolve(response.data)
+                    this.userManagement = response.data.data
+                }).catch(err =>{
+                    reject(err)
+                })
+            })
+        },
+
     },
     getters: {
         getUserManagementFields() {
             return this.userManagementFields
-        }
+        },
+        getUserManagement(){
+            return this.userManagement
+        },
     }
 })

@@ -9,7 +9,7 @@ export const useLoginStore = defineStore({
     actions: {
         setLogin(token) {
                 return new Promise((resolve, reject) => {
-                    axios.post(`http://10.164.58.62/FDTP-Portal/public/api/auth/profile`, {
+                    axios.post(`http://10.164.58.65/FDTP-Portal/public/api/auth/profile`, {
                         token: token,
                     }).then((response) => {
                         resolve(response.data)
@@ -21,7 +21,7 @@ export const useLoginStore = defineStore({
         },
         setUser(data, role) {
             return new Promise((resolve, reject) => {
-                axios.get(`user-profile/${data.emp_id}`).then((response) => {
+                axios.get(`user/${data.emp_id}`).then((response) => {
                     resolve(response.data)
                     if (response.data.status === "success") {
                         sessionStorage.setItem("email", this.userProfile.email)
@@ -50,7 +50,7 @@ export const useLoginStore = defineStore({
         },
         setLoginRole(data) {
             return new Promise((resolve, reject) => {
-                axios.patch(`users/${data.employee_id}`, data.role_access).then(response => {
+                axios.patch(`user/${data.employee_id}`, data.role_access).then(response => {
                     resolve(response.data)
                 }).then(err => {
                     reject(err)
