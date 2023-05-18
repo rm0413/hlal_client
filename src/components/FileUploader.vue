@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <Toast />
+    <!-- <Toast /> -->
     <FileUpload
       name="demo[]"
       url="./upload.php"
@@ -38,15 +38,15 @@
               :disabled="!files || files.length === 0"
             ></Button>
           </div>
-          <ProgressBar
+          <!-- <ProgressBar
             :value="totalSizePercent"
             :showValue="false"
             :class="[
               'md:w-20rem h-1rem w-full text-end',
               { 'exceeded-progress-bar': totalSizePercent > 100 },
             ]"
-            ><span class="white-space-nowrap">{{ totalSize }}B / 5Mb</span></ProgressBar
-          >
+            ><span class="white-space-nowrap">{{ totalSize }}B / 5Mb</span></ProgressBar 
+          >-->
         </div>
       </template>
       <template
@@ -59,7 +59,7 @@
       >
         <div v-if="files.length > 0">
           <h5>Pending</h5>
-          <div class="flex flex-wrap p-0 sm:p-5 gap-5">
+          <div class="flex flex-col p-0 sm:p-5 gap-5  h-[20vh] overflow-y-scroll">
             <div
               v-for="(file, index) of files"
               :key="file.name + file.type + file.size"
@@ -77,7 +77,7 @@
               </div>
               <span class="font-semibold">{{ file.name }}</span>
               <div>{{ formatSize(file.size) }}</div>
-              <Badge value="Pending" severity="warning" />
+              <!-- <Badge value="Pending" severity="warning" /> -->
               <Button
                 icon="pi pi-times"
                 @click="onRemoveTemplatingFile(file, removeFileCallback, index)"
@@ -109,7 +109,7 @@
               </div>
               <span class="font-semibold">{{ file.name }}</span>
               <div>{{ formatSize(file.size) }}</div>
-              <Badge value="Completed" class="mt-3" severity="success" />
+              <!-- <Badge value="Completed" class="mt-3" severity="success" /> -->
               <Button
                 icon="pi pi-times"
                 @click="removeUploadedFileCallback(index)"

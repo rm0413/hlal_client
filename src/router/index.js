@@ -73,15 +73,14 @@ const routes = [
 const router = createRouter({
     routes,
     history: createWebHashHistory(),
-    linkActiveClass: "text-[#A10E13] ",
+    linkActiveClass: "translate-x-3 rounded",
 })
 
 router.afterEach((to, from) => {
-    var checkToken = sessionStorage.getItem("userdata")
-    if (to.fullPath !== '/') {
+    var checkToken = JSON.parse(localStorage.getItem("userdata"))
+    if (to.name !== 'login') {
         if (!checkToken) {
-            console.log('test')
-            // window.location.href = 'http://10.164.58.62/FDTP-Portal/public/login'
+            window.location.href = 'http://10.164.58.62/FDTP-Portal/public/login'
         } else { console.log('authenticated') }
     }
 })

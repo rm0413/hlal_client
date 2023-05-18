@@ -4,7 +4,7 @@
       class="select-none absolute inset-x-0 top-0 w-screen bg-[#A10E13] h-[2px] z-50"
     ></div>
     <div
-      class="select-none fixed w-full z-30 flex shadow-lg dark:bg-[#0F172A] p-2 items-center justify-center h-16 px-10 bg-white"
+      :class="`select-none fixed w-full z-30 flex shadow-lg dark:bg-[#0F172A] p-2 items-center justify-center h-16 px-10 bg-${themeStore.theme[themeStore.theme_select]._navbar}`"
     >
       <div
         ref="logo"
@@ -16,7 +16,7 @@
         ref="asideProfile"
         @click="openAside()"
         style="cursor: pointer"
-        class="bg-gradient-to-r duration-500 bg-white border-2 shadow-lg flex-none rounded-2xl h-full text-center flex item-center justify-center -mr-24 w-72 z-50"
+        :class="`bg-gradient-to-r duration-500 bg-${themeStore.theme[themeStore.theme_select]._navbar} border-2 shadow-lg flex-none rounded-2xl h-full text-center flex item-center justify-center -mr-24 w-72 z-50`"
       >
         <div
           ref="profile"
@@ -34,7 +34,7 @@
         </div>
         <div
           ref="settings"
-          class="opacity-0 duration-[600ms] font-bold md:block text-sm md:text-md text-black mt-3 dark:text-white mr-3"
+          :class="`opacity-0 duration-[600ms] font-bold md:block text-sm md:text-md text-${themeStore.theme[themeStore.theme_select].sidebar_text} mt-3 dark:text-white mr-3`"
         >
           SETTINGS
         </div>
@@ -44,18 +44,18 @@
         ref="asideCog"
         class="transition translate-x-12 flex mr-4 p-4 rounded-full text-white z-50 rotate-[360deg] duration-[600ms] cursor-pointer"
       >
-        <font-awesome-icon class="text-black h-6 w-6" icon="gear"></font-awesome-icon>
+        <font-awesome-icon :class="`text-${themeStore.theme[themeStore.theme_select]._navbar_icon} h-6 w-6`" icon="gear"></font-awesome-icon>
         <!-- <i class="pi pi-cog text-black" style="font-size: 1.5rem"></i> -->
       </div>
     </div>
     <aside
       ref="caside"
-      class="select-none inset-y-0 right-0 w-[19rem] translate-x-96 fixed transition ease-in-out duration-500 flex z-10 h-[calc(100vh)] shadow-2xl bg-white"
+      :class="`select-none inset-y-0 right-0 w-[19rem] translate-x-96 fixed transition ease-in-out duration-500 flex z-10 h-[calc(100vh)] shadow-2xl bg-${themeStore.theme[themeStore.theme_select].aside}`"
     >
       <!-- MAX ASIDE -->
       <div
         ref="maxAside"
-        class="ml-2 max text-black mt-16 flex-col space-y-2 w-full h-[calc(100vh)] flex text-center"
+        :class="`ml-2 max text-${themeStore.theme[themeStore.theme_select].sidebar_text} mt-16 flex-col space-y-2 w-full h-[calc(100vh)] flex text-center`"
       >
         <div class="text-xl divide-y-2 divide-white font-bold mt-7">USER INFORMATION</div>
         <div class="grid grid-rows-2 h-28">
@@ -74,43 +74,23 @@
     </aside>
     <aside
       ref="sidebar"
-      class="select-none w-60 -translate-x-48 fixed transition transform ease-in-out duration-1000 z-30 flex h-screen bg-white shadow-xl"
+      :class="`select-none w-60 -translate-x-48 fixed transition transform ease-in-out duration-1000 z-30 flex h-screen bg-${themeStore.theme[themeStore.theme_select].sidebar} shadow-xl`"
     >
       <!-- open sidebar button -->
       <div
         ref="maxToolbar"
-        class="max-toolbar translate-x-24 scale-x-0 w-full -right-6 transition transform ease-in duration-300 flex items-center justify-between border-4 border-white dark:border-[#0F172A] bg-white shadow-lg absolute top-2 rounded-full h-12"
+        :class="`max-toolbar translate-x-24 scale-x-0 w-full -right-6 transition transform ease-in duration-300 flex items-center justify-between border-2 border-gray-200 dark:border-[#0F172A] bg-${themeStore.theme[themeStore.theme_select].container} shadow-lg absolute top-2 rounded-full h-12`"
       >
         <div class="flex pl-4 items-center space-x-2">
           <div>
-            <div onclick="setDark('dark')" class="moon">
-              <svg
-                class="h-4 w-4 text-zinc-400 hover:text-[#A10E13] dark:hover:text-[#38BDF8]"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
+            <div @click="themeStore.darkMode(), openNav()" v-if="themeStore.theme_select === 0" class="cursor-pointer">
+              <font-awesome-icon icon="moon"></font-awesome-icon>
             </div>
-            <div onclick="setDark('light')" class="sun hidden">
-              <svg
-                class="h-4 w-4 text-zinc-400 hover:text-[#A10E13] dark:hover:text-[#38BDF8]"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
+            <div v-else @click="themeStore.onDefault(), openNav()" class="cursor-pointer">
+              <font-awesome-icon icon="sun" class="text-white"></font-awesome-icon>
             </div>
           </div>
-          <div class="text-black hover:text-blue-500 dark:hover:text-[#38BDF8]">
+          <div class="text-black hover:text-blue-500 dark:hover:text-[#38BDF8] hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -144,26 +124,26 @@
       <!-- MAX SIDEBAR-->
       <div
         ref="maxSidebar"
-        class="max hidden text-white mt-20 flex-col space-y-2 w-full h-[calc(100vh)]"
+        :class="`max hidden text-white mt-20 flex-col space-y-2 w-full h-[calc(100vh)]`"
       >
         <div v-for="(navs, n) in links" :key="n">
           <router-link
             v-if="!navs.sub_module"
             :to="{ name: navs.name }"
-            class="hover:ml-4 w-full shadow-lg text-black hover:text-rose-900 dark:hover:text-blue-500 bg-white border-red-700 p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3"
+            :class="`hover:ml-4 w-full shadow-lg text-${themeStore.theme[themeStore.theme_select].sidebar_text} hover:text-rose-900 dark:hover:text-blue-500 bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg} border-red-700 p-2 pl-8 rounded transform ease-in-out duration-300 flex flex-row items-center space-x-3`"
           >
             <i v-show="navs.class" :style="navs.style" :class="navs.class"></i>
             <i v-show="navs.svg" v-html="navs.svg"></i>
             <font-awesome-icon
               v-if="navs.fa"
-              class="h-3 w-3 text-black"
+              :class="`h-3 w-3 text-${themeStore.theme[themeStore.theme_select].sidebar_icon}`"
               :icon="navs.fa"
             ></font-awesome-icon>
 
             <div>{{ navs.title }}</div>
           </router-link>
           <div
-            :class="`hover:ml-4  w-full shadow-lg text-black hover:text-rose-900 dark:hover:text-blue-500 border-red-700 p-2 pl-8 transform ease-in-out duration-300 flex flex-row items-center space-x-3 transform ease-in-out duration-300 flex shadow-lg cursor-pointer bg-white ${!openSubModule ? ' rounded text-[#A10E13]' : ' rounded-full'}`"
+            :class="`hover:ml-4  w-full shadow-lg text-${themeStore.theme[themeStore.theme_select].sidebar_text} hover:text-rose-900 dark:hover:text-blue-500 border-red-700 p-2 pl-8 transform ease-in-out duration-300 flex flex-row items-center space-x-3 transform ease-in-out duration-300 flex shadow-lg cursor-pointer bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg} ${!openSubModule ? ' rounded text-[#A10E13]' : ' rounded'}`"
             @click="(openSubModule = !openSubModule), expand_submodule()"
             v-else
           >
@@ -180,7 +160,7 @@
             <router-link :to="{ name: sub.name }">
               <div
                 ref="sub_module"
-                class="hover:ml-4 w-full shadow-lg text-black hover:text-rose-900 text-[12px] dark:hover:text-blue-500 bg-white border-red-700 p-2 pl-12 rounded transform ease-in-out duration-300 flex flex-row items-center space-x-3 transform ease-in-out duration-300 flex shadow-lg cursor-pointer gap-2"
+                :class="`hover:ml-4 w-full shadow-lg text-${themeStore.theme[themeStore.theme_select].sidebar_text} hover:text-rose-900 text-[12px] dark:hover:text-blue-500 bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg} border-red-700 p-2 pl-12 rounded transform ease-in-out duration-300 flex flex-row items-center space-x-3 transform ease-in-out duration-300 flex shadow-lg cursor-pointer gap-2`"
               >
                 <i v-show="sub.class" :style="sub.style" :class="sub.class"></i>
                 <i v-show="sub.svg" v-html="sub.svg"></i>
@@ -204,18 +184,18 @@
           <router-link
             v-if="!navs.sub_module"
             :to="{ name: navs.name }"
-            class="hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 w-full bg-white p-3 rounded-full transform ease-in-out duration-500 flex shadow-lg"
+            :class="`hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 w-full bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg} p-3 rounded-full transform ease-in-out duration-500 flex shadow-lg`"
           >
             <i v-show="navs.class" :style="navs.style" :class="navs.class"></i>
             <i v-show="navs.svg" v-html="navs.svg"></i>
             <font-awesome-icon
               v-if="navs.fa"
-              class="h-5 w-5"
+              :class="`h-5 w-5 text-${themeStore.theme[themeStore.theme_select].sidebar_icon}`"
               :icon="navs.fa"
             ></font-awesome-icon>
           </router-link>
           <div
-            :class="`hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 duration-500  w-full p-3 bg-white  ${openSubModule ? 'rounded text-[#A10E13]' : 'rounded-full text-blue-600'} transform ease-in-out duration-300 flex shadow-lg cursor-pointer`"
+            :class="`hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 duration-500  w-full p-3 bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg}  ${openSubModule ? 'rounded text-[#A10E13]' : 'rounded-full text-blue-400'} transform ease-in-out duration-300 flex shadow-lg cursor-pointer`"
             @click="(openSubModule = !openSubModule), expand_submodule()"
             v-else
           >
@@ -231,7 +211,7 @@
             <router-link :to="{ name: sub.name }">
               <div
                 ref="sub_module"
-                class="transform duration-300 absolute hover:ml-4 opacity-0 -translate-x-[15rem] justify-end pr-5 text-blue-600 dark:hover:text-red-200 hover:text-red-900 w-full rounded bg-white p-3 flex shadow-lg"
+                :class="`transform duration-300 absolute hover:ml-4 opacity-0 -translate-x-[15rem] justify-end pr-5 text-${themeStore.theme[themeStore.theme_select].sidebar_sub_icon} dark:hover:text-red-200 hover:text-red-900 w-full rounded bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg} p-3 flex shadow-lg`"
               >
                 <i v-show="sub.class" :style="sub.style" :class="sub.class"></i>
                 <i v-show="sub.svg" v-html="sub.svg"></i>
@@ -248,12 +228,12 @@
     </aside>
     <div
       ref="content"
-      class=" content ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 h-[89vh]"
+      :class="`content ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 h-screen`"
     >
       <slot name="page"></slot>
     </div>
     <div
-      class="select-none absolute inset-x-0 bottom-0 w-screen bg-[#A10E13] z-50 text-sm text-zinc-100 text-right"
+      :class="`select-none absolute inset-x-0 bottom-0 w-screen duration-500 bg-${themeStore.theme[themeStore.theme_select].footer} z-50 text-sm text-zinc-100 text-right`"
     >
       Hinsei & LSA Agreement List ©2023 MIS
     </div>
@@ -262,6 +242,8 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import { useThemeStore } from '@/modules/alpha'
+const themeStore = useThemeStore()
 
 const props = defineProps({
   links: Array,

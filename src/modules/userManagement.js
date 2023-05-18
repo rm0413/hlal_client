@@ -5,9 +5,9 @@ export const useUserManagementStore = defineStore({
     state: () => ({
         userManagement: [],
         userManagementFields: [
-            { label: 'ID', key: '#'},
-            { label: 'EmployeeID', key: 'emp_id'},
-            { label: 'Name', key: 'fullname'},
+            { label: 'ID', key: '#' },
+            { label: 'EmployeeID', key: 'emp_id' },
+            { label: 'Name', key: 'fullname' },
             { label: 'Image', key: 'photo' },
             { label: 'Email', key: 'emp_email' },
             { label: 'Role', key: 'role_access' },
@@ -16,6 +16,7 @@ export const useUserManagementStore = defineStore({
             { label: 'Status', key: 'emp_system_status' },
             { label: 'Action', key: 'action' },
         ],
+        search_filter: ''
         // userManagementForm: {
         //     userManagement_name: '',
         //     userManagement_image: '',
@@ -25,12 +26,12 @@ export const useUserManagementStore = defineStore({
         // onEditIndex: null
     }),
     actions: {
-        setUserManagement(){
-            return new Promise((resolve, reject) =>{
-                axios.get('user').then(response =>{
+        setUserManagement() {
+            return new Promise((resolve, reject) => {
+                axios.get('user').then(response => {
                     resolve(response.data)
                     this.userManagement = response.data.data
-                }).catch(err =>{
+                }).catch(err => {
                     reject(err)
                 })
             })
@@ -41,7 +42,7 @@ export const useUserManagementStore = defineStore({
         getUserManagementFields() {
             return this.userManagementFields
         },
-        getUserManagement(){
+        getUserManagement() {
             return this.userManagement
         },
     }

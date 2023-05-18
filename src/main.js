@@ -16,13 +16,13 @@ axios.defaults.baseURL = 'http://10.164.58.65/hinsei/server/public/api/';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
     faUser, faInfoCircle, faBars, faAddressCard, faInfo, faAngleRight, faAngleDown, faClipboardList, faRing, faClone, faColumns,
-    faChartArea, faChartPie, faChartLine, faChartBar, faSignOutAlt, faEnvelope, faWindowClose, faComments, faQuestion, faEdit, faBell, faGripLines, faUsers, faDesktop, faLock, faPlusSquare, faPencilAlt, faTrash, faFileLines, faHouse, faUserCircle, faUserPlus, faUserMinus, faSearch, faGear, faMagnifyingGlassPlus, faLayerGroup, faFolderPlus, faPenToSquare, faPuzzlePiece, faTags, faPaperclip, faCircleMinus, faUsersGear, faMagnifyingGlass, faXmark, faCloudArrowUp, faEraser, faDownload, faEye, faPen, faFloppyDisk, faRightFromBracket
+    faChartArea, faChartPie, faChartLine, faChartBar, faSignOutAlt, faEnvelope, faWindowClose, faComments, faQuestion, faEdit, faBell, faGripLines, faUsers, faDesktop, faLock, faPlusSquare, faPencilAlt, faTrash, faFileLines, faHouse, faUserCircle, faUserPlus, faUserMinus, faSearch, faGear, faMagnifyingGlassPlus, faLayerGroup, faFolderPlus, faPenToSquare, faPuzzlePiece, faTags, faPaperclip, faCircleMinus, faUsersGear, faMagnifyingGlass, faXmark, faCloudArrowUp, faEraser, faDownload, faEye, faPen, faFloppyDisk, faRightFromBracket, faMoon, faSun
 }
     from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUser, faInfoCircle, faBars, faAddressCard, faInfo, faAngleRight, faAngleDown, faClipboardList, faRing, faClone, faColumns,
-    faChartArea, faChartPie, faChartLine, faChartBar, faSignOutAlt, faEnvelope, faWindowClose, faComments, faQuestion, faEdit, faBell, faGripLines, faUsers, faDesktop, faLock, faPlusSquare, faPencilAlt, faTrash, faFileLines, faHouse, faUserCircle, faUserPlus, faUserMinus, faSearch, faGear, faMagnifyingGlassPlus, faLayerGroup, faFolderPlus, faPenToSquare, faPuzzlePiece, faTags, faPaperclip, faCircleMinus, faUsersGear, faMagnifyingGlass, faXmark, faCloudArrowUp, faEraser, faDownload, faEye, faPen, faFloppyDisk, faRightFromBracket)
+    faChartArea, faChartPie, faChartLine, faChartBar, faSignOutAlt, faEnvelope, faWindowClose, faComments, faQuestion, faEdit, faBell, faGripLines, faUsers, faDesktop, faLock, faPlusSquare, faPencilAlt, faTrash, faFileLines, faHouse, faUserCircle, faUserPlus, faUserMinus, faSearch, faGear, faMagnifyingGlassPlus, faLayerGroup, faFolderPlus, faPenToSquare, faPuzzlePiece, faTags, faPaperclip, faCircleMinus, faUsersGear, faMagnifyingGlass, faXmark, faCloudArrowUp, faEraser, faDownload, faEye, faPen, faFloppyDisk, faRightFromBracket, faMoon, faSun)
 
 
 const pinia = createPinia()
@@ -37,7 +37,7 @@ import FileUpload from 'primevue/fileupload'
 import ToastService from 'primevue/toastservice';
 import Dialog from 'primevue/dialog';
 import Avatar from 'primevue/avatar';
-import 'primeicons/primeicons.css'; 
+import 'primeicons/primeicons.css';
 
 
 app.component('font-awesome-icon', FontAwesomeIcon)
