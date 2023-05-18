@@ -5,9 +5,9 @@ import { onMounted } from 'vue'
 
 const route = useRoute()
 
-onMounted(() => {
-  console.log(route.fullPath)
-})
+// onMounted(() => {
+//   console.log(route.fullPath)
+// })
 
 const systemDetails = {
   name: "Hinsei & LSA Agreement List",

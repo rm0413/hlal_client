@@ -57,7 +57,7 @@ const system_id = ref(window.location.href.split("/")[8].split("#")[0]);
 const swal = inject("$swal");
 
 onMounted(() => {
-  console.log(window.location.href.split('/'))
+  // console.log(window.location.href.split('/'))
   if(token.value){
   loginStore.setLogin(token.value).then((response) => {
     localStorage.setItem("userdata", JSON.stringify(token.value));
