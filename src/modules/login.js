@@ -7,11 +7,9 @@ export const useLoginStore = defineStore({
         userProfile: null
     }),
     actions: {
-        setLogin(token) {
+        setLogin() {
                 return new Promise((resolve, reject) => {
-                    axios.post(`http://10.164.58.65/FDTP-Portal/public/api/auth/profile`, {
-                        token: token,
-                    }).then((response) => {
+                    axios.post(`http://10.164.58.65/FDTP-Portal/public/api/auth/profile`).then((response) => {
                         resolve(response.data)
                         this.userProfile = response.data.data
                     }).catch((err) => {

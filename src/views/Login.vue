@@ -53,7 +53,7 @@ const loginStore = useLoginStore();
 const router = useRouter();
 const token = ref(window.location.href.split("/")[6]);
 const role = ref( window.location.href.split("/")[7].split("#")[0]);
-// const system_id = ref(window.location.href.split("/")[6].split("#")[0] === "#" ? '' : window.location.href.split("/")[6].split("#")[0])
+const system_id = ref(window.location.href.split("/")[8].split("#")[0]);
 const swal = inject("$swal");
 
 onMounted(() => {
@@ -61,6 +61,8 @@ onMounted(() => {
   if(token.value){
   loginStore.setLogin(token.value).then((response) => {
     localStorage.setItem("userdata", JSON.stringify(token.value));
+    localStorage.setItem("role", JSON.stringify(role.value));
+    localStorage.setItem("system_id", JSON.stringify(system_id.value));
     if (response.status === "success") {
       loginStore.setUser(response.data, role.value).then((response) => {
         if (response.status === "success") {
