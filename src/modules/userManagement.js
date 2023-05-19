@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 const system_id = JSON.parse(localStorage.getItem('system_id'))
+axios.defaults.headers.common.Authorization = `Bearer ${JSON.parse(localStorage.getItem("userdata"))}`;
 
 export const useUserManagementStore = defineStore({
     id: 'usermanagement',
@@ -69,21 +70,28 @@ export const useUserManagementStore = defineStore({
                 })
             })
         },
-        setAddHinseiUser(){
+        setAddHinseiUser() {
             var add_user_data = {
                 employee_id: this.employeeForm.system_access_id.emp_id,
                 role_access: this.employeeForm.role_id.role
             }
             // console.log(add_user_data)
-            return new Promise((resolve,reject) => {
+            return new Promise((resolve, reject) => {
                 axios.post('user', add_user_data).then((response) => {
                     resolve(response.data)
                     this.setUserManagement()
+                    this.clearUser()
                 }).catch(err => {
                     reject(err)
                 })
             })
-         }
+        },
+        clearUser() {
+            this.employeeForm = {
+                system_access_id: null,
+                role_id: null
+            }
+        },
 
     },
     getters: {
@@ -93,7 +101,7 @@ export const useUserManagementStore = defineStore({
         getUserManagement() {
             return this.userManagement
         },
-        getUserRequest(){
+        getUserRequest() {
             // console.log(this.userManagementRequestUser)
             return this.userRequest
         },

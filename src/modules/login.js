@@ -1,6 +1,9 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 
+
+axios.defaults.headers.common.Authorization = `Bearer ${JSON.parse(localStorage.getItem("userdata"))}`;
+
 export const useLoginStore = defineStore({
     id: 'login',
     state: () => ({
@@ -9,7 +12,7 @@ export const useLoginStore = defineStore({
     actions: {
         setLogin() {
                 return new Promise((resolve, reject) => {
-                    axios.post(`http://10.164.58.65/FDTP-Portal/public/api/auth/profile`).then((response) => {
+                    axios.post(`http://10.164.58.62/FDTP-Portal/public/api/auth/profile`).then((response) => {
                         resolve(response.data)
                         this.userProfile = response.data.data
                     }).catch((err) => {

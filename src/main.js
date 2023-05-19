@@ -12,7 +12,6 @@ import './style.css'
 
 import axios from 'axios'
 axios.defaults.baseURL = 'http://10.164.58.62/hinsei/server/public/api/';
-axios.defaults.headers.common.Authorization = `Bearer ${JSON.parse(localStorage.getItem("userdata"))}`;
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
