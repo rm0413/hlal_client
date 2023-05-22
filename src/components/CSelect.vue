@@ -1,5 +1,5 @@
 <template>
-    <select v-model="selected" @input="$emit('update:modelValue', selected)" class="p-2 border-2 rounded border-gray-400 w-full hover:border-red-600 cursor-pointer" >
+    <select v-model="selected" @input="$emit('update:modelValue', selected)" class="p-2 border-2 rounded border-gray-400 w-full hover:border-red-600 cursor-pointer" required>
         <option v-for="(role, idx) in options" :key="idx" :value="role">{{ role.role }}</option>  
     </select> 
 </template>

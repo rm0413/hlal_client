@@ -95,8 +95,9 @@ export const useUserManagementStore = defineStore({
         setRemoveUser() {
             return new Promise((resolve, reject) => {
                 axios.get(`http://10.164.58.62/FDTP-Portal/public/api/system-load-all-users/${system_id}`).then((response) => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     resolve(response.data)
+                    this.setUserRequest()
                 }).catch(err => {
                     reject(err)
                 })
@@ -115,7 +116,6 @@ export const useUserManagementStore = defineStore({
             });
         },
         removeUserRole(role_id, user_id) {
-            console.log(role_id)
             return new Promise((resolve, reject) => {
                 axios.delete(`user/${user_id}`).then(response => {
                     resolve(response.data)
@@ -127,7 +127,41 @@ export const useUserManagementStore = defineStore({
                     reject(err)
                 })
             })
-        }
+        },
+        setUpdateUserRole(user_employee_id, role_selected) {
+            var data = {
+                id: user_employee_id.value,
+                employee_id: user_employee_id.value,
+                role_access: role_selected.value.role
+            }
+            return new Promise((resolve, reject) => {
+                axios.patch(`user/${data.id}`, data).then(response => {
+                    resolve(response.data)
+                    this.setUserManagement()
+                    this.setUserRequest()
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        setUpdatePortalRoleAccess(user_data, role_selected) {
+            var data = {
+                id: user_data[0].user_role_id,
+                system_access_id: user_data[0].user_system_access_id,
+                role_id: role_selected.value.role_id
+            }
+            return new Promise((resolve, reject) => {
+                axios.put(`http://10.164.58.62/FDTP-Portal/public/api/role-access/${data.id}`, data)
+                    .then(function (response) {
+                        resolve(response.data);
+                        this.setUserManagement()
+                        this.setUserRequest()
+                    })
+                    .catch(function (error) {
+                        reject(error);
+                    });
+            });
+        },
 
     },
     getters: {

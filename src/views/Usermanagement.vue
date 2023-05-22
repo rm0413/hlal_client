@@ -72,25 +72,26 @@
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
-        <div class="flex flex-col p-5 w-[20rem]">
-          <label class="flex justify-between px-5">
-            <span><b>Current Role:</b> </span>
-            <i class="text-[18px]">{{
-              !edit_user_form.item.role ? "No role" : edit_user_form.item.role
-            }}</i>
-          </label>
-          <div class="flex flex-col px-5">
-            <b>Change Role:</b>
-            <div class="ml-3 flex justify-between mt-2">
-              <c-select
-                :options="userManagementStore.getUserRequest.roles"
-                v-model="role_selected"
-              ></c-select>
+        <form method="post" @submit.prevent="updateRole">
+          <div class="flex flex-col p-5 w-[20rem]">
+            <label class="flex justify-between px-5">
+              <span><b>Current Role:</b> </span>
+              <i class="text-[18px]">{{
+                !edit_user_form.item.role_access ? "No role" : edit_user_form.item.role_access
+              }}</i>
+            </label>
+            <div class="flex flex-col px-5">
+              <b>Change Role:</b>
+              <div class="ml-3 flex justify-between mt-2">
+                <c-select class="text-center" :options="userManagementStore.getUserRequest.roles"
+                  v-model="role_selected"></c-select>
+              </div>
             </div>
           </div>
-        </div>
-            <button @click="updateRole" class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">Save</button>
-            <button @click="edit_user_close_modal()" class="w-full bg-gray-600 rounded hover:bg-gray-500 p-3 text-white">Cancel</button>
+          <button type="submit" class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">Save</button>
+          <button @click="edit_user_close_modal()"
+            class="w-full bg-gray-600 rounded hover:bg-gray-500 p-3 text-white">Cancel</button>
+        </form>
       </div>
     </dialog>
   </div>
@@ -103,34 +104,60 @@ import { useUserManagementStore } from "@/modules/userManagement";
 
 
 const swal = inject("$swal");
-
 const userManagementStore = useUserManagementStore();
-const user_emp_id = ref([]);
-
 const options_employee_name = ref([]);
-const options_employee_role = [];
-
 const edit_modal = ref(null);
-const user_table = ref(null);
-
 const edit_user_form = ref({
   item: {
-    role: "",
   },
 });
-const edit_role = ref(null);
-
+const user_id = ref(null); //id of an item
 const role_selected = ref(null); //edit user modal selected
-
+const user_employee_id = ref(null)
+const user_role_id = ref(null)
+const user_system_access_id = ref(null)
+const user_data = [];
 const edit_user_modal = (data) => {
+  console.log(data.item)
   edit_modal.value.showModal();
   edit_modal.value.classList.remove("-translate-y-5");
   edit_user_form.value = data;
+  user_id.value = edit_user_form.value.item.user_id
+  user_employee_id.value = edit_user_form.value.item.emp_id
+  console.log(user_employee_id.value)
+  userManagementStore.setRemoveUser().then((response) => {
+    response.data.forEach((v) => {
+      console.log(v.role_id)
+      if (user_employee_id.value === v.emp_id) {
+        user_data.push({
+          user_role_id: v.role_id,
+          user_system_access_id: v.system_access_id
+        })
+      }
+    })
+  })
 };
 const edit_user_close_modal = () => {
   edit_modal.value.close();
   edit_modal.value.classList.add("-translate-y-5");
 };
+const updateRole = () => {
+  userManagementStore.setUpdatePortalRoleAccess(user_data, role_selected)
+  userManagementStore.setUpdateUserRole(user_employee_id, role_selected).then((response) => {
+    console.log(response)
+    if (response.status === "success") {
+      swal({
+        icon: "success",
+        title: response.message,
+        timer: 2000,
+      })
+      edit_modal.value.close();
+    } else {
+      console.log(response.message)
+    }
+  })
+}
+
 onMounted(() => {
   userManagementStore.setUserManagement().then((response) => {
     if (response.status === "success") {
@@ -170,6 +197,7 @@ const addHinseiUser = () => {
         userManagementStore.setAddHinseiUser().then((response) => {
           // console.log(res.status);
           if (response.status === "success") {
+            edit_modal.value.close();
             swal({
               icon: "success",
               title: response.message,
@@ -217,21 +245,21 @@ const removeUser = (data) => {
         })
         // console.log(role_id)
         if (role_id !== "") {
-            userManagementStore.removeUserRole(role_id, user_id).then((response) => {
-              if (response.status === "success") {
-                swal({
-                  icon: "success",
-                  title: response.message,
-                  timer: 2000,
-                })
-              } else if (response.status === "warning") {
-                swal({ 
-                  icon: "success",
-                  title: response.message,
-                  timer: 2000,
-                })
-              }
-            })
+          userManagementStore.removeUserRole(role_id, user_id).then((response) => {
+            if (response.status === "success") {
+              swal({
+                icon: "success",
+                title: response.message,
+                timer: 2000,
+              })
+            } else if (response.status === "warning") {
+              swal({
+                icon: "success",
+                title: response.message,
+                timer: 2000,
+              })
+            }
+          })
         } else {
           console.log("User has no role id")
         }
