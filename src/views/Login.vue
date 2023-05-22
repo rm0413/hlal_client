@@ -46,7 +46,7 @@
 </template>
 <script setup>
 import { inject, onMounted, ref } from "vue";
-import { useLoginStore } from "../modules/login";
+import { useLoginStore } from "../modules/login.js";
 import { useRouter } from "vue-router";
 
 const loginStore = useLoginStore();
@@ -57,9 +57,10 @@ const system_id = ref(window.location.href.split("/")[8].split("#")[0]);
 const swal = inject("$swal");
 
 onMounted(() => {
-  // console.log(window.location.href.split('/'))
+  console.log(window.location.href.split('/'))
   if(token.value){
-  loginStore.setLogin(token.value).then((response) => {
+    loginStore.setLogin(token.value).then((response) => {
+    console.log(response) 
     localStorage.setItem("userdata", JSON.stringify(token.value));
     localStorage.setItem("role", JSON.stringify(role.value));
     localStorage.setItem("system_id", JSON.stringify(system_id.value));

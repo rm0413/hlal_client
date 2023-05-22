@@ -1,7 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 
-
 axios.defaults.headers.common.Authorization = `Bearer ${JSON.parse(localStorage.getItem("userdata"))}`;
 
 export const useLoginStore = defineStore({
@@ -10,7 +9,8 @@ export const useLoginStore = defineStore({
         userProfile: null
     }),
     actions: {
-        setLogin() {
+        setLogin(data) {
+            axios.defaults.headers.common.Authorization = `Bearer ${data}`;
                 return new Promise((resolve, reject) => {
                     axios.post(`http://10.164.58.62/FDTP-Portal/public/api/auth/profile`).then((response) => {
                         resolve(response.data)

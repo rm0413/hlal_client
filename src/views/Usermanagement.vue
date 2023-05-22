@@ -21,7 +21,8 @@
       </div>
       <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
         <Button label="Submit" severity="success" class="text-black w-[10rem] rounded-md" @click="addHinseiUser()" />
-        <Button label="Clear" severity="secondary" class="text-black w-[10rem] rounded-md" @click="userManagementStore.clearUser"/>
+        <Button label="Clear" severity="secondary" class="text-black w-[10rem] rounded-md"
+          @click="userManagementStore.clearUser" />
       </div>
     </div>
     <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col h-[89vh]">
@@ -55,7 +56,7 @@
               <Button @click="edit_user_modal(data)" severity="warning" class="w-[1rem] items-center justify-center">
                 <font-awesome-icon icon="gear"></font-awesome-icon>
               </Button>
-              <Button severity="danger" class="w-[1rem] items-center justify-center" @click="userManagementStore.setRemoveUser(data.item)">
+              <Button severity="danger" class="w-[1rem] items-center justify-center" @click="removeUser(data.item)">
                 <font-awesome-icon icon="circle-minus"></font-awesome-icon>
               </Button>
             </div>
@@ -166,7 +167,7 @@ const addHinseiUser = () => {
     cancelButtonColor: "#d33",
     confirmButtonText: "Submit",
   }).then((response) => {
-    if (response.value) {
+    if (response.value === true) {
       setTimeout(() => {
         userManagementStore.setAddHinseiUser().then((response) => {
           // console.log(res.status);
@@ -194,4 +195,50 @@ const addHinseiUser = () => {
     }
   });
 };
+
+const removeUser = (data) => {
+  swal({
+    icon: "question",
+    title: "Are you sure to remove this user?",
+    text: "Please make sure before to proceed!",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Submit",
+  }).then((response) => {
+    if (response.value === true) {
+      var user_id = data.user_id
+      var employee_id = data.emp_id
+      var role_id = ""
+      userManagementStore.setRemoveUser().then((response) => {
+        response.data.forEach((v) => {
+          console.log(v)
+          if (employee_id === v.emp_id) {
+            role_id = v.role_id
+          }
+        })
+        // console.log(role_id)
+        if (role_id !== "") {
+            userManagementStore.removeUserRole(role_id, user_id).then((response) => {
+              if (response.status === "success") {
+                swal({
+                  icon: "success",
+                  title: response.message,
+                  timer: 2000,
+                })
+              } else if (response.status === "warning") {
+                swal({ 
+                  icon: "success",
+                  title: response.message,
+                  timer: 2000,
+                })
+              }
+            })
+        } else {
+          console.log("User has no role id")
+        }
+      })
+    }
+  })
+}
 </script>
