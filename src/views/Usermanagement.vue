@@ -81,23 +81,16 @@
           </label>
           <div class="flex flex-col px-5">
             <b>Change Role:</b>
-            <div class="ml-3 flex justify-between">
-              <label for=""> Administrator </label>
-              <button v-if="edit_user_form.item.role === 'ADMIN'">ON</button>
-              <button v-else>OFF</button>
-            </div>
-            <div class="ml-3 flex justify-between">
-              <label for=""> Viewer </label>
-              <button v-if="edit_user_form.item.role === 'VIEWER'">ON</button>
-              <button v-else>OFF</button>
-            </div>
-            <div class="ml-3 flex justify-between">
-              <label for=""> USER </label>
-              <button v-if="edit_user_form.item.role === 'USER'">ON</button>
-              <button v-else>OFF</button>
+            <div class="ml-3 flex justify-between mt-2">
+              <c-select
+                :options="userManagementStore.getUserRequest.roles"
+                v-model="role_selected"
+              ></c-select>
             </div>
           </div>
         </div>
+            <button @click="updateRole" class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">Save</button>
+            <button @click="edit_user_close_modal()" class="w-full bg-gray-600 rounded hover:bg-gray-500 p-3 text-white">Cancel</button>
       </div>
     </dialog>
   </div>
@@ -105,6 +98,7 @@
 <script setup>
 import { onMounted, ref, inject, computed } from "vue";
 import CTable from "@/components/Datatable.vue";
+import CSelect from "@/components/CSelect.vue";
 import { useUserManagementStore } from "@/modules/userManagement";
 
 
@@ -126,6 +120,8 @@ const edit_user_form = ref({
 });
 const edit_role = ref(null);
 
+const role_selected = ref(null); //edit user modal selected
+
 const edit_user_modal = (data) => {
   edit_modal.value.showModal();
   edit_modal.value.classList.remove("-translate-y-5");
@@ -140,7 +136,7 @@ onMounted(() => {
     if (response.status === "success") {
       userManagementStore.setUserRequest().then((res) => {
         res.data.users.forEach((v) => {
-          if (!response.data.some(user => user.emp_id === v.emp_id)) {
+          if (!response.data.some((user) => user.emp_id === v.emp_id)) {
             options_employee_name.value.push({
               system_access_id: v.system_access_id,
               text: v.name,
@@ -155,6 +151,8 @@ onMounted(() => {
       console.log(response.message);
     }
   });
+
+  console.log(userManagementStore.getUserRequest.roles);
 });
 
 const addHinseiUser = () => {
