@@ -71,7 +71,12 @@ export const useUserManagementStore = defineStore({
                 employee_id: this.employeeForm.system_access_id.emp_id,
                 role_access: this.employeeForm.role_id.role
             }
-            var employee_data = {
+            var employee_data = {clearUser() {
+            this.employeeForm = {
+                system_access_id: null,
+                role_id: null
+            }
+        },
                 system_access_id: this.employeeForm.system_access_id.system_access_id,
                 role_id: this.employeeForm.role_id.role_id
             }
@@ -86,12 +91,7 @@ export const useUserManagementStore = defineStore({
                 })
             })
         },
-        clearUser() {
-            this.employeeForm = {
-                system_access_id: null,
-                role_id: null
-            }
-        },
+        
         setRemoveUser() {
             return new Promise((resolve, reject) => {
                 axios.get(`http://10.164.58.62/FDTP-Portal/public/api/system-load-all-users/${system_id}`).then((response) => {

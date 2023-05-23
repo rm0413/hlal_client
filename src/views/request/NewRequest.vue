@@ -181,14 +181,18 @@
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
-        <div class="flex p-5">
-          <label class="flex flex-col">
-            <span>Name of Unit</span>
-            <input class="w-[20rem] h-10 border-2 p-2 hover:border-red-600 rounded" />
-          </label>
-        </div>
-        <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Save</button>
-        <button @click="closeModal('new_unit')" class="p-3 bg-gray-600 text-white hover:bg-gray-500">Cancel</button>
+        <form method="post" @submit.prevent="submitUnit">
+          <div class="flex p-5">
+            <label class="flex flex-col">
+              <span>Name of Unit</span>
+              <input class="w-[20rem] h-10 border-2 p-2 hover:border-red-600 rounded"
+                v-model="newRequestStore.unitForm.unit_name" required />
+            </label>
+          </div>
+          <button type="submit" class="p-3 bg-[#A10E13] text-white hover:bg-red-600 w-full">Save</button>
+        </form>
+        <button @click="newRequestStore.setClearUnit"
+          class="p-3 bg-gray-600 text-white hover:bg-gray-500 w-full">Clear</button>
       </div>
     </dialog>
     <!--Search-->
@@ -214,7 +218,9 @@
 import FileUploader from "@/components/FileUploader.vue";
 import CTable from '@/components/Datatable.vue'
 import { useNewRequestStore } from "@/modules/request/newrequest";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject } from "vue";
+
+const swal = inject("$swal");
 const newRequestStore = useNewRequestStore();
 const multiple_input = ref(null);
 const view_items = ref(null);
@@ -246,12 +252,44 @@ const closeModal = (modal) => {
     view_items.value.classList.add("-translate-y-5");
   } else if (modal === 'new_unit') {
     new_unit.value.close()
+    newRequestStore.setClearUnit()
     new_unit.value.classList.add("-translate-y-5");
   } else if (modal === 'search') {
     search.value.close()
     search.value.classList.add("-translate-y-5")
   }
 };
+const submitUnit = () => {
+  new_unit.value.close()
+  swal({
+    icon: "question",
+    title: "Are you sure to add this unit?",
+    text: "Please make sure before to proceed!",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Submit",
+  }).then((response) => {
+    if (response.value === true) {
+      // console.log(true)
+      newRequestStore.setInsertUnits().then((response) => {
+        if (response.status === "success") {
+          swal({
+            icon: "successs",
+            title: response.message,
+            timer: 2500
+          })
+        } else {
+          swal({
+            icon: "warning",
+            title: response.message,
+            timer: 2500
+          })
+        }
+      })
+    }
+  })
+}
 
 onMounted(() => {
   newRequestStore.setAgreementList().then(() => {
