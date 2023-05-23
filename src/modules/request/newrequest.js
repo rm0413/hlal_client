@@ -5,6 +5,7 @@ export const useNewRequestStore = defineStore({
     id: 'newRequest',
     state: () => ({
         agreement_list: [],
+        units: [],
         unitForm: {
             unit_name: null,
             unit_created_by: null,
@@ -52,8 +53,20 @@ export const useNewRequestStore = defineStore({
             return new Promise((resolve, reject) => {
                 axios.post('unit', unit_data).then(response => {
                     resolve(response.data)
+                    this.setUnits()
                     // console.log(response.data)
                     this.setClearUnit()
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        setUnits(){
+            return new Promise((resolve, reject) => {
+                axios.get('unit').then(response => {
+                    resolve(response.data.data)
+                    // console.log(response.data)
+                    this.units = response.data.data
                 }).catch(err => {
                     reject(err)
                 })
@@ -66,9 +79,10 @@ export const useNewRequestStore = defineStore({
             return this.view_item_details_fields
         },
         getAgreementList() {
-            // alert(1)
-            // console.log(this.agreement_list)
             return this.agreement_list
+        },
+        getUnit(){
+            return this.units
         }
     }
 })

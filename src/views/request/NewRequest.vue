@@ -7,9 +7,10 @@
         </label>
         <div class="flex gap-2 mr-10">
           <div class="flex flex-row">
-            <select class="text-center p-1 border-2 rounded w-[12rem] rounded-l-md" />
+            <!-- <select class="text-center p-1 border-2 rounded w-[12rem] rounded-l-md" /> -->
+            <c-select class="h-[2.5rem] text-center" :options="units" v-model="unit_selected"></c-select>
             <button @click="openModal('new_unit')"
-              class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-r-md hover:bg-red-600">
+              class="h-[2.5rem] w-[12rem] bg-[#A10E13] text-white py-1 px-3 rounded-r-md hover:bg-red-600">
               <font-awesome-icon icon="plus-square"></font-awesome-icon>
               New Unit
             </button>
@@ -17,8 +18,8 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md" />
-            <button @click="openModal('search')" class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
+            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" />
+            <button @click="openModal('search')" class="h-[2.5rem] bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
@@ -217,6 +218,7 @@
 <script setup>
 import FileUploader from "@/components/FileUploader.vue";
 import CTable from '@/components/Datatable.vue'
+import CSelect from '@/components/CSelect.vue'
 import { useNewRequestStore } from "@/modules/request/newrequest";
 import { ref, onMounted, inject } from "vue";
 
@@ -226,6 +228,8 @@ const multiple_input = ref(null);
 const view_items = ref(null);
 const new_unit = ref(null)
 const search = ref(null)
+const units = ref([])
+const unit_selected = ref(null)
 
 const openModal = (modal) => {
   if (modal === "multiple_input") {
@@ -274,8 +278,9 @@ const submitUnit = () => {
       // console.log(true)
       newRequestStore.setInsertUnits().then((response) => {
         if (response.status === "success") {
+          loadUnits()
           swal({
-            icon: "successs",
+            icon: "success",
             title: response.message,
             timer: 2500
           })
@@ -291,9 +296,24 @@ const submitUnit = () => {
   })
 }
 
+const loadUnits = () => {
+  newRequestStore.setUnits().then((response) => {
+    // console.log(response)
+    units.value = [];
+    response.forEach((v) => {
+      units.value.push({
+        text: v.unit_name,
+        unit_id: v.unit_id
+      })
+      console.log(units.value)
+    })
+  })
+}
 onMounted(() => {
+  loadUnits()
   newRequestStore.setAgreementList().then(() => {
     // console.log(response)
   })
+
 })
 </script>

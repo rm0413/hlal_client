@@ -9,11 +9,11 @@
       </div>
       <div class="mt-2">
         <label class="">Employee Name</label>
-        <c-select v-model="userManagementStore.employeeForm.system_access_id" :options="options_employee_name"></c-select>
+        <c-select v-model="userManagementStore.employeeForm.system_access_id" :options="options_employee_name" class="text-center"></c-select>
       </div>
       <div class="mt-2">
         <label class="">Employee Role</label>
-        <c-select v-model="userManagementStore.employeeForm.role_id" :options="role_options"></c-select>
+        <c-select v-model="userManagementStore.employeeForm.role_id" :options="role_options" class="text-center"></c-select>
       </div>
       <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
         <Button label="Submit" severity="success" class="text-black w-[10rem] rounded-md" @click="addHinseiUser()" />
