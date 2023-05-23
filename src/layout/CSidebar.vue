@@ -248,10 +248,10 @@ const themeStore = useThemeStore()
 const props = defineProps({
   links: Array,
   systemDetails: Object,
-  // userDetails: Object,
-  // signOut: Function,
-  // changeEmail: Function,
-  // changePassword: Function,
+  userDetails: Object,
+  signOut: Function,
+  changeEmail: Function,
+  changePassword: Function,
 });
 
 //sidebar

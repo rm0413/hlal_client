@@ -8,6 +8,11 @@ const route = useRoute()
 // onMounted(() => {
 //   console.log(route.fullPath)
 // })
+const signOut = () => {
+  localStorage.clear()
+  sessionStorage.clear()
+  window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
+}
 
 const systemDetails = {
   name: "Hinsei & LSA Agreement List",
@@ -78,7 +83,8 @@ const links = [
 
 <template>
   <div class="h-screen">
-    <CSidebar :systemDetails="systemDetails" :links="links" v-if="route.name !== 'login'">
+    <CSidebar :systemDetails="systemDetails" :links="links" :userDetails="userDetails" :signOut="signOut"
+    v-if="route.name !== 'login'">
       <template #page>
         <router-view />
       </template>
