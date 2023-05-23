@@ -18,9 +18,10 @@
           class="text-center"></c-select>
       </div>
       <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
-        <Button label="Submit" severity="success" class="text-black w-[10rem] rounded-md" @click="addHinseiUser()" />
-        <Button label="Clear" severity="secondary" class="text-black w-[10rem] rounded-md"
-          @click="userManagementStore.clearUser()" />
+        <button class="w-[10rem] bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white"
+          @click="addHinseiUser()">Save</button>
+        <button class="w-[10rem] bg-gray-600 rounded hover:bg-gray-500 p-3 text-white"
+          @click="userManagementStore.clearUser()">Clear</button>
       </div>
     </div>
     <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col h-[89vh]">
@@ -208,44 +209,48 @@ const loadAll = () => {
 };
 
 const addHinseiUser = () => {
-  swal({
-    icon: "question",
-    title: "Are you sure to add this user?",
-    text: "Please make sure before to proceed!",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Submit",
-  }).then((response) => {
-    if (response.value === true) {
-      setTimeout(() => {
-        userManagementStore.setAddHinseiUser().then((response) => {
-          // console.log(res.status);
-          if (response.status === "success") {
-            loadAll()
-            edit_modal.value.close();
-            swal({
-              icon: "success",
-              title: response.message,
-              timer: 2000,
-            });
-          } else if (response.status === "warning") {
-            swal({
-              icon: "warning",
-              title: response.message,
-              timer: 2000,
-            });
-          }
+  if (userManagementStore.employeeForm.system_access_id && userManagementStore.employeeForm.role_id) {
+    swal({
+      icon: "question",
+      title: "Are you sure to add this user?",
+      text: "Please make sure before to proceed!",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Submit",
+    }).then((response) => {
+      if (response.value === true) {
+        setTimeout(() => {
+          userManagementStore.setAddHinseiUser().then((response) => {
+            // console.log(res.status);
+            if (response.status === "success") {
+              loadAll()
+              edit_modal.value.close();
+              swal({
+                icon: "success",
+                title: response.message,
+                timer: 2000,
+              });
+            } else if (response.status === "warning") {
+              swal({
+                icon: "warning",
+                title: response.message,
+                timer: 2000,
+              });
+            }
+          });
         });
-      });
-    } else {
-      swal({
-        icon: "warning",
-        title: "Cancelled",
-        timer: 2000,
-      });
-    }
-  });
+      } else {
+        swal({
+          icon: "warning",
+          title: "Cancelled",
+          timer: 2000,
+        });
+      }
+    });
+  } else {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Please select Name or Role.', life: 3000 });
+  }
 };
 
 const removeUser = (data) => {
