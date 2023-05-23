@@ -1,18 +1,29 @@
 <script setup>
 import CSidebar from "@/layout/CSidebar.vue"
 import { useRoute } from "vue-router"
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const route = useRoute()
 
 // onMounted(() => {
-//   console.log(route.fullPath)
+//   console.log(userprofile.value)
 // })
 const signOut = () => {
   localStorage.clear()
   sessionStorage.clear()
   window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
 }
+
+// const userprofile = ref(sessionStorage.getItem("employee_id"))
+const userprofile = ref({
+  full_name: `${sessionStorage.getItem("last_name")}, ${sessionStorage.getItem("first_name")}`,
+  employee_id: sessionStorage.getItem("employee_id"),
+  position: sessionStorage.getItem("position"),
+  photo: sessionStorage.getItem("photo"),
+  email: sessionStorage.getItem("email"),
+  section: sessionStorage.getItem("section"),
+  role: sessionStorage.getItem("role_access")
+})
 
 const systemDetails = {
   name: "Hinsei & LSA Agreement List",
@@ -83,7 +94,7 @@ const links = [
 
 <template>
   <div class="h-screen">
-    <CSidebar :systemDetails="systemDetails" :links="links" :userDetails="userDetails" :signOut="signOut"
+    <CSidebar :systemDetails="systemDetails" :links="links" :userDetails="userprofile" :signOut="signOut"
     v-if="route.name !== 'login'">
       <template #page>
         <router-view />
