@@ -8,7 +8,8 @@
         <div class="flex gap-2 mr-10">
           <div class="flex flex-row">
             <!-- <select class="text-center p-1 border-2 rounded w-[12rem] rounded-l-md" /> -->
-            <c-select class="h-[2.5rem] text-center" :options="units" v-model="unit_selected"></c-select>
+            <c-select class="h-[2.5rem] text-center" :options="units"
+              v-model="newRequestStore.agreementForm.unit"></c-select>
             <button @click="openModal('new_unit')"
               class="h-[2.5rem] w-[12rem] bg-[#A10E13] text-white py-1 px-3 rounded-r-md hover:bg-red-600">
               <font-awesome-icon icon="plus-square"></font-awesome-icon>
@@ -29,87 +30,105 @@
         <div class="col-span-1 p-10">
           <label class="flex flex-col gap-2">
             Trial No.
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.trial_number" required />
           </label>
           <label class="flex flex-col gap-2">
             Request Date
-            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.request_date" required />
           </label>
           <label class="flex flex-col gap-2">
             Additional Request Qty Date
-            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.additional_request_date" required />
           </label>
           <label class="flex flex-col gap-2">
             TRI No.
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.tri_number" required />
           </label>
           <label class="flex flex-col gap-2">
             TRI Quantity
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.tri_quantity" required />
           </label>
           <label class="flex flex-col gap-2">
             Request Person
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.request_person" required />
           </label>
           <label class="flex flex-col gap-2">
             Superior Approval
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.supperior_approval" required />
           </label>
         </div>
         <div class="col-span-1 p-10">
           <label class="flex flex-col gap-2">
             Supplier
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.supplier_name" required />
           </label>
           <label class="flex flex-col gap-2">
             Part Number
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.part_number" required />
           </label>
           <label class="flex flex-col gap-2">
             Sub Part Number
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.sub_part_number" required />
           </label>
           <label class="flex flex-col gap-2">
             Revision
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.revision" required />
           </label>
           <label class="flex flex-col gap-2">
             Coordinates
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.coordinates" required />
           </label>
           <label class="flex flex-col gap-2">
             Dimension
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.dimension" required />
           </label>
           <label class="flex flex-col gap-2">
             Actual Value
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.actual_value" required />
           </label>
         </div>
         <div class="col-span-1 p-10">
           <label class="flex flex-col gap-2">
             Critical Parts
             <!-- <select class="w-full border-2 rounded p-1 hover:border-blue-300" /> -->
-            <c-select v-model="critical_part_selected" :options="critical_parts_options" class="text-center"></c-select>
+            <c-select v-model="newRequestStore.agreementForm.critical_parts" :options="critical_parts_options"
+              class="text-center"></c-select>
           </label>
           <label class="flex flex-col gap-2">
             Critical Dimension
             <!-- <select class="w-full border-2 rounded p-1 hover:border-blue-300" /> -->
-            <c-select v-model="critical_dimension_selected" :options="critical_dimension_options" class="text-center"></c-select>
+            <c-select v-model="newRequestStore.agreementForm.critical_dimension" :options="critical_dimension_options"
+              class="text-center"></c-select>
           </label>
           <label class="flex flex-col gap-2">
             Kind of Request
             <!-- <select class="w-full border-2 rounded p-1 hover:border-blue-300" /> -->
-            <c-select v-model="kind_request_selected" :options="kind_request_options" class="text-center"></c-select>
+            <c-select v-model="newRequestStore.agreementForm.kind_request" :options="kind_request_options"
+              class="text-center"></c-select>
           </label>
           <label class="flex flex-col gap-2">
             Request Value
             <textarea style="resize: none" class="w-full border-2 rounded p-1 hover:border-blue-300 h-[6.5rem]"
-              required />
+              v-model="newRequestStore.agreementForm.request_value" required />
           </label>
           <label class="flex flex-col gap-2">
             Request Quantity
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+              v-model="newRequestStore.agreementForm.request_quantity" required />
           </label>
           <div class="flex justify-center items-center mt-8 gap-2">
             <button type="submit" class="bg-[#A10E13] text-white p-1 w-[7rem] rounded">
@@ -235,10 +254,10 @@ const view_items = ref(null);
 const new_unit = ref(null)
 const search = ref(null)
 const units = ref([])
-const unit_selected = ref(null)
-const critical_part_selected = ref(null)
-const critical_dimension_selected = ref(null)
-const kind_request_selected = ref(null)
+// const unit_selected = ref(null)
+// const critical_part_selected = ref(null)
+// const critical_dimension_selected = ref(null)
+// const kind_request_selected = ref(null)
 const critical_parts_options = ref(
   [
     {
@@ -277,8 +296,35 @@ const kind_request_options = ref(
 )
 
 const submitAgreementList = () => {
-  if (unit_selected.value && critical_part_selected.value && critical_dimension_selected.value && kind_request_selected.value) {
-    console.log(true)
+  if (newRequestStore.agreementForm.unit && newRequestStore.agreementForm.critical_parts && newRequestStore.agreementForm.critical_dimension && newRequestStore.agreementForm.kind_request) {
+    swal({
+      icon: "question",
+      title: "Are you sure to add this request?",
+      text: "Please make sure before to proceed!",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Submit",
+    }).then((response) => {
+      if (response.value === true) {
+        newRequestStore.setInsertAgreementList().then((response) => {
+          if (response.status === "success") {
+            newRequestStore.setAgreementList()
+            swal({
+              icon: "success",
+              title: response.message,
+              timer: 2500
+            })
+          }else {
+            swal({
+            icon: "warning",
+            title: response.message,
+            timer: 2500
+          })
+          }
+        })
+      }
+    })
   } else {
     toast.add({ severity: 'error', summary: 'Error Message', detail: 'Please Select Critical Parts/Critical Dimension/Kind of Request/ Unit Options', life: 3000 });
   }
@@ -364,9 +410,7 @@ const loadUnits = () => {
 }
 onMounted(() => {
   loadUnits()
-  newRequestStore.setAgreementList().then(() => {
-    // console.log(response)
-  })
+  newRequestStore.setAgreementList()
 
 })
 </script>

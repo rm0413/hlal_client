@@ -10,8 +10,9 @@ export const useNewRequestStore = defineStore({
             request_date: null,
             additional_request_date: null,
             tri_number: null,
+            tri_quantity: null,
             request_person: null,
-            supperior_approval: null, 
+            supperior_approval: null,
             supplier_name: null,
             part_number: null,
             sub_part_number: null,
@@ -23,7 +24,8 @@ export const useNewRequestStore = defineStore({
             critical_dimension: null,
             kind_request: null,
             request_value: null,
-            request_quantity: null
+            request_quantity: null,
+            unit: null
         },
         units: [],
         unitForm: {
@@ -81,12 +83,69 @@ export const useNewRequestStore = defineStore({
                 })
             })
         },
-        setUnits(){
+        setUnits() {
             return new Promise((resolve, reject) => {
                 axios.get('unit').then(response => {
                     resolve(response.data.data)
                     // console.log(response.data)
                     this.units = response.data.data
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        setClearAgreementList(){
+            this.agreementForm = {
+                trial_number: null,
+                request_date: null,
+                additional_request_date: null,
+                tri_number: null,
+                tri_quantity: null,
+                request_person: null,
+                supperior_approval: null,
+                supplier_name: null,
+                part_number: null,
+                sub_part_number: null,
+                revision: null,
+                coordinates: null,
+                dimension: null,
+                actual_value: null,
+                critical_parts: null,
+                critical_dimension: null,
+                kind_request: null,
+                request_value: null,
+                request_quantity: null,
+                unit: null
+            }
+        },
+        setInsertAgreementList() {
+            var agreement_data = {
+                trial_number: this.agreementForm.trial_number,
+                request_date: this.agreementForm.request_date,
+                additional_request_qty_date: this.agreementForm.additional_request_date,
+                tri_number: this.agreementForm.tri_number,
+                tri_quantity: this.agreementForm.tri_quantity,
+                request_person: this.agreementForm.request_person,
+                superior_approval: this.agreementForm.supperior_approval,
+                supplier_name: this.agreementForm.supplier_name,
+                part_number: this.agreementForm.part_number,
+                sub_part_number: this.agreementForm.sub_part_number,
+                revision: this.agreementForm.revision,
+                coordinates: this.agreementForm.coordinates,
+                dimension: this.agreementForm.dimension,
+                actual_value: this.agreementForm.actual_value,
+                critical_parts: this.agreementForm.critical_parts.value,
+                critical_dimension: this.agreementForm.critical_dimension.value,
+                request_type: this.agreementForm.kind_request.value,
+                request_value: this.agreementForm.request_value,
+                request_quantity: this.agreementForm.request_quantity,
+                unit_id: this.agreementForm.unit.unit_id,
+                requestor_employee_id: sessionStorage.getItem("employee_id")
+            }
+            return new Promise((resolve, reject) => {
+                axios.post('agreement-list', agreement_data).then(response => {
+                    resolve(response.data)
+                    this.setClearAgreementList()
                 }).catch(err => {
                     reject(err)
                 })
@@ -101,7 +160,7 @@ export const useNewRequestStore = defineStore({
         getAgreementList() {
             return this.agreement_list
         },
-        getUnit(){
+        getUnit() {
             return this.units
         }
     }
