@@ -9,11 +9,13 @@
       </div>
       <div class="mt-2">
         <label class="">Employee Name</label>
-        <c-select v-model="userManagementStore.employeeForm.system_access_id" :options="options_employee_name" class="text-center"></c-select>
+        <c-select v-model="userManagementStore.employeeForm.system_access_id" :options="options_employee_name"
+          class="text-center"></c-select>
       </div>
       <div class="mt-2">
         <label class="">Employee Role</label>
-        <c-select v-model="userManagementStore.employeeForm.role_id" :options="role_options" class="text-center"></c-select>
+        <c-select v-model="userManagementStore.employeeForm.role_id" :options="role_options"
+          class="text-center"></c-select>
       </div>
       <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
         <Button label="Submit" severity="success" class="text-black w-[10rem] rounded-md" @click="addHinseiUser()" />
@@ -82,8 +84,8 @@
             <div class="flex flex-col px-5">
               <b>Change Role:</b>
               <div class="ml-3 flex justify-between mt-2">
-                <c-select :selected="edit_user_form.item.role_access" class="text-center" :options="role_options"
-                  v-model="role_selected"></c-select>
+                <c-select ref="role_select" :selected="edit_user_form.item.role_access" class="text-center"
+                  :options="role_options" v-model="role_selected"></c-select>
               </div>
             </div>
           </div>
@@ -97,6 +99,7 @@
         </form>
       </div>
     </dialog>
+    <Toast />
   </div>
 </template>
 <script setup>
@@ -104,7 +107,8 @@ import { onMounted, ref, inject, computed } from "vue";
 import CTable from "@/components/Datatable.vue";
 import CSelect from "@/components/CSelect.vue";
 import { useUserManagementStore } from "@/modules/userManagement";
-
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const swal = inject("$swal");
 const userManagementStore = useUserManagementStore();
 const options_employee_name = ref([]);
@@ -119,6 +123,7 @@ const user_employee_id = ref(null);
 const user_role_id = ref(null);
 const user_system_access_id = ref(null);
 const user_data = [];
+const popover = ref(null)
 
 const edit_user_modal = (data) => {
   edit_modal.value.showModal();
@@ -143,23 +148,29 @@ const edit_user_close_modal = () => {
   edit_modal.value.close();
   edit_modal.value.classList.add("-translate-y-5");
 };
-const updateRole = () => {
-  userManagementStore.setUpdatePortalRoleAccess(user_data, role_selected.value);
-  userManagementStore
-    .setUpdateUserRole(user_employee_id, role_selected.value)
-    .then((response) => {
-      console.log(response);
-      if (response.status === "success") {
-        swal({
-          icon: "success",
-          title: response.message,
-          timer: 2000,
-        });
-        edit_modal.value.close();
-      } else {
-        console.log(response.message);
-      }
-    });
+
+const updateRole = (event) => {
+  if (role_selected.value) {
+    userManagementStore.setUpdatePortalRoleAccess(user_data, role_selected.value);
+    userManagementStore
+      .setUpdateUserRole(user_employee_id, role_selected.value)
+      .then((response) => {
+        console.log(response);
+        if (response.status === "success") {
+          swal({
+            icon: "success",
+            title: response.message,
+            timer: 2000,
+          });
+          edit_modal.value.close();
+        } else {
+          console.log(response.message);
+        }
+      });
+  } else {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Please Select Role', life: 3000 });
+  }
+
 };
 
 onMounted(() => {

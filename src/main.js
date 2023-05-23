@@ -10,6 +10,7 @@ import "primevue/resources/primevue.min.css";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import './style.css'
 
+
 import axios from 'axios'
 axios.defaults.baseURL = 'http://10.164.58.62/hinsei/server/public/api/';
 
@@ -34,10 +35,11 @@ import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import FileUpload from 'primevue/fileupload'
-import ToastService from 'primevue/toastservice';
 import Dialog from 'primevue/dialog';
 import Avatar from 'primevue/avatar';
 import 'primeicons/primeicons.css';
+import Toast from 'primevue/toast';
+import ToastService from 'primevue/toastservice';
 
 
 app.component('font-awesome-icon', FontAwesomeIcon)
@@ -50,6 +52,8 @@ app.component('Button', Button)
 app.component('FileUpload', FileUpload)
 app.component('Dialog', Dialog)
 app.component('Avatar', Avatar)
+app.component('Toast', Toast)
+
 
 app.use(VueSweetalert2);
 app.use(pinia)
