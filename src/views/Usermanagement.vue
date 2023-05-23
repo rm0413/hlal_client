@@ -1,74 +1,37 @@
 <template>
-  <div
-    class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
-  >
+  <div class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
     <div class="lg:col-span-2 min-[100px]:col-span-9 h-[89vh] flex flex-col">
-      <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono"
-        ><font-awesome-icon class="h-6 w-6 text-black" icon="users-gear" /> User
-        Management</label
-      >
-      <div
-        class="flex flex-col justify-center py-3 px-16 bg-[#A10E13] rounded shadow-md text-white mt-4 text-center"
-      >
+      <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono"><font-awesome-icon
+          class="h-6 w-6 text-black" icon="users-gear" /> User
+        Management</label>
+      <div class="flex flex-col justify-center py-3 px-16 bg-[#A10E13] rounded shadow-md text-white mt-4 text-center">
         Add User
       </div>
       <div class="mt-2">
         <label class="">Employee Name</label>
-        <!-- <drop-down
-          class="w-full md:w-100rem h-[4.5vh] text-center items-center justify-center rounded-md"
-          v-model="userManagementStore.employeeForm.system_access_id"
-          :options="options_employee_name"
-          optionLabel="text"
-          placeholder="Select Employee Name"
-        /> -->
-        <c-select  v-model="userManagementStore.employeeForm.system_access_id" :options="options_employee_name"></c-select>
+        <c-select v-model="userManagementStore.employeeForm.system_access_id" :options="options_employee_name"></c-select>
       </div>
       <div class="mt-2">
         <label class="">Employee Role</label>
-        <!-- <drop-down
-          class="w-full md:w-20rem h-[4.5vh] text-center items-center justify-center rounded-md"
-          v-model="userManagementStore.employeeForm.role_id"
-          :options="userManagementStore.getUserRequest.roles"
-          optionLabel="role"
-          placeholder="Select Employee Role"
-        /> -->
-        <c-select  v-model="userManagementStore.employeeForm.role_id" :options="role_options"></c-select>
+        <c-select v-model="userManagementStore.employeeForm.role_id" :options="role_options"></c-select>
       </div>
-      <div
-        class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3"
-      >
-        <Button
-          label="Submit"
-          severity="success"
-          class="text-black w-[10rem] rounded-md"
-          @click="addHinseiUser()"
-        />
-        <Button
-          label="Clear"
-          severity="secondary"
-          class="text-black w-[10rem] rounded-md"
-          @click="userManagementStore.clearUser"
-        />
+      <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
+        <Button label="Submit" severity="success" class="text-black w-[10rem] rounded-md" @click="addHinseiUser()" />
+        <Button label="Clear" severity="secondary" class="text-black w-[10rem] rounded-md"
+          @click="userManagementStore.clearUser()" />
       </div>
     </div>
     <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col h-[89vh]">
       <div class="flex items-end justify-end">
         <span class="p-input-icon-left">
           <font-awesome-icon icon="magnifying-glass" />
-          <input-text
-            v-model="userManagementStore.search_filter"
-            placeholder="Search"
-            class="w-[17rem] h-[4.5vh] rounded-md"
-          />
+          <input-text v-model="userManagementStore.search_filter" placeholder="Search"
+            class="w-[17rem] h-[4.5vh] rounded-md" />
         </span>
       </div>
       <div class="border rounded-[5px] overflow-y-scroll h-full mt-2">
-        <c-table
-          :filter="userManagementStore.search_filter"
-          :fields="userManagementStore.getUserManagementFields"
-          :thStyle="'bg-[#A10E13] text-white p-3'"
-          :items="userManagementStore.getUserManagement"
-        >
+        <c-table :filter="userManagementStore.search_filter" :fields="userManagementStore.getUserManagementFields"
+          :thStyle="'bg-[#A10E13] text-white p-3'" :items="userManagementStore.getUserManagement">
           <template #cell(#)="data">
             <div class="flex items-center justify-center">
               {{ data.index + 1 }}
@@ -86,18 +49,10 @@
           </template>
           <template #cell(action)="data">
             <div class="flex items-center justify-center gap-1">
-              <Button
-                @click="edit_user_modal(data)"
-                severity="warning"
-                class="w-[1rem] items-center justify-center"
-              >
+              <Button @click="edit_user_modal(data)" severity="warning" class="w-[1rem] items-center justify-center">
                 <font-awesome-icon icon="gear"></font-awesome-icon>
               </Button>
-              <Button
-                severity="danger"
-                class="w-[1rem] items-center justify-center"
-                @click="removeUser(data.item)"
-              >
+              <Button severity="danger" class="w-[1rem] items-center justify-center" @click="removeUser(data.item)">
                 <font-awesome-icon icon="circle-minus"></font-awesome-icon>
               </Button>
             </div>
@@ -107,14 +62,10 @@
     </div>
     <dialog ref="edit_modal" class="p-0 rounded transform duration-300 -translate-y-5">
       <div class="flex flex-col">
-        <div
-          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
-        >
-          <span> <font-awesome-icon icon="gear"></font-awesome-icon> Action | <strong><code>{{ edit_user_form.item.emp_last_name}}</code></strong></span>
-          <button
-            class="px-3 py-2 rounded-full hover:bg-red-600"
-            @click="edit_user_close_modal()"
-          >
+        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
+          <span> <font-awesome-icon icon="gear"></font-awesome-icon> Action |
+            <strong><code>{{ edit_user_form.item.emp_last_name }}</code></strong></span>
+          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="edit_user_close_modal()">
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
@@ -124,33 +75,23 @@
               <span><b>Current Role:</b> </span>
               <i class="text-[18px]">{{
                 !edit_user_form.item.role_access
-                  ? "No role"
-                  : edit_user_form.item.role_access
+                ? "No role"
+                : edit_user_form.item.role_access
               }}</i>
             </label>
             <div class="flex flex-col px-5">
               <b>Change Role:</b>
               <div class="ml-3 flex justify-between mt-2">
-                <c-select
-                  :selected="edit_user_form.item.role_access"
-                  class="text-center"
-                  :options="role_options"
-                  v-model="role_selected"
-                ></c-select>
+                <c-select :selected="edit_user_form.item.role_access" class="text-center" :options="role_options"
+                  v-model="role_selected"></c-select>
               </div>
             </div>
           </div>
-          <button
-            type="submit"
-            class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white"
-          >
+          <button type="submit" class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">
             Save
           </button>
-          <button
-          type="button"
-            @click="edit_user_close_modal()"
-            class="w-full bg-gray-600 rounded hover:bg-gray-500 p-3 text-white"
-          >
+          <button type="button" @click="edit_user_close_modal()"
+            class="w-full bg-gray-600 rounded hover:bg-gray-500 p-3 text-white">
             Cancel
           </button>
         </form>

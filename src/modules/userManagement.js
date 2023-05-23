@@ -57,6 +57,7 @@ export const useUserManagementStore = defineStore({
             })
         },
         setAddUser(data) {
+            // console.log(data)
             return new Promise((resolve, reject) => {
                 axios.post('http://10.164.58.62/FDTP-Portal/public/api/role-access', data).then((response) => {
                     resolve(response.data)
@@ -66,32 +67,32 @@ export const useUserManagementStore = defineStore({
                 })
             })
         },
+        clearUser() {
+            console.log(this.employeeForm)
+            this.employeeForm.system_access_id = null
+            this.employeeForm.role_id = null
+        },
         setAddHinseiUser() {
             var add_user_data = {
                 employee_id: this.employeeForm.system_access_id.emp_id,
-                role_access: this.employeeForm.role_id.role
+                role_access: this.employeeForm.role_id.text
             }
-            var employee_data = {clearUser() {
-            this.employeeForm = {
-                system_access_id: null,
-                role_id: null
-            }
-        },
+            var employee_data = {
                 system_access_id: this.employeeForm.system_access_id.system_access_id,
-                role_id: this.employeeForm.role_id.role_id
+                role_id: this.employeeForm.role_id.value
             }
             return new Promise((resolve, reject) => {
                 axios.post('user', add_user_data).then((response) => {
                     resolve(response.data)
+                    this.setAddUser(employee_data)
                     this.setUserManagement()
                     this.clearUser()
-                    this.setAddUser(employee_data)
                 }).catch(err => {
                     reject(err)
                 })
             })
         },
-        
+
         setRemoveUser() {
             return new Promise((resolve, reject) => {
                 axios.get(`http://10.164.58.62/FDTP-Portal/public/api/system-load-all-users/${system_id}`).then((response) => {
