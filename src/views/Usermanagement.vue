@@ -149,7 +149,7 @@ const edit_user_close_modal = () => {
   edit_modal.value.classList.add("-translate-y-5");
 };
 
-const updateRole = (event) => {
+const updateRole = () => {
   if (role_selected.value) {
     userManagementStore.setUpdatePortalRoleAccess(user_data, role_selected.value);
     userManagementStore

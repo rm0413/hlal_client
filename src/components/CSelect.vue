@@ -5,7 +5,7 @@
     class="p-2 border rounded border-stone-300 w-full hover:border-red-600 cursor-pointer"
     required
   >
-    <option value="null" disabled selected>{{ placeholder }}</option>
+    <option value="null" disabled selected hidden>{{ placeholder }}</option>
     <option v-for="(data, idx) in options" :key="idx" :value="data">
       {{ data.text }}
     </option>

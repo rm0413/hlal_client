@@ -25,87 +25,91 @@
           </div>
         </div>
       </div>
-      <form class="grid grid-cols-3" action="">
+      <form class="grid grid-cols-3" action="post" @submit.prevent="submitAgreementList">
         <div class="col-span-1 p-10">
           <label class="flex flex-col gap-2">
             Trial No.
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             Request Date
-            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300" />
+            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             Additional Request Qty Date
-            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300" />
+            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             TRI No.
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             TRI Quantity
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             Request Person
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             Superior Approval
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
         </div>
         <div class="col-span-1 p-10">
           <label class="flex flex-col gap-2">
             Supplier
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             Part Number
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             Sub Part Number
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             Revision
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             Coordinates
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             Dimension
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <label class="flex flex-col gap-2">
             Actual Value
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
         </div>
         <div class="col-span-1 p-10">
           <label class="flex flex-col gap-2">
             Critical Parts
-            <select class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <!-- <select class="w-full border-2 rounded p-1 hover:border-blue-300" /> -->
+            <c-select v-model="critical_part_selected" :options="critical_parts_options" class="text-center"></c-select>
           </label>
           <label class="flex flex-col gap-2">
             Critical Dimension
-            <select class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <!-- <select class="w-full border-2 rounded p-1 hover:border-blue-300" /> -->
+            <c-select v-model="critical_dimension_selected" :options="critical_dimension_options" class="text-center"></c-select>
           </label>
           <label class="flex flex-col gap-2">
             Kind of Request
-            <select class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <!-- <select class="w-full border-2 rounded p-1 hover:border-blue-300" /> -->
+            <c-select v-model="kind_request_selected" :options="kind_request_options" class="text-center"></c-select>
           </label>
           <label class="flex flex-col gap-2">
             Request Value
-            <textarea style="resize: none" class="w-full border-2 rounded p-1 hover:border-blue-300 h-[6.5rem]" />
+            <textarea style="resize: none" class="w-full border-2 rounded p-1 hover:border-blue-300 h-[6.5rem]"
+              required />
           </label>
           <label class="flex flex-col gap-2">
             Request Quantity
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" />
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300" required />
           </label>
           <div class="flex justify-center items-center mt-8 gap-2">
             <button type="submit" class="bg-[#A10E13] text-white p-1 w-[7rem] rounded">
@@ -212,6 +216,7 @@
         <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Add</button>
       </div>
     </dialog>
+    <Toast />
   </div>
 </template>
 
@@ -221,7 +226,8 @@ import CTable from '@/components/Datatable.vue'
 import CSelect from '@/components/CSelect.vue'
 import { useNewRequestStore } from "@/modules/request/newrequest";
 import { ref, onMounted, inject } from "vue";
-
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const swal = inject("$swal");
 const newRequestStore = useNewRequestStore();
 const multiple_input = ref(null);
@@ -230,6 +236,53 @@ const new_unit = ref(null)
 const search = ref(null)
 const units = ref([])
 const unit_selected = ref(null)
+const critical_part_selected = ref(null)
+const critical_dimension_selected = ref(null)
+const kind_request_selected = ref(null)
+const critical_parts_options = ref(
+  [
+    {
+      text: "YES",
+      value: "YES"
+    },
+    {
+      text: "NO",
+      value: "NO"
+    }
+  ]
+)
+const critical_dimension_options = ref(
+  [
+    {
+      text: "YES",
+      value: "YES"
+    },
+    {
+      text: "NO",
+      value: "NO"
+    }
+  ]
+)
+const kind_request_options = ref(
+  [
+    {
+      text: "LSA Request",
+      value: "LSA Request"
+    },
+    {
+      text: "Hinsei Request",
+      value: "Hinsei Request"
+    }
+  ]
+)
+
+const submitAgreementList = () => {
+  if (unit_selected.value && critical_part_selected.value && critical_dimension_selected.value && kind_request_selected.value) {
+    console.log(true)
+  } else {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: 'Please Select Critical Parts/Critical Dimension/Kind of Request/ Unit Options', life: 3000 });
+  }
+}
 
 const openModal = (modal) => {
   if (modal === "multiple_input") {

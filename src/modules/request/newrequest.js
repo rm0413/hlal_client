@@ -5,6 +5,26 @@ export const useNewRequestStore = defineStore({
     id: 'newRequest',
     state: () => ({
         agreement_list: [],
+        agreementForm: {
+            trial_number: null,
+            request_date: null,
+            additional_request_date: null,
+            tri_number: null,
+            request_person: null,
+            supperior_approval: null, 
+            supplier_name: null,
+            part_number: null,
+            sub_part_number: null,
+            revision: null,
+            coordinates: null,
+            dimension: null,
+            actual_value: null,
+            critical_parts: null,
+            critical_dimension: null,
+            kind_request: null,
+            request_value: null,
+            request_quantity: null
+        },
         units: [],
         unitForm: {
             unit_name: null,
