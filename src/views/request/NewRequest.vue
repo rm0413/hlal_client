@@ -181,20 +181,22 @@
           </button>
         </div>
         <div class="flex p-5">
-          <CTable :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
+          <CTable @selectable="(i) => checkedData = i" :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
             :items="newRequestStore.getAgreementList">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
               </div>
             </template>
-            <template #cell(selected)="data">
+            <!-- <template #cell(selected)="data">
               <div class="flex items-center justify-center">
-                <input type="checkbox" name="chk" id="chk">
+                <input :id="`check(${data.index})`" @change="viewItemsCheckBox(data.item, data.index)" type="checkbox"
+                  name="chk">
               </div>
-            </template>
+            </template> -->
           </CTable>
         </div>
+        {{ checkedData }}
         <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Generate</button>
       </div>
     </dialog>
@@ -267,10 +269,9 @@ const view_items = ref(null);
 const new_unit = ref(null)
 const search = ref(null)
 const units = ref([])
-// const unit_selected = ref(null)
-// const critical_part_selected = ref(null)
-// const critical_dimension_selected = ref(null)
-// const kind_request_selected = ref(null)
+const checkedData = ref([]) //view-item-details check box
+
+
 const critical_parts_options = ref(
   [
     {
@@ -354,9 +355,9 @@ const openModal = (modal) => {
     new_unit.value.showModal()
     new_unit.value.classList.remove("-translate-y-5");
   } else if (modal === 'search') {
-    if (newRequestStore.search_filter) {
-      search.value.showModal()
-    }
+    // if (newRequestStore.search_filter) {
+    search.value.showModal()
+    // }
     search.value.classList.remove("-translate-y-5")
   }
 };
@@ -423,6 +424,20 @@ const loadUnits = () => {
     })
   })
 }
+
+// const viewItemsCheckBox = (data, index) => {
+//   var checkbox = document.getElementById(`check(${index})`)
+
+//   if (checkbox.checked) {
+//     checkedData.value.push(data)
+//   } else {
+//     var agreementIdSplicer = checkedData.value.findIndex((obj) => obj.agreement_id === data.agreement_id)
+//     checkedData.value.splice(agreementIdSplicer, 1)
+//   }
+
+// }
+
+
 onMounted(() => {
   loadUnits()
   newRequestStore.setAgreementList()

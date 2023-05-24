@@ -1,5 +1,5 @@
 <template>
-  <table :class="table_class">
+  <table :class="`${table_class} select-none`">
     <thead>
       <tr>
         <th :class="thStyle" v-for="(column, t) in fields" :key="t">
@@ -14,7 +14,7 @@
       >
         {{ emptyMsg }}</span
       >
-      <tr v-else :class="tdStyle" v-for="(item, index) in onFilter" :key="index">
+      <tr v-else :class="tdStyle" v-for="(item, index) in onFilter" :key="index" @click="getData(item, `record(${index})`)" :id="`record(${index})`">
         <th class="font-normal relative" v-for="(column, t) in fields" :key="t">
           <slot :name="`cell(${column.key})`" :item="item" :index="index"></slot>
           <span v-if="item[column.key]">{{ item[column.key] }}</span>
@@ -25,7 +25,7 @@
       <span v-if="items.length === 0" class="flex justify-center w-full absolute italic">
         {{ emptyMsg }}</span
       >
-      <tr :class="tdStyle" v-for="(item, index) in items" :key="index">
+      <tr :class="tdStyle" v-for="(item, index) in items" :key="index" @click="getData(item, `record(${index})`), $emit('selectable', selected_value)" :id="`record(${index})`">
         <th class="font-normal" v-for="(column, t) in fields" :key="t">
           <slot :name="`cell(${column.key})`" :item="item" :index="index"></slot>
           {{ item[column.key] }}
@@ -36,8 +36,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-
+import { computed, ref } from "vue";
 const props = defineProps({
   table_class: {
     type: String,
@@ -60,6 +59,22 @@ const props = defineProps({
   },
   filter: String,
 });
+
+const selected_value = ref([]);
+
+const getData = (data, id) => {
+  const record = document.getElementById(id)
+  record.checked = !record.checked
+  record.checked ? record.classList.add('bg-red-300') : record.classList.remove('bg-red-300')
+  if (record.checked) {
+    selected_value.value.push(data)
+  } else {
+    var agreementIdSplicer = selected_value.value.findIndex((obj) => obj.agreement_id === data.agreement_id)
+    selected_value.value.splice(agreementIdSplicer, 1)
+  }
+}
+
+
 
 const onFilter = computed(() => {
     return props.items.filter((v) =>
