@@ -19,7 +19,7 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" />
+            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" v-model="newRequestStore.search_filter" />
             <button @click="openModal('search')" class="h-[2.5rem] bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
@@ -134,7 +134,8 @@
             <button type="submit" class="bg-[#A10E13] text-white p-1 w-[7rem] rounded">
               Enter
             </button>
-            <button type="button" class="bg-gray-700 text-white p-1 w-[7rem] rounded" @click="newRequestStore.setClearAgreementList">
+            <button type="button" class="bg-gray-700 text-white p-1 w-[7rem] rounded"
+              @click="newRequestStore.setClearAgreementList">
               Clear
             </button>
           </div>
@@ -180,7 +181,8 @@
           </button>
         </div>
         <div class="flex p-5">
-          <CTable :fields="newRequestStore.getViewItemDetailsFields" :items="newRequestStore.getAgreementList">
+          <CTable :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
+            :items="newRequestStore.getAgreementList">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
@@ -229,7 +231,18 @@
           </button>
         </div>
         <div class="flex p-5 overflow-y-scroll">
-          <c-table :fields="newRequestStore.view_item_details_fields">
+          <c-table :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
+            :items="newRequestStore.getAgreementList">
+            <template #cell(#)="data">
+              <div class="flex items-center justify-center">
+                {{ data.index + 1 }}
+              </div>
+            </template>
+            <template #cell(selected)="data">
+              <div class="flex items-center justify-center">
+                <input type="checkbox" name="chk" id="chk">
+              </div>
+            </template>
           </c-table>
         </div>
         <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Add</button>
@@ -315,12 +328,12 @@ const submitAgreementList = () => {
               title: response.message,
               timer: 2500
             })
-          }else {
+          } else {
             swal({
-            icon: "warning",
-            title: response.message,
-            timer: 2500
-          })
+              icon: "warning",
+              title: response.message,
+              timer: 2500
+            })
           }
         })
       }
@@ -341,7 +354,9 @@ const openModal = (modal) => {
     new_unit.value.showModal()
     new_unit.value.classList.remove("-translate-y-5");
   } else if (modal === 'search') {
-    search.value.showModal()
+    if (newRequestStore.search_filter) {
+      search.value.showModal()
+    }
     search.value.classList.remove("-translate-y-5")
   }
 };

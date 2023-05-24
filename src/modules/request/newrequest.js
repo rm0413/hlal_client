@@ -44,7 +44,8 @@ export const useNewRequestStore = defineStore({
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
             { label: 'Actual Value', key: 'actual_value' }
-        ]
+        ],
+        search_filter: ''
     }),
     actions: {
         setAgreementList() {
