@@ -134,7 +134,7 @@
             <button type="submit" class="bg-[#A10E13] text-white p-1 w-[7rem] rounded">
               Enter
             </button>
-            <button type="button" class="bg-gray-700 text-white p-1 w-[7rem] rounded">
+            <button type="button" class="bg-gray-700 text-white p-1 w-[7rem] rounded" @click="newRequestStore.setClearAgreementList">
               Clear
             </button>
           </div>
