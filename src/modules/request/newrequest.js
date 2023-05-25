@@ -132,6 +132,7 @@ export const useNewRequestStore = defineStore({
             }
         },
         setInsertAgreementList() {
+            console.log(this.agreementForm)
             var agreement_data = {
                 trial_number: this.agreementForm.trial_number,
                 request_date: this.agreementForm.request_date,
@@ -152,7 +153,7 @@ export const useNewRequestStore = defineStore({
                 request_type: this.agreementForm.kind_request.value,
                 request_value: this.agreementForm.request_value,
                 request_quantity: this.agreementForm.request_quantity,
-                unit_id: this.agreementForm.unit.unit_id,
+                unit_id: this.agreementForm.unit_name,
                 requestor_employee_id: sessionStorage.getItem("employee_id")
             }
             return new Promise((resolve, reject) => {

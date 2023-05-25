@@ -113,7 +113,8 @@
           </label>
           <label class="flex flex-col gap-2">
             Request Value
-            <textarea style="resize: none" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[6.5rem]"
+            <textarea style="resize: none"
+              class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[6.5rem]"
               v-model="newRequestStore.agreementForm.request_value" required />
           </label>
           <label class="flex flex-col gap-2">
@@ -172,8 +173,8 @@
           </button>
         </div>
         <div class="flex p-5 max-h-[50vh] overflow-y-scroll">
-          <CTable :isSelectable="true" @selectable="(data) => checkedData = data" :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
-            :items="newRequestStore.getAgreementList">
+          <CTable :isSelectable="true" @selectable="(data) => checkedData = data" :filter="newRequestStore.search_filter"
+            :fields="newRequestStore.getViewItemDetailsFields" :items="newRequestStore.getAgreementList">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
@@ -186,7 +187,7 @@
       </div>
     </dialog>
     <!--Search-->
-    <dialog ref="search" class="p-0 rounded transform duration-300 -translate-y-5">
+    <dialog ref="search" class="p-0 rounded transform duration-300 -translate-y-5 w-full">
       <div class="flex flex-col">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <span>Search</span>
@@ -196,14 +197,15 @@
         </div>
         <div class="flex p-5 overflow-y-scroll">
           <c-table :filter="newRequestStore.search_filter" :fields="newRequestStore.search_fields"
-            :items="newRequestStore.getAgreementList">
+            :items="newRequestStore.getAgreementList" class="w-full">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
               </div>
             </template>
             <template #cell(action)="data">
-              <button type="button" class="bg-[#A10E13] text-white hover:bg-red-600 rounded w-[4rem] h-[2rem]" @click="autoAdd(data.item)">ADD</button>
+              <button type="button" class="bg-[#A10E13] text-white hover:bg-red-600 rounded w-[4rem] h-[2rem]"
+                @click="autoAdd(data.item)">ADD</button>
             </template>
           </c-table>
         </div>
@@ -296,6 +298,7 @@ const submitAgreementList = () => {
             swal({
               icon: "warning",
               title: response.message,
+              text: 'Please input all necessarry details.',
               timer: 2500
             })
           }
@@ -314,9 +317,17 @@ const openModal = (modal) => {
   } else if (modal === "view_items") {
     view_items.value.showModal();
     view_items.value.classList.remove("-translate-y-5");
-  }else if (modal === 'search') {
-    search.value.showModal()
-    search.value.classList.remove("-translate-y-5")
+  } else if (modal === 'search') {
+    if (newRequestStore.search_filter) {
+      search.value.showModal()
+      search.value.classList.remove("-translate-y-5")
+    } else {
+      swal({
+        icon: "warning",
+        title: "Please Input a data.",
+        timer: 2500
+      })
+    }
   }
 };
 
