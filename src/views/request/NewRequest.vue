@@ -29,12 +29,12 @@
           </label>
           <label class="flex flex-col gap-2">
             Request Date
-            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300 text-center"
+            <input type="date" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.request_date" required />
           </label>
           <label class="flex flex-col gap-2">
             Additional Request Qty Date
-            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300 text-center"
+            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300"
               v-model="newRequestStore.agreementForm.additional_request_date" required />
           </label>
           <label class="flex flex-col gap-2">
