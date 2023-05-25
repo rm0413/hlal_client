@@ -172,7 +172,7 @@
       </div>
     </dialog>
     <!--View Items-->
-    <dialog ref="view_items" class="p-0 rounded transform duration-300 -translate-y-5">
+    <dialog ref="view_items" class="p-0 rounded transform duration-300 -translate-y-5 ">
       <div class="flex flex-col">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <span>View Item Details</span>
@@ -180,8 +180,8 @@
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
-        <div class="flex p-5">
-          <CTable @selectable="(i) => checkedData = i" :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
+        <div class="flex p-5 max-h-[50vh] overflow-y-scroll">
+          <CTable :isSelectable="true" @selectable="(data) => checkedData = data" :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
             :items="newRequestStore.getAgreementList">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
@@ -240,11 +240,11 @@
                 {{ data.index + 1 }}
               </div>
             </template>
-            <template #cell(selected)="data">
+            <!-- <template #cell(selected)="data">
               <div class="flex items-center justify-center">
                 <input type="checkbox" name="chk" id="chk">
               </div>
-            </template>
+            </template> -->
           </c-table>
         </div>
         <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Add</button>

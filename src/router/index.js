@@ -77,7 +77,7 @@ const router = createRouter({
 })
 
 router.afterEach((to, from) => {
-    var checkToken = JSON.parse(localStorage.getItem("userdata"))
+    var checkToken = sessionStorage.getItem("userdata")
     if (to.name !== 'login') {
         if (!checkToken) {
             window.location.href = 'http://10.164.58.62/FDTP-Portal/public/login'

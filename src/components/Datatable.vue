@@ -58,20 +58,27 @@ const props = defineProps({
     default: "mt-3 h-[5vh] hover:bg-gray-100 border-b-2 border-gray-200",
   },
   filter: String,
+  isSelectable: Boolean
 });
 
 const selected_value = ref([]);
 
+
 const getData = (data, id) => {
+  if(!props.isSelectable) return
+  
   const record = document.getElementById(id)
   record.checked = !record.checked
   record.checked ? record.classList.add('bg-red-300') : record.classList.remove('bg-red-300')
+  record.checked ? record.classList.add('hover:bg-red-200') : record.classList.remove('hover:bg-red-200')
+  record.checked ? record.classList.remove('hover:bg-gray-100') : record.classList.add('hover:bg-gray-100')
   if (record.checked) {
     selected_value.value.push(data)
   } else {
     var agreementIdSplicer = selected_value.value.findIndex((obj) => obj.agreement_id === data.agreement_id)
     selected_value.value.splice(agreementIdSplicer, 1)
   }
+  
 }
 
 

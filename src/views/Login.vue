@@ -60,7 +60,7 @@ onMounted(() => {
   console.log(window.location.href.split('/'))
   if(token.value){
     loginStore.setLogin(token.value).then((response) => {
-    console.log(response) 
+    sessionStorage.setItem("userdata", JSON.stringify(token.value))
     localStorage.setItem("userdata", JSON.stringify(token.value));
     localStorage.setItem("role", JSON.stringify(role.value));
     localStorage.setItem("system_id", JSON.stringify(system_id.value));
