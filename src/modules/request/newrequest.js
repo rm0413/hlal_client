@@ -57,7 +57,8 @@ export const useNewRequestStore = defineStore({
             { label: 'Dimension', key: 'dimension' },
             { label: 'Actual Value', key: 'actual_value' }
         ],
-        search_filter: ''
+        search_filter: '',
+        load_no_code: [],
     }),
     actions: {
         setAgreementList() {
@@ -107,7 +108,7 @@ export const useNewRequestStore = defineStore({
                 })
             })
         },
-        setClearAgreementList(){
+        setClearAgreementList() {
             this.agreementForm = {
                 trial_number: null,
                 request_date: null,
@@ -165,7 +166,7 @@ export const useNewRequestStore = defineStore({
                 })
             })
         },
-        setAutoAdd(data){
+        setAutoAdd(data) {
             console.log(data)
             this.agreementForm = {
                 trial_number: data.trial_number,
@@ -190,6 +191,16 @@ export const useNewRequestStore = defineStore({
                 unit: data.unit_name
             }
 
+        },
+        setNoCodeAgreementList() {
+            return new Promise((resolve, reject) => {
+                axios.get('load-with-no-code-request').then(response => {
+                    resolve(response.data.data)
+                    this.load_no_code = response.data.data
+                }).catch(err => {
+                    reject(err)
+                })
+            })
         }
 
     },
@@ -202,6 +213,9 @@ export const useNewRequestStore = defineStore({
         },
         getUnit() {
             return this.units
+        },
+        getNoCode(){
+            return this.load_no_code
         }
     }
 })

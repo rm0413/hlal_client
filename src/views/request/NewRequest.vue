@@ -164,7 +164,7 @@
       </div>
     </dialog>
     <!--View Items-->
-    <dialog ref="view_items" class="p-0 rounded transform duration-300 -translate-y-5 ">
+    <dialog ref="view_items" class="p-0 rounded transform duration-300 -translate-y-5 w-full">
       <div class="flex flex-col">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <span>View Item Details</span>
@@ -174,7 +174,7 @@
         </div>
         <div class="flex p-5 max-h-[50vh] overflow-y-scroll">
           <CTable :isSelectable="true" @selectable="(data) => checkedData = data" :filter="newRequestStore.search_filter"
-            :fields="newRequestStore.getViewItemDetailsFields" :items="newRequestStore.getAgreementList">
+            :fields="newRequestStore.getViewItemDetailsFields" :items="newRequestStore.getNoCode">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
@@ -361,6 +361,7 @@ const loadUnits = () => {
 onMounted(() => {
   loadUnits()
   newRequestStore.setAgreementList()
+  newRequestStore.setNoCodeAgreementList()
 
 })
 </script>
