@@ -1,6 +1,6 @@
 <template>
   <table :class="`${table_class} select-none`">
-    <thead>
+    <thead class="sticky top-0">
       <tr>
         <th :class="thStyle" v-for="(column, t) in fields" :key="t">
           {{ column.label }}
