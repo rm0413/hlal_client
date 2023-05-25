@@ -81,10 +81,27 @@ const links = [
     name: 'monitoring',
     fa: 'desktop'
   },
+  // {
+  //   title: 'Usermanagement',
+  //   name: 'usermanagement',
+  //   fa: 'users-gear'
+  // },
   {
-    title: 'Usermanagement',
-    name: 'usermanagement',
-    fa: 'users-gear'
+    title: 'Management',
+    name: 'management',
+    fa: 'gears',
+    sub_module: [
+      {
+        title: 'User Management',
+        name: 'usermanagement',
+        fa: 'users-gear'
+      },
+      {
+        title: 'Unit Management',
+        name: 'unitmanagement',
+        fa: 'toolbox'
+      },
+    ]
   },
 ]
 
@@ -95,13 +112,13 @@ const links = [
 <template>
   <div class="h-screen">
     <CSidebar :systemDetails="systemDetails" :links="links" :userDetails="userprofile" :signOut="signOut"
-    v-if="route.name !== 'login'">
+      v-if="route.name !== 'login'">
       <template #page>
         <router-view />
       </template>
     </CSidebar>
     <router-view v-else />
- 
+
   </div>
 </template>
 

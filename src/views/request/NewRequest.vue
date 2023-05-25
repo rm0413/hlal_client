@@ -7,14 +7,8 @@
         </label>
         <div class="flex gap-2 mr-10">
           <div class="flex flex-row">
-            <!-- <select class="text-center p-1 border-2 rounded w-[12rem] rounded-l-md" /> -->
-            <c-select class="h-[2.5rem] text-center" :options="units"
+            <c-select class="h-[2.5rem] text-center w-[15rem]" :options="units"
               v-model="newRequestStore.agreementForm.unit"></c-select>
-            <button @click="openModal('new_unit')"
-              class="h-[2.5rem] w-[12rem] bg-[#A10E13] text-white py-1 px-3 rounded-r-md hover:bg-red-600">
-              <font-awesome-icon icon="plus-square"></font-awesome-icon>
-              New Unit
-            </button>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
@@ -104,19 +98,16 @@
         <div class="col-span-1 p-10">
           <label class="flex flex-col gap-2">
             Critical Parts
-            <!-- <select class="w-full border-2 rounded p-1 hover:border-blue-300" /> -->
             <c-select v-model="newRequestStore.agreementForm.critical_parts" :options="critical_parts_options"
               class="text-center"></c-select>
           </label>
           <label class="flex flex-col gap-2">
             Critical Dimension
-            <!-- <select class="w-full border-2 rounded p-1 hover:border-blue-300" /> -->
             <c-select v-model="newRequestStore.agreementForm.critical_dimension" :options="critical_dimension_options"
               class="text-center"></c-select>
           </label>
           <label class="flex flex-col gap-2">
             Kind of Request
-            <!-- <select class="w-full border-2 rounded p-1 hover:border-blue-300" /> -->
             <c-select v-model="newRequestStore.agreementForm.kind_request" :options="kind_request_options"
               class="text-center"></c-select>
           </label>
@@ -194,29 +185,6 @@
         <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Generate</button>
       </div>
     </dialog>
-    <!-- New Unit -->
-    <dialog ref="new_unit" class="p-0 rounded transform duration-300 -translate-y-5">
-      <div class="flex flex-col">
-        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
-          <span>Create New Unit</span>
-          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('new_unit')">
-            <font-awesome-icon icon="xmark"></font-awesome-icon>
-          </button>
-        </div>
-        <form method="post" @submit.prevent="submitUnit">
-          <div class="flex p-5">
-            <label class="flex flex-col">
-              <span>Name of Unit</span>
-              <input class="w-[20rem] h-10 border-2 p-2 hover:border-red-600 rounded"
-                v-model="newRequestStore.unitForm.unit_name" required />
-            </label>
-          </div>
-          <button type="submit" class="p-3 bg-[#A10E13] text-white hover:bg-red-600 w-full">Save</button>
-        </form>
-        <button @click="newRequestStore.setClearUnit"
-          class="p-3 bg-gray-600 text-white hover:bg-gray-500 w-full">Clear</button>
-      </div>
-    </dialog>
     <!--Search-->
     <dialog ref="search" class="p-0 rounded transform duration-300 -translate-y-5">
       <div class="flex flex-col">
@@ -257,11 +225,9 @@ const swal = inject("$swal");
 const newRequestStore = useNewRequestStore();
 const multiple_input = ref(null);
 const view_items = ref(null);
-const new_unit = ref(null)
 const search = ref(null)
 const units = ref([])
 const checkedData = ref([]) //view-item-details check box
-const trial_number = ref(null) //search
 
 
 const critical_parts_options = ref(
@@ -348,13 +314,8 @@ const openModal = (modal) => {
   } else if (modal === "view_items") {
     view_items.value.showModal();
     view_items.value.classList.remove("-translate-y-5");
-  } else if (modal === 'new_unit') {
-    new_unit.value.showModal()
-    new_unit.value.classList.remove("-translate-y-5");
-  } else if (modal === 'search') {
-    // if (newRequestStore.search_filter) {
+  }else if (modal === 'search') {
     search.value.showModal()
-    // }
     search.value.classList.remove("-translate-y-5")
   }
 };
@@ -366,47 +327,11 @@ const closeModal = (modal) => {
   } else if (modal === "view_items") {
     view_items.value.close();
     view_items.value.classList.add("-translate-y-5");
-  } else if (modal === 'new_unit') {
-    new_unit.value.close()
-    newRequestStore.setClearUnit()
-    new_unit.value.classList.add("-translate-y-5");
   } else if (modal === 'search') {
     search.value.close()
     search.value.classList.add("-translate-y-5")
   }
 };
-const submitUnit = () => {
-  new_unit.value.close()
-  swal({
-    icon: "question",
-    title: "Are you sure to add this unit?",
-    text: "Please make sure before to proceed!",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Submit",
-  }).then((response) => {
-    if (response.value === true) {
-      // console.log(true)
-      newRequestStore.setInsertUnits().then((response) => {
-        if (response.status === "success") {
-          loadUnits()
-          swal({
-            icon: "success",
-            title: response.message,
-            timer: 2500
-          })
-        } else {
-          swal({
-            icon: "warning",
-            title: response.message,
-            timer: 2500
-          })
-        }
-      })
-    }
-  })
-}
 
 const loadUnits = () => {
   newRequestStore.setUnits().then((response) => {
@@ -421,19 +346,6 @@ const loadUnits = () => {
     })
   })
 }
-
-// const viewItemsCheckBox = (data, index) => {
-//   var checkbox = document.getElementById(`check(${index})`)
-
-//   if (checkbox.checked) {
-//     checkedData.value.push(data)
-//   } else {
-//     var agreementIdSplicer = checkedData.value.findIndex((obj) => obj.agreement_id === data.agreement_id)
-//     checkedData.value.splice(agreementIdSplicer, 1)
-//   }
-
-// }
-
 
 onMounted(() => {
   loadUnits()

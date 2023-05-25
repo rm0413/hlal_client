@@ -4,6 +4,7 @@ const Login = () => import('@/views/Login.vue')
 const Dashboard = () => import('@/views/Dashboard.vue')
 const Monitoring = () => import('@/views/Monitoring.vue')
 const Usermanagement = () => import('@/views/Usermanagement.vue')
+const Unitmanagement = () => import('@/views/UnitManagement.vue')
 const Request = () => import('@/views/Request.vue')
 const NewRequest = () => import('@/views/request/NewRequest.vue')
 const InspectionData = () => import('@/views/request/InspectionData.vue')
@@ -67,6 +68,11 @@ const routes = [
         path: '/usermanagement',
         name: 'usermanagement',
         component: Usermanagement
+    },
+    {
+        path: '/unitmanagement',
+        name: 'unitmanagement',
+        component: Unitmanagement
     },
 ]
 
