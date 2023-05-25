@@ -1,7 +1,7 @@
 <template>
   <select
     v-model="selected_value"
-    @input="$emit('update:modelValue', selected_value)"
+    @change="$emit('update:modelValue', selected_value)"
     class="p-2 border rounded border-stone-300 w-full hover:border-red-600 cursor-pointer"
     required
   >
@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import {  ref } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps({
   options: Array,

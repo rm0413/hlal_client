@@ -25,7 +25,7 @@ export const useUserManagementStore = defineStore({
             { label: 'Status', key: 'emp_system_status' },
             { label: 'Action', key: 'action' },
         ],
-        search_filter: ''
+        search_filter: '',
         // userManagementForm: {
         //     userManagement_name: '',
         //     userManagement_image: '',
@@ -33,6 +33,8 @@ export const useUserManagementStore = defineStore({
         // },
         // onEdit: false,
         // onEditIndex: null
+        options_employee_name: [],
+        role_options: []
     }),
     actions: {
         setUserManagement() {
@@ -42,6 +44,31 @@ export const useUserManagementStore = defineStore({
                     this.userManagement = response.data.data
                 }).catch(err => {
                     reject(err)
+                })
+            })
+        },
+        async setEmployeeOptions() {
+            this.options_employee_name = []
+            this.role_options = []
+            await this.setUserManagement().then(response => {
+                // resolve(response)
+                this.setUserRequest().then(res => {
+                
+                    res.data.users.forEach(v => {
+                        if (response.data.some((user) => user.emp_id === v.emp_id)) return
+                        this.options_employee_name.push({
+                            system_access_id: v.system_access_id,
+                            text: v.name,
+                            emp_id: v.emp_id,
+                        });
+
+                    })
+                    res.data.roles.forEach(v => {
+                        this.role_options.push({
+                            text: v.role,
+                            value: v.role_id,
+                        })
+                    })
                 })
             })
         },
@@ -55,6 +82,7 @@ export const useUserManagementStore = defineStore({
                     reject(err)
                 })
             })
+
         },
         setAddUser(data) {
             // console.log(data)
@@ -68,9 +96,9 @@ export const useUserManagementStore = defineStore({
             })
         },
         clearUser() {
-            console.log(this.employeeForm)
+            // console.log(this.employeeForm)
             this.employeeForm.system_access_id = null
-            this.employeeForm.role_id = null
+            // this.employeeForm.role_id = null
         },
         setAddHinseiUser() {
             var add_user_data = {
@@ -86,7 +114,7 @@ export const useUserManagementStore = defineStore({
                     resolve(response.data)
                     this.setAddUser(employee_data)
                     this.setUserManagement()
-                    this.clearUser()
+                    // this.clearUser()
                 }).catch(err => {
                     reject(err)
                 })

@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="row-span-1 grid grid-cols-2">
-          <Chart type="bar" :data="chartData" :options="chartOptions" />
+          <Chart type="bar" :data="chartData2" :options="chartOptions" />
           <div class="grid grid-cols-2 gap-3">
             <label for="" class="flex flex-col text-[14px]">
               From
@@ -97,7 +97,17 @@ const chartData = ref({
   labels: ["OK", "NG", "PENDING"],
   datasets: [
     {
-      label: "Sales",
+      label: "Hinsei",
+      data: [540, 325, 702],
+      backgroundColor: ["#A10E13"],
+    },
+  ],
+});
+const chartData2 = ref({
+  labels: ["OK", "NG", "PENDING"],
+  datasets: [
+    {
+      label: "LSA",
       data: [540, 325, 702],
       backgroundColor: ["#A10E13"],
     },

@@ -14,8 +14,15 @@
       >
         {{ emptyMsg }}</span
       >
-      <tr v-else :class="tdStyle" v-for="(item, index) in onFilter" :key="index" @click="getData(item, `record(${index})`)" :id="`record(${index})`">
-        <th class="font-normal relative" v-for="(column, t) in fields" :key="t">
+      <tr
+        v-else
+        :class="tdStyle"
+        v-for="(item, index) in onFilter"
+        :key="index"
+        @click="getData(item, `record(${index})`)"
+        :id="`record(${index})`"
+      >
+        <th class="font-normal relative border-r" v-for="(column, t) in fields" :key="t">
           <slot :name="`cell(${column.key})`" :item="item" :index="index"></slot>
           <span v-if="item[column.key]">{{ item[column.key] }}</span>
         </th>
@@ -25,8 +32,20 @@
       <span v-if="items.length === 0" class="flex justify-center w-full absolute italic">
         {{ emptyMsg }}</span
       >
-      <tr :class="tdStyle" v-for="(item, index) in items" :key="index" @click="getData(item, `record(${index})`), $emit('selectable', selected_value)" :id="`record(${index})`">
-        <th class="font-normal" v-for="(column, t) in fields" :key="t">
+      <tr
+        :class="tdStyle"
+        v-for="(item, index) in items"
+        :key="index"
+        @click="getData(item, `record(${index})`), $emit('selectable', selected_value)"
+        :id="`record(${index})`"
+      >
+        <th
+          v-for="(column, t) in fields"
+          :key="t"
+          :id="`cell(${index},${t})`"
+          @click="getCellData(item[column.key], `cell(${index},${t})`)"
+          class="font-normal border-r"
+        >
           <slot :name="`cell(${column.key})`" :item="item" :index="index"></slot>
           {{ item[column.key] }}
         </th>
@@ -58,36 +77,60 @@ const props = defineProps({
     default: "mt-3 h-[5vh] hover:bg-gray-100 border-b-2 border-gray-200",
   },
   filter: String,
-  isSelectable: Boolean
+  isSelectable: Boolean,
+  cellCopy: {
+    type: Boolean,
+    default: false,
+  },
+  cellHover: {
+    type: String,
+    default: "hover: bg-green-300",
+  },
 });
 
 const selected_value = ref([]);
 
-
 const getData = (data, id) => {
-  if(!props.isSelectable) return
-  
-  const record = document.getElementById(id)
-  record.checked = !record.checked
-  record.checked ? record.classList.add('bg-red-300') : record.classList.remove('bg-red-300')
-  record.checked ? record.classList.add('hover:bg-red-200') : record.classList.remove('hover:bg-red-200')
-  record.checked ? record.classList.remove('hover:bg-gray-100') : record.classList.add('hover:bg-gray-100')
+  if (!props.isSelectable) return;
+
+  const record = document.getElementById(id);
+  record.checked = !record.checked;
+  record.checked
+    ? record.classList.add("bg-red-300")
+    : record.classList.remove("bg-red-300");
+  record.checked
+    ? record.classList.add("hover:bg-red-200")
+    : record.classList.remove("hover:bg-red-200");
+  record.checked
+    ? record.classList.remove("hover:bg-gray-100")
+    : record.classList.add("hover:bg-gray-100");
   if (record.checked) {
-    selected_value.value.push(data)
+    selected_value.value.push(data);
   } else {
-    var agreementIdSplicer = selected_value.value.findIndex((obj) => obj.agreement_id === data.agreement_id)
-    selected_value.value.splice(agreementIdSplicer, 1)
+    var agreementIdSplicer = selected_value.value.findIndex(
+      (obj) => obj.agreement_id === data.agreement_id
+    );
+    selected_value.value.splice(agreementIdSplicer, 1);
   }
-  
-}
+};
 
-
+const getCellData = (data, id) => {
+  if(!props.cellCopy) return
+  const cell = document.getElementById(id);
+  console.log(cell);
+  if (!cell.classList.contains("bg-green-400")) {
+    cell.classList.add("bg-green-400");
+    navigator.clipboard.writeText(cell.innerHTML);
+  } else {
+    cell.classList.remove("bg-green-400");
+  }
+};
 
 const onFilter = computed(() => {
-    return props.items.filter((v) =>
-      Object.keys(v).some((k) =>
-        String(v[k]).toLowerCase().includes(props.filter.toLowerCase())
-      )
-    );
+  return props.items.filter((v) =>
+    Object.keys(v).some((k) =>
+      String(v[k]).toLowerCase().includes(props.filter.toLowerCase())
+    )
+  );
 });
 </script>
