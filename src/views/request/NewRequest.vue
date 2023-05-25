@@ -30,74 +30,74 @@
         <div class="col-span-1 p-10">
           <label class="flex flex-col gap-2">
             Trial No.
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.trial_number" required />
           </label>
           <label class="flex flex-col gap-2">
             Request Date
-            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300"
+            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.request_date" required />
           </label>
           <label class="flex flex-col gap-2">
             Additional Request Qty Date
-            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300"
+            <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.additional_request_date" required />
           </label>
           <label class="flex flex-col gap-2">
             TRI No.
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.tri_number" required />
           </label>
           <label class="flex flex-col gap-2">
             TRI Quantity
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.tri_quantity" required />
           </label>
           <label class="flex flex-col gap-2">
             Request Person
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.request_person" required />
           </label>
           <label class="flex flex-col gap-2">
             Superior Approval
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.supperior_approval" required />
           </label>
         </div>
         <div class="col-span-1 p-10">
           <label class="flex flex-col gap-2">
             Supplier
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.supplier_name" required />
           </label>
           <label class="flex flex-col gap-2">
             Part Number
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.part_number" required />
           </label>
           <label class="flex flex-col gap-2">
             Sub Part Number
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.sub_part_number" required />
           </label>
           <label class="flex flex-col gap-2">
             Revision
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.revision" required />
           </label>
           <label class="flex flex-col gap-2">
             Coordinates
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.coordinates" required />
           </label>
           <label class="flex flex-col gap-2">
             Dimension
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.dimension" required />
           </label>
           <label class="flex flex-col gap-2">
             Actual Value
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.actual_value" required />
           </label>
         </div>
@@ -122,12 +122,12 @@
           </label>
           <label class="flex flex-col gap-2">
             Request Value
-            <textarea style="resize: none" class="w-full border-2 rounded p-1 hover:border-blue-300 h-[6.5rem]"
+            <textarea style="resize: none" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[6.5rem]"
               v-model="newRequestStore.agreementForm.request_value" required />
           </label>
           <label class="flex flex-col gap-2">
             Request Quantity
-            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300"
+            <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
               v-model="newRequestStore.agreementForm.request_quantity" required />
           </label>
           <div class="flex justify-center items-center mt-8 gap-2">
@@ -188,12 +188,6 @@
                 {{ data.index + 1 }}
               </div>
             </template>
-            <!-- <template #cell(selected)="data">
-              <div class="flex items-center justify-center">
-                <input :id="`check(${data.index})`" @change="viewItemsCheckBox(data.item, data.index)" type="checkbox"
-                  name="chk">
-              </div>
-            </template> -->
           </CTable>
         </div>
         {{ checkedData }}
@@ -233,21 +227,18 @@
           </button>
         </div>
         <div class="flex p-5 overflow-y-scroll">
-          <c-table :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
+          <c-table :filter="newRequestStore.search_filter" :fields="newRequestStore.search_fields"
             :items="newRequestStore.getAgreementList">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
               </div>
             </template>
-            <!-- <template #cell(selected)="data">
-              <div class="flex items-center justify-center">
-                <input type="checkbox" name="chk" id="chk">
-              </div>
-            </template> -->
+            <template #cell(action)="data">
+              <button type="button" class="bg-[#A10E13] text-white hover:bg-red-600 rounded w-[4rem] h-[2rem]" @click="autoAdd(data.item)">ADD</button>
+            </template>
           </c-table>
         </div>
-        <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Add</button>
       </div>
     </dialog>
     <Toast />
@@ -270,6 +261,7 @@ const new_unit = ref(null)
 const search = ref(null)
 const units = ref([])
 const checkedData = ref([]) //view-item-details check box
+const trial_number = ref(null) //search
 
 
 const critical_parts_options = ref(
@@ -308,6 +300,11 @@ const kind_request_options = ref(
     }
   ]
 )
+const autoAdd = (data) => {
+  search.value.close()
+  newRequestStore.setAutoAdd(data)
+
+}
 
 const submitAgreementList = () => {
   if (newRequestStore.agreementForm.unit && newRequestStore.agreementForm.critical_parts && newRequestStore.agreementForm.critical_dimension && newRequestStore.agreementForm.kind_request) {
