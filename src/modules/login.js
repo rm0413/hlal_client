@@ -50,8 +50,9 @@ export const useLoginStore = defineStore({
             })
         },
         setLoginRole(data) {
+            console.log(data)
             return new Promise((resolve, reject) => {
-                axios.patch(`user/${data.employee_id}`, data.role_access).then(response => {
+                axios.patch(`user/${data.employee_id.emp_id}`, data.role_access).then(response => {
                     resolve(response.data)
                 }).then(err => {
                     reject(err)
