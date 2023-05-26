@@ -318,7 +318,7 @@
     </aside>
     <div
       ref="content"
-      :class="`content ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 h-screen`"
+      :class="`content ${themeStore.theme[themeStore.theme_select].container} ml-12 transform ease-in-out duration-500 pt-20 px-2 md:px-5 pb-4 h-screen`"
     >
       <slot name="page"></slot>
     </div>
@@ -366,7 +366,7 @@ const settings = ref(null);
 
 const expand_submodule = (id) => {
   sub_module.value.forEach((sub) => {
-    if (sub.classList.contains(id) && sub.classList.contains("opacity-0")) {
+    if (sub.classList.contains(id) && sub.classList.contains('opacity-0')) {
       sub.classList.remove("-translate-x-[15rem]");
       sub.classList.remove("opacity-0");
       sub.classList.remove("absolute");
@@ -422,7 +422,7 @@ const openNav = () => {
     content.value.classList.remove("ml-12");
     content.value.classList.add("ml-12", "md:ml-60");
     sub_module.value.forEach((v) => {
-      if(sub.classList.contains('opacity-0'))
+      if(v.classList.contains('opacity-0'))
       v.classList.add("absolute");
     });
   } else {

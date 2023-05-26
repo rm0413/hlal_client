@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col">
     <div class="h-full w-full">
-      <div class="flex justify-between">
+      <div class=" flex justify-between">
         <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono">
           <font-awesome-icon class="h-6 w-6 text-black" icon="paperclip" />
           Attachments
