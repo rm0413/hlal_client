@@ -6,8 +6,8 @@
           <font-awesome-icon class="h-6 w-6 text-black" icon="file-lines" /> New Request
         </label>
         <div class="flex gap-2 mr-10">
-          <div class="flex flex-row">
-            <c-select class="h-[2.5rem] text-center w-[15rem]" :options="units"
+          <div class="flex flex-row w-[18rem]">
+            <c-select class="h-[2.5rem] text-center" :options="units"
               v-model="newRequestStore.agreementForm.unit"></c-select>
           </div>
           <div class="relative">
@@ -182,8 +182,7 @@
             </template>
           </CTable>
         </div>
-        {{ checkedData }}
-        <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600">Generate</button>
+        <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600" @click="generateCode">Generate</button>
       </div>
     </dialog>
     <!--Search-->
@@ -272,6 +271,32 @@ const autoAdd = (data) => {
   search.value.close()
   newRequestStore.setAutoAdd(data)
 
+}
+
+const generateCode = () => {
+  view_items.value.close();
+  console.log(checkedData.value)
+  var payload = {
+    agreement_request_id: []
+  };
+  checkedData.value.forEach((v) => {
+    payload.agreement_request_id.push(
+      v.agreement_id_pk
+    )
+  })
+  newRequestStore.setGenerateCode(payload).then((response) => {
+    if (response.status === "success") {
+      newRequestStore.setShowGenerateCode(response.data.id).then((response) => {
+        if (response.status === "success") {
+          swal({
+            icon: "success",
+            title: response.data[0].code,
+            text: "Your code has been generated."
+          })
+        }
+      })
+    }
+  })
 }
 
 const submitAgreementList = () => {

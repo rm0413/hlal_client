@@ -201,6 +201,25 @@ export const useNewRequestStore = defineStore({
                     reject(err)
                 })
             })
+        },
+        setGenerateCode(data) {
+            return new Promise((resolve, reject) => {
+                axios.post('generate-agreement-code', data).then(response => {
+                    resolve(response.data)
+                    this.setNoCodeAgreementList()
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        setShowGenerateCode(id) {
+            return new Promise((resolve, reject) => {
+                axios.get(`agreement-list-code/${id}`).then(response => {
+                    resolve(response.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
         }
 
     },
@@ -214,7 +233,7 @@ export const useNewRequestStore = defineStore({
         getUnit() {
             return this.units
         },
-        getNoCode(){
+        getNoCode() {
             return this.load_no_code
         }
     }
