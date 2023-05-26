@@ -16,7 +16,7 @@
       >
       <tr
         v-else
-        :class="tdStyle"
+        :class="`${tdStyle} unchecked`"
         v-for="(item, index) in onFilter"
         :key="index"
         @click="getData(item, `record(${index})`)"
@@ -33,12 +33,13 @@
         {{ emptyMsg }}</span
       >
       <tr
-        :class="tdStyle"
+        :class="`${tdStyle} unchecked`"
         v-for="(item, index) in items"
         :key="index"
-        @click="getData(item, `record(${index})`), $emit('selectable', selected_value)"
+        @click="getData(item, `record(${index})`)"
         :id="`record(${index})`"
       >
+        <!-- , $emit('selectable', selected_value) -->
         <th
           v-for="(column, t) in fields"
           :key="t"
@@ -78,6 +79,7 @@ const props = defineProps({
   },
   filter: String,
   isSelectable: Boolean,
+  value: Array,
   cellCopy: {
     type: Boolean,
     default: false,
@@ -88,24 +90,50 @@ const props = defineProps({
   },
 });
 
+// onMounted(() => {
+//   console.log(selected_value.value)
+// });
+
+const emit = defineEmits(["selected_value", "selectable"]);
+
 const selected_value = ref([]);
+
+const unSelect = () => {
+  var records = [];
+  props.items.forEach((v, i) => {
+    records.push({ record: document.getElementById(`record(${i})`) });
+  });
+
+  records.forEach((v) => {
+    if (!v.record.classList.contains("unchecked")) {
+      v.record.classList.remove("bg-red-300");
+      v.record.classList.remove("hover:bg-red-200");
+      v.record.classList.add("hover:bg-gray-100");
+      v.record.classList.add("unchecked");
+    }
+  });
+
+  selected_value.value = [];
+};
 
 const getData = (data, id) => {
   if (!props.isSelectable) return;
 
   const record = document.getElementById(id);
-  record.checked = !record.checked;
-  record.checked
-    ? record.classList.add("bg-red-300")
-    : record.classList.remove("bg-red-300");
-  record.checked
-    ? record.classList.add("hover:bg-red-200")
-    : record.classList.remove("hover:bg-red-200");
-  record.checked
-    ? record.classList.remove("hover:bg-gray-100")
-    : record.classList.add("hover:bg-gray-100");
-  if (record.checked) {
+  if (record.classList.contains("unchecked")) {
+    record.classList.remove("unchecked");
+    record.classList.add("bg-red-300");
+    record.classList.add("hover:bg-red-200");
+    record.classList.remove("hover:bg-gray-100");
+  } else {
+    record.classList.remove("bg-red-300");
+    record.classList.remove("hover:bg-red-200");
+    record.classList.add("hover:bg-gray-100");
+    record.classList.add("unchecked");
+  }
+  if (!record.classList.contains("unchecked")) {
     selected_value.value.push(data);
+    emit("selectable", selected_value.value);
   } else {
     var agreementIdSplicer = selected_value.value.findIndex(
       (obj) => obj.agreement_id === data.agreement_id
@@ -115,9 +143,9 @@ const getData = (data, id) => {
 };
 
 const getCellData = (data, id) => {
-  if(!props.cellCopy) return
+  if (!props.cellCopy) return;
   const cell = document.getElementById(id);
-  console.log(cell);
+  // console.log(cell);
   if (!cell.classList.contains("bg-green-400")) {
     cell.classList.add("bg-green-400");
     navigator.clipboard.writeText(cell.innerHTML);
@@ -132,5 +160,9 @@ const onFilter = computed(() => {
       String(v[k]).toLowerCase().includes(props.filter.toLowerCase())
     )
   );
+});
+
+defineExpose({
+  unSelect,
 });
 </script>

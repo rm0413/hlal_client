@@ -301,13 +301,13 @@
                   themeStore.theme[themeStore.theme_select].sidebar_sub_icon
                 } dark:hover:text-red-200 hover:text-red-900 w-full rounded bg-${
                   themeStore.theme[themeStore.theme_select].sidebar_route_bg
-                } p-3 flex shadow-lg`"
+                } text-${themeStore.theme[themeStore.theme_select].sidebar_text} p-3 flex shadow-lg`"
               >
                 <i v-show="sub.class" :style="sub.style" :class="sub.class"></i>
                 <i v-show="sub.svg" v-html="sub.svg"></i>
                 <font-awesome-icon
                   v-if="sub.fa"
-                  class="h-4 w-4"
+                  class="h-4 w-4 "
                   :icon="sub.fa"
                 ></font-awesome-icon>
               </div>

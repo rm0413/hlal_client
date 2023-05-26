@@ -133,7 +133,7 @@ export const useNewRequestStore = defineStore({
             }
         },
         setInsertAgreementList() {
-            console.log(this.agreementForm)
+            // console.log(this.agreementForm)
             var agreement_data = {
                 trial_number: this.agreementForm.trial_number,
                 request_date: this.agreementForm.request_date,
@@ -167,7 +167,7 @@ export const useNewRequestStore = defineStore({
             })
         },
         setAutoAdd(data) {
-            console.log(data)
+            // console.log(data)
             this.agreementForm = {
                 trial_number: data.trial_number,
                 request_date: data.request_date,
