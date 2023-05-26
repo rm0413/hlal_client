@@ -24,4 +24,21 @@ const props = defineProps({
 });
 
 const selected_value = ref(null);
+
+const unSelect = () => {
+  selected_value.value = null
+}
+
+const editSelect = (data) => {
+  props.options.forEach(v => {
+    if(data === v.text){
+      selected_value.value = v
+    }
+  })
+}
+
+defineExpose({
+  unSelect,
+  editSelect,
+})
 </script>

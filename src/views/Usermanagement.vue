@@ -15,6 +15,7 @@
       <div class="mt-2">
         <label class="">Employee Name</label>
         <c-select
+        ref="empSelectComponent"
           v-model="userManagementStore.employeeForm.system_access_id"
           :options="userManagementStore.options_employee_name"
           class="text-center"
@@ -23,6 +24,7 @@
       <div class="mt-2">
         <label class="">Employee Role</label>
         <c-select
+        ref="roleSelectComponent"
           v-model="userManagementStore.employeeForm.role_id"
           :options="userManagementStore.role_options"
           class="text-center"
@@ -133,7 +135,7 @@
               <b>Change Role:</b>
               <div class="ml-3 flex justify-between mt-2">
                 <c-select
-                  ref="role_select"
+                  ref="editSelectComponent"
                   :selected="edit_user_form.item.role_access"
                   class="text-center"
                   :options="userManagementStore.role_options"
@@ -183,16 +185,21 @@ const user_system_access_id = ref(null);
 const user_data = [];
 const popover = ref(null);
 
+const roleSelectComponent = ref(null)
+const empSelectComponent = ref(null)
+const editSelectComponent = ref(null)
+
+
 const edit_user_modal = (data) => {
   edit_modal.value.showModal();
   edit_modal.value.classList.remove("-translate-y-5");
   edit_user_form.value = data;
   user_id.value = edit_user_form.value.item.user_id;
   user_employee_id.value = edit_user_form.value.item.emp_id;
+  editSelectComponent.value.editSelect(edit_user_form.value.item.role_access)
 
   userManagementStore.setRemoveUser().then((response) => {
     response.data.forEach((v) => {
-      console.log(v);
       if (user_employee_id.value === v.emp_id) {
         user_data.push({
           user_role_id: v.role_id,
@@ -265,6 +272,8 @@ const addHinseiUser = () => {
               // userManagementStore.clearUser();
               loadAll();
               edit_modal.value.close();
+              roleSelectComponent.value.unSelect()
+              empSelectComponent.value.unSelect()
               swal({
                 icon: "success",
                 title: response.message,
