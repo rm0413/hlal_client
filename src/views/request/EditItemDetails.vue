@@ -17,13 +17,13 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md" v-model="editItemDetailsStore.search_filter" />
+            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" v-model="editItemDetailsStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
           <div>
-            <select class="text-center p-1 border-2 rounded-md w-[12rem]" />
+            <c-select class="text-center w-[15rem]"></c-select>
           </div>
         </div>
       </div>
@@ -191,6 +191,7 @@ onMounted(() => {
   // })
   // })
 })
+
 const select_critical_parts = ref()
 const critical_parts_options = ref(
   [
