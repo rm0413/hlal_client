@@ -75,7 +75,7 @@ export const useEditItemDetailsStore = defineStore({
                 actual_value: this.editItemForm.actual_value,
                 critical_parts: this.editItemForm.critical_parts,
                 critical_dimension: this.editItemForm.critical_dimension,
-                request_type: this.editItemForm.kind_request.value,
+                request_type: this.editItemForm.kind_request,
                 request_value: this.editItemForm.request_value,
                 request_quantity: this.editItemForm.request_quantity,
                 unit_id: this.editItemForm.unit_id,
