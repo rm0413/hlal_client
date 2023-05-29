@@ -31,7 +31,7 @@ const unSelect = () => {
 
 const editSelect = (data) => {
   props.options.forEach(v => {
-    if(data === v.text){
+    if(data.toLowerCase() === v.text.toLowerCase()){
       selected_value.value = v
     }
   })

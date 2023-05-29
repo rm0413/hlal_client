@@ -87,7 +87,7 @@
               <Button
                 @click="edit_user_modal(data)"
                 severity="warning"
-                class="w-[1rem] items-center justify-center"
+                class="w-[1rem] items-center justify-center" v-tooltip.top="'Edit Role'"
               >
                 <font-awesome-icon icon="gear"></font-awesome-icon>
               </Button>
@@ -95,6 +95,7 @@
                 severity="danger"
                 class="w-[1rem] items-center justify-center"
                 @click="removeUser(data.item)"
+                v-tooltip.top="'Delete User'"
               >
                 <font-awesome-icon icon="circle-minus"></font-awesome-icon>
               </Button>

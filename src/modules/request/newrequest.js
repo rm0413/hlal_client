@@ -182,7 +182,7 @@ export const useNewRequestStore = defineStore({
                 revision: data.revision,
                 coordinates: data.coordinates,
                 dimension: data.dimension,
-                actual_value: data.trial_number,
+                actual_value: data.actual_value,
                 critical_parts: data.critical_parts,
                 critical_dimension: data.critical_dimension,
                 kind_request: data.request_type,

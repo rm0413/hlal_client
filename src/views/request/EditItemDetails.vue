@@ -8,17 +8,16 @@
         </label>
         <div class="flex gap-2">
           <div class="flex">
-            <label class="flex flex-col items-center justify-center">Search by:  </label>
+            <label class="flex flex-col items-center justify-center">Search by: </label>
             <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3">
               Code
             </div>
             <div class="text-center p-1 border-2 rounded w-[8rem]">Part Number</div>
           </div>
           <div class="relative">
-            <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"
-              ><font-awesome-icon icon="magnifying-glass"></font-awesome-icon
-            ></i>
-            <input class="text-center p-1 border-2 rounded-l-md" />
+            <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
+                icon="magnifying-glass"></font-awesome-icon></i>
+            <input class="text-center p-1 border-2 rounded-l-md" v-model="editItemDetailsStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
@@ -29,90 +28,14 @@
         </div>
       </div>
       <div class="h-[80vh] w-full mt-3 overflow-y-scroll">
-        <c-table
-          :items="[
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              actual_value: '+0.25/+0.30',
-              kind_of_request: 'LSA Request',
-              value_of_request: '144.5(+0.30/-0.20)',
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              actual_value: '+0.25/+0.30',
-              kind_of_request: 'LSA Request',
-              value_of_request: '144.5(+0.30/-0.20)',
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              actual_value: '+0.25/+0.30',
-              kind_of_request: 'LSA Request',
-              value_of_request: '144.5(+0.30/-0.20)',
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              actual_value: '+0.25/+0.30',
-              kind_of_request: 'LSA Request',
-              value_of_request: '144.5(+0.30/-0.20)',
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              actual_value: '+0.25/+0.30',
-              kind_of_request: 'LSA Request',
-              value_of_request: '144.5(+0.30/-0.20)',
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              actual_value: '+0.25/+0.30',
-              kind_of_request: 'LSA Request',
-              value_of_request: '144.5(+0.30/-0.20)',
-            },
-          ]"
-          :fields="editItemDetailsStore.getEditItemDetailsFields"
-          :thStyle="'bg-[#A10E13] text-white p-2 text-[13px]'"
-        >
-          <template #cell(action)>
+        <c-table :items="editItemDetailsStore.getEditItemDetails" :filter="editItemDetailsStore.search_filter"
+          :fields="editItemDetailsStore.getEditItemDetailsFields" :thStyle="'bg-[#A10E13] text-white p-2 text-[13px]'">
+          <template #cell(action)="data">
             <div class="flex justify-center gap-1">
-              <button class="h-8 w-9 rounded bg-yellow-500 text-white">
+              <button class="h-8 w-9 rounded bg-yellow-500 text-white" @click="openModal(data.item)" data-open-modal v-tooltip.top="'Edit Request'">
                 <font-awesome-icon icon="pen"></font-awesome-icon>
               </button>
-              <button class="h-8 w-9 rounded bg-[#A10E13] text-white">
+              <button class="h-8 w-9 rounded bg-[#A10E13] text-white" v-tooltip.top="'Delete Request'">
                 <font-awesome-icon icon="trash"></font-awesome-icon>
               </button>
             </div>
@@ -120,10 +43,249 @@
         </c-table>
       </div>
     </div>
+    <dialog ref="edit_item" class="p-0 rounded transform duration-300 -translate-y-5">
+      <div class="flex flex-col">
+        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
+          <span><font-awesome-icon icon="pen" /><label class="ml-2">Edit Item Modal</label></span>
+          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="edit_item.close()">
+            <font-awesome-icon icon="xmark"></font-awesome-icon>
+          </button>
+        </div>
+        <form class="grid grid-cols-3" action="post" @submit.prevent="submitUpdateAgreementList">
+          <div class="col-span-1 p-10">
+            <label class="flex flex-col gap-2">
+              Trial No.
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.trial_number" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Request Date
+              <input type="date" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.request_date" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Additional Request Qty Date
+              <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300"
+                v-model="editItemDetailsStore.editItemForm.additional_request_date" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              TRI No.
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.tri_number" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              TRI Quantity
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.tri_quantity" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Request Person
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.request_person" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Superior Approval
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.supperior_approval" required />
+            </label>
+          </div>
+          <div class="col-span-1 p-10">
+            <label class="flex flex-col gap-2">
+              Supplier
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.supplier_name" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Part Number
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.part_number" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Sub Part Number
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.sub_part_number" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Revision
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.revision" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Coordinates
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.coordinates" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Dimension
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.dimension" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Actual Value
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.actual_value" required />
+            </label>
+          </div>
+          <div class="col-span-1 p-10">
+            <label class="flex flex-col gap-2">
+              Critical Parts
+              <c-select ref="select_critical_parts" v-model="editItemDetailsStore.editItemForm.critical_parts"
+                :options="critical_parts_options" class="text-center"></c-select>
+            </label>
+            <label class="flex flex-col gap-2">
+              Critical Dimension
+              <c-select ref="select_critical_dimension" v-model="editItemDetailsStore.editItemForm.critical_dimension"
+                :options="critical_dimension_options" class="text-center"></c-select>
+            </label>
+            <label class="flex flex-col gap-2">
+              Kind of Request
+              <c-select ref="select_kind_request" v-model="editItemDetailsStore.editItemForm.kind_request"
+                :options="kind_request_options" class="text-center"></c-select>
+            </label>
+            <label class="flex flex-col gap-2">
+              Request Value
+              <textarea style="resize: none"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[6.5rem]"
+                v-model="editItemDetailsStore.editItemForm.request_value" required />
+            </label>
+            <label class="flex flex-col gap-2">
+              Request Quantity
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+                v-model="editItemDetailsStore.editItemForm.request_quantity" required />
+            </label>
+            <div class="flex justify-center items-center mt-8 gap-2">
+              <button type="submit" class="bg-[#A10E13] text-white p-1 w-[7rem] rounded">
+                Enter
+              </button>
+              <button type="button" class="bg-gray-700 text-white p-1 w-[7rem] rounded">
+                Clear
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </dialog>
   </div>
 </template>
 <script setup>
+import { ref, onMounted, inject } from "vue";
 import CTable from "@/components/Datatable.vue";
+import CSelect from "@/components/CSelect.vue";
 import { useEditItemDetailsStore } from "@/modules/request/edititemdetails";
 const editItemDetailsStore = useEditItemDetailsStore();
+
+const swal = inject("$swal");
+// const part_number = ref([]);
+const edit_item = ref(null);
+
+onMounted(() => {
+  editItemDetailsStore.setAgreementListCode()
+  // .then((response) => {
+  // console.log(response)
+  // response.forEach((v) => {
+  //   part_number.value.push(
+  //     v.part_number
+  //   )
+  // })
+  // })
+})
+const select_critical_parts = ref()
+const critical_parts_options = ref(
+  [
+    {
+      text: "Yes",
+      value: "Yes"
+    },
+    {
+      text: "No",
+      value: "No"
+    }
+  ]
+)
+const select_critical_dimension = ref()
+const critical_dimension_options = ref(
+  [
+    {
+      text: "Yes",
+      value: "Yes"
+    },
+    {
+      text: "No",
+      value: "No"
+    }
+  ]
+)
+const select_kind_request = ref()
+const kind_request_options = ref(
+  [
+    {
+      text: "LSA Request",
+      value: "LSA Request"
+    },
+    {
+      text: "Hinsei Request",
+      value: "Hinsei Request"
+    }
+  ]
+)
+
+const openModal = (data) => {
+  edit_item.value.showModal()
+  select_critical_parts.value.editSelect(data.critical_parts)
+  select_critical_dimension.value.editSelect(data.critical_dimension)
+  select_kind_request.value.editSelect(data.request_type)
+  editItemDetailsStore.editItemForm = {
+    id: data.agreement_id_pk,
+    trial_number: data.trial_number,
+    request_date: data.request_date,
+    additional_request_date: data.additional_request_qty_date,
+    tri_number: data.tri_number,
+    tri_quantity: data.tri_quantity,
+    request_person: data.request_person,
+    supperior_approval: data.superior_approval,
+    supplier_name: data.supplier_name,
+    part_number: data.part_number,
+    sub_part_number: data.sub_part_number,
+    revision: data.revision,
+    coordinates: data.coordinates,
+    dimension: data.dimension,
+    actual_value: data.actual_value,
+    critical_parts: data.critical_parts,
+    critical_dimension: data.critical_dimension,
+    kind_request: data.request_type,
+    request_value: data.request_value,
+    request_quantity: data.request_quantity,
+    unit_id: data.unit_id
+  }
+}
+const submitUpdateAgreementList = () => {
+  edit_item.value.close()
+  swal({
+    icon: "question",
+    title: "Are you sure to update this request?",
+    text: "Please make sure before to proceed!",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Submit",
+  }).then((response) => {
+    if (response.value === true) {
+      editItemDetailsStore.setUpdateAgreementList().then((response) => {
+        if (response.status === "success") {
+          swal({
+            icon: "success",
+            title: response.message,
+            timer: 1500
+          })
+        } else {
+          swal({
+            icon: "warning",
+            title: response.message,
+            timer: 1500
+          })
+        }
+      })
+    }
+  })
+}
 </script>

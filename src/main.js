@@ -40,6 +40,7 @@ import Avatar from 'primevue/avatar';
 import 'primeicons/primeicons.css';
 import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
+import Tooltip from 'primevue/tooltip';
 
 
 app.component('font-awesome-icon', FontAwesomeIcon)
@@ -53,6 +54,7 @@ app.component('FileUpload', FileUpload)
 app.component('Dialog', Dialog)
 app.component('Avatar', Avatar)
 app.component('Toast', Toast)
+app.directive('tooltip', Tooltip);
 
 
 app.use(VueSweetalert2);

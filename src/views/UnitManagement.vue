@@ -34,11 +34,11 @@
                 <c-table :fields="unitManagementStore.unitManagementFields" :items="unitManagementStore.getUnit">
                     <template #cell(action)="data">
                         <div class="flex items-center justify-center gap-1">
-                            <Button severity="warning" class="w-[1rem] items-center justify-center"
+                            <Button severity="warning" class="w-[1rem] items-center justify-center" v-tooltip.top="'Edit Unit'"
                                 @click="editUnit(data.item)">
                                 <font-awesome-icon icon="pen"></font-awesome-icon>
                             </Button>
-                            <Button severity="danger" class="w-[1rem] items-center justify-center"
+                            <Button severity="danger" class="w-[1rem] items-center justify-center" v-tooltip.top="'Delete Unit'"
                                 @click="deleteUnit(data.item)">
                                 <font-awesome-icon icon="circle-minus"></font-awesome-icon>
                             </Button>
