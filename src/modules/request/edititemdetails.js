@@ -89,6 +89,17 @@ export const useEditItemDetailsStore = defineStore({
                     reject(err)
                 })
             })
+        },
+        setDeleteAgreementList(data) {
+            var agreement_id = data.agreement_id_pk
+            return new Promise((resolve, reject) => {
+                axios.delete(`agreement-list/${agreement_id}`).then(response => {
+                    resolve(response.data)
+                    this.setAgreementListCode()
+                }).catch(err => {
+                    reject(err)
+                })
+            })
         }
     },
     getters: {

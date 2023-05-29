@@ -32,10 +32,12 @@
           :fields="editItemDetailsStore.getEditItemDetailsFields" :thStyle="'bg-[#A10E13] text-white p-2 text-[13px]'">
           <template #cell(action)="data">
             <div class="flex justify-center gap-1">
-              <button class="h-8 w-9 rounded bg-yellow-500 text-white" @click="openModal(data.item)" data-open-modal v-tooltip.top="'Edit Request'">
+              <button class="h-8 w-9 rounded bg-yellow-500 text-white" @click="openModal(data.item)" data-open-modal
+                v-tooltip.top="'Edit Request'">
                 <font-awesome-icon icon="pen"></font-awesome-icon>
               </button>
-              <button class="h-8 w-9 rounded bg-[#A10E13] text-white" v-tooltip.top="'Delete Request'">
+              <button class="h-8 w-9 rounded bg-[#A10E13] text-white" v-tooltip.top="'Delete Request'"
+                @click="deleteRequest(data.item)">
                 <font-awesome-icon icon="trash"></font-awesome-icon>
               </button>
             </div>
@@ -284,6 +286,42 @@ const submitUpdateAgreementList = () => {
             timer: 1500
           })
         }
+      })
+    }
+  })
+}
+
+const deleteRequest = (data) => {
+  swal({
+    icon: "question",
+    title: "Are you sure to delete this request?",
+    text: "Please make sure before to proceed!",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Submit",
+  }).then((response) => {
+    if (response.value === true) {
+      editItemDetailsStore.setDeleteAgreementList(data).then((response) => {
+        if (response.status === "success") {
+          swal({
+            icon: "success",
+            title: response.message,
+            timer: 1500
+          })
+        } else {
+          swal({
+            icon: "warning",
+            title: response.message,
+            timer: 1500
+          })
+        }
+      })
+    } else {
+      swal({
+        icon: "warning",
+        title: "Cancelled",
+        timer: 1500
       })
     }
   })
