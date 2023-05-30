@@ -178,9 +178,8 @@ export const useUserManagementStore = defineStore({
             var data = {
                 id: user_data[0].user_role_id,
                 system_access_id: user_data[0].user_system_access_id,
-                role_id: role_selected
+                role_id: role_selected.value
             }
-            console.log(data)
             return new Promise((resolve, reject) => {
                 axios.put(`http://10.164.58.62/FDTP-Portal/public/api/role-access/${data.id}`, data)
                     .then(function (response) {

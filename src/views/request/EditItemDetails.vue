@@ -17,7 +17,8 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" v-model="editItemDetailsStore.search_filter" />
+            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]"
+              v-model="editItemDetailsStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
@@ -131,18 +132,36 @@
           <div class="col-span-1 p-10">
             <label class="flex flex-col gap-2">
               Critical Parts
-              <c-select ref="select_critical_parts" v-model="editItemDetailsStore.editItemForm.critical_parts"
-                :options="critical_parts_options" class="text-center"></c-select>
+              <!-- <c-select ref="select_critical_parts" v-model="editItemDetailsStore.editItemForm.critical_parts"
+                :options="critical_parts_options" class="text-center"></c-select> -->
+              <select class="h-[2.3rem] border-2 rounded text-center"
+                v-model="editItemDetailsStore.editItemForm.critical_parts" required>
+                <option value="null" disabled>Select Critical Parts</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
             </label>
             <label class="flex flex-col gap-2">
               Critical Dimension
-              <c-select ref="select_critical_dimension" v-model="editItemDetailsStore.editItemForm.critical_dimension"
-                :options="critical_dimension_options" class="text-center"></c-select>
+              <!-- <c-select ref="select_critical_dimension" v-model="editItemDetailsStore.editItemForm.critical_dimension"
+                :options="critical_dimension_options" class="text-center"></c-select> -->
+              <select class="h-[2.3rem] border-2 rounded text-center"
+                v-model="editItemDetailsStore.editItemForm.critical_dimension" required>
+                <option value="null" disabled>Select Critical Dimension</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
             </label>
             <label class="flex flex-col gap-2">
               Kind of Request
-              <c-select ref="select_kind_request" v-model="editItemDetailsStore.editItemForm.kind_request"
-                :options="kind_request_options" class="text-center"></c-select>
+              <!-- <c-select ref="select_kind_request" v-model="editItemDetailsStore.editItemForm.kind_request"
+                :options="kind_request_options" class="text-center"></c-select> -->
+              <select class="h-[2.3rem] border-2 rounded text-center"
+                v-model="editItemDetailsStore.editItemForm.kind_request" required>
+                <option value="null" disabled>Select Kind of Request</option>
+                <option value="LSA Request">LSA Request</option>
+                <option value="Hinsei Request">Hinsei Request</option>
+              </select>
             </label>
             <label class="flex flex-col gap-2">
               Request Value
@@ -167,6 +186,7 @@
         </form>
       </div>
     </dialog>
+    <Toast />
   </div>
 </template>
 <script setup>
@@ -175,6 +195,8 @@ import CTable from "@/components/Datatable.vue";
 import CSelect from "@/components/CSelect.vue";
 import { useEditItemDetailsStore } from "@/modules/request/edititemdetails";
 const editItemDetailsStore = useEditItemDetailsStore();
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 
 const swal = inject("$swal");
 // const part_number = ref([]);
@@ -192,51 +214,8 @@ onMounted(() => {
   // })
 })
 
-const select_critical_parts = ref()
-const critical_parts_options = ref(
-  [
-    {
-      text: "Yes",
-      value: "Yes"
-    },
-    {
-      text: "No",
-      value: "No"
-    }
-  ]
-)
-const select_critical_dimension = ref()
-const critical_dimension_options = ref(
-  [
-    {
-      text: "Yes",
-      value: "Yes"
-    },
-    {
-      text: "No",
-      value: "No"
-    }
-  ]
-)
-const select_kind_request = ref()
-const kind_request_options = ref(
-  [
-    {
-      text: "LSA Request",
-      value: "LSA Request"
-    },
-    {
-      text: "Hinsei Request",
-      value: "Hinsei Request"
-    }
-  ]
-)
-
 const openModal = (data) => {
   edit_item.value.showModal()
-  select_critical_parts.value.editSelect(data.critical_parts)
-  select_critical_dimension.value.editSelect(data.critical_dimension)
-  select_kind_request.value.editSelect(data.request_type)
   editItemDetailsStore.editItemForm = {
     id: data.agreement_id_pk,
     trial_number: data.trial_number,
@@ -253,8 +232,8 @@ const openModal = (data) => {
     coordinates: data.coordinates,
     dimension: data.dimension,
     actual_value: data.actual_value,
-    critical_parts: data.critical_parts,
     critical_dimension: data.critical_dimension,
+    critical_parts: data.critical_parts,
     kind_request: data.request_type,
     request_value: data.request_value,
     request_quantity: data.request_quantity,

@@ -133,7 +133,6 @@ export const useNewRequestStore = defineStore({
             }
         },
         setInsertAgreementList() {
-            // console.log(this.agreementForm)
             var agreement_data = {
                 trial_number: this.agreementForm.trial_number,
                 request_date: this.agreementForm.request_date,
@@ -149,12 +148,12 @@ export const useNewRequestStore = defineStore({
                 coordinates: this.agreementForm.coordinates,
                 dimension: this.agreementForm.dimension,
                 actual_value: this.agreementForm.actual_value,
-                critical_parts: this.agreementForm.critical_parts.value,
-                critical_dimension: this.agreementForm.critical_dimension.value,
-                request_type: this.agreementForm.kind_request.value,
+                critical_parts: this.agreementForm.critical_parts,
+                critical_dimension: this.agreementForm.critical_dimension,
+                request_type: this.agreementForm.kind_request,
                 request_value: this.agreementForm.request_value,
                 request_quantity: this.agreementForm.request_quantity,
-                unit_id: this.agreementForm.unit_name,
+                unit_id: this.agreementForm.unit,
                 requestor_employee_id: sessionStorage.getItem("employee_id")
             }
             return new Promise((resolve, reject) => {
