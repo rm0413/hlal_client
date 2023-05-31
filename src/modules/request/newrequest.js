@@ -160,36 +160,11 @@ export const useNewRequestStore = defineStore({
                 axios.post('agreement-list', agreement_data).then(response => {
                     resolve(response.data)
                     this.setClearAgreementList()
+                    this.setNoCodeAgreementList()
                 }).catch(err => {
                     reject(err)
                 })
             })
-        },
-        setAutoAdd(data) {
-            // console.log(data)
-            this.agreementForm = {
-                trial_number: data.trial_number,
-                request_date: data.request_date,
-                additional_request_date: data.additional_request_qty_date,
-                tri_number: data.tri_number,
-                tri_quantity: data.tri_quantity,
-                request_person: data.request_person,
-                supperior_approval: data.superior_approval,
-                supplier_name: data.supplier_name,
-                part_number: data.part_number,
-                sub_part_number: data.sub_part_number,
-                revision: data.revision,
-                coordinates: data.coordinates,
-                dimension: data.dimension,
-                actual_value: data.actual_value,
-                critical_parts: data.critical_parts,
-                critical_dimension: data.critical_dimension,
-                kind_request: data.request_type,
-                request_value: data.request_value,
-                request_quantity: data.request_quantity,
-                unit: data.unit_name
-            }
-
         },
         setNoCodeAgreementList() {
             return new Promise((resolve, reject) => {

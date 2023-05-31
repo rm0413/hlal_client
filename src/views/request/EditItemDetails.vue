@@ -24,7 +24,7 @@
             </button>
           </div>
           <div>
-            <c-select class="text-center w-[15rem]"></c-select>
+            <c-select class="text-center w-[15rem]" :options="part_number"></c-select>
           </div>
         </div>
       </div>
@@ -190,7 +190,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, inject } from "vue";
+import { ref, onMounted, inject, computed } from "vue";
 import CTable from "@/components/Datatable.vue";
 import CSelect from "@/components/CSelect.vue";
 import { useEditItemDetailsStore } from "@/modules/request/edititemdetails";
@@ -199,19 +199,19 @@ import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
 const swal = inject("$swal");
-// const part_number = ref([]);
+const part_number = ref([]);
 const edit_item = ref(null);
 
 onMounted(() => {
   editItemDetailsStore.setAgreementListCode()
-  // .then((response) => {
-  // console.log(response)
-  // response.forEach((v) => {
-  //   part_number.value.push(
-  //     v.part_number
-  //   )
-  // })
-  // })
+  editItemDetailsStore.setLoadPartNumber().then((response) => {
+    response.data.forEach((v) => {
+      part_number.value.push({
+        text: v,
+        value: v
+      })
+    })
+  })
 })
 
 const openModal = (data) => {
