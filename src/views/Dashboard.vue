@@ -9,7 +9,7 @@
       <div
         class="flex flex-col justify-center py-4 px-16 bg-[#A10E13] rounded-full text-white"
       >
-        <span class="text-[1.5rem]">Hello, <strong>Reina Mae</strong></span>
+        <span class="text-[1.5rem]">Hello, <strong>{{ first_name }}</strong></span>
         <i class="text-[1rem] opacity-90"
           >Welcome to Hinsei & LSA Agreement List System</i
         >
@@ -93,6 +93,7 @@ const hinsei_date_to = ref();
 const lsa_date_from = ref();
 const lsa_date_to = ref();
 
+const first_name = sessionStorage.getItem("first_name")
 const documentStyle = getComputedStyle(document.body);
 const chartData = ref({
   labels: ["OK", "NG", "PENDING"],
