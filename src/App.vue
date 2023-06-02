@@ -15,15 +15,15 @@ const signOut = () => {
 }
 
 // const userprofile = ref(sessionStorage.getItem("employee_id"))
-const userprofile = ref({
-  full_name: `${sessionStorage.getItem("last_name")}, ${sessionStorage.getItem("first_name")}`,
-  employee_id: sessionStorage.getItem("employee_id"),
-  position: sessionStorage.getItem("position"),
-  photo: sessionStorage.getItem("photo"),
-  email: sessionStorage.getItem("email"),
-  section: sessionStorage.getItem("section"),
-  role: sessionStorage.getItem("role_access")
-})
+// const userprofile = ref({
+//   full_name: `${sessionStorage.getItem("last_name")}, ${sessionStorage.getItem("first_name")}`,
+//   employee_id: sessionStorage.getItem("employee_id"),
+//   position: sessionStorage.getItem("position"),
+//   photo: sessionStorage.getItem("photo"),
+//   email: sessionStorage.getItem("email"),
+//   section: sessionStorage.getItem("section"),
+//   role: sessionStorage.getItem("role_access")
+// })
 
 const systemDetails = {
   name: "Hinsei & LSA Agreement List",
@@ -111,7 +111,7 @@ const links = [
 
 <template>
   <div class="h-screen">
-    <CSidebar :systemDetails="systemDetails" :links="links" :userDetails="userprofile" :signOut="signOut"
+    <CSidebar :systemDetails="systemDetails" :links="links" :signOut="signOut"
       v-if="route.name !== 'login'">
       <template #page>
         <router-view />

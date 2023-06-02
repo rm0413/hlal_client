@@ -76,8 +76,8 @@
         <div class="text-xl text-left flex flex-col p-5">
           <div class="w-full flex items-center justify-center">
             <img
-              v-if="userDetails.photo !== undefined"
-              :src="userDetails.photo"
+              v-if="userprofile.photo !== undefined"
+              :src="userprofile.photo"
               alt=""
               class="rounded-full w-[7rem]"
             />
@@ -90,25 +90,25 @@
           </div>
           <div class="flex flex-col items-center justify-center">
             <p class="text-[#A10E13] font-bold text-[17px]">
-              {{ userDetails.full_name ? userDetails.full_name : "Dela Cruz, Juan" }}
+              {{ userprofile.full_name ? userprofile.full_name : "Dela Cruz, Juan" }}
             </p>
             <p class="text-black font-bold text-[15px]">
-              {{ userDetails.role }}
+              {{ userprofile.role }}
             </p>
             <p class="text-zinc-400 text-sm">
               {{
-                userDetails.position !== undefined
-                  ? `${userDetails.position}`
+                userprofile.position !== undefined
+                  ? `${userprofile.position}`
                   : "IT Staff"
               }}
             </p>
             <p class="text-zinc-400 text-xs">
-              {{ userDetails.section !== undefined ? `${userDetails.section}` : "MIT" }}
+              {{ userprofile.section !== undefined ? `${userprofile.section}` : "MIT" }}
             </p>
             <p class="text-zinc-400 text-xs">
               {{
-                userDetails.email !== undefined
-                  ? `${userDetails.email}`
+                userprofile.email !== undefined
+                  ? `${userprofile.email}`
                   : "john.doe@fujitsu.com"
               }}
             </p>
@@ -333,18 +333,27 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref } from "vue";
 import { useThemeStore } from "@/modules/alpha";
 const themeStore = useThemeStore();
-
 const props = defineProps({
   links: Array,
   systemDetails: Object,
-  userDetails: Object,
   signOut: Function,
   changeEmail: Function,
   changePassword: Function,
 });
+
+//User Information
+const userprofile = ref({
+  full_name: `${sessionStorage.getItem("last_name")}, ${sessionStorage.getItem("first_name")}`,
+  employee_id: sessionStorage.getItem("employee_id"),
+  position: sessionStorage.getItem("position"),
+  photo: sessionStorage.getItem("photo"),
+  email: sessionStorage.getItem("email"),
+  section: sessionStorage.getItem("section"),
+  role: sessionStorage.getItem("role_access")
+})
 
 //sidebar
 const logo = ref(null);
