@@ -37,13 +37,32 @@ export const useSavedInputsStore = defineStore({
                     reject(err)
                 })
             })
+        },
+        setGenerateCode(data) {
+            return new Promise((resolve, reject) => {
+                axios.post('generate-agreement-code', data).then(response => {
+                    resolve(response.data)
+                    this.loadRequestWithNoCode()
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        setShowGenerateCode(id) {
+            return new Promise((resolve, reject) => {
+                axios.get(`agreement-list-code/${id}`).then(response => {
+                    resolve(response.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
         }
     },
     getters: {
         getSavedInputsFields() {
             return this.savedInputsFields
         },
-        getAgreementRequest(){
+        getAgreementRequest() {
             return this.savedInputs
         }
     }

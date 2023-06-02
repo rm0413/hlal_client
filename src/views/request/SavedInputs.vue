@@ -19,26 +19,42 @@
                     </div>
                 </div>
             </div>
-           <div class="flex flex-col h-[90vh] w-full mt-3 min-[100px]:overflow-y-scroll lg:overflow-y-hidden">
+            <div class="flex flex-col h-[90vh] w-full mt-3 min-[100px]:overflow-y-scroll lg:overflow-y-hidden">
                 <div class="h-[80vh]">
-                    <c-table :filter="savedInputsStore.search_filter" :items="savedInputsStore.getAgreementRequest" :fields="savedInputsStore.getSavedInputsFields"
-                        :thStyle="'bg-[#A10E13] p-2 text-white'"></c-table>
+                    <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
+                        :filter="savedInputsStore.search_filter" :items="savedInputsStore.getAgreementRequest"
+                        :fields="savedInputsStore.getSavedInputsFields" :thStyle="'bg-[#A10E13] p-2 text-white'"></c-table>
                 </div>
                 <div class="flex flex-col items-center justify-center w-full">
-                    <button class="bg-[#A10E13] hover:bg-red-600 w-full h-[2.8rem] text-white tracking-widest font-serif text-[20px]">
+                    <button
+                        class="bg-[#A10E13] hover:bg-red-600 w-full h-[2.8rem] text-white tracking-widest font-serif text-[20px]"
+                        @click="generateCode">
                         <font-awesome-icon icon="floppy-disk" class="h-5 w-5"></font-awesome-icon> GENERATE</button>
                 </div>
             </div>
         </div>
+        <Toast position="bottom-left" group="bl"></Toast>
     </div>
 </template>
 <script setup>
 import CTable from "@/components/Datatable.vue";
 import { onMounted, ref } from "vue";
 import { useSavedInputsStore } from "@/modules/request/savedInputs";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 const savedInputsStore = useSavedInputsStore();
+const select_data = ref([])
 
 onMounted(() => {
     savedInputsStore.loadRequestWithNoCode()
 })
+
+const generateCode = () => {
+    console.log(select_data)
+    if (select_data.value.length !== 0) {
+        console.log('generate_code')
+    } else {
+        toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
+    }
+}
 </script>
