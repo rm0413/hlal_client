@@ -212,7 +212,8 @@
             </template>
           </CTable>
         </div>
-        <button class="bg-[#A10E13] hover:bg-red-600 w-full h-[2.8rem] text-white tracking-widest font-serif text-[20px]" @click="generateCode">
+        <button class="bg-[#A10E13] hover:bg-red-600 w-full h-[2.8rem] text-white tracking-widest font-serif text-[20px]"
+          @click="generateCode">
           <font-awesome-icon icon="floppy-disk" class="h-5 w-5"></font-awesome-icon> GENERATE</button>
       </div>
     </dialog>
@@ -312,6 +313,12 @@ const generateCode = () => {
               text: "Your code has been generated.",
             });
           }
+        });
+      } else {
+        swal({
+          icon: "warning",
+          title: response.message,
+          timer: 2000
         });
       }
     });

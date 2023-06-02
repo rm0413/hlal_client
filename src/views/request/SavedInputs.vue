@@ -38,21 +38,50 @@
 </template>
 <script setup>
 import CTable from "@/components/Datatable.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, inject } from "vue";
 import { useSavedInputsStore } from "@/modules/request/savedInputs";
 import { useToast } from "primevue/usetoast";
+
+const swal = inject("$swal");
 const toast = useToast();
 const savedInputsStore = useSavedInputsStore();
 const select_data = ref([])
+const ctable = ref()
 
 onMounted(() => {
     savedInputsStore.loadRequestWithNoCode()
 })
 
 const generateCode = () => {
-    console.log(select_data)
     if (select_data.value.length !== 0) {
-        console.log('generate_code')
+        var payload = {
+            agreement_request_id: []
+        }
+        select_data.value.forEach((v) => {
+            payload.agreement_request_id.push(v.agreement_id_pk)
+        })
+        savedInputsStore.setGenerateCode(payload).then((response) => {
+            // console.log(response.data)
+            if (response.status === "success") {
+                savedInputsStore.setShowGenerateCode(response.data.id).then((response) => {
+                    if (response.status === "success") {
+                        ctable.value.unSelect();
+                        select_data.value = [];
+                        swal({
+                            icon: "success",
+                            title: response.data[0].code,
+                            text: "Your code has been generated.",
+                        });
+                    }
+                });
+            } else {
+                swal({
+                    icon: "warning",
+                    title: response.message,
+                    timer: 2000
+                });
+            }
+        })
     } else {
         toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
     }
