@@ -18,6 +18,7 @@ export const useSavedInputsStore = defineStore({
             { label: 'Request Value', key: 'request_value' },
             { label: 'Critical Parts', key: 'critical_parts' },
         ],
+        search_filter: "",
         savedInputsForm: {
             savedInputs_unit_name: '',
             savedInputs_supplier: '',

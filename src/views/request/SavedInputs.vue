@@ -11,7 +11,7 @@
                         <div class="relative">
                             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                                     icon="magnifying-glass"></font-awesome-icon></i>
-                            <input class="text-center p-1 border-2 rounded-l-md" />
+                            <input v-model="savedInputsStore.search_filter" class="text-center p-1 border-2 rounded-l-md" />
                             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
                                 Search
                             </button>
@@ -21,7 +21,7 @@
             </div>
            <div class="flex flex-col h-[90vh] w-full mt-3 min-[100px]:overflow-y-scroll lg:overflow-y-hidden">
                 <div class="h-[80vh]">
-                    <c-table :items="savedInputsStore.getAgreementRequest" :fields="savedInputsStore.getSavedInputsFields"
+                    <c-table :filter="savedInputsStore.search_filter" :items="savedInputsStore.getAgreementRequest" :fields="savedInputsStore.getSavedInputsFields"
                         :thStyle="'bg-[#A10E13] p-2 text-white'"></c-table>
                 </div>
                 <div class="flex flex-col items-center justify-center w-full">
