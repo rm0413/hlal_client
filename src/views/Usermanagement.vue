@@ -74,7 +74,7 @@
           </template>
           <template #cell(photo)="data">
             <div class="flex items-center justify-center">
-              <Avatar size="large" :image="data.item.emp_photo"></Avatar>
+              <Avatar size="large" :image="data.item.emp_photo" shape="circle"></Avatar>
             </div>
           </template>
           <template #cell(fullname)="data">

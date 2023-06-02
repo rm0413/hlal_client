@@ -8,11 +8,14 @@
           </label>
           <div class="flex gap-2 mr-10">
             <div class="flex flex-row w-[18rem]">
+              <p
+                class="flex flex-col text-white bg-[#A10E13] h-[2.5rem] w-[5rem] items-center justify-center rounded-l-md">
+                Unit</p>
               <!-- <c-select ref="select_unit" class="h-[2.5rem] text-center" :options="units"
               v-model="newRequestStore.agreementForm.unit"></c-select> -->
-              <select class="h-[2.5rem] border-2 rounded text-center w-[16rem]"
+              <select class="h-[2.5rem] border-2 rounded text-center w-[16rem] rounded-r-md"
                 v-model="newRequestStore.agreementForm.unit" required>
-                <option :value="null" disabled>Select Unit</option>
+                <option value="" disabled>Select Unit</option>
                 <option v-for="i in units" :value="i.unit_id">{{ i.text }}</option>
               </select>
             </div>
@@ -20,7 +23,8 @@
               <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                   icon="magnifying-glass"></font-awesome-icon></i>
               <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" v-model="newRequestStore.search_filter" />
-              <button type="button" @click="openModal('search')" class="h-[2.5rem] bg-gray-400 text-white py-1 px-3 rounded-r-md">
+              <button type="button" @click="openModal('search')"
+                class="h-[2.5rem] bg-gray-400 text-white py-1 px-3 rounded-r-md">
                 Search
               </button>
             </div>
@@ -106,7 +110,7 @@
               Critical Parts
               <select class="h-[2.3rem] border-2 rounded text-center"
                 v-model="newRequestStore.agreementForm.critical_parts" required>
-                <option value="null" disabled>Select Critical Parts</option>
+                <option value="" disabled>Select Critical Parts</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
@@ -119,7 +123,7 @@
               :options="critical_dimension_options" class="text-center"></c-select> -->
               <select class="h-[2.3rem] border-2 rounded text-center"
                 v-model="newRequestStore.agreementForm.critical_dimension" required>
-                <option value="null" disabled>Select Critical Dimension</option>
+                <option value="" disabled>Select Critical Dimension</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
@@ -130,7 +134,7 @@
                 :options="kind_request_options" class="text-center"></c-select> -->
               <select class="h-[2.3rem] border-2 rounded text-center" v-model="newRequestStore.agreementForm.kind_request"
                 required>
-                <option value="null" disabled>Select Kind of Request</option>
+                <option value="" disabled>Select Kind of Request</option>
                 <option value="LSA Request">LSA Request</option>
                 <option value="Hinsei Request">Hinsei Request</option>
               </select>
@@ -239,8 +243,9 @@
           </c-table>
         </div>
       </div>
+      <Toast position="bottom-left"></Toast>
+      <Toast position="bottom-left" group="bl"></Toast>
     </dialog>
-    <Toast />
   </div>
 </template>
 
@@ -288,28 +293,33 @@ const autoAdd = (data) => {
 };
 
 const generateCode = () => {
-  view_items.value.close();
-  var payload = {
-    agreement_request_id: [],
-  };
-  checkedData.value.forEach((v) => {
-    payload.agreement_request_id.push(v.agreement_id_pk);
-  });
-  newRequestStore.setGenerateCode(payload).then((response) => {
-    if (response.status === "success") {
-      newRequestStore.setShowGenerateCode(response.data.id).then((response) => {
-        if (response.status === "success") {
-          ctable.value.unSelect();
-          checkedData.value = [];
-          swal({
-            icon: "success",
-            title: response.data[0].code,
-            text: "Your code has been generated.",
-          });
-        }
-      });
-    }
-  });
+  if (checkedData.value.length !== 0) {
+    view_items.value.close();
+    var payload = {
+      agreement_request_id: [],
+    };
+    checkedData.value.forEach((v) => {
+      payload.agreement_request_id.push(v.agreement_id_pk);
+    });
+    newRequestStore.setGenerateCode(payload).then((response) => {
+      if (response.status === "success") {
+        newRequestStore.setShowGenerateCode(response.data.id).then((response) => {
+          if (response.status === "success") {
+            ctable.value.unSelect();
+            checkedData.value = [];
+            swal({
+              icon: "success",
+              title: response.data[0].code,
+              text: "Your code has been generated.",
+            });
+          }
+        });
+      }
+    });
+  } else {
+    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
+  }
+
 };
 
 const submitAgreementList = () => {
@@ -357,11 +367,8 @@ const openModal = (modal) => {
       search.value.showModal();
       search.value.classList.remove("-translate-y-5");
     } else {
-      swal({
-        icon: "warning",
-        title: "Please Input a data.",
-        timer: 2500,
-      });
+      console.log('Please input data.')
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Please input data.', life: 2000 });
     }
   }
 };

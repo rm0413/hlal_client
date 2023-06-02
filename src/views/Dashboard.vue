@@ -93,13 +93,16 @@ const hinsei_date_to = ref();
 const lsa_date_from = ref();
 const lsa_date_to = ref();
 
+const documentStyle = getComputedStyle(document.body);
 const chartData = ref({
   labels: ["OK", "NG", "PENDING"],
   datasets: [
     {
       label: "Hinsei",
       data: [540, 325, 702],
-      backgroundColor: ["#A10E13"],
+      backgroundColor: [documentStyle.getPropertyValue('--green-700'), documentStyle.getPropertyValue('--red-700'), documentStyle.getPropertyValue('--yellow-500')],
+      hoverBackgroundColor: [documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--yellow-400')]
+      // backgroundColor: ["#A10E13"],
     },
   ],
 });
@@ -109,7 +112,8 @@ const chartData2 = ref({
     {
       label: "LSA",
       data: [540, 325, 702],
-      backgroundColor: ["#A10E13"],
+      backgroundColor: [documentStyle.getPropertyValue('--green-700'), documentStyle.getPropertyValue('--red-700'), documentStyle.getPropertyValue('--yellow-500')],
+      hoverBackgroundColor: [documentStyle.getPropertyValue('--green-400'), documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--yellow-400')]
     },
   ],
 });
