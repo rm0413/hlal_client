@@ -212,9 +212,8 @@
             </template>
           </CTable>
         </div>
-        <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600" @click="generateCode">
-          Generate
-        </button>
+        <button class="bg-[#A10E13] hover:bg-red-600 w-full h-[2.8rem] text-white tracking-widest font-serif text-[20px]">
+          <font-awesome-icon icon="floppy-disk" class="h-5 w-5"></font-awesome-icon> GENERATE</button>
       </div>
     </dialog>
     <!--Search-->
