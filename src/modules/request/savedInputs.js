@@ -31,7 +31,7 @@ export const useSavedInputsStore = defineStore({
         loadRequestWithNoCode() {
             return new Promise((resolve, reject) => {
                 axios.get('load-with-no-code-request').then(response => {
-                    resolve(response.data)
+                    resolve(response.data.data)
                     this.savedInputs = response.data.data
                 }).catch(err => {
                     reject(err)
