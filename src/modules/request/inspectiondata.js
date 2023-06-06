@@ -15,6 +15,7 @@ export const useInspectionDataStore = defineStore({
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
             { label: 'Critical Parts', key: 'critical_parts' },
+            { label: 'Cpk', key: 'cpk_data' },
         ],
         inspectionDataForm: {
             inspectionData_unit_name: '',
