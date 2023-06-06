@@ -18,9 +18,10 @@ export const useInspectionDataStore = defineStore({
             { label: 'Cpk', key: 'cpk_data' },
         ],
         inspectionDataForm: {
-            inspectionData_unit_name: '',
-            inspectionData_supplier: '',
-            inspectionData_part_number: '',
+            cpk_data: null,
+            inspection_rework: null,
+            revised_date: null,
+            send_date: null,
         },
         onEdit: false,
         onEditIndex: null
@@ -36,6 +37,14 @@ export const useInspectionDataStore = defineStore({
                     reject(err)
                 })
             })
+        },
+        clearInspectionData(){
+            this.inspectionDataForm = {
+                cpk_data: null,
+                inspection_rework: null,
+                revised_date: null,
+                send_date: null,
+            }
         }
     },
     getters: {

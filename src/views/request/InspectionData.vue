@@ -38,23 +38,25 @@
         <form method="post" @submit.prevent="submitInspectionData">
           <label class="flex flex-col items-center">
             <i class="text-gray-400">100% of Inspection Data or CPK Data</i>
-            <textarea style="resize:none" class="border-2 rounded w-full h-[10rem]" required></textarea>
+            <textarea style="resize:none" class="border-2 rounded w-full h-[10rem] text-center" v-model="inspectionDataStore.inspectionDataForm.cpk_data" required></textarea>
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Inspection after Rework</i>
-            <input type="text" class="border-2 rounded w-full h-[3rem]" required />
+            <input type="text" class="border-2 rounded w-full h-[3rem] text-center" v-model="inspectionDataStore.inspectionDataForm.inspection_rework" required />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Revised Date of IGM</i>
-            <input type="date" class="border-2 rounded w-full h-[3rem] text-center " />
+            <input type="date" class="border-2 rounded w-full h-[3rem] text-center " v-model="inspectionDataStore.inspectionDataForm.revised_date" />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Send Date of IGM</i>
-            <input type="date" class="border-2 rounded w-full h-[3rem] text-center " />
+            <input type="date" class="border-2 rounded w-full h-[3rem] text-center " v-model="inspectionDataStore.inspectionDataForm.send_date" />
           </label>
           <button type="submit"
             class="flex gap-2 bg-[#A10E13] p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
               icon="floppy-disk"></font-awesome-icon>Save</button>
+          <button type="button" @click="inspectionDataStore.clearInspectionData"
+            class="flex gap-2 bg-gray-600 hover:bg-gray-500 p-3 text-white rounded justify-center items-center w-full mt-2">Clear</button>
         </form>
       </div>
     </div>
