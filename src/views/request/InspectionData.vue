@@ -33,10 +33,11 @@
       class="h-[85vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
     >
       <div
-        class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[70vh] bg-gray-100 overflow-y-scroll"
+        class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[81vh] overflow-y-scroll"
       >
-        <c-table
+        <c-table ref="c-table" :isSelectable="true" @selectable="(data) => (select_data = data)"
           :fields="inspectionDataStore.getInspectionDataFields"
+          :items="inspectionDataStore.getInspectionData"
           :thStyle="'bg-[#A10E13] p-2 text-white'"
         ></c-table>
       </div>
@@ -57,13 +58,23 @@
             <i class="text-gray-400">Send Date of IGM</i>
           <input type="date" class="border-2 rounded w-full h-[3rem] text-center "/>
         </label>
-        <button class="flex gap-2 bg-[#A10E13] p-3 text-white rounded justify-center items-center"><font-awesome-icon icon="floppy-disk"></font-awesome-icon>Save</button>
+        <button @click="submitInspectionData" class="flex gap-2 bg-[#A10E13] p-3 text-white rounded justify-center items-center"><font-awesome-icon icon="floppy-disk"></font-awesome-icon>Save</button>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import { onMounted, ref } from "vue";
 import CTable from "@/components/Datatable.vue";
 import { useInspectionDataStore } from "@/modules/request/inspectiondata";
 const inspectionDataStore = useInspectionDataStore();
+const ctable = ref()
+const select_data = ref([])
+onMounted(() => {
+  inspectionDataStore.setInspectionDataRequest()
+})
+
+// const submitInspectionData = () => {
+//   console.log(select_data.value)
+// }
 </script>
