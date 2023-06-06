@@ -35,25 +35,27 @@
           :thStyle="'bg-[#A10E13] p-2 text-white'"></c-table>
       </div>
       <div class="lg:col-span-2 min-[100px]:col-span-9 h-full flex flex-col mt-10 gap-2 px-10">
-        <label class="flex flex-col items-center">
-          <i class="text-gray-400">100% of Inspection Data or CPK Data</i>
-          <textarea style="resize:none" class="border-2 rounded w-full h-[10rem]"></textarea>
-        </label>
-        <label class="flex flex-col items-center">
-          <i class="text-gray-400">Inspection after Rework</i>
-          <input type="text" class="border-2 rounded w-full h-[3rem]" />
-        </label>
-        <label class="flex flex-col items-center">
-          <i class="text-gray-400">Revised Date of IGM</i>
-          <input type="date" class="border-2 rounded w-full h-[3rem] text-center " />
-        </label>
-        <label class="flex flex-col items-center">
-          <i class="text-gray-400">Send Date of IGM</i>
-          <input type="date" class="border-2 rounded w-full h-[3rem] text-center " />
-        </label>
-        <button @click="submitInspectionData"
-          class="flex gap-2 bg-[#A10E13] p-3 text-white rounded justify-center items-center"><font-awesome-icon
-            icon="floppy-disk"></font-awesome-icon>Save</button>
+        <form method="post" @submit.prevent="submitInspectionData">
+          <label class="flex flex-col items-center">
+            <i class="text-gray-400">100% of Inspection Data or CPK Data</i>
+            <textarea style="resize:none" class="border-2 rounded w-full h-[10rem]" required></textarea>
+          </label>
+          <label class="flex flex-col items-center">
+            <i class="text-gray-400">Inspection after Rework</i>
+            <input type="text" class="border-2 rounded w-full h-[3rem]" required />
+          </label>
+          <label class="flex flex-col items-center">
+            <i class="text-gray-400">Revised Date of IGM</i>
+            <input type="date" class="border-2 rounded w-full h-[3rem] text-center " />
+          </label>
+          <label class="flex flex-col items-center">
+            <i class="text-gray-400">Send Date of IGM</i>
+            <input type="date" class="border-2 rounded w-full h-[3rem] text-center " />
+          </label>
+          <button type="submit"
+            class="flex gap-2 bg-[#A10E13] p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
+              icon="floppy-disk"></font-awesome-icon>Save</button>
+        </form>
       </div>
     </div>
     <Toast position="bottom-left" group="bl"></Toast>
