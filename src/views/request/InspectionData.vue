@@ -17,7 +17,7 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md" />
+            <input class="text-center p-1 border-2 rounded-l-md" v-model="inspectionDataStore.search_filter"/>
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
@@ -32,7 +32,7 @@
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[81vh] overflow-y-scroll">
         <c-table ref="c-table" :isSelectable="true" @selectable="(data) => (select_data = data)"
           :fields="inspectionDataStore.getInspectionDataFields" :items="inspectionDataStore.getInspectionData"
-          :thStyle="'bg-[#A10E13] p-2 text-white'"></c-table>
+          :thStyle="'bg-[#A10E13] p-2 text-white'" :filter="inspectionDataStore.search_filter"></c-table>
       </div>
       <div class="lg:col-span-2 min-[100px]:col-span-9 h-full flex flex-col mt-10 gap-2 px-10">
         <form method="post" @submit.prevent="submitInspectionData">

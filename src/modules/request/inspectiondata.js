@@ -24,7 +24,8 @@ export const useInspectionDataStore = defineStore({
             send_date: null,
         },
         onEdit: false,
-        onEditIndex: null
+        onEditIndex: null,
+        search_filter: ""
     }),
     actions: {
         setInspectionDataRequest() {
