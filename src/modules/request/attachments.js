@@ -40,6 +40,15 @@ export const useAttachmentsStore = defineStore({
                     reject(err)
                 })
             })
+        },
+        setLoadPartNumber() {
+            return new Promise((resolve, reject) => {
+                axios.get('load-part-number-with-code').then(response => {
+                    resolve(response.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
         }
     },
     getters: {

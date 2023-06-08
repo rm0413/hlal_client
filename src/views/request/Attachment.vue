@@ -23,7 +23,7 @@
             </button>
           </div>
           <div>
-            <select class="text-center p-1 border-2 rounded-md w-[12rem]" />
+            <CSelect class="text-center p-1 border-2 rounded-md w-[12rem]" :options="part_number" v-model="attachmentsStore.part_number_select"></CSelect>
           </div>
         </div>
       </div>
@@ -65,6 +65,7 @@ import { ref, onMounted, inject } from "vue";
 const swal = inject("$swal");
 import FileUploader from "@/components/FileUploader.vue";
 import CTable from "@/components/Datatable.vue"
+import CSelect from "@/components/CSelect.vue"
 import { useAttachmentsStore } from '@/modules/request/attachments'
 const attachmentsStore = useAttachmentsStore()
 import { useToast } from "primevue/usetoast";
@@ -72,14 +73,19 @@ const toast = useToast();
 
 const ctable = ref();
 const select_data = ref([]); //select table
+const part_number = ref([])
 onMounted(() => {
   attachmentsStore.setAgreementListCode()
-  // startProgress();
+  attachmentsStore.setLoadPartNumber().then((response) => {
+    response.data.forEach((v) => {
+      part_number.value.push({
+        text: v,
+        value: v
+      })
+    })
+  })
 })
 const fileUpload = ref()
-// onBeforeUnmount(() => {
-//   endProgress();
-// });
 const value1 = ref(0);
 const interval = ref();
 const startProgress = () => {
