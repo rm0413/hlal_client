@@ -23,7 +23,7 @@
             </button>
           </div>
           <div>
-            <CSelect class="text-center p-1 border-2 rounded-md w-[12rem]" :options="part_number"></CSelect>
+            <CSelect class="text-center p-1 border-2 rounded-md w-[12rem]" :options="part_number" v-model="inspectionDataStore.part_number_select"></CSelect>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
     <div class="h-[85vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[81vh] overflow-y-scroll">
         <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
-          :fields="inspectionDataStore.getInspectionDataFields" :items="inspectionDataStore.getInspectionData"
+          :fields="inspectionDataStore.getInspectionDataFields" :items="filterPartNumber"
           :thStyle="'bg-[#A10E13] p-2 text-white'" :filter="inspectionDataStore.search_filter">
           <template #cell(action)="data">
             <button @click="editCpkData(data.item)" v-if="data.item.cpk_data !== null"
@@ -79,7 +79,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref, inject } from "vue";
+import { onMounted, ref, inject, computed } from "vue";
 import CTable from "@/components/Datatable.vue";
 import CSelect from "@/components/CSelect.vue";
 import { useInspectionDataStore } from "@/modules/request/inspectiondata";
@@ -173,4 +173,10 @@ const updateInspectionData = () => {
     }
   })
 }
+
+const filterPartNumber = computed(() => {
+  return inspectionDataStore.getInspectionData.filter((v) =>
+  v.part_number == inspectionDataStore.part_number_select.value
+  );
+})
 </script>
