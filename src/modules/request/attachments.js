@@ -13,7 +13,10 @@ export const useAttachmentsStore = defineStore({
             { label: 'Part Number', key: 'part_number' },
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
-        ]
+        ],
+        part_number_select: '',
+        search_filter: ''
+
     }),
     actions: {
         setAgreementListCode() {

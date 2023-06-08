@@ -17,7 +17,7 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md" />
+            <input class="text-center p-1 border-2 rounded-l-md" v-model="attachmentsStore.search_filter"/>
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
@@ -49,8 +49,8 @@
         </form>
       </div>
       <div class="col-span-7 my-5 overflow-y-scroll">
-        <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
-          :items="attachmentsStore.getAttachment" :fields="attachmentsStore.getAttachmentsFields"
+        <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)" :filter="attachmentsStore.search_filter"
+          :items="filterPartNumber" :fields="attachmentsStore.getAttachmentsFields"
           :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'">
         </CTable>
       </div>
@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject } from "vue";
+import { ref, onMounted, inject, computed } from "vue";
 const swal = inject("$swal");
 import FileUploader from "@/components/FileUploader.vue";
 import CTable from "@/components/Datatable.vue"
@@ -107,8 +107,6 @@ const file = ref(null);
 const uploadFile = (event) => {
   startProgress();
   file.value = event.target.files[0];
-  // filename.value = event.target.files[0].name
-  // console.log(filename)
 };
 const submitAttachment = () => {
   console.log(select_data.value)
@@ -148,4 +146,10 @@ const submitAttachment = () => {
     console.log('Please select data in table')
   }
 }
+
+const filterPartNumber = computed(() => {
+  return attachmentsStore.getAttachment.filter((v) =>
+  v.part_number == attachmentsStore.part_number_select.value
+  );
+})
 </script>
