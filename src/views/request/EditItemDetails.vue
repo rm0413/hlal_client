@@ -24,12 +24,12 @@
             </button>
           </div>
           <div>
-            <c-select class="text-center w-[15rem]" :options="part_number"></c-select>
+            <c-select class="text-center w-[15rem]" :options="part_number" v-model="editItemDetailsStore.part_number_select"></c-select>
           </div>
         </div>
       </div>
       <div class="h-[80vh] w-full mt-3 overflow-y-scroll">
-        <c-table :items="editItemDetailsStore.getEditItemDetails" :filter="editItemDetailsStore.search_filter"
+        <c-table :items="filterPartNumber" :filter="editItemDetailsStore.search_filter"
           :fields="editItemDetailsStore.getEditItemDetailsFields" :thStyle="'bg-[#A10E13] text-white p-2 text-[13px]'">
           <template #cell(action)="data">
             <div class="flex justify-center gap-1">
@@ -212,6 +212,12 @@ onMounted(() => {
       })
     })
   })
+})
+
+const filterPartNumber = computed(() => {
+  return editItemDetailsStore.getEditItemDetails.filter((v) =>
+  v.part_number == editItemDetailsStore.part_number_select.value
+  );
 })
 
 const openModal = (data) => {

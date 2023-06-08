@@ -44,6 +44,7 @@ export const useEditItemDetailsStore = defineStore({
         onEdit: false,
         onEditIndex: null,
         search_filter: '',
+        part_number_select: ''
     }),
     actions: {
         setAgreementListCode() {

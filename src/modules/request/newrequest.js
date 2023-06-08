@@ -195,16 +195,16 @@ export const useNewRequestStore = defineStore({
                 })
             })
         },
-        setDownloadFormat() {
-            return new Promise((resolve, reject) => {
-                axios.get('download').then(response => {
-                    resolve(response.data)
-                    console.log(response.data)
-                }).catch(err => {
-                    reject(err)
-                })
-            })
-        },
+        // setDownloadFormat() {
+        //     return new Promise((resolve, reject) => {
+        //         axios.get('download').then(response => {
+        //             resolve(response.data)
+        //             console.log(response.data)
+        //         }).catch(err => {
+        //             reject(err)
+        //         })
+        //     })
+        // },
 
     },
     getters: {
