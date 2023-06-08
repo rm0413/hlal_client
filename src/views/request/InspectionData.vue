@@ -23,7 +23,7 @@
             </button>
           </div>
           <div>
-            <select class="text-center p-1 border-2 rounded-md w-[12rem]" />
+            <CSelect class="text-center p-1 border-2 rounded-md w-[12rem]" :options="part_number"></CSelect>
           </div>
         </div>
       </div>
@@ -81,6 +81,7 @@
 <script setup>
 import { onMounted, ref, inject } from "vue";
 import CTable from "@/components/Datatable.vue";
+import CSelect from "@/components/CSelect.vue";
 import { useInspectionDataStore } from "@/modules/request/inspectiondata";
 import { useToast } from "primevue/usetoast";
 const inspectionDataStore = useInspectionDataStore();
@@ -88,8 +89,17 @@ const swal = inject("$swal");
 const toast = useToast();
 const ctable = ref()
 const select_data = ref([])
+const part_number = ref([]);
 onMounted(() => {
   inspectionDataStore.setInspectionDataRequest()
+  inspectionDataStore.setLoadPartNumber().then((response) => {
+    response.data.forEach((v) => {
+      part_number.value.push({
+        text: v,
+        value: v
+      })
+    })
+  })
 })
 
 const submitInspectionData = () => {
