@@ -13,6 +13,7 @@ export const useAttachmentsStore = defineStore({
             { label: 'Part Number', key: 'part_number' },
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
+            { label: 'Action', key: 'action' },
         ],
         part_number_select: '',
         search_filter: ''
@@ -52,7 +53,17 @@ export const useAttachmentsStore = defineStore({
                     reject(err)
                 })
             })
-        }
+        },
+        downloadAttachment(payload) {
+            return new Promise((resolve, reject) => {
+                axios.get('http://10.164.58.62/hinsei/server/public/download-attachment', payload).then(response => {
+                    resolve(response.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        
     },
     getters: {
         getAttachmentsFields() {

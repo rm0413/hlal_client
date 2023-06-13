@@ -17,13 +17,14 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md" v-model="attachmentsStore.search_filter"/>
+            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" v-model="attachmentsStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
           <div>
-            <CSelect class="text-center p-1 border-2 rounded-md w-[12rem]" :options="part_number" v-model="attachmentsStore.part_number_select"></CSelect>
+            <CSelect class="text-center p-1 border-2 rounded-md w-[14rem] h-[2.5rem] text-lg" :options="part_number"
+              v-model="attachmentsStore.part_number_select"></CSelect>
           </div>
         </div>
       </div>
@@ -33,25 +34,41 @@
         <p class="flex flex-col text-white bg-[#A10E13] h-[2.5rem] w-full items-center justify-center rounded mt-5">
           Attachments</p>
         <form method="post" @submit.prevent="submitAttachment">
-          <div class="flex flex-col items-center justify-center mt-10">
-            <input id="input-file" type="file" accept=".pdf" @change="uploadFile" :draggable="true" class="text-sm text-grey-500 w-full h-[6rem]
+          <div class="flex flex-col items-center justify-center mt-2 border-2 border-black rounded-xl border-dashed">
+            <input id="input-file" type="file" accept=".pdf" @change="uploadFile" :draggable="true" class="text-sm text-grey-500 w-full h-[10rem] mt-10
             file:mr-5 file:py-2 file:px-6
             file:rounded-full file:border-0
             file:text-sm file:font-medium
             file:bg-blue-50 file:text-blue-700
             hover:file:cursor-pointer hover:file:bg-amber-50
             hover:file:text-amber-700" required />
-            <div class="flex flex-col items-center justify-center w-full mt-5">
-              <ProgressBar :value="value1" class="w-full bg-gray-300 h-[0.5rem] text-[9px]" />
-              <button class="bg-[#A10E13] text-white p-1 w-full h-[3rem] rounded mt-5 " type="submit">Save</button>
-            </div>
+            <span class="file-msg">or drag and drop PDF file here</span>
+          </div>
+          <div class="flex flex-col items-center justify-center w-full">
+            <!-- <ProgressBar :value="value1" class="w-full bg-gray-300 h-[0.5rem] text-[9px]" /> -->
+            <button class="bg-[#A10E13] text-white p-1 w-full h-[3rem] rounded mt-5 " type="submit">Save</button>
           </div>
         </form>
       </div>
       <div class="col-span-7 my-5 overflow-y-scroll">
-        <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)" :filter="attachmentsStore.search_filter"
-          :items="filterPartNumber" :fields="attachmentsStore.getAttachmentsFields"
-          :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'">
+        <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
+          :filter="attachmentsStore.search_filter" :items="filterPartNumber"
+          :fields="attachmentsStore.getAttachmentsFields" :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'">
+          <template #cell(action)="data">
+            <!-- <button @click="download"
+              class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500">
+              Download
+            </button> -->
+            <!-- <a :href="path"><button @click="download"
+                class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500">
+                Download
+              </button></a> -->
+            <!-- <button @click="download"
+              class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500">
+              Download
+            </button> -->
+            <!-- <a  class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500" :href="`http://10.164.58.62/hinsei/server/public/download-attachment?file_path_attachment=GDdJTg5szroNvIpX0w3vUCAfZTrKJI6gvuLXowms.pdf`" >Download</a> -->
+          </template>
         </CTable>
       </div>
     </div>
@@ -74,6 +91,7 @@ const toast = useToast();
 const ctable = ref();
 const select_data = ref([]); //select table
 const part_number = ref([])
+const path = ref(null);
 onMounted(() => {
   attachmentsStore.setAgreementListCode()
   attachmentsStore.setLoadPartNumber().then((response) => {
@@ -85,71 +103,85 @@ onMounted(() => {
     })
   })
 })
-const fileUpload = ref()
+// const fileUpload = ref()
 const value1 = ref(0);
-const interval = ref();
-const startProgress = () => {
-  interval.value = setInterval(() => {
-    let newValue = value1.value + Math.floor(Math.random() * 1) + 90;
-    if (newValue >= 100) {
-      newValue = 100;
-      toast.add({ severity: 'success', summary: 'Success', detail: 'PDF File Upload Completed.', life: 2000 });
-      endProgress();
-    }
-    value1.value = newValue;
-  }, 2000);
-};
-const endProgress = () => {
-  clearInterval(interval.value);
-  interval.value = null;
-};
+// const interval = ref();
+// const startProgress = () => {
+//   interval.value = setInterval(() => {
+//     let newValue = value1.value + Math.floor(Math.random() * 1) + 90;
+//     if (newValue >= 100) {
+//       newValue = 100;
+//       toast.add({ severity: 'success', summary: 'Success', detail: 'PDF File Upload Completed.', life: 2000 });
+//       endProgress();
+//     }
+//     value1.value = newValue;
+//   }, 2000);
+// };
+// const endProgress = () => {
+//   clearInterval(interval.value);
+//   interval.value = null;
+// };
 const file = ref(null);
 const uploadFile = (event) => {
-  startProgress();
+  // startProgress();
   file.value = event.target.files[0];
 };
 const submitAttachment = () => {
-  console.log(select_data.value)
-  if (select_data.value.length !== 0) {
-    var payload = {
-      agreement_request_id: [],
-    };
-    select_data.value.forEach((v) => {
-      payload.agreement_request_id.push(v.agreement_id_pk);
-    });
-    const formData = new FormData();
-    formData.append('file_path_attachment', file.value);
-    payload.agreement_request_id.forEach(function (value) {
-      formData.append("agreement_request_id[]", value) // you have to add array symbol after the key name
-    })
-    attachmentsStore.setInsertAttachment(formData).then((response) => {
-      if (response.status === "success") {
-        ctable.value.unSelect();
-        select_data.value = [];
-        document.getElementById("input-file").value = null;
-        value1.value = 0;
-        swal({
-          icon: "success",
-          title: response.message,
-          timer: 1500
-        })
-      } else {
-        swal({
-          icon: "warning",
-          title: response.message,
-          timer: 1500
-        })
-      }
-    })
+  // console.log(file.value)
+  if (file.value.type === "application/pdf") {
+    if (select_data.value.length !== 0) {
+      var payload = {
+        agreement_request_id: [],
+      };
+      select_data.value.forEach((v) => {
+        payload.agreement_request_id.push(v.agreement_id_pk);
+      });
+      const formData = new FormData();
+      formData.append('file_path_attachment', file.value);
+      payload.agreement_request_id.forEach(function (value) {
+        formData.append("agreement_request_id[]", value) // you have to add array symbol after the key name
+      })
+      attachmentsStore.setInsertAttachment(formData).then((response) => {
+        if (response.status === "success") {
+          ctable.value.unSelect();
+          select_data.value = [];
+          document.getElementById("input-file").value = null;
+          value1.value = 0;
+          swal({
+            icon: "success",
+            title: response.message,
+            timer: 1500
+          })
+        } else {
+          swal({
+            icon: "warning",
+            title: response.message,
+            timer: 1500
+          })
+        }
+      })
+    } else {
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
+      console.log('Please select data in table')
+    }
   } else {
-    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
-    console.log('Please select data in table')
+    toast.add({ severity: 'error', summary: 'Warning', detail: 'Only PDF File Allowed.', life: 2000, group: 'bl' });
   }
 }
 
 const filterPartNumber = computed(() => {
   return attachmentsStore.getAttachment.filter((v) =>
-  v.part_number == attachmentsStore.part_number_select.value
+    v.part_number == attachmentsStore.part_number_select.value
   );
 })
+
+// const download = () => {
+//   var file = "GDdJTg5szroNvIpX0w3vUCAfZTrKJI6gvuLXowms";
+//   var payload_path = `http://10.164.58.62/hinsei/server/public/download-attachment?file_path_attachment=${file}`;
+//   var payload = {
+//     file_path_attachment: file
+//   }
+//   // attachmentsStore.downloadAttachment(payload)
+
+// }
 </script>

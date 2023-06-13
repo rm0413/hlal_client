@@ -28,14 +28,14 @@ export const useInspectionDataStore = defineStore({
         },
         onEdit: false,
         onEditIndex: null,
-        search_filter: ""
+        search_filter: "",
+        part_number_select: ""
     }),
     actions: {
         setInspectionDataRequest() {
             return new Promise((resolve, reject) => {
                 axios.get('load-with-code-inspection').then(response => {
                     resolve(response.data.data)
-                    // console.log(response.data)
                     this.inspectionData = response.data.data
                 }).catch(err => {
                     reject(err)
@@ -83,7 +83,7 @@ export const useInspectionDataStore = defineStore({
         },
         setLoadPartNumber() {
             return new Promise((resolve, reject) => {
-                axios.get('load-part-number-with-code').then(response => {
+                axios.get('load-part-number-with-critical').then(response => {
                     resolve(response.data)
                 }).catch(err => {
                     reject(err)

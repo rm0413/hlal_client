@@ -17,7 +17,7 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md" v-model="inspectionDataStore.search_filter" />
+            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" v-model="inspectionDataStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
@@ -57,12 +57,12 @@
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Revised Date of IGM</i>
             <input type="date" class="border-2 rounded w-full h-[3rem] text-center "
-              v-model="inspectionDataStore.inspectionDataForm.revised_date" />
+              v-model="inspectionDataStore.inspectionDataForm.revised_date" required/>
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Sent Date of IGM</i>
             <input type="date" class="border-2 rounded w-full h-[3rem] text-center "
-              v-model="inspectionDataStore.inspectionDataForm.send_date" />
+              v-model="inspectionDataStore.inspectionDataForm.send_date" required/>
           </label>
           <button type="submit" v-if="!inspectionDataStore.onEdit"
             class="flex gap-2 bg-[#A10E13] hover:bg-red-600 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
@@ -71,7 +71,7 @@
             class="flex gap-2 bg-yellow-400 p-3 hover:bg-yellow-200 text-black rounded justify-center items-center w-full mt-2"><font-awesome-icon
               icon="floppy-disk"></font-awesome-icon>Update</button>
           <button type="button" @click="clearInputs"
-            class="flex gap-2 bg-gray-600 hover:bg-gray-500 p-3 text-white rounded justify-center items-center w-full mt-2">Clear</button>
+            class="flex gap-2 bg-gray-600 hover:bg-gray-500 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon icon="eraser" class="h-5 w-5" />Clear</button>
         </form>
       </div>
     </div>

@@ -33,110 +33,9 @@
       class="h-[80vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
     >
       <div
-        class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 bg-gray-100 overflow-y-scroll"
+        class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 overflow-y-scroll"
       >
-        <c-table
-          :items="[
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              critical_dimension: '',
-              inspection_data: 'CPK'
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              critical_dimension: '',
-              inspection_data: 'CPK'
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              critical_dimension: '',
-              inspection_data: 'CPK'
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              critical_dimension: '',
-              inspection_data: 'CPK'
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              critical_dimension: '',
-              inspection_data: 'CPK'
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              critical_dimension: '',
-              inspection_data: 'CPK'
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              critical_dimension: '',
-              inspection_data: 'CPK'
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              critical_dimension: '',
-              inspection_data: 'CPK'
-            },
-            {
-              code: 'DX458',
-              trial_no: 'T3',
-              request_date: '10/12/2022',
-              supplier: 'SPPI',
-              part_number: 'KD0616-E081',
-              revision: '06',
-              dimension: '144.5+-0.20',
-              critical_dimension: '',
-              inspection_data: 'CPK'
-            },
-          ]"
+        <c-table :items="designerSectionAnswerStore.getDesignerSectionRequest"
           :fields="designerSectionAnswerStore.getDesignerSectionAnswerFields"
           :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'"
         >
@@ -188,6 +87,11 @@
 
 <script setup>
 import CTable from "@/components/Datatable.vue";
+import { onMounted } from "vue"
 import { useDesignerSectionAnswerStore } from "@/modules/request/designersectionanswer";
 const designerSectionAnswerStore = useDesignerSectionAnswerStore();
+
+onMounted(() => {
+  designerSectionAnswerStore.setLoadDesignerSection()
+})
 </script>
