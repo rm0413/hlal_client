@@ -10,6 +10,7 @@ const NewRequest = () => import('@/views/request/NewRequest.vue')
 const InspectionData = () => import('@/views/request/InspectionData.vue')
 const EditItemDetails = () => import('@/views/request/EditItemDetails.vue')
 const DesignerSectionAnswer = () => import('@/views/request/DesignerSectionAnswer.vue')
+// const DesignerSectionAnswer = () => import('@/views/request/DesignerSectionAnswer.vue')
 const Attachment = () => import('@/views/request/Attachment.vue')
 const SavedInputs = () => import('@/views/request/SavedInputs.vue')
 

@@ -1,8 +1,10 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
 import axios from 'axios'
+import { faL } from "@fortawesome/free-solid-svg-icons";
+
 export const useDesignerSectionAnswerStore = defineStore({
-    id: 'designerSectionAnswer',
+    id: "designSectionAnswer",
     state: () => ({
         designerSectionAnswer: [],
         designerSectionAnswerFields: [
@@ -14,18 +16,25 @@ export const useDesignerSectionAnswerStore = defineStore({
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
             { label: 'Critical Dimension', key: 'critical_dimension' },
-            { label: 'Inspection Data', key: 'cpk_data' },
+            // { label: 'Inspection Data', key: 'cpk_data' },
+            // { label: 'Request Result', key: 'request_result' },
+            { label: 'Action', key: 'action' },
         ],
         designerSectionAnswerForm: {
-            designerSectionAnswer_unit_name: '',
-            designerSectionAnswer_supplier: '',
-            designerSectionAnswer_part_number: '',
+            id: null,
+            agreement_request_id: null,
+            request_result: null,
+            designer_section_answer: null,
+            designer_in_charge: null,
+            answer_date: null,
         },
         onEdit: false,
-        onEditIndex: null
+        onEditIndex: null,
+        search_filter: '',
+        part_number_select: ''
     }),
     actions: {
-        setLoadDesignerSection(){
+        setLoadDesignerSection() {
             return new Promise((resolve, reject) => {
                 axios.get('load-with-code-designer-section').then(response => {
                     resolve(response.data.data)
@@ -34,14 +43,73 @@ export const useDesignerSectionAnswerStore = defineStore({
                     reject(err)
                 })
             })
+        },
+        clearDesignerAnswer() {
+            this.designerSectionAnswerForm = {
+                id: null,
+                request_result: null,
+                designer_section_answer: null,
+                designer_in_charge: null,
+                answer_date: null,
+            }
+        },
+        setInsertDesignerSectionAnswer(data) {
+            var payload = {
+                agreement_request_id: [],
+                designer_answer: this.designerSectionAnswerForm.designer_section_answer,
+                designer_in_charge: this.designerSectionAnswerForm.designer_in_charge,
+                request_result: this.designerSectionAnswerForm.request_result,
+                answer_date: this.designerSectionAnswerForm.answer_date
+            }
+            data.forEach(v => {
+                payload.agreement_request_id.push(v.agreement_id_pk)
+            });
+            return new Promise((resolve, reject) => {
+                axios.post('designer-section-answer', payload).then(response => {
+                    resolve(response.data)
+                    console.log(response.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        setUpdateDesignerSectionAnswer() {
+            var payload = {
+                id: this.designerSectionAnswerForm.id,
+                agreement_request_id: this.designerSectionAnswerForm.agreement_request_id,
+                request_result: this.designerSectionAnswerForm.request_result,
+                designer_answer: this.designerSectionAnswerForm.designer_section_answer,
+                designer_in_charge: this.designerSectionAnswerForm.designer_in_charge,
+                answer_date: this.designerSectionAnswerForm.answer_date
+            }
+            return new Promise((resolve, reject) => {
+                axios.patch(`designer-section-answer/${payload.id}`, payload).then(response => {
+                    resolve(response.data)
+                    // console.log(response.data)
+                    this.setLoadDesignerSection()
+                    this.clearDesignerAnswer()
+                    this.onEdit = false
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        setLoadPartNumber() {
+            return new Promise((resolve, reject) => {
+                axios.get('load-part-number-with-code').then(response => {
+                    resolve(response.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
         }
     },
     getters: {
+        getDesignerSectionAnswer() {
+            return this.designerSectionAnswer
+        },
         getDesignerSectionAnswerFields() {
             return this.designerSectionAnswerFields
-        },
-        getDesignerSectionRequest(){
-            return this.designerSectionAnswer
         }
     }
 })

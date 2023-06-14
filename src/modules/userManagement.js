@@ -26,13 +26,6 @@ export const useUserManagementStore = defineStore({
             { label: 'Action', key: 'action' },
         ],
         search_filter: '',
-        // userManagementForm: {
-        //     userManagement_name: '',
-        //     userManagement_image: '',
-        //     userManagement_email: '',
-        // },
-        // onEdit: false,
-        // onEditIndex: null
         options_employee_name: [],
         role_options: []
     }),
