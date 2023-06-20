@@ -195,16 +195,21 @@ export const useNewRequestStore = defineStore({
                 })
             })
         },
-        // setDownloadFormat() {
-        //     return new Promise((resolve, reject) => {
-        //         axios.get('download').then(response => {
-        //             resolve(response.data)
-        //             console.log(response.data)
-        //         }).catch(err => {
-        //             reject(err)
-        //         })
-        //     })
-        // },
+        setUploadMultipleRequest(data) {
+            // console.log(data)
+            return new Promise((resolve, reject) => {
+                axios.post('upload-multiple-agreement-request', data, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(response => {
+                    resolve(response.data)
+                    console.log(response.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        }
 
     },
     getters: {

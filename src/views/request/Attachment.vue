@@ -104,7 +104,7 @@ onMounted(() => {
   })
 })
 // const fileUpload = ref()
-const value1 = ref(0);
+// const value1 = ref(0);
 // const interval = ref();
 // const startProgress = () => {
 //   interval.value = setInterval(() => {
@@ -146,7 +146,7 @@ const submitAttachment = () => {
           ctable.value.unSelect();
           select_data.value = [];
           document.getElementById("input-file").value = null;
-          value1.value = 0;
+          // value1.value = 0;
           swal({
             icon: "success",
             title: response.message,

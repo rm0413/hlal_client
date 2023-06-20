@@ -152,11 +152,11 @@
             </label>
             <div class="flex justify-center items-center mt-8 gap-2">
               <button type="submit" class="bg-[#A10E13] text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-red-600">
-                <font-awesome-icon icon="arrow-turn-right"/> Enter
+                <font-awesome-icon icon="arrow-turn-right" /> Enter
               </button>
               <button type="button" class="bg-gray-700 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-gray-600"
                 @click="newRequestStore.setClearAgreementList">
-                <font-awesome-icon icon="eraser"/> Clear
+                <font-awesome-icon icon="eraser" /> Clear
               </button>
             </div>
           </div>
@@ -167,30 +167,45 @@
       <button @click="openModal('multiple_input')"
         class="w-full p-3 flex justify-center items-center bg-[#A10E13] text-white rounded hover:bg-red-600"
         data-open-modal>
-        <font-awesome-icon icon="file-import" class="h-5 w-5"/><p class="ml-3">Multiple Input</p>
+        <font-awesome-icon icon="file-import" class="h-5 w-5" />
+        <p class="ml-3">Multiple Input</p>
       </button>
       <button @click="openModal('view_items')"
         class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500">
-        <font-awesome-icon icon="file-lines" class="h-5 w-5" /><p class="ml-3">View Item Details</p>
+        <font-awesome-icon icon="file-lines" class="h-5 w-5" />
+        <p class="ml-3">View Item Details</p>
       </button>
     </div>
     <!--Multiple Input-->
     <dialog ref="multiple_input" class="p-0 rounded transform duration-300 -translate-y-5">
       <div class="flex flex-col">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
-          <p><font-awesome-icon icon="file-import" class="h-5 w-5 mr-2"/>Multiple Input</p>
+          <p><font-awesome-icon icon="file-import" class="h-5 w-5 mr-2" />Multiple Input</p>
           <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('multiple_input')">
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
-        <div class="flex p-5">
-          <FileUploader></FileUploader>
-        </div>
-        <button class="p-3 bg-green-600 text-white hover:bg-green-500 w-full" @click="downloadFormat">
-          <font-awesome-icon icon="download" /> Download Format
-        </button>
-        <button class="p-3 bg-[#A10E13] text-white hover:bg-red-600"><font-awesome-icon icon="floppy-disk" />
-          Save</button>
+        <form method="post" @submit.prevent="submitMultipleRequest">
+          <div class="flex p-5">
+            <!-- <FileUploader></FileUploader> -->
+            <div class="flex flex-col items-center justify-center mt-2 border-2 border-black rounded-xl border-dashed">
+              <input id="input-file" type="file" accept=".xlsx" @change="uploadFile" :draggable="true" class="text-sm text-grey-500 w-full h-[10rem] mt-10
+            file:mr-5 file:py-2 file:px-6
+            file:rounded-full file:border-0
+            file:text-sm file:font-medium
+            file:bg-blue-50 file:text-blue-700
+            hover:file:cursor-pointer hover:file:bg-amber-50
+            hover:file:text-amber-700" required />
+              <span class="file-msg">or drag and drop PDF file here</span>
+            </div>
+          </div>
+          <button type="button" class="p-3 bg-green-600 text-white hover:bg-green-500 w-full" @click="downloadFormat">
+            <font-awesome-icon icon="download" /> Download Format
+          </button>
+          <button type="submit" class="w-full p-3 bg-[#A10E13] text-white hover:bg-red-600"><font-awesome-icon
+              icon="cloud-arrow-up" />
+            Upload</button>
+        </form>
       </div>
     </dialog>
     <!--View Items-->
@@ -293,39 +308,57 @@ const autoAdd = (data) => {
 };
 
 const generateCode = () => {
+  view_items.value.close();
   if (checkedData.value.length !== 0) {
-    view_items.value.close();
-    var payload = {
-      agreement_request_id: [],
-    };
-    checkedData.value.forEach((v) => {
-      payload.agreement_request_id.push(v.agreement_id_pk);
-    });
-    newRequestStore.setGenerateCode(payload).then((response) => {
-      if (response.status === "success") {
-        newRequestStore.setShowGenerateCode(response.data.id).then((response) => {
+    swal({
+      icon: "question",
+      title: "Generate Code?",
+      text: "Please make sure. Cannot be undone",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Submit",
+    }).then((response => {
+      if (response.value === true) {
+        view_items.value.close();
+        var payload = {
+          agreement_request_id: [],
+        };
+        checkedData.value.forEach((v) => {
+          payload.agreement_request_id.push(v.agreement_id_pk);
+        });
+        newRequestStore.setGenerateCode(payload).then((response) => {
           if (response.status === "success") {
-            ctable.value.unSelect();
-            checkedData.value = [];
+            newRequestStore.setShowGenerateCode(response.data.id).then((response) => {
+              if (response.status === "success") {
+                ctable.value.unSelect();
+                checkedData.value = [];
+                swal({
+                  icon: "success",
+                  title: response.data[0].code,
+                  text: "Your code has been generated. An email notification will be sent.",
+                });
+              } else {
+                toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
+              }
+            });
+          } else {
             swal({
-              icon: "success",
-              title: response.data[0].code,
-              text: "Your code has been generated.",
+              icon: "warning",
+              title: response.message,
+              timer: 2000
             });
           }
         });
       } else {
-        swal({
-          icon: "warning",
-          title: response.message,
-          timer: 2000
-        });
+        view_items.value.showModal();
+        toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled', life: 2000, group: 'bl' });
       }
-    });
+    }))
   } else {
-    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
+    view_items.value.showModal();
+    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table.', life: 2000, group: 'bl' });
   }
-
 };
 
 const submitAgreementList = () => {
@@ -422,10 +455,61 @@ const downloadFormat = () => {
     confirmButtonText: "Submit",
   }).then((response) => {
     if (response.value === true) {
-      window.location.href ='http://10.164.58.62/hinsei/server/public/download-format';
+      window.location.href = 'http://10.164.58.62/hinsei/server/public/download-format';
     } else {
+      multiple_input.value.showModal();
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000 });
     }
   })
+}
+
+const file = ref(null);
+const employee_id = ref(sessionStorage.getItem("employee_id"))
+const uploadFile = (event) => {
+  // startProgress();
+  file.value = event.target.files[0];
+};
+
+const submitMultipleRequest = () => {
+  multiple_input.value.close();
+  if (file.value.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+    const formData = new FormData();
+    formData.append('uploaded_file', file.value);
+    formData.append('unit_id', newRequestStore.agreementForm.unit);
+    formData.append('requestor_employee_id', employee_id.value);
+    if (newRequestStore.agreementForm.unit !== null) {
+      swal({
+        icon: "question",
+        title: "Upload File?",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Submit",
+      }).then((response) => {
+        if (response.value === true) {
+          newRequestStore.setUploadMultipleRequest(formData).then((response) => {
+            if (response.status === "success") {
+              multiple_input.value.close();
+              swal({
+                icon: "success",
+                title: "Multiple Input Added Successfully.",
+                timer: 1500
+              })
+            } else {
+              toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
+            }
+          })
+        } else {
+          multiple_input.value.showModal();
+          toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
+        }
+      })
+    } else {
+      multiple_input.value.showModal();
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select Unit Name', life: 2000, group: 'bl' });
+    }
+  } else {
+    toast.add({ severity: 'error', summary: 'Warning', detail: 'Only Excel File Allowed.', life: 2000, group: 'bl' });
+  }
 }
 </script>
