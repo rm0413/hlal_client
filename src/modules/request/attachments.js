@@ -13,7 +13,7 @@ export const useAttachmentsStore = defineStore({
             { label: 'Part Number', key: 'part_number' },
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
-            { label: 'Action', key: 'action' },
+            { label: 'File Path', key: 'file_path_attachment' },
         ],
         part_number_select: '',
         search_filter: ''
@@ -22,7 +22,7 @@ export const useAttachmentsStore = defineStore({
     actions: {
         setAgreementListCode() {
             return new Promise((resolve, reject) => {
-                axios.get('load-with-code-request').then(response => {
+                axios.get('load-with-code-attachment').then(response => {
                     resolve(response.data.data)
                     console.log(response.data)
                     this.attachments = response.data.data

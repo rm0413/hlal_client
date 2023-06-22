@@ -40,12 +40,12 @@
             <label class="flex flex-col gap-2">
               Request Date
               <input type="date" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
-                v-model="newRequestStore.agreementForm.request_date" required />
+                v-model="newRequestStore.agreementForm.request_date"  />
             </label>
             <label class="flex flex-col gap-2">
               Additional Request Qty Date
               <input type="date" class="w-full text-center h-[2.5rem] border-2 rounded p-1 hover:border-blue-300"
-                v-model="newRequestStore.agreementForm.additional_request_date" required />
+                v-model="newRequestStore.agreementForm.additional_request_date" />
             </label>
             <label class="flex flex-col gap-2">
               TRI No.
@@ -189,7 +189,7 @@
           <div class="flex p-5">
             <!-- <FileUploader></FileUploader> -->
             <div class="flex flex-col items-center justify-center mt-2 border-2 border-black rounded-xl border-dashed">
-              <input id="input-file" type="file" accept=".xlsx" @change="uploadFile" :draggable="true" class="text-sm text-grey-500 w-full h-[10rem] mt-10
+              <input id="input-file" type="file" accept=".xlsx" @change="uploadFile" :draggable="true" class="text-sm text-grey-500 w-[25rem] h-[15rem] mt-10
             file:mr-5 file:py-2 file:px-6
             file:rounded-full file:border-0
             file:text-sm file:font-medium
@@ -364,7 +364,7 @@ const generateCode = () => {
 const submitAgreementList = () => {
   swal({
     icon: "question",
-    title: "Are you sure to add this request?",
+    title: "Add this request?",
     text: "Please make sure before to proceed!",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -489,6 +489,8 @@ const submitMultipleRequest = () => {
         if (response.value === true) {
           newRequestStore.setUploadMultipleRequest(formData).then((response) => {
             if (response.status === "success") {
+              ctable.value.unSelect();
+              checkedData.value = [];
               multiple_input.value.close();
               swal({
                 icon: "success",

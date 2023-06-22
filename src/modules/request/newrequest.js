@@ -203,6 +203,8 @@ export const useNewRequestStore = defineStore({
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(response => {
+                    this.setNoCodeAgreementList()
+                    this.setClearAgreementList()
                     resolve(response.data)
                     console.log(response.data)
                 }).catch(err => {
