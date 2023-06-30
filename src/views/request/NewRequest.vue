@@ -266,7 +266,6 @@
 </template>
 
 <script setup>
-import FileUploader from "@/components/FileUploader.vue";
 import CTable from "@/components/Datatable.vue";
 import { useNewRequestStore } from "@/modules/request/newrequest";
 import { ref, onMounted, inject } from "vue";
@@ -317,7 +316,7 @@ const generateCode = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Submit",
+      confirmButtonText: "Yes",
     }).then((response => {
       if (response.value === true) {
         view_items.value.close();
@@ -369,7 +368,7 @@ const submitAgreementList = () => {
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Submit",
+    confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
       newRequestStore.setInsertAgreementList().then((response) => {
@@ -452,7 +451,7 @@ const downloadFormat = () => {
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Submit",
+    confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
       window.location.href = 'http://10.164.58.62/hinsei/server/public/download-format';
@@ -484,7 +483,7 @@ const submitMultipleRequest = () => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Submit",
+        confirmButtonText: "Yes",
       }).then((response) => {
         if (response.value === true) {
           newRequestStore.setUploadMultipleRequest(formData).then((response) => {
@@ -494,7 +493,7 @@ const submitMultipleRequest = () => {
               multiple_input.value.close();
               swal({
                 icon: "success",
-                title: "Multiple Input Added Successfully.",
+                title: "Multiple Request Added Successfully.",
                 timer: 1500
               })
             } else {

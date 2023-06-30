@@ -23,7 +23,8 @@
             </button>
           </div>
           <div>
-            <CSelect class="text-center p-1 border-2 rounded-md w-[12rem]" :options="part_number" v-model="inspectionDataStore.part_number_select"></CSelect>
+            <CSelect class="text-center p-1 border-2 rounded-md w-[12rem]" :options="part_number"
+              v-model="inspectionDataStore.part_number_select"></CSelect>
           </div>
         </div>
       </div>
@@ -57,12 +58,12 @@
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Revised Date of IGM</i>
             <input type="date" class="border-2 rounded w-full h-[3rem] text-center "
-              v-model="inspectionDataStore.inspectionDataForm.revised_date" required/>
+              v-model="inspectionDataStore.inspectionDataForm.revised_date" required />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Sent Date of IGM</i>
             <input type="date" class="border-2 rounded w-full h-[3rem] text-center "
-              v-model="inspectionDataStore.inspectionDataForm.send_date" required/>
+              v-model="inspectionDataStore.inspectionDataForm.send_date" />
           </label>
           <button type="submit" v-if="!inspectionDataStore.onEdit"
             class="flex gap-2 bg-[#A10E13] hover:bg-red-600 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
@@ -71,7 +72,8 @@
             class="flex gap-2 bg-yellow-400 p-3 hover:bg-yellow-200 text-black rounded justify-center items-center w-full mt-2"><font-awesome-icon
               icon="floppy-disk"></font-awesome-icon>Update</button>
           <button type="button" @click="clearInputs"
-            class="flex gap-2 bg-gray-600 hover:bg-gray-500 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon icon="eraser" class="h-5 w-5" />Clear</button>
+            class="flex gap-2 bg-gray-600 hover:bg-gray-500 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
+              icon="eraser" class="h-5 w-5" />Clear</button>
         </form>
       </div>
     </div>
@@ -105,6 +107,7 @@ onMounted(() => {
 const submitInspectionData = () => {
   if (select_data.value.length !== 0) {
     inspectionDataStore.setInsertInspectionData(select_data.value).then((response) => {
+      console.log(response)
       if (response.status === "success") {
         clearInputs();
         ctable.value.unSelect();
@@ -115,10 +118,8 @@ const submitInspectionData = () => {
           timer: 1500
         })
       } else {
-        swal({
-          icon: "warning",
-          title: response.message,
-          timer: 1500
+        Object.keys(response.error).forEach((key) => {
+          toast.add({ severity: 'warn', summary: 'Warning', detail: response.error[key][0], life: 2000, group: 'bl' });
         })
       }
     })
@@ -176,7 +177,7 @@ const updateInspectionData = () => {
 
 const filterPartNumber = computed(() => {
   return inspectionDataStore.getInspectionData.filter((v) =>
-  v.part_number == inspectionDataStore.part_number_select.value
+    v.part_number == inspectionDataStore.part_number_select.value
   );
 })
 </script>

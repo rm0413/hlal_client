@@ -45,6 +45,7 @@ export const useDesignerSectionAnswerStore = defineStore({
             })
         },
         clearDesignerAnswer() {
+            this.onEdit = false;
             this.designerSectionAnswerForm = {
                 id: null,
                 request_result: null,
@@ -54,20 +55,25 @@ export const useDesignerSectionAnswerStore = defineStore({
             }
         },
         setInsertDesignerSectionAnswer(data) {
-            var payload = {
-                agreement_request_id: [],
-                designer_answer: this.designerSectionAnswerForm.designer_section_answer,
-                designer_in_charge: this.designerSectionAnswerForm.designer_in_charge,
-                request_result: this.designerSectionAnswerForm.request_result,
-                answer_date: this.designerSectionAnswerForm.answer_date
-            }
-            data.forEach(v => {
-                payload.agreement_request_id.push(v.agreement_id_pk)
-            });
+            // var payload = {
+            //     agreement_request_id: [],
+            //     designer_answer: this.designerSectionAnswerForm.designer_section_answer,
+            //     designer_in_charge: this.designerSectionAnswerForm.designer_in_charge,
+            //     request_result: this.designerSectionAnswerForm.request_result,
+            //     answer_date: this.designerSectionAnswerForm.answer_date
+            // }
+            // data.forEach(v => {
+            //     payload.agreement_request_id.push(v.agreement_id_pk)
+            // });
             return new Promise((resolve, reject) => {
-                axios.post('designer-section-answer', payload).then(response => {
+                axios.post('designer-section-answer', data, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(response => {
                     resolve(response.data)
                     console.log(response.data)
+                    this.setLoadDesignerSection()
                 }).catch(err => {
                     reject(err)
                 })

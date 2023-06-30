@@ -24,7 +24,8 @@
             </button>
           </div>
           <div>
-            <c-select class="text-center w-[15rem]" :options="part_number" v-model="editItemDetailsStore.part_number_select"></c-select>
+            <c-select class="text-center w-[15rem]" :options="part_number"
+              v-model="editItemDetailsStore.part_number_select"></c-select>
           </div>
         </div>
       </div>
@@ -64,12 +65,12 @@
             <label class="flex flex-col gap-2">
               Request Date
               <input type="date" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
-                v-model="editItemDetailsStore.editItemForm.request_date" required />
+                v-model="editItemDetailsStore.editItemForm.request_date" />
             </label>
             <label class="flex flex-col gap-2">
               Additional Request Qty Date
               <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300"
-                v-model="editItemDetailsStore.editItemForm.additional_request_date" required />
+                v-model="editItemDetailsStore.editItemForm.additional_request_date" />
             </label>
             <label class="flex flex-col gap-2">
               TRI No.
@@ -186,7 +187,7 @@
         </form>
       </div>
     </dialog>
-    <Toast />
+    <Toast position="bottom-left" group="bl"></Toast>
   </div>
 </template>
 <script setup>
@@ -216,11 +217,12 @@ onMounted(() => {
 
 const filterPartNumber = computed(() => {
   return editItemDetailsStore.getEditItemDetails.filter((v) =>
-  v.part_number == editItemDetailsStore.part_number_select.value
+    v.part_number == editItemDetailsStore.part_number_select.value
   );
 })
 
 const openModal = (data) => {
+  console.log(data)
   edit_item.value.showModal()
   editItemDetailsStore.editItemForm = {
     id: data.agreement_id_pk,
@@ -250,12 +252,12 @@ const submitUpdateAgreementList = () => {
   edit_item.value.close()
   swal({
     icon: "question",
-    title: "Are you sure to update this request?",
+    title: "Update this request?",
     text: "Please make sure before to proceed!",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Submit",
+    confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
       editItemDetailsStore.setUpdateAgreementList().then((response) => {
@@ -266,13 +268,11 @@ const submitUpdateAgreementList = () => {
             timer: 1500
           })
         } else {
-          swal({
-            icon: "warning",
-            title: response.message,
-            timer: 1500
-          })
+          toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
         }
       })
+    } else {
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
     }
   })
 }
@@ -280,12 +280,12 @@ const submitUpdateAgreementList = () => {
 const deleteRequest = (data) => {
   swal({
     icon: "question",
-    title: "Are you sure to delete this request?",
+    title: "Delete this request?",
     text: "Please make sure before to proceed!",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
     cancelButtonColor: "#d33",
-    confirmButtonText: "Submit",
+    confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
       editItemDetailsStore.setDeleteAgreementList(data).then((response) => {
@@ -296,19 +296,11 @@ const deleteRequest = (data) => {
             timer: 1500
           })
         } else {
-          swal({
-            icon: "warning",
-            title: response.message,
-            timer: 1500
-          })
+          toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
         }
       })
     } else {
-      swal({
-        icon: "warning",
-        title: "Cancelled",
-        timer: 1500
-      })
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
     }
   })
 }

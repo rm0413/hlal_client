@@ -45,8 +45,9 @@
             <span class="file-msg">or drag and drop PDF file here</span>
           </div>
           <div class="flex flex-col items-center justify-center w-full">
-            <!-- <ProgressBar :value="value1" class="w-full bg-gray-300 h-[0.5rem] text-[9px]" /> -->
             <button class="bg-[#A10E13] text-white p-1 w-full h-[3rem] rounded mt-5 " type="submit">Save</button>
+            <button class="bg-gray-700 hover:bg-gray-500 text-white p-1 w-full h-[3rem] rounded mt-1" @click="clearFile"
+              type="button">Clear</button>
           </div>
         </form>
       </div>
@@ -55,19 +56,6 @@
           :filter="attachmentsStore.search_filter" :items="filterPartNumber"
           :fields="attachmentsStore.getAttachmentsFields" :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'">
           <template #cell(action)="data">
-            <!-- <button @click="download"
-              class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500">
-              Download
-            </button> -->
-            <!-- <a :href="path"><button @click="download"
-                class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500">
-                Download
-              </button></a> -->
-            <!-- <button @click="download"
-              class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500">
-              Download
-            </button> -->
-            <!-- <a  class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500" :href="`http://10.164.58.62/hinsei/server/public/download-attachment?file_path_attachment=GDdJTg5szroNvIpX0w3vUCAfZTrKJI6gvuLXowms.pdf`" >Download</a> -->
           </template>
         </CTable>
       </div>
@@ -80,7 +68,6 @@
 <script setup>
 import { ref, onMounted, inject, computed } from "vue";
 const swal = inject("$swal");
-import FileUploader from "@/components/FileUploader.vue";
 import CTable from "@/components/Datatable.vue"
 import CSelect from "@/components/CSelect.vue"
 import { useAttachmentsStore } from '@/modules/request/attachments'
@@ -92,6 +79,7 @@ const ctable = ref();
 const select_data = ref([]); //select table
 const part_number = ref([])
 const path = ref(null);
+
 onMounted(() => {
   attachmentsStore.setAgreementListCode()
   attachmentsStore.setLoadPartNumber().then((response) => {
@@ -103,31 +91,13 @@ onMounted(() => {
     })
   })
 })
-// const fileUpload = ref()
-// const value1 = ref(0);
-// const interval = ref();
-// const startProgress = () => {
-//   interval.value = setInterval(() => {
-//     let newValue = value1.value + Math.floor(Math.random() * 1) + 90;
-//     if (newValue >= 100) {
-//       newValue = 100;
-//       toast.add({ severity: 'success', summary: 'Success', detail: 'PDF File Upload Completed.', life: 2000 });
-//       endProgress();
-//     }
-//     value1.value = newValue;
-//   }, 2000);
-// };
-// const endProgress = () => {
-//   clearInterval(interval.value);
-//   interval.value = null;
-// };
+
 const file = ref(null);
 const uploadFile = (event) => {
-  // startProgress();
   file.value = event.target.files[0];
 };
+
 const submitAttachment = () => {
-  // console.log(file.value)
   if (file.value.type === "application/pdf") {
     if (select_data.value.length !== 0) {
       var payload = {
@@ -141,23 +111,36 @@ const submitAttachment = () => {
       payload.agreement_request_id.forEach(function (value) {
         formData.append("agreement_request_id[]", value) // you have to add array symbol after the key name
       })
-      attachmentsStore.setInsertAttachment(formData).then((response) => {
-        if (response.status === "success") {
-          ctable.value.unSelect();
-          select_data.value = [];
-          document.getElementById("input-file").value = null;
-          // value1.value = 0;
-          swal({
-            icon: "success",
-            title: response.message,
-            timer: 1500
+      swal({
+        icon: "question",
+        title: "Upload a File?",
+        text: "Please make sure before to proceed!",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((response) => {
+        if (response.value === true) {
+          attachmentsStore.setInsertAttachment(formData).then((response) => {
+            if (response.status === "success") {
+              ctable.value.unSelect();
+              select_data.value = [];
+              document.getElementById("input-file").value = null;
+              swal({
+                icon: "success",
+                title: response.message,
+                timer: 1500
+              })
+            } else {
+              swal({
+                icon: "warning",
+                title: response.message,
+                timer: 1500
+              })
+            }
           })
         } else {
-          swal({
-            icon: "warning",
-            title: response.message,
-            timer: 1500
-          })
+          toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
         }
       })
     } else {
@@ -175,13 +158,9 @@ const filterPartNumber = computed(() => {
   );
 })
 
-// const download = () => {
-//   var file = "GDdJTg5szroNvIpX0w3vUCAfZTrKJI6gvuLXowms";
-//   var payload_path = `http://10.164.58.62/hinsei/server/public/download-attachment?file_path_attachment=${file}`;
-//   var payload = {
-//     file_path_attachment: file
-//   }
-//   // attachmentsStore.downloadAttachment(payload)
-
-// }
+const clearFile = () => {
+  document.getElementById('input-file').value= null;
+  ctable.value.unSelect();
+  select_data.value = []; 
+}
 </script>

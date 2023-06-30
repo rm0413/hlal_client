@@ -2,76 +2,85 @@
 import CSidebar from "@/layout/CSidebar.vue"
 import { useRoute } from "vue-router"
 import { onMounted, ref } from 'vue'
+import { useLoginStore } from "@/modules/login.js";
 
 const route = useRoute()
+const loginStore = useLoginStore()
+const role = ref(null)
+const section = ref(null)
 
-// onMounted(() => {
-//   console.log(userprofile.value)
-// })
+onMounted(() => {
+  if(loginStore.role === null && loginStore.section === null){
+    loginStore.role = sessionStorage.getItem('role_access')
+    loginStore.section = sessionStorage.getItem('section_code')
+  }
+})
+  
 const signOut = () => {
   localStorage.clear()
   sessionStorage.clear()
   window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
 }
 
-// const userprofile = ref(sessionStorage.getItem("employee_id"))
-// const userprofile = ref({
-//   full_name: `${sessionStorage.getItem("last_name")}, ${sessionStorage.getItem("first_name")}`,
-//   employee_id: sessionStorage.getItem("employee_id"),
-//   position: sessionStorage.getItem("position"),
-//   photo: sessionStorage.getItem("photo"),
-//   email: sessionStorage.getItem("email"),
-//   section: sessionStorage.getItem("section"),
-//   role: sessionStorage.getItem("role_access")
-// })
-
 const systemDetails = {
   name: "Hinsei & LSA Agreement List",
   class: "text-rose-600",
   version: "Version 1.0.0",
   logo: "@/assets/images/fujitsuICO.png",
-  abbv: "Hinsoi",
+  abbv: "HLAL",
 };
+
+
+
 const links = [
   {
     title: 'Dashboard',
     name: 'dashboard',
-    fa: 'home'
+    fa: 'home',
   },
   {
     title: 'Request',
     name: 'request',
     fa: 'layer-group',
+    role: 'ADMIN',
+    section: 'QCI',
     sub_module: [
       {
         title: 'New Request',
         name: 'new-request',
-        fa: 'folder-plus'
+        fa: 'folder-plus',
+        role: 'ADMIN'
       },
       {
         title: 'Inspection Data',
         name: 'inspection-data',
-        fa: 'magnifying-glass'
+        fa: 'magnifying-glass',
+        role: 'ADMIN',
+        section: 'QCI'
       },
       {
         title: 'Edit Item Details',
         name: 'edit-item-details',
-        fa: 'eraser'
+        fa: 'eraser',
+        role: 'ADMIN'
       },
       {
         title: 'Designer Section Answer',
         name: 'designer-section-answer',
-        fa: 'puzzle-piece'
+        fa: 'puzzle-piece',
+        role: 'ADMIN'
       },
       {
         title: 'Attachment',
         name: 'attachment',
-        fa: 'paperclip'
+        fa: 'paperclip',
+        role: 'ADMIN'
       },
       {
         title: 'Saved Inputs',
         name: 'saved-inputs',
-        fa: 'tags'
+        fa: 'tags',
+        role: 'ADMIN'
       },
 
     ]
@@ -79,7 +88,7 @@ const links = [
   {
     title: 'Monitoring',
     name: 'monitoring',
-    fa: 'desktop'
+    fa: 'desktop',
   },
   // {
   //   title: 'Usermanagement',
@@ -94,12 +103,14 @@ const links = [
       {
         title: 'User Management',
         name: 'usermanagement',
-        fa: 'users-gear'
+        fa: 'users-gear',
+        role: 'ADMIN',
       },
       {
         title: 'Unit Management',
         name: 'unitmanagement',
-        fa: 'toolbox'
+        fa: 'toolbox',
+        role: 'ADMIN',
       },
     ]
   },
@@ -111,7 +122,7 @@ const links = [
 
 <template>
   <div class="h-screen">
-    <CSidebar :systemDetails="systemDetails" :links="links" :signOut="signOut"
+    <CSidebar :role="loginStore.role" :section="loginStore.section" :systemDetails="systemDetails" :links="links" :signOut="signOut"
       v-if="route.name !== 'login'">
       <template #page>
         <router-view />

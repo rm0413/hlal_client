@@ -6,19 +6,21 @@ axios.defaults.headers.common.Authorization = `Bearer ${JSON.parse(localStorage.
 export const useLoginStore = defineStore({
     id: 'login',
     state: () => ({
-        userProfile: null
+        userProfile: null,
+        role: null,
+        section: null
     }),
     actions: {
         setLogin(data) {
             axios.defaults.headers.common.Authorization = `Bearer ${data}`;
-                return new Promise((resolve, reject) => {
-                    axios.post(`http://10.164.58.62/FDTP-Portal/public/api/auth/profile`).then((response) => {
-                        resolve(response.data)
-                        this.userProfile = response.data.data
-                    }).catch((err) => {
-                        reject(err)
-                    })
+            return new Promise((resolve, reject) => {
+                axios.post(`http://10.164.58.62/FDTP-Portal/public/api/auth/profile`).then((response) => {
+                    resolve(response.data)
+                    this.userProfile = response.data.data
+                }).catch((err) => {
+                    reject(err)
                 })
+            })
         },
         setUser(data, role) {
             return new Promise((resolve, reject) => {
@@ -42,6 +44,8 @@ export const useLoginStore = defineStore({
                                 role_access: role,
                             },
                         };
+                        this.role = sessionStorage.getItem('role_access')
+                        this.section = sessionStorage.getItem('section_code')
                         this.setLoginRole(login_data);
                     }
                 }).catch(err => {
@@ -50,8 +54,15 @@ export const useLoginStore = defineStore({
             })
         },
         setLoginRole(data) {
+            var payload = {
+                id: data.employee_id.emp_id,
+                data: {
+                    role_access: data.role_access,
+                    employee_id: data.employee_id.emp_id,
+                }
+            }
             return new Promise((resolve, reject) => {
-                axios.patch(`user/${data.employee_id.emp_id}`, data.role_access).then(response => {
+                axios.patch(`user/${payload.id}`, payload.data).then(response => {
                     resolve(response.data)
                 }).then(err => {
                     reject(err)

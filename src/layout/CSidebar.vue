@@ -243,11 +243,12 @@
                 <i v-show="sub.class" :style="sub.style" :class="sub.class"></i>
                 <i v-show="sub.svg" v-html="sub.svg"></i>
                 <font-awesome-icon
-                  v-if="sub.fa"
-                  class="h-3 w-3"
-                  :icon="sub.fa"
+                v-if="sub.fa"
+                class="h-3 w-3"
+                :icon="sub.fa"
                 ></font-awesome-icon>
                 {{ sub.title }}
+                <!-- {{ links[0] }} -->
               </div>
             </router-link>
           </div>
@@ -259,6 +260,8 @@
         class="mini mt-20 flex flex-col space-y-2 w-full h-[calc(100vh)]"
       >
         <div v-for="(navs, n) in links" :key="n">
+          <!-- {{ navs }} -->
+          <div v-if="navs.role === undefined || navs.role === role">
           <router-link
             v-if="!navs.sub_module"
             :to="{ name: navs.name }"
@@ -294,7 +297,7 @@
             ></font-awesome-icon>
           </div>
           <div v-for="(sub, s) in navs.sub_module" :key="s">
-            <router-link :to="{ name: sub.name }">
+            <router-link v-if="sub.role === role || sub.section === section" :to="{ name: sub.name }">
               <div
                 ref="sub_module"
                 :class="`submodule(${n}) transform duration-300 absolute hover:ml-4 opacity-0 -translate-x-[15rem] justify-end pr-5 text-${
@@ -312,7 +315,8 @@
                 ></font-awesome-icon>
               </div>
             </router-link>
-          </div>
+            </div>
+        </div>
         </div>
       </div>
     </aside>
@@ -333,7 +337,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useThemeStore } from "@/modules/alpha";
 const themeStore = useThemeStore();
 const props = defineProps({
@@ -342,7 +346,15 @@ const props = defineProps({
   signOut: Function,
   changeEmail: Function,
   changePassword: Function,
+  section: String,
+  role: String
 });
+
+onMounted(() => {
+  console.log(props.links)
+  console.log(props.role)
+  console.log(props.section)
+})
 
 //User Information
 const userprofile = ref({
