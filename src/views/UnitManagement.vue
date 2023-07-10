@@ -78,7 +78,7 @@ const loadUnits = () => {
 const deleteUnit = (data) => {
     swal({
         icon: "question",
-        title: "Are you sure to remove this unit?",
+        title: "Delete Unit?",
         text: "Please make sure before to proceed!",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -101,12 +101,6 @@ const deleteUnit = (data) => {
                     })
                 }
             })
-        } else {
-            swal({
-                icon: "warning",
-                title: "Cancelled",
-                timer: 2500
-            })
         }
     })
 }
@@ -118,7 +112,7 @@ const editUnit = (data) => {
 const submitUpdateUnit = () => {
     swal({
         icon: "question",
-        title: "Are you sure to update this unit?",
+        title: "Update Unit?",
         text: "Please make sure before to proceed!",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -141,19 +135,13 @@ const submitUpdateUnit = () => {
                     })
                 }
             })
-        } else {
-            swal({
-                icon: "warning",
-                title: "Cancelled",
-                timer: 2500
-            })
         }
     })
 }
 const submitUnit = () => {
     swal({
         icon: "question",
-        title: "Are you sure to add this unit?",
+        title: "Add Unit?",
         text: "Please make sure before to proceed!",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -175,12 +163,6 @@ const submitUnit = () => {
                         timer: 2500
                     })
                 }
-            })
-        } else {
-            swal({
-                icon: "warning",
-                title: "Cancelled",
-                timer: 2500
             })
         }
     })

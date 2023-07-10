@@ -180,10 +180,7 @@ const edit_user_form = ref({
 const user_id = ref(null); //id of an item
 const role_selected = ref(null); //edit user modal selected
 const user_employee_id = ref(null);
-const user_role_id = ref(null);
-const user_system_access_id = ref(null);
 const user_data = [];
-const popover = ref(null);
 
 const roleSelectComponent = ref(null)
 const empSelectComponent = ref(null)
@@ -257,7 +254,7 @@ const addHinseiUser = () => {
   ) {
     swal({
       icon: "question",
-      title: "Are you sure to add this user?",
+      title: "Add User?",
       text: "Please make sure before to proceed!",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -289,12 +286,6 @@ const addHinseiUser = () => {
             }
           });
         });
-      } else {
-        swal({
-          icon: "warning",
-          title: "Cancelled",
-          timer: 2000,
-        });
       }
     });
   } else {
@@ -310,7 +301,7 @@ const addHinseiUser = () => {
 const removeUser = (data) => {
   swal({
     icon: "question",
-    title: "Are you sure to remove this user?",
+    title: "Delete User?",
     text: "Please make sure before to proceed!",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",

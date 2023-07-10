@@ -87,7 +87,7 @@ router.afterEach((to, from) => {
     var checkToken = sessionStorage.getItem("userdata")
     if (to.name !== 'login') {
         if (!checkToken) {
-            window.location.href = 'http://10.164.58.82/FDTP-Portal/public/login'
+            window.location.href = 'http://10.164.58.62/FDTP-Portal/public/login'
         } else { console.log('authenticated') }
     }
 })

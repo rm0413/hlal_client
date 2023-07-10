@@ -40,7 +40,7 @@
             <label class="flex flex-col gap-2">
               Request Date
               <input type="date" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
-                v-model="newRequestStore.agreementForm.request_date"  />
+                v-model="newRequestStore.agreementForm.request_date" />
             </label>
             <label class="flex flex-col gap-2">
               Additional Request Qty Date
@@ -164,7 +164,7 @@
       </form>
     </div>
     <div class="lg:col-span-2 min-[100px]:col-span-9 h-full flex flex-col mt-10 gap-2">
-      <button @click="multipleInputValidation(), openModal('multiple_input')"
+      <button @click="openModal('multiple_input')"
         class="w-full p-3 flex justify-center items-center bg-[#A10E13] text-white rounded hover:bg-red-600"
         data-open-modal>
         <font-awesome-icon icon="file-import" class="h-5 w-5" />
@@ -395,8 +395,18 @@ const submitAgreementList = () => {
 
 const openModal = (modal) => {
   if (modal === "multiple_input") {
-    multiple_input.value.showModal();
-    multiple_input.value.classList.remove("-translate-y-5");
+    if (newRequestStore.agreementForm.unit !== null) {
+      multiple_input.value.showModal();
+      multiple_input.value.classList.remove("-translate-y-5");
+    } else {
+      toast.add({
+        severity: "error",
+        summary: "warning",
+        detail: "Please select Unit.",
+        life: 2000,
+        group: "bl"
+      });
+    }
   } else if (modal === "view_items") {
     view_items.value.showModal();
     view_items.value.classList.remove("-translate-y-5");
@@ -453,7 +463,7 @@ const downloadFormat = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      window.location.href = 'http://10.164.58.82/hinsei/server/public/download-format';
+      window.location.href = 'http://10.164.58.62/hinsei/server/public/download-format';
     } else {
       multiple_input.value.showModal();
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000 });
@@ -510,21 +520,6 @@ const submitMultipleRequest = () => {
     }
   } else {
     toast.add({ severity: 'error', summary: 'Warning', detail: 'Only Excel File Allowed.', life: 2000, group: 'bl' });
-  }
-}
-
-const multipleInputValidation = () => {
-  if(newRequestStore.agreementForm.unit !== null){
-    multiple_input.value.showModal();
-  } else {
-    toast.add({
-      severity: "error",
-      summary: "warning",
-      detail: "Please select Unit.",
-      life: 2000,
-      group: "bl"
-    });
-    multiple_input.value.closeModal();
   }
 }
 </script>

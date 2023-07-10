@@ -19,7 +19,7 @@ onMounted(() => {
 const signOut = () => {
   localStorage.clear()
   sessionStorage.clear()
-  window.location.href = "http://10.164.58.82/FDTP-Portal/public/";
+  window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
 }
 
 const systemDetails = {

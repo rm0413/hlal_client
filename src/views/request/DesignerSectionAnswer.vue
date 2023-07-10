@@ -32,6 +32,8 @@
         </div>
       </div>
     </div>
+    <button @click="unSelectAll"
+      class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">Unselect All</button>
     <div class="h-[80vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 overflow-y-scroll">
         <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
@@ -87,7 +89,7 @@
           </label>
           <button type="submit" v-if="!designerSectionAnswerStore.onSingle"
             class="w-full flex gap-2 bg-green-400 p-3 hover:bg-green-200 text-black rounded justify-center items-center mt-2">
-            <font-awesome-icon icon="floppy-disk" />Save Single Inputs
+            <font-awesome-icon icon="floppy-disk" />Save Inputs
           </button>
           <button type="button" @click="excelUploadingDesignerAnswer" v-else-if="designerSectionAnswerStore.onUploading"
             class="w-full flex gap-2 bg-[#A10E13] p-3 text-white rounded justify-center items-center mt-5">
@@ -284,5 +286,10 @@ const clearInputs = () => {
   ctable.value.unSelect();
   select_data.value = [];
   designerSectionAnswerStore.clearDesignerAnswer()
+}
+
+const unSelectAll = () => {
+  ctable.value.unSelect();
+  select_data.value = [];
 }
 </script>
