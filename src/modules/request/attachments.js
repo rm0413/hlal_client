@@ -56,7 +56,7 @@ export const useAttachmentsStore = defineStore({
         },
         downloadAttachment(payload) {
             return new Promise((resolve, reject) => {
-                axios.get('http://10.164.58.62/hinsei/server/public/download-attachment', payload).then(response => {
+                axios.get('http://10.164.58.82/hinsei/server/public/download-attachment', payload).then(response => {
                     resolve(response.data)
                 }).catch(err => {
                     reject(err)

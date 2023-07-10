@@ -16,7 +16,7 @@
               <select class="h-[2.5rem] border-2 rounded text-center w-[16rem] rounded-r-md"
                 v-model="newRequestStore.agreementForm.unit" required>
                 <option value="" disabled>Select Unit</option>
-                <option v-for="i in units" :value="i.unit_id">{{ i.text }}</option>
+                <option v-for="(i, key) in units" :key="key" :value="i.unit_id">{{ i.text }}</option>
               </select>
             </div>
             <div class="relative">
@@ -164,7 +164,7 @@
       </form>
     </div>
     <div class="lg:col-span-2 min-[100px]:col-span-9 h-full flex flex-col mt-10 gap-2">
-      <button @click="openModal('multiple_input')"
+      <button @click="multipleInputValidation(), openModal('multiple_input')"
         class="w-full p-3 flex justify-center items-center bg-[#A10E13] text-white rounded hover:bg-red-600"
         data-open-modal>
         <font-awesome-icon icon="file-import" class="h-5 w-5" />
@@ -453,7 +453,7 @@ const downloadFormat = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      window.location.href = 'http://10.164.58.62/hinsei/server/public/download-format';
+      window.location.href = 'http://10.164.58.82/hinsei/server/public/download-format';
     } else {
       multiple_input.value.showModal();
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000 });
@@ -510,6 +510,21 @@ const submitMultipleRequest = () => {
     }
   } else {
     toast.add({ severity: 'error', summary: 'Warning', detail: 'Only Excel File Allowed.', life: 2000, group: 'bl' });
+  }
+}
+
+const multipleInputValidation = () => {
+  if(newRequestStore.agreementForm.unit !== null){
+    multiple_input.value.showModal();
+  } else {
+    toast.add({
+      severity: "error",
+      summary: "warning",
+      detail: "Please select Unit.",
+      life: 2000,
+      group: "bl"
+    });
+    multiple_input.value.closeModal();
   }
 }
 </script>
