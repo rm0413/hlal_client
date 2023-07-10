@@ -71,7 +71,7 @@ export const useInspectionDataStore = defineStore({
                 revised_date_igm: this.inspectionDataForm.revised_date,
                 sent_date_igm: this.inspectionDataForm.send_date,
             }
-            console.log(payload)
+            // console.log(payload)
             return new Promise((resolve, reject) => {
                 axios.patch(`inspection-data/${payload.id}`, payload).then(response => {
                     resolve(response.data)

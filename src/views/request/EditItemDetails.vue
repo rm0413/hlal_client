@@ -222,7 +222,6 @@ const filterPartNumber = computed(() => {
 })
 
 const openModal = (data) => {
-  console.log(data)
   edit_item.value.showModal()
   editItemDetailsStore.editItemForm = {
     id: data.agreement_id_pk,

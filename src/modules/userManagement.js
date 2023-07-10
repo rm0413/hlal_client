@@ -156,7 +156,7 @@ export const useUserManagementStore = defineStore({
                 employee_id: user_employee_id.value,
                 role_access: role_selected.text
             }
-            console.log(data)
+            // console.log(data)
             return new Promise((resolve, reject) => {
                 axios.patch(`user/${data.id}`, data).then(response => {
                     resolve(response.data)

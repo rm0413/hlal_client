@@ -217,7 +217,7 @@
             <font-awesome-icon icon="xmark" />
           </button>
         </div>
-        <div class="flex p-5 max-h-[50vh] overflow-y-scroll">
+        <div class="flex p-5 max-h-[70vh] overflow-y-scroll">
           <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (checkedData = data)"
             :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
             :items="newRequestStore.getNoCode">
@@ -405,7 +405,6 @@ const openModal = (modal) => {
       search.value.showModal();
       search.value.classList.remove("-translate-y-5");
     } else {
-      console.log('Please input data.')
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Please input data.', life: 2000 });
     }
   }

@@ -220,7 +220,7 @@ const updateRole = () => {
     userManagementStore
       .setUpdateUserRole(user_employee_id, role_selected.value)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.status === "success") {
           swal({
             icon: "success",
@@ -323,7 +323,7 @@ const removeUser = (data) => {
       var role_id = "";
       userManagementStore.setRemoveUser().then((response) => {
         response.data.forEach((v) => {
-          console.log(v);
+          // console.log(v);
           if (employee_id === v.emp_id) {
             role_id = v.role_id;
           }

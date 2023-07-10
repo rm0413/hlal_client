@@ -71,7 +71,7 @@ const loadUnits = () => {
                 text: v.unit_name,
                 unit_id: v.unit_id
             })
-            console.log(units.value)
+            // console.log(units.value)
         })
     })
 }

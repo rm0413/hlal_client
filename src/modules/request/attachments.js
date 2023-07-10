@@ -24,7 +24,7 @@ export const useAttachmentsStore = defineStore({
             return new Promise((resolve, reject) => {
                 axios.get('load-with-code-attachment').then(response => {
                     resolve(response.data.data)
-                    console.log(response.data)
+                    // console.log(response.data)
                     this.attachments = response.data.data
                 }).catch(err => {
                     reject(err)

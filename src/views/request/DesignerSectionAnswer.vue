@@ -26,7 +26,7 @@
             </button>
           </div>
           <div>
-            <c-select class="text-center w-[15rem]" :options="part_number"
+            <c-select class="text-center w-[15rem]" :options="part_number" @change="selectPartNumber"
               v-model="designerSectionAnswerStore.part_number_select"></c-select>
           </div>
         </div>
@@ -53,7 +53,7 @@
           <label class="flex flex-col items-center">
             <i class="text-white bg-[#A10E13] w-full flex justify-center rounded">Request Result</i>
             <select class="border-2 rounded w-full h-[3rem] text-center"
-              v-model="designerSectionAnswerStore.designerSectionAnswerForm.request_result" >
+              v-model="designerSectionAnswerStore.designerSectionAnswerForm.request_result" required>
               <option value="" disabled>Select Request Result</option>
               <option value="LSA OK">LSA OK</option>
               <option value="LSA NG">LSA NG</option>
@@ -66,30 +66,34 @@
             <div class="p-2 w-full">
               <p class="text-[13px]">Designer section's answer</p>
               <textarea style="resize: none"
-                v-model="designerSectionAnswerStore.designerSectionAnswerForm.designer_section_answer"
-                class="border-2 rounded w-full h-[4rem] text-center"  />
+                v-model="designerSectionAnswerStore.designerSectionAnswerForm.designer_section_answer" required
+                class="border-2 rounded w-full h-[4rem] text-center" />
               <p class="text-[13px]">Designer In-charge</p>
               <input type="text" v-model="designerSectionAnswerStore.designerSectionAnswerForm.designer_in_charge"
-                class="border-2 rounded w-full text-center h-[2.5rem]"  />
+                class="border-2 rounded w-full text-center h-[2.5rem]" required />
               <p class="text-[13px]">Answer Date:</p>
               <input type="date" v-model="designerSectionAnswerStore.designerSectionAnswerForm.answer_date"
-                class="border-2 rounded text-center w-full h-[2.5rem]"  />
+                class="border-2 rounded text-center w-full h-[2.5rem]" required />
             </div>
           </label>
           <label class="flex flex-col items-center">
             <i class="text-white bg-[#A10E13] w-full flex justify-center rounded mb-2">Upload Designer Answer</i>
-            <input type="file" accept=".xlsx" @change="uploadFile" :draggable="true" class="block w-full text-sm text-slate-600 file:mr-5 file:py-2 file:px-6
+            <input type="file" id="file-designer" accept=".xlsx" @change="uploadFile" :draggable="true" class="block w-full text-sm text-slate-600 file:mr-5 file:py-2 file:px-6
             file:rounded-full file:border-0
             file:text-sm file:font-medium
             file:bg-blue-50 file:text-blue-700
             hover:file:cursor-pointer hover:file:bg-amber-50
             hover:file:text-amber-700" />
           </label>
-          <button type="submit" v-if="!designerSectionAnswerStore.onEdit"
-            class="w-full flex gap-2 bg-[#A10E13] p-3 text-white rounded justify-center items-center mt-5">
-            <font-awesome-icon icon="floppy-disk" />Save
+          <button type="submit" v-if="!designerSectionAnswerStore.onSingle"
+            class="w-full flex gap-2 bg-green-400 p-3 hover:bg-green-200 text-black rounded justify-center items-center mt-2">
+            <font-awesome-icon icon="floppy-disk" />Save Single Inputs
           </button>
-          <button type="button" @click="updateDesignerSectionAnswer" v-else
+          <button type="button" @click="excelUploadingDesignerAnswer" v-else-if="designerSectionAnswerStore.onUploading"
+            class="w-full flex gap-2 bg-[#A10E13] p-3 text-white rounded justify-center items-center mt-5">
+            <font-awesome-icon icon="floppy-disk" />Submit File
+          </button>
+          <button type="button" @click="updateDesignerSectionAnswer" v-else-if="designerSectionAnswerStore.onEdit"
             class="w-full flex gap-2 bg-yellow-400 p-3 hover:bg-yellow-200 text-black rounded justify-center items-center mt-5">
             <font-awesome-icon icon="floppy-disk" />Update
           </button>
@@ -119,7 +123,6 @@ const swal = inject("$swal");
 const select_data = ref([])
 const ctable = ref()
 const part_number = ref([])
-const data = ref([])
 
 onMounted(() => {
   designerSectionAnswerStore.setLoadDesignerSection()
@@ -133,95 +136,114 @@ onMounted(() => {
   })
 })
 
+const selectPartNumber = () => {
+  ctable.value.unSelect();
+  select_data.value = [];
+}
+
 const file = ref(null);
 const uploadFile = (event) => {
-  // startProgress();
+  designerSectionAnswerStore.onSingle = true
+  designerSectionAnswerStore.onUploading = true
+  designerSectionAnswerStore.onEdit = false
   file.value = event.target.files[0];
 };
 
-const submitDesignerSectionAnswer = () => {
-  select_data.value.forEach((v) => {
-    data.value = {
-      agreement_request_id_pk: v.agreement_request_id_fk,
-      trial_number: v.trial_number,
-      request_date: v.request_date,
-      additional_request_qty_date: v.additional_request_qty_date,
-      tri_number: v.tri_number,
-      request_person: v.request_person,
-      superior_approval: v.superior_approval,
-      supplier_name: v.supplier_name,
-      part_number: v.part_number,
-      sub_part_number: v.sub_part_number,
-      revision: v.revision,
-      coordinates: v.coordinates,
-      dimension: v.dimension,
-      actual_value: v.actual_value,
-      critical_parts: v.critical_parts,
-      critical_dimension: v.critical_dimension,
-      request_type: v.request_type,
-      request_value: v.request_value,
-      request_quantity: v.request_quantity,
-      unit_id: v.unit_id,
-      requestor_employee_id: v.requestor_employee_id,
+const excelUploadingDesignerAnswer = () => {
+  if (select_data.value.length !== 0) {
+    if (file.value.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+      if (designerSectionAnswerStore.designerSectionAnswerForm.request_result !== null) {
+        swal({
+          icon: "question",
+          title: "Upload Designer Answer?",
+          text: "Please make sure before to proceed!",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+        }).then(((response) => {
+          if (response.value === true) {
+            const name = "data";
+            const formData = new FormData();
+            select_data.value.forEach((item, i) => {
+              console.log(item)
+              formData.append((`${name}[${i}]${["[agreement_request_id]"]}`), item["agreement_request_id_fk"]);
+              formData.append((`${name}[${i}]${["[trial_number]"]}`), item["trial_number"]);
+              formData.append((`${name}[${i}]${["[request_date]"]}`), item["request_date"]);
+              formData.append((`${name}[${i}]${["[additional_request_qty_date]"]}`), item["additional_request_qty_date"]);
+              formData.append((`${name}[${i}]${["[tri_number]"]}`), item["tri_number"]);
+              formData.append((`${name}[${i}]${["[tri_quantity]"]}`), item["tri_quantity"]);
+              formData.append((`${name}[${i}]${["[request_person]"]}`), item["request_person"]);
+              formData.append((`${name}[${i}]${["[superior_approval]"]}`), item["superior_approval"]);
+              formData.append((`${name}[${i}]${["[supplier_name]"]}`), item["supplier_name"]);
+              formData.append((`${name}[${i}]${["[part_number]"]}`), item["part_number"]);
+              formData.append((`${name}[${i}]${["[sub_part_number]"]}`), item["sub_part_number"]);
+              formData.append((`${name}[${i}]${["[revision]"]}`), item["revision"]);
+              formData.append((`${name}[${i}]${["[coordinates]"]}`), item["coordinates"]);
+              formData.append((`${name}[${i}]${["[dimension]"]}`), item["dimension"]);
+              formData.append((`${name}[${i}]${["[actual_value]"]}`), item["actual_value"]);
+              formData.append((`${name}[${i}]${["[critical_parts]"]}`), item["critical_parts"]);
+              formData.append((`${name}[${i}]${["[critical_dimension]"]}`), item["critical_dimension"]);
+              formData.append((`${name}[${i}]${["[request_type]"]}`), item["request_type"]);
+              formData.append((`${name}[${i}]${["[request_value]"]}`), item["request_value"]);
+              formData.append((`${name}[${i}]${["[request_quantity]"]}`), item["request_quantity"]);
+              formData.append((`${name}[${i}]${["[unit_id]"]}`), item["unit_id"]);
+              formData.append((`${name}[${i}]${["[requestor_employee_id]"]}`), item["requestor_employee_id"]);
+            })
+            formData.append('uploaded_file', file.value);
+            formData.append('request_result', designerSectionAnswerStore.designerSectionAnswerForm.request_result);
+            designerSectionAnswerStore.setInsertDesignerSectionAnswer(formData)
+          }
+        }))
+      } else {
+        toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select Request Result', life: 1500, group: 'bl' });
+      }
+    } else {
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Only Excel File Allowed', life: 1500, group: 'bl' });
     }
-    console.log(data.value)
-  })
-  // data.value = select_data.value
-
-  // var payload = {
-  //   agreement_request_id: [],
-  // };
-  // select_data.value.forEach((v) => {
-  //   payload.agreement_request_id.push(v.agreement_id_pk);
-  // });
-  const formData = new FormData();
-  formData.append('uploaded_file', file.value);
-  formData.append('data', data.value);
-  // formData.append('data', data.value);
-  // data.value.forEach(function (value) {
-  //   formData.append("data[]", value)
-  //   // console.log(value) // you have to add array symbol after the key name
-  // })
-  designerSectionAnswerStore.setInsertDesignerSectionAnswer(formData)
-
+  } else {
+    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 1500, group: 'bl' });
+  }
 }
 
-// const submitDesignerSectionAnswer = () => {
-//   if (select_data.value.length !== 0) {
-//     swal({
-//       icon: "question",
-//       title: "Add Designer Section Answer?",
-//       text: "Please make sure before to proceed!",
-//       showCancelButton: true,
-//       confirmButtonColor: "#3085d6",
-//       cancelButtonColor: "#d33",
-//       confirmButtonText: "Yes",
-//     }).then((response) => {
-//       if (response.value === true) {
-//         designerSectionAnswerStore.setInsertDesignerSectionAnswer(select_data.value).then((response) => {
-//           if (response.status === 'success') {
-//             swal({
-//               icon: 'success',
-//               title: response.message,
-//               timer: 1500
-//             })
-//           } else {
-//             toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 1500, group: 'br' });
-//           }
-//         })
-//       } else {
-//         toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled', life: 1500, group: 'bl' });
-//       }
-//     })
-//   } else {
-//     toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 1500, group: 'bl' });
-//   }
-// }
+const submitDesignerSectionAnswer = () => {
+  if (select_data.value.length !== 0) {
+    swal({
+      icon: "question",
+      title: "Add Designer Section Answer?",
+      text: "Please make sure before to proceed!",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((response) => {
+      if (response.value === true) {
+        designerSectionAnswerStore.setInsertSingleMultipleDesigner(select_data.value).then((response) => {
+          if (response.status === 'success') {
+            swal({
+              icon: 'success',
+              title: response.message,
+              timer: 1500
+            })
+          } else {
+            toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 1500, group: 'br' });
+          }
+        })
+      } else {
+        toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled', life: 1500, group: 'bl' });
+      }
+    })
+  } else {
+    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 1500, group: 'bl' });
+  }
+}
 
 const editDesignerSection = (data) => {
   ctable.value.unSelect();
   select_data.value = [];
   designerSectionAnswerStore.onEdit = true;
+  designerSectionAnswerStore.onUploading = false;
+  designerSectionAnswerStore.onSingle = true;
   designerSectionAnswerStore.designerSectionAnswerForm = {
     id: data.designer_section_id,
     agreement_request_id: data.agreement_request_id_fk,
@@ -256,6 +278,9 @@ const filterPartNumber = computed(() => {
 
 const clearInputs = () => {
   designerSectionAnswerStore.onEdit = false
+  designerSectionAnswerStore.onUploading = false
+  designerSectionAnswerStore.onSingle = false
+  document.getElementById('file-designer').value = null;
   ctable.value.unSelect();
   select_data.value = [];
   designerSectionAnswerStore.clearDesignerAnswer()

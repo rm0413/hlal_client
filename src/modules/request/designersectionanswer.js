@@ -29,6 +29,8 @@ export const useDesignerSectionAnswerStore = defineStore({
             answer_date: null,
         },
         onEdit: false,
+        onUploading: false,
+        onSingle: false,
         onEditIndex: null,
         search_filter: '',
         part_number_select: ''
@@ -55,18 +57,8 @@ export const useDesignerSectionAnswerStore = defineStore({
             }
         },
         setInsertDesignerSectionAnswer(data) {
-            // var payload = {
-            //     agreement_request_id: [],
-            //     designer_answer: this.designerSectionAnswerForm.designer_section_answer,
-            //     designer_in_charge: this.designerSectionAnswerForm.designer_in_charge,
-            //     request_result: this.designerSectionAnswerForm.request_result,
-            //     answer_date: this.designerSectionAnswerForm.answer_date
-            // }
-            // data.forEach(v => {
-            //     payload.agreement_request_id.push(v.agreement_id_pk)
-            // });
             return new Promise((resolve, reject) => {
-                axios.post('designer-section-answer', data, {
+                axios.post(`designer-section-answer`, data, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -104,6 +96,30 @@ export const useDesignerSectionAnswerStore = defineStore({
             return new Promise((resolve, reject) => {
                 axios.get('load-part-number-with-code').then(response => {
                     resolve(response.data)
+                    // console.log(response.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        setInsertSingleMultipleDesigner(data) {
+            // console.log(data)
+            var payload = {
+                agreement_request_id: [],
+                designer_answer: this.designerSectionAnswerForm.designer_section_answer,
+                designer_in_charge: this.designerSectionAnswerForm.designer_in_charge,
+                request_result: this.designerSectionAnswerForm.request_result,
+                answer_date: this.designerSectionAnswerForm.answer_date
+            }
+            data.forEach(v => {
+                payload.agreement_request_id.push(v.agreement_request_id_fk)
+            });
+            return new Promise((resolve, reject) => {
+                axios.post('insert-designer-answer', payload).then(response => {
+                    resolve(response.data)
+                    // console.log(response.data)
+                    this.setLoadDesignerSection()
+                    this.clearDesignerAnswer()
                 }).catch(err => {
                     reject(err)
                 })

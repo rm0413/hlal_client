@@ -145,7 +145,6 @@ const submitAttachment = () => {
       })
     } else {
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
-      console.log('Please select data in table')
     }
   } else {
     toast.add({ severity: 'error', summary: 'Warning', detail: 'Only PDF File Allowed.', life: 2000, group: 'bl' });

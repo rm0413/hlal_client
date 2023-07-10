@@ -350,11 +350,11 @@ const props = defineProps({
   role: String
 });
 
-onMounted(() => {
-  console.log(props.links)
-  console.log(props.role)
-  console.log(props.section)
-})
+// onMounted(() => {
+//   console.log(props.links)
+//   console.log(props.role)
+//   console.log(props.section)
+// })
 
 //User Information
 const userprofile = ref({

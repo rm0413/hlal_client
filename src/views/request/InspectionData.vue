@@ -107,7 +107,7 @@ onMounted(() => {
 const submitInspectionData = () => {
   if (select_data.value.length !== 0) {
     inspectionDataStore.setInsertInspectionData(select_data.value).then((response) => {
-      console.log(response)
+      // console.log(response)
       if (response.status === "success") {
         clearInputs();
         ctable.value.unSelect();
