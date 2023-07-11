@@ -9,12 +9,13 @@
         <div class="flex gap-2">
           <div class="flex">
             <label class="flex flex-col items-center justify-center">Search by: </label>
-            <div
+            <button
               class="flex flex-col h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3 items-center justify-center">
               Code
-            </div>
-            <div class="flex flex-col text-center p-1 border-2 rounded w-[8rem] items-center justify-center">Part Number
-            </div>
+            </button>
+            <button class="flex flex-col text-center p-1 border-2 rounded w-[8rem] items-center justify-center">Part
+              Number
+            </button>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon

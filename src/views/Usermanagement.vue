@@ -1,45 +1,39 @@
 <template>
-  <div
-    class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
-  >
+  <div class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
     <div class="lg:col-span-2 min-[100px]:col-span-9 h-[89vh] flex flex-col">
-      <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono"
-        ><font-awesome-icon class="h-6 w-6 text-black" icon="users-gear" /> User
-        Management</label
-      >
-      <div
-        class="flex flex-col justify-center py-3 px-16 bg-[#A10E13] rounded shadow-md text-white mt-4 text-center"
-      >
+      <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono"><font-awesome-icon
+          class="h-6 w-6 text-black" icon="users-gear" /> User
+        Management</label>
+      <div class="flex flex-col justify-center py-3 px-16 bg-[#A10E13] rounded shadow-md text-white mt-4 text-center">
         Add User
       </div>
-      <div class="mt-2">
-        <label class="">Employee Name</label>
-        <c-select
-        ref="empSelectComponent"
-          v-model="userManagementStore.employeeForm.system_access_id"
-          :options="userManagementStore.options_employee_name"
-          class="text-center"
-        ></c-select>
-      </div>
-      <div class="mt-2">
-        <label class="">Employee Role</label>
-        <c-select
-        ref="roleSelectComponent"
-          v-model="userManagementStore.employeeForm.role_id"
-          :options="userManagementStore.role_options"
-          class="text-center"
-        ></c-select>
-      </div>
-      <div
-        class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3"
-      >
-        <button
-          class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white"
-          @click="addHinseiUser()"
-        >
-          Save
-        </button>
-        <!-- <button
+      <form method="post" @submit.prevent="addHinseiUser">
+        <div class="mt-2">
+          <label class="">Employee Name</label>
+          <!-- <c-select ref="empSelectComponent" v-model="userManagementStore.employeeForm.system_access_id"
+          :options="userManagementStore.options_employee_name" class="text-center"></c-select> -->
+          <select class="h-[2.5rem] border-2 rounded text-center w-full"
+            v-model="userManagementStore.employeeForm.system_access_id" required>
+            <option value="" disabled>Select Name</option>
+            <option v-for="(i, key) in userManagementStore.options_employee_name" :key="key" :value="i">{{ i.text }}
+            </option>
+          </select>
+        </div>
+        <div class="mt-2">
+          <label class="">Employee Role</label>
+          <!-- <c-select ref="roleSelectComponent" v-model="userManagementStore.employeeForm.role_id"
+          :options="userManagementStore.role_options" class="text-center"></c-select> -->
+          <select class="h-[2.5rem] border-2 rounded text-center w-full"
+            v-model="userManagementStore.employeeForm.role_id" required>
+            <option value="" disabled>Select Role</option>
+            <option v-for="(i, key) in userManagementStore.role_options" :key="key" :value="i">{{ i.text }}</option>
+          </select>
+        </div>
+        <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
+          <button type="submit" class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">
+            Save
+          </button>
+          <!-- <button
           class="w-[10rem] bg-gray-600 rounded hover:bg-gray-500 p-3 text-white"
           @click="
             userManagementStore.clearUser(), userManagementStore.setEmployeeOptions()
@@ -47,26 +41,20 @@
         >
           Clear
         </button> -->
-      </div>
+        </div>
+      </form>
     </div>
     <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col h-[89vh]">
       <div class="flex items-end justify-end">
         <span class="p-input-icon-left">
           <font-awesome-icon icon="magnifying-glass" />
-          <input-text
-            v-model="userManagementStore.search_filter"
-            placeholder="Search"
-            class="w-[17rem] h-[4.5vh] rounded-md"
-          />
+          <input-text v-model="userManagementStore.search_filter" placeholder="Search"
+            class="w-[17rem] h-[4.5vh] rounded-md" />
         </span>
       </div>
       <div class="border rounded-[5px] overflow-y-scroll h-full mt-2">
-        <c-table
-          :filter="userManagementStore.search_filter"
-          :fields="userManagementStore.getUserManagementFields"
-          :thStyle="'bg-[#A10E13] text-white p-3'"
-          :items="userManagementStore.getUserManagement"
-        >
+        <c-table :filter="userManagementStore.search_filter" :fields="userManagementStore.getUserManagementFields"
+          :thStyle="'bg-[#A10E13] text-white p-3'" :items="userManagementStore.getUserManagement">
           <template #cell(#)="data">
             <div class="flex items-center justify-center">
               {{ data.index + 1 }}
@@ -84,18 +72,10 @@
           </template>
           <template #cell(action)="data">
             <div class="flex items-center justify-center gap-1">
-              <Button
-                @click="edit_user_modal(data)"
-                severity="warning"
-                class="w-[1rem] items-center justify-center"
-              >
+              <Button @click="edit_user_modal(data)" severity="warning" class="w-[1rem] items-center justify-center">
                 <font-awesome-icon icon="gear"></font-awesome-icon>
               </Button>
-              <Button
-                severity="danger"
-                class="w-[1rem] items-center justify-center"
-                @click="removeUser(data.item)"
-              >
+              <Button severity="danger" class="w-[1rem] items-center justify-center" @click="removeUser(data.item)">
                 <font-awesome-icon icon="circle-minus"></font-awesome-icon>
               </Button>
             </div>
@@ -105,19 +85,11 @@
     </div>
     <dialog ref="edit_modal" class="p-0 rounded transform duration-300 -translate-y-5">
       <div class="flex flex-col">
-        <div
-          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
-        >
+        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <span>
             <font-awesome-icon icon="gear"></font-awesome-icon> Action |
-            <strong
-              ><code>{{ edit_user_form.item.emp_last_name }}</code></strong
-            ></span
-          >
-          <button
-            class="px-3 py-2 rounded-full hover:bg-red-600"
-            @click="edit_user_close_modal()"
-          >
+            <strong><code>{{ edit_user_form.item.emp_last_name }}</code></strong></span>
+          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="edit_user_close_modal()">
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
@@ -127,50 +99,43 @@
               <span><b>Current Role:</b> </span>
               <i class="text-[18px]">{{
                 !edit_user_form.item.role_access
-                  ? "No role"
-                  : edit_user_form.item.role_access
+                ? "No role"
+                : edit_user_form.item.role_access
               }}</i>
             </label>
             <div class="flex flex-col px-5">
               <b>Change Role:</b>
               <div class="ml-3 flex justify-between mt-2">
-                <c-select
-                  ref="editSelectComponent"
-                  :selected="edit_user_form.item.role_access"
-                  class="text-center"
-                  :options="userManagementStore.role_options"
-                  v-model="role_selected"
-                ></c-select>
+                <!-- <c-select ref="editSelectComponent" :selected="edit_user_form.item.role_access" class="text-center"
+                  :options="userManagementStore.role_options" v-model="role_selected"></c-select> -->
+                <select class="h-[2.5rem] border-2 rounded text-center w-full" v-model="role_selected" required>
+                  <option value="" disabled>Select Role</option>
+                  <option v-for="(i, key) in userManagementStore.role_options" :key="key" :value="i">{{ i.text }}</option>
+                </select>
               </div>
             </div>
           </div>
-          <button
-            type="submit"
-            class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white"
-          >
+          <button type="submit" class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">
             Save
           </button>
-          <button
-            type="button"
-            @click="edit_user_close_modal()"
-            class="w-full bg-gray-600 rounded hover:bg-gray-500 p-3 text-white"
-          >
+          <button type="button" @click="edit_user_close_modal()"
+            class="w-full bg-gray-600 rounded hover:bg-gray-500 p-3 text-white">
             Cancel
           </button>
         </form>
       </div>
     </dialog>
-    <Toast />
+    <Toast position="bottom-right" group="br"></Toast>
   </div>
 </template>
 <script setup>
-import { onMounted, ref, inject, computed } from "vue";
+import { onMounted, ref, inject } from "vue";
 import CTable from "@/components/Datatable.vue";
-import CSelect from "@/components/CSelect.vue";
 import { useUserManagementStore } from "@/modules/userManagement";
 import { useToast } from "primevue/usetoast";
-const toast = useToast();
 const swal = inject("$swal");
+
+const toast = useToast();
 const userManagementStore = useUserManagementStore();
 
 const edit_modal = ref(null);
@@ -182,18 +147,13 @@ const role_selected = ref(null); //edit user modal selected
 const user_employee_id = ref(null);
 const user_data = [];
 
-const roleSelectComponent = ref(null)
-const empSelectComponent = ref(null)
-const editSelectComponent = ref(null)
-
-
 const edit_user_modal = (data) => {
+  console.log(data)
   edit_modal.value.showModal();
   edit_modal.value.classList.remove("-translate-y-5");
   edit_user_form.value = data;
   user_id.value = edit_user_form.value.item.user_id;
   user_employee_id.value = edit_user_form.value.item.emp_id;
-  editSelectComponent.value.editSelect(edit_user_form.value.item.role_access)
 
   userManagementStore.setRemoveUser().then((response) => {
     response.data.forEach((v) => {
@@ -212,31 +172,21 @@ const edit_user_close_modal = () => {
 };
 
 const updateRole = () => {
-  if (role_selected.value) {
-    userManagementStore.setUpdatePortalRoleAccess(user_data, role_selected.value);
-    userManagementStore
-      .setUpdateUserRole(user_employee_id, role_selected.value)
-      .then((response) => {
-        // console.log(response);
-        if (response.status === "success") {
-          swal({
-            icon: "success",
-            title: response.message,
-            timer: 2000,
-          });
-          edit_modal.value.close();
-        } else {
-          console.log(response.message);
-        }
-      });
-  } else {
-    toast.add({
-      severity: "error",
-      summary: "Error Message",
-      detail: "Please Select Role",
-      life: 3000,
+  userManagementStore.setUpdatePortalRoleAccess(user_data, role_selected.value);
+  userManagementStore
+    .setUpdateUserRole(user_employee_id, role_selected.value)
+    .then((response) => {
+      if (response.status === "success") {
+        swal({
+          icon: "success",
+          title: response.message,
+          timer: 2000,
+        });
+        edit_modal.value.close();
+      } else {
+        console.log(response.message);
+      }
     });
-  }
 };
 
 onMounted(() => {
@@ -248,54 +198,32 @@ const loadAll = () => {
 };
 
 const addHinseiUser = () => {
-  if (
-    userManagementStore.employeeForm.system_access_id &&
-    userManagementStore.employeeForm.role_id
-  ) {
-    swal({
-      icon: "question",
-      title: "Add User?",
-      text: "Please make sure before to proceed!",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Submit",
-    }).then((response) => {
-      if (response.value === true) {
-        setTimeout(() => {
-          userManagementStore.setAddHinseiUser().then((response) => {
-            // console.log(res.status);
-            if (response.status === "success") {
-              // userManagementStore.clearUser();
-              loadAll();
-              edit_modal.value.close();
-              roleSelectComponent.value.unSelect()
-              empSelectComponent.value.unSelect()
-              swal({
-                icon: "success",
-                title: response.message,
-                timer: 2000,
-              });
-            } else if (response.status === "warning") {
-              swal({
-                icon: "warning",
-                title: response.message,
-                text: 'Fill in the form',
-                timer: 2000,
-              });
-            }
-          });
+  swal({
+    icon: "question",
+    title: "Add User?",
+    text: "Please make sure before to proceed!",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Submit",
+  }).then((response) => {
+    if (response.value === true) {
+      setTimeout(() => {
+        userManagementStore.setAddHinseiUser().then((response) => {
+          if (response.status === "success") {
+            loadAll();
+            swal({
+              icon: "success",
+              title: response.message,
+              timer: 2000,
+            });
+          } else {
+            toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 1500, group: 'br' });
+          }
         });
-      }
-    });
-  } else {
-    toast.add({
-      severity: "error",
-      summary: "Error Message",
-      detail: "Please select Name or Role.",
-      life: 3000,
-    });
-  }
+      });
+    }
+  });
 };
 
 const removeUser = (data) => {

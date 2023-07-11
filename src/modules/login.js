@@ -56,13 +56,13 @@ export const useLoginStore = defineStore({
         setLoginRole(data) {
             var payload = {
                 id: data.employee_id.emp_id,
-                data: {
-                    role_access: data.role_access,
-                    employee_id: data.employee_id.emp_id,
-                }
+                // data: {
+                role_access: data.role_access,
+                employee_id: data.employee_id.emp_id,
+                // }
             }
             return new Promise((resolve, reject) => {
-                axios.patch(`user/${payload.id}`, payload.data).then(response => {
+                axios.patch(`user/${payload.id}`, payload).then(response => {
                     resolve(response.data)
                 }).then(err => {
                     reject(err)

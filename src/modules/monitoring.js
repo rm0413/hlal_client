@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import axios from 'axios'
 
 export const useMonitoringStore = defineStore({
     id: 'monitoring',
@@ -18,13 +19,31 @@ export const useMonitoringStore = defineStore({
             monitoring_part_number: '',
         },
         onEdit: false,
-        onEditIndex: null
+        onEditIndex: null,
+        units: []
     }),
     actions: {
+        setUnits() {
+            return new Promise((resolve, reject) => {
+                axios.get('unit').then(response => {
+                    resolve(response.data.data)
+                    // console.log(response.data)
+                    this.units = response.data.data
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
+        setUnit(){
+            console.log(this.monitoringForm.monitoring_unit_name)
+        }
     },
     getters: {
         getMonitoringFields() {
             return this.monitoringFields
-        }
+        },
+        getUnit() {
+            return this.units
+        },
     }
 })

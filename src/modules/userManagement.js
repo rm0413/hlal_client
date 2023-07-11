@@ -46,7 +46,7 @@ export const useUserManagementStore = defineStore({
             await this.setUserManagement().then(response => {
                 // resolve(response)
                 this.setUserRequest().then(res => {
-                
+
                     res.data.users.forEach(v => {
                         if (response.data.some((user) => user.emp_id === v.emp_id)) return
                         this.options_employee_name.push({
@@ -69,7 +69,7 @@ export const useUserManagementStore = defineStore({
             return new Promise((resolve, reject) => {
                 axios.get(`http://10.164.58.62/FDTP-Portal/public/api/system-request-users/${system_id}`).then((response) => {
                     resolve(response.data)
-                    console.log(response.data.data)
+                    // console.log(response.data.data)
                     this.userRequest = response.data.data
                 }).catch(err => {
                     reject(err)
@@ -89,9 +89,10 @@ export const useUserManagementStore = defineStore({
             })
         },
         clearUser() {
-            // console.log(this.employeeForm)
-            this.employeeForm.system_access_id = null
-            // this.employeeForm.role_id = null
+            this.employeeForm = {
+                system_access_id: null,
+                role_id: null
+            }
         },
         setAddHinseiUser() {
             var add_user_data = {
@@ -107,7 +108,7 @@ export const useUserManagementStore = defineStore({
                     resolve(response.data)
                     this.setAddUser(employee_data)
                     this.setUserManagement()
-                    // this.clearUser()
+                    this.clearUser()
                 }).catch(err => {
                     reject(err)
                 })
@@ -168,7 +169,6 @@ export const useUserManagementStore = defineStore({
             })
         },
         setUpdatePortalRoleAccess(user_data, role_selected) {
-            console.log(user_data)
             var data = {
                 id: user_data[0].user_role_id,
                 system_access_id: user_data[0].user_system_access_id,
@@ -179,7 +179,7 @@ export const useUserManagementStore = defineStore({
                 axios.put(`http://10.164.58.62/FDTP-Portal/public/api/role-access/${data.id}`, data)
                     .then(function (response) {
                         resolve(response.data);
-                        console.log(response.data)
+                        // console.log(response.data)
                         this.setUserManagement()
                         this.setUserRequest()
                     })

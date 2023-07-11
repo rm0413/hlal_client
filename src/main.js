@@ -10,7 +10,6 @@ import "primevue/resources/primevue.min.css";
 import 'sweetalert2/dist/sweetalert2.min.css';
 import './style.css'
 
-
 import axios from 'axios'
 axios.defaults.baseURL = 'http://10.164.58.62/hinsei/server/public/api/';
 
@@ -24,7 +23,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faUser, faInfoCircle, faBars, faAddressCard, faInfo, faAngleRight, faAngleDown, faClipboardList, faRing, faClone, faColumns,
     faChartArea, faChartPie, faChartLine, faChartBar, faSignOutAlt, faEnvelope, faWindowClose, faComments, faQuestion, faEdit, faBell, faGripLines, faUsers, faDesktop, faLock, faPlusSquare, faPencilAlt, faTrash, faFileLines, faHouse, faUserCircle, faUserPlus, faUserMinus, faSearch, faGear, faMagnifyingGlassPlus, faLayerGroup, faFolderPlus, faPenToSquare, faPuzzlePiece, faTags, faPaperclip, faCircleMinus, faUsersGear, faMagnifyingGlass, faXmark, faCloudArrowUp, faEraser, faDownload, faEye, faPen, faFloppyDisk, faRightFromBracket, faMoon, faSun, faGears, faToolbox, faArrowTurnRight, faFileImport)
-
 
 const pinia = createPinia()
 const app = createApp(App)
@@ -43,9 +41,7 @@ import ToastService from 'primevue/toastservice';
 import Tooltip from 'primevue/tooltip';
 import ProgressBar from 'primevue/progressbar';
 
-
 app.component('font-awesome-icon', FontAwesomeIcon)
-
 app.component('Chart', Chart)
 app.component('multiselect', MultiSelect)
 app.component('drop-down', Dropdown)
@@ -57,7 +53,6 @@ app.component('Avatar', Avatar)
 app.component('Toast', Toast)
 app.component('ProgressBar', ProgressBar)
 app.directive('tooltip', Tooltip);
-
 
 app.use(VueSweetalert2);
 app.use(pinia)
