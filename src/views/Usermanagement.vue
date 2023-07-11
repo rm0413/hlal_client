@@ -30,17 +30,14 @@
           </select>
         </div>
         <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
-          <button type="submit" class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">
+          <button type="submit" class="w-[15rem] bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">
             Save
           </button>
-          <!-- <button
-          class="w-[10rem] bg-gray-600 rounded hover:bg-gray-500 p-3 text-white"
-          @click="
-            userManagementStore.clearUser(), userManagementStore.setEmployeeOptions()
-          "
-        >
-          Clear
-        </button> -->
+          <button class="gap-2 w-[15rem] bg-gray-600 rounded hover:bg-gray-500 p-3 text-white" @click="
+            userManagementStore.clearUser()
+            ">
+            Clear
+          </button>
         </div>
       </form>
     </div>
