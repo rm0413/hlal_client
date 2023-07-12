@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="h-[80vh] w-full mt-3 overflow-y-scroll">
-        <c-table :items="filterPartNumber" :filter="editItemDetailsStore.search_filter"
+        <c-table :items="filterPartNumber" :filter="editItemDetailsStore.part_number_select.value"
           :fields="editItemDetailsStore.getEditItemDetailsFields" :thStyle="'bg-[#A10E13] text-white p-2 text-[13px]'">
           <template #cell(action)="data">
             <div class="flex justify-center gap-1">
@@ -217,7 +217,7 @@ onMounted(() => {
 
 const filterPartNumber = computed(() => {
   return editItemDetailsStore.getEditItemDetails.filter((v) =>
-    v.part_number == editItemDetailsStore.part_number_select.value
+    v.code == editItemDetailsStore.search_filter
   );
 })
 

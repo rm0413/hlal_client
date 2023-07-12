@@ -53,7 +53,7 @@
       </div>
       <div class="col-span-7 my-5 overflow-y-scroll">
         <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
-          :filter="attachmentsStore.search_filter" :items="filterPartNumber"
+          :filter="attachmentsStore.part_number_select.value" :items="filterPartNumber"
           :fields="attachmentsStore.getAttachmentsFields" :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'">
           <template #cell(action)="data">
           </template>
@@ -153,7 +153,7 @@ const submitAttachment = () => {
 
 const filterPartNumber = computed(() => {
   return attachmentsStore.getAttachment.filter((v) =>
-    v.part_number == attachmentsStore.part_number_select.value
+    v.code == attachmentsStore.search_filter
   );
 })
 

@@ -38,7 +38,7 @@
     <div class="h-[80vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 overflow-y-scroll">
         <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
-          :filter="designerSectionAnswerStore.search_filter" :items="filterPartNumber"
+          :filter="designerSectionAnswerStore.part_number_select.value" :items="filterPartNumber"
           :fields="designerSectionAnswerStore.getDesignerSectionAnswerFields"
           :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'">
           <template #cell(action)="data">
@@ -275,7 +275,7 @@ const updateDesignerSectionAnswer = () => {
 
 const filterPartNumber = computed(() => {
   return designerSectionAnswerStore.getDesignerSectionAnswer.filter((v) =>
-    v.part_number == designerSectionAnswerStore.part_number_select.value
+    v.code == designerSectionAnswerStore.search_filter
   );
 })
 

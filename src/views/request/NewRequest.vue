@@ -497,9 +497,9 @@ const submitMultipleRequest = () => {
         if (response.value === true) {
           newRequestStore.setUploadMultipleRequest(formData).then((response) => {
             if (response.status === "success") {
-              ctable.value.unSelect();
-              checkedData.value = [];
+              document.getElementById("input-file").value = null
               multiple_input.value.close();
+
               swal({
                 icon: "success",
                 title: "Multiple Request Added Successfully.",

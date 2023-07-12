@@ -33,7 +33,7 @@
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[81vh] overflow-y-scroll">
         <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
           :fields="inspectionDataStore.getInspectionDataFields" :items="filterPartNumber"
-          :thStyle="'bg-[#A10E13] p-2 text-white'" :filter="inspectionDataStore.search_filter">
+          :thStyle="'bg-[#A10E13] p-2 text-white'" :filter="inspectionDataStore.part_number_select.value">
           <template #cell(action)="data">
             <button @click="editCpkData(data.item)" v-if="data.item.cpk_data !== null"
               class="h-8 w-9 rounded bg-yellow-500 text-white" v-tooltip.top="'Edit Cpk Data'"><font-awesome-icon
@@ -177,7 +177,7 @@ const updateInspectionData = () => {
 
 const filterPartNumber = computed(() => {
   return inspectionDataStore.getInspectionData.filter((v) =>
-    v.part_number == inspectionDataStore.part_number_select.value
+    v.code == inspectionDataStore.search_filter
   );
 })
 </script>
