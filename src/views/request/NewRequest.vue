@@ -111,8 +111,8 @@
               <select class="border-2 rounded text-center h-[2.5rem]"
                 v-model="newRequestStore.agreementForm.critical_parts" required>
                 <option value="" disabled>Select Critical Parts</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option value="YES">YES</option>
+                <option value="NO">NO</option>
               </select>
               <!-- <c-select ref="select_critical_parts" v-model="newRequestStore.agreementForm.critical_parts"
               :options="critical_parts_options" class="text-center"></c-select> -->
@@ -124,8 +124,8 @@
               <select class="border-2 rounded text-center h-[2.5rem]"
                 v-model="newRequestStore.agreementForm.critical_dimension" required>
                 <option value="" disabled>Select Critical Dimension</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
+                <option value="YES">YES</option>
+                <option value="NO">NO</option>
               </select>
             </label>
             <label class="flex flex-col gap-2">

@@ -195,7 +195,20 @@ const excelUploadingDesignerAnswer = () => {
             })
             formData.append('uploaded_file', file.value);
             formData.append('request_result', designerSectionAnswerStore.designerSectionAnswerForm.request_result);
-            designerSectionAnswerStore.setInsertDesignerSectionAnswer(formData)
+            designerSectionAnswerStore.setInsertDesignerSectionAnswer(formData).then(response => {
+              if (response.status === "success") {
+                document.getElementById("file-designer").value = null;
+                swal({
+                  icon: "success",
+                  title: response.message,
+                  timer: 1500
+                })
+                ctable.value.unSelect();
+                select_data.value = [];
+              } else {
+                toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 1500, group: 'br' });
+              }
+            })
           }
         }))
       } else {

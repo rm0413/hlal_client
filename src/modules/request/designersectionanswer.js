@@ -66,6 +66,7 @@ export const useDesignerSectionAnswerStore = defineStore({
                     resolve(response.data)
                     console.log(response.data)
                     this.setLoadDesignerSection()
+                    this.clearDesignerAnswer()
                 }).catch(err => {
                     reject(err)
                 })
