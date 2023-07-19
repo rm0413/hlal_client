@@ -6,16 +6,14 @@ import { useLoginStore } from "@/modules/login.js";
 
 const route = useRoute()
 const loginStore = useLoginStore()
-const role = ref(null)
-const section = ref(null)
 
 onMounted(() => {
-  if(loginStore.role === null && loginStore.section === null){
+  if (loginStore.role === null && loginStore.section === null) {
     loginStore.role = sessionStorage.getItem('role_access')
     loginStore.section = sessionStorage.getItem('section_code')
   }
 })
-  
+
 const signOut = () => {
   localStorage.clear()
   sessionStorage.clear()
@@ -90,11 +88,6 @@ const links = [
     name: 'monitoring',
     fa: 'desktop',
   },
-  // {
-  //   title: 'Usermanagement',
-  //   name: 'usermanagement',
-  //   fa: 'users-gear'
-  // },
   {
     title: 'Management',
     name: 'management',
@@ -116,14 +109,12 @@ const links = [
   },
 ]
 
-
-
 </script>
 
 <template>
   <div class="h-screen">
-    <CSidebar :role="loginStore.role" :section="loginStore.section" :systemDetails="systemDetails" :links="links" :signOut="signOut"
-      v-if="route.name !== 'login'">
+    <CSidebar :role="loginStore.role" :section="loginStore.section" :systemDetails="systemDetails" :links="links"
+      :signOut="signOut" v-if="route.name !== 'login'">
       <template #page>
         <router-view />
       </template>
@@ -133,4 +124,23 @@ const links = [
   </div>
 </template>
 
-<style scoped></style>
+<style>
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 0 grey;
+  border-radius: 10px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #A10E13;
+  border-radius: 10px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}
+</style>

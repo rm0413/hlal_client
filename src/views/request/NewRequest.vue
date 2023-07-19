@@ -13,7 +13,8 @@
                 Unit</p>
               <!-- <c-select ref="select_unit" class="h-[2.5rem] text-center" :options="units"
               v-model="newRequestStore.agreementForm.unit"></c-select> -->
-              <select class="h-[2.5rem] border-2 rounded text-center w-[16rem] rounded-r-md"
+              <select
+                class="h-[2.5rem] border-2 rounded text-center w-[16rem] rounded-r-md border-gray-600 hover:border-blue-300 outline-green-600"
                 v-model="newRequestStore.agreementForm.unit" required>
                 <option value="" disabled>Select Unit</option>
                 <option v-for="(i, key) in units" :key="key" :value="i.unit_id">{{ i.text }}</option>
@@ -22,7 +23,9 @@
             <div class="relative">
               <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                   icon="magnifying-glass"></font-awesome-icon></i>
-              <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" v-model="newRequestStore.search_filter" />
+              <input
+                class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
+                v-model="newRequestStore.search_filter" />
               <button type="button" @click="openModal('search')"
                 class="h-[2.5rem] bg-gray-400 text-white py-1 px-3 rounded-r-md">
                 Search
@@ -34,85 +37,100 @@
           <div class="col-span-1 p-10">
             <label class="flex flex-col gap-2">
               Trial No.
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.trial_number" required />
             </label>
             <label class="flex flex-col gap-2">
               Request Date
-              <input type="date" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="date"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.request_date" />
             </label>
             <label class="flex flex-col gap-2">
               Additional Request Qty Date
-              <input type="date" class="w-full text-center h-[2.5rem] border-2 rounded p-1 hover:border-blue-300"
+              <input type="date"
+                class="w-full text-center h-[2.5rem]  outline-green-600 border-2 rounded p-1 hover:border-blue-300 border-gray-600"
                 v-model="newRequestStore.agreementForm.additional_request_date" />
             </label>
             <label class="flex flex-col gap-2">
               TRI No.
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.tri_number" required />
             </label>
             <label class="flex flex-col gap-2">
               TRI Quantity
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.tri_quantity" required />
             </label>
             <label class="flex flex-col gap-2">
               Request Person
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.request_person" required />
             </label>
             <label class="flex flex-col gap-2">
               Superior Approval
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.supperior_approval" required />
             </label>
           </div>
           <div class="col-span-1 p-10">
             <label class="flex flex-col gap-2">
               Supplier
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.supplier_name" required />
             </label>
             <label class="flex flex-col gap-2">
               Part Number
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.part_number" required />
             </label>
             <label class="flex flex-col gap-2">
               Sub Part Number
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.sub_part_number" required />
             </label>
             <label class="flex flex-col gap-2">
               Revision
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.revision" required />
             </label>
             <label class="flex flex-col gap-2">
               Coordinates
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.coordinates" required />
             </label>
             <label class="flex flex-col gap-2">
               Dimension
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.dimension" required />
             </label>
             <label class="flex flex-col gap-2">
               Actual Value
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.actual_value" required />
             </label>
           </div>
           <div class="col-span-1 p-10">
             <label class="flex flex-col gap-2">
               Critical Parts
-              <select class="border-2 rounded text-center h-[2.5rem]"
+              <select
+                class="border-2 rounded text-center h-[2.5rem] hover:border-blue-300 border-gray-600 outline-green-600"
                 v-model="newRequestStore.agreementForm.critical_parts" required>
                 <option value="" disabled>Select Critical Parts</option>
-                <option value="YES">YES</option>
-                <option value="NO">NO</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
               <!-- <c-select ref="select_critical_parts" v-model="newRequestStore.agreementForm.critical_parts"
               :options="critical_parts_options" class="text-center"></c-select> -->
@@ -121,19 +139,21 @@
               Critical Dimension
               <!-- <c-select ref="select_critical_dimension" v-model="newRequestStore.agreementForm.critical_dimension"
               :options="critical_dimension_options" class="text-center"></c-select> -->
-              <select class="border-2 rounded text-center h-[2.5rem]"
+              <select
+                class="border-2 rounded text-center h-[2.5rem] hover:border-blue-300 border-gray-600 outline-green-600"
                 v-model="newRequestStore.agreementForm.critical_dimension" required>
                 <option value="" disabled>Select Critical Dimension</option>
-                <option value="YES">YES</option>
-                <option value="NO">NO</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </label>
             <label class="flex flex-col gap-2">
               Kind of Request
               <!-- <c-select ref="select_kind_request" v-model="newRequestStore.agreementForm.kind_request"
                 :options="kind_request_options" class="text-center"></c-select> -->
-              <select class="border-2 rounded text-center h-[2.5rem]" v-model="newRequestStore.agreementForm.kind_request"
-                required>
+              <select
+                class="border-2 rounded text-center h-[2.5rem] hover:border-blue-300 border-gray-600 outline-green-600"
+                v-model="newRequestStore.agreementForm.kind_request" required>
                 <option value="" disabled>Select Kind of Request</option>
                 <option value="LSA Request">LSA Request</option>
                 <option value="Hinsei Request">Hinsei Request</option>
@@ -142,12 +162,13 @@
             <label class="flex flex-col gap-2">
               Request Value
               <textarea style="resize: none"
-                class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[7rem]"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[7rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.request_value" required />
             </label>
             <label class="flex flex-col gap-2">
               Request Quantity
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[2.5rem]"
+              <input type="text"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 border-gray-600 text-center h-[2.5rem] outline-green-600"
                 v-model="newRequestStore.agreementForm.request_quantity" required />
             </label>
             <div class="flex justify-center items-center mt-8 gap-2">
@@ -209,7 +230,7 @@
       </div>
     </dialog>
     <!--View Items-->
-    <dialog ref="view_items" class="p-0 rounded transform duration-300 -translate-y-5 w-full">
+    <dialog ref="view_items" class="p-0 rounded transform duration-300 -translate-y-2 w-full">
       <div class="flex flex-col">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <p><font-awesome-icon icon="file-lines" class="h-5 w-5 mr-2" />View Item Details</p>
@@ -217,7 +238,12 @@
             <font-awesome-icon icon="xmark" />
           </button>
         </div>
-        <div class="flex p-5 max-h-[70vh] overflow-y-scroll">
+        <div class="flex flex-row ml-5 mt-2">
+          <button @click="selectAll"
+            class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">Select
+            All</button>
+        </div>
+        <div class="flex flex-row p-5 max-h-[70vh] overflow-y-scroll">
           <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (checkedData = data)"
             :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
             :items="newRequestStore.getNoCode">
@@ -521,5 +547,11 @@ const submitMultipleRequest = () => {
   } else {
     toast.add({ severity: 'error', summary: 'Warning', detail: 'Only Excel File Allowed.', life: 2000, group: 'bl' });
   }
+}
+
+const selectAll = () => {
+  ctable.value.selectAll().then(res => {
+    select_data.value = res
+  })
 }
 </script>

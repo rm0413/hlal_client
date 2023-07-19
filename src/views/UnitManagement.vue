@@ -10,7 +10,7 @@
             <form method="post" @submit.prevent="submitUnit">
                 <div class="mt-2">
                     <label class="">Unit Name</label>
-                    <input type="text" class="w-full border-2 h-[2.5rem] rounded text-center"
+                    <input type="text" class="w-full border-2 h-[2.5rem] border-gray-600 rounded text-center hover:border-blue-300 outline-green-600"
                         v-model="unitManagementStore.unitForm.unit_name" required>
                 </div>
                 <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">

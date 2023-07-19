@@ -12,25 +12,25 @@
             <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3">
               Code
             </div>
-            <div class="text-center p-1 border-2 rounded w-[8rem]">Part Number</div>
+            <div class="text-center p-1 border-2 rounded w-[8rem] border-gray-600">Part Number</div>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]"
+            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="editItemDetailsStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
           <div>
-            <c-select class="text-center w-[15rem]" :options="part_number"
+            <c-select class="text-center w-[15rem] border-gray-600 hover:border-blue-300 outline-green-600" :options="part_number"
               v-model="editItemDetailsStore.part_number_select"></c-select>
           </div>
         </div>
       </div>
       <div class="h-[80vh] w-full mt-3 overflow-y-scroll">
-        <c-table :items="filterPartNumber" :filter="editItemDetailsStore.part_number_select.value"
+        <c-table :items="filterPartNumber" :filter="editItemDetailsStore.search_filter"
           :fields="editItemDetailsStore.getEditItemDetailsFields" :thStyle="'bg-[#A10E13] text-white p-2 text-[13px]'">
           <template #cell(action)="data">
             <div class="flex justify-center gap-1">
@@ -59,74 +59,74 @@
           <div class="col-span-1 p-10">
             <label class="flex flex-col gap-2">
               Trial No.
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.trial_number" required />
             </label>
             <label class="flex flex-col gap-2">
               Request Date
-              <input type="date" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="date" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.request_date" />
             </label>
             <label class="flex flex-col gap-2">
               Additional Request Qty Date
-              <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300"
+              <input type="date" class="w-full text-center border-2 rounded p-1 hover:border-blue-300 outline-green-600"
                 v-model="editItemDetailsStore.editItemForm.additional_request_date" />
             </label>
             <label class="flex flex-col gap-2">
               TRI No.
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.tri_number" required />
             </label>
             <label class="flex flex-col gap-2">
               TRI Quantity
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.tri_quantity" required />
             </label>
             <label class="flex flex-col gap-2">
               Request Person
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.request_person" required />
             </label>
             <label class="flex flex-col gap-2">
               Superior Approval
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.supperior_approval" required />
             </label>
           </div>
           <div class="col-span-1 p-10">
             <label class="flex flex-col gap-2">
               Supplier
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.supplier_name" required />
             </label>
             <label class="flex flex-col gap-2">
               Part Number
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.part_number" required />
             </label>
             <label class="flex flex-col gap-2">
               Sub Part Number
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.sub_part_number" required />
             </label>
             <label class="flex flex-col gap-2">
               Revision
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.revision" required />
             </label>
             <label class="flex flex-col gap-2">
               Coordinates
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.coordinates" required />
             </label>
             <label class="flex flex-col gap-2">
               Dimension
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.dimension" required />
             </label>
             <label class="flex flex-col gap-2">
               Actual Value
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.actual_value" required />
             </label>
           </div>
@@ -135,7 +135,7 @@
               Critical Parts
               <!-- <c-select ref="select_critical_parts" v-model="editItemDetailsStore.editItemForm.critical_parts"
                 :options="critical_parts_options" class="text-center"></c-select> -->
-              <select class="h-[2.3rem] border-2 rounded text-center"
+              <select class="h-[2.3rem] hover:border-blue-300 outline-green-600 border-2 rounded text-center"
                 v-model="editItemDetailsStore.editItemForm.critical_parts" required>
                 <option value="null" disabled>Select Critical Parts</option>
                 <option value="Yes">Yes</option>
@@ -146,7 +146,7 @@
               Critical Dimension
               <!-- <c-select ref="select_critical_dimension" v-model="editItemDetailsStore.editItemForm.critical_dimension"
                 :options="critical_dimension_options" class="text-center"></c-select> -->
-              <select class="h-[2.3rem] border-2 rounded text-center"
+              <select class="h-[2.3rem] hover:border-blue-300 outline-green-600 border-2 rounded text-center"
                 v-model="editItemDetailsStore.editItemForm.critical_dimension" required>
                 <option value="null" disabled>Select Critical Dimension</option>
                 <option value="Yes">Yes</option>
@@ -157,7 +157,7 @@
               Kind of Request
               <!-- <c-select ref="select_kind_request" v-model="editItemDetailsStore.editItemForm.kind_request"
                 :options="kind_request_options" class="text-center"></c-select> -->
-              <select class="h-[2.3rem] border-2 rounded text-center"
+              <select class="h-[2.3rem] hover:border-blue-300 outline-green-600 border-2 rounded text-center"
                 v-model="editItemDetailsStore.editItemForm.kind_request" required>
                 <option value="null" disabled>Select Kind of Request</option>
                 <option value="LSA Request">LSA Request</option>
@@ -167,12 +167,12 @@
             <label class="flex flex-col gap-2">
               Request Value
               <textarea style="resize: none"
-                class="w-full border-2 rounded p-1 hover:border-blue-300 text-center h-[6.5rem]"
+                class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center h-[6.5rem]"
                 v-model="editItemDetailsStore.editItemForm.request_value" required />
             </label>
             <label class="flex flex-col gap-2">
               Request Quantity
-              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 text-center"
+              <input type="text" class="w-full border-2 rounded p-1 hover:border-blue-300 outline-green-600 text-center"
                 v-model="editItemDetailsStore.editItemForm.request_quantity" required />
             </label>
             <div class="flex justify-center items-center mt-8 gap-2">
@@ -217,7 +217,7 @@ onMounted(() => {
 
 const filterPartNumber = computed(() => {
   return editItemDetailsStore.getEditItemDetails.filter((v) =>
-    v.code == editItemDetailsStore.search_filter
+    v.part_number == editItemDetailsStore.part_number_select.value
   );
 })
 

@@ -8,20 +8,10 @@
       </tr>
     </thead>
     <tbody v-if="filter" class="relative">
-      <span
-        v-if="onFilter.length === 0"
-        class="flex justify-center w-full absolute italic"
-      >
-        {{ emptyMsg }}</span
-      >
-      <tr
-        v-else
-        :class="`${tdStyle} unchecked`"
-        v-for="(item, index) in onFilter"
-        :key="index"
-        @click="getData(item, `record(${index})`)"
-        :id="`record(${index})`"
-      >
+      <span v-if="onFilter.length === 0" class="flex justify-center w-full absolute italic">
+        {{ emptyMsg }}</span>
+      <tr v-else :class="`${tdStyle} unchecked`" v-for="(item, index) in onFilter" :key="index"
+        @click="getData(item, `record(${index})`)" :id="`record(${index})`">
         <th class="font-normal relative border-r" v-for="(column, t) in fields" :key="t">
           <slot :name="`cell(${column.key})`" :item="item" :index="index"></slot>
           <span v-if="item[column.key]">{{ item[column.key] }}</span>
@@ -30,23 +20,12 @@
     </tbody>
     <tbody v-else-if="items">
       <span v-if="items.length === 0" class="flex justify-center w-full absolute italic">
-        {{ emptyMsg }}</span
-      >
-      <tr
-        :class="`${tdStyle} unchecked`"
-        v-for="(item, index) in items"
-        :key="index"
-        @click="getData(item, `record(${index})`)"
-        :id="`record(${index})`"
-      >
+        {{ emptyMsg }}</span>
+      <tr :class="`${tdStyle} unchecked`" v-for="(item, index) in items" :key="index"
+        @click="getData(item, `record(${index})`)" :id="`record(${index})`">
         <!-- , $emit('selectable', selected_value) -->
-        <th
-          v-for="(column, t) in fields"
-          :key="t"
-          :id="`cell(${index},${t})`"
-          @click="getCellData(item[column.key], `cell(${index},${t})`)"
-          class="font-normal border-r"
-        >
+        <th v-for="(column, t) in fields" :key="t" :id="`cell(${index},${t})`"
+          @click="getCellData(item[column.key], `cell(${index},${t})`)" class="font-normal border-r">
           <slot :name="`cell(${column.key})`" :item="item" :index="index"></slot>
           {{ item[column.key] }}
         </th>
@@ -98,6 +77,8 @@ const emit = defineEmits(["selected_value", "selectable"]);
 
 const selected_value = ref([]);
 
+const select_all = ref(false)
+
 const unSelect = () => {
   var records = [];
   props.items.forEach((v, i) => {
@@ -112,7 +93,7 @@ const unSelect = () => {
       v.record.classList.add("unchecked");
     }
   });
-
+  select_all.value = false
   selected_value.value = [];
 };
 
@@ -134,13 +115,37 @@ const getData = (data, id) => {
   if (!record.classList.contains("unchecked")) {
     selected_value.value.push(data);
     emit("selectable", selected_value.value);
-  } else {
+  }
+  else {
     var agreementIdSplicer = selected_value.value.findIndex(
       (obj) => obj.agreement_id === data.agreement_id
     );
     selected_value.value.splice(agreementIdSplicer, 1);
   }
 };
+
+const selectAll = () => {
+  return new Promise((resolve) => {
+    select_all.value = !select_all.value
+    if (select_all.value === true) {
+      props.items.forEach((v, i) => {
+        if (document.getElementById(`record(${i})`).classList.contains('unchecked')) {
+          selected_value.value.push(v)
+          document.getElementById(`record(${i})`).classList.remove("unchecked");
+          document.getElementById(`record(${i})`).classList.add("bg-red-300");
+          document.getElementById(`record(${i})`).classList.add("hover:bg-red-200");
+          document.getElementById(`record(${i})`).classList.remove("hover:bg-gray-100");
+          resolve(selected_value.value)
+        } else {
+          resolve('error')
+        }
+      })
+    } else {
+      unSelect()
+      resolve(selected_value.value)
+    }
+  })
+}
 
 const getCellData = (data, id) => {
   if (!props.cellCopy) return;
@@ -164,5 +169,6 @@ const onFilter = computed(() => {
 
 defineExpose({
   unSelect,
+  selectAll
 });
 </script>

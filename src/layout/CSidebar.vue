@@ -269,6 +269,9 @@
               themeStore.theme[themeStore.theme_select].sidebar_route_bg
             } p-3 rounded-full transform ease-in-out duration-500 flex shadow-lg`"
           >
+            <div class="relative inline-block hover:visible" v-if="tooltip[0]">
+              <span class="absolute top-[50%] right-[100%] mt-[5px] border-2 after:content-[''] hidden">{{tooltip[1]}}</span>
+            </div>
             <i v-show="navs.class" :style="navs.style" :class="navs.class"></i>
             <i v-show="navs.svg" v-html="navs.svg"></i>
             <font-awesome-icon
@@ -347,7 +350,11 @@ const props = defineProps({
   changeEmail: Function,
   changePassword: Function,
   section: String,
-  role: String
+  role: String,
+  tooltip: {
+    type: Array,
+    default: [true, 'try']
+  }
 });
 
 // onMounted(() => {

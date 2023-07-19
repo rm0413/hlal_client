@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+import Swal from 'sweetalert2/dist/sweetalert2';
 
 const Login = () => import('@/views/Login.vue')
 const Dashboard = () => import('@/views/Dashboard.vue')
@@ -87,7 +88,14 @@ router.afterEach((to, from) => {
     var checkToken = sessionStorage.getItem("userdata")
     if (to.name !== 'login') {
         if (!checkToken) {
-            window.location.href = 'http://10.164.58.62/FDTP-Portal/public/login'
+            Swal.fire({
+                icon: "warning",
+                title: 'Unauthorized User',
+                text: 'Redirecting to FDTP Portal!!',
+                timer: 3000
+            }).then(() => {
+                window.location.href = "http://10.164.30.174/FDTP-Portal/public/";
+            });
         } else { console.log('authenticated') }
     }
 })

@@ -12,7 +12,7 @@
           <label class="">Employee Name</label>
           <!-- <c-select ref="empSelectComponent" v-model="userManagementStore.employeeForm.system_access_id"
           :options="userManagementStore.options_employee_name" class="text-center"></c-select> -->
-          <select class="h-[2.5rem] border-2 rounded text-center w-full"
+          <select class="h-[2.5rem] border-2 rounded text-center w-full border-gray-600 hover:border-blue-300 outline-green-600"
             v-model="userManagementStore.employeeForm.system_access_id" required>
             <option value="" disabled>Select Name</option>
             <option v-for="(i, key) in userManagementStore.options_employee_name" :key="key" :value="i">{{ i.text }}
@@ -23,7 +23,7 @@
           <label class="">Employee Role</label>
           <!-- <c-select ref="roleSelectComponent" v-model="userManagementStore.employeeForm.role_id"
           :options="userManagementStore.role_options" class="text-center"></c-select> -->
-          <select class="h-[2.5rem] border-2 rounded text-center w-full"
+          <select class="h-[2.5rem] border-2 rounded text-center w-full border-gray-600 hover:border-blue-300 outline-green-600"
             v-model="userManagementStore.employeeForm.role_id" required>
             <option value="" disabled>Select Role</option>
             <option v-for="(i, key) in userManagementStore.role_options" :key="key" :value="i">{{ i.text }}</option>

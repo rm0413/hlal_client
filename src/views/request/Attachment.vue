@@ -12,18 +12,18 @@
             <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3">
               Code
             </div>
-            <div class="text-center p-1 border-2 rounded w-[8rem]">Part Number</div>
+            <div class="text-center p-1 border-2 rounded w-[8rem] border-gray-600">Part Number</div>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" v-model="attachmentsStore.search_filter" />
+            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600" v-model="attachmentsStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
           <div>
-            <CSelect class="text-center p-1 border-2 rounded-md w-[14rem] h-[2.5rem] text-lg" :options="part_number"
+            <CSelect class="text-center p-1 border-2 rounded-md w-[14rem] h-[2.5rem] text-lg border-gray-600 hover:border-blue-300 outline-green-600" :options="part_number"
               v-model="attachmentsStore.part_number_select"></CSelect>
           </div>
         </div>
@@ -53,7 +53,7 @@
       </div>
       <div class="col-span-7 my-5 overflow-y-scroll">
         <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
-          :filter="attachmentsStore.part_number_select.value" :items="filterPartNumber"
+          :filter="attachmentsStore.search_filter" :items="filterPartNumber"
           :fields="attachmentsStore.getAttachmentsFields" :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'">
           <template #cell(action)="data">
           </template>
@@ -153,7 +153,7 @@ const submitAttachment = () => {
 
 const filterPartNumber = computed(() => {
   return attachmentsStore.getAttachment.filter((v) =>
-    v.code == attachmentsStore.search_filter
+    v.part_number == attachmentsStore.part_number_select.value
   );
 })
 

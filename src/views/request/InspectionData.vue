@@ -12,19 +12,19 @@
             <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3">
               Code
             </div>
-            <div class="text-center p-1 border-2 rounded w-[8rem]">Part Number</div>
+            <div class="text-center p-1 border-2 rounded w-[8rem] border-gray-600">Part Number</div>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]" v-model="inspectionDataStore.search_filter" />
+            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600" v-model="inspectionDataStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
           <div>
-            <CSelect class="text-center p-1 border-2 rounded-md w-[12rem]" :options="part_number"
-              v-model="inspectionDataStore.part_number_select"></CSelect>
+            <CSelect class="text-center p-1 border-2 rounded-md w-[12rem] border-gray-600 hover:border-blue-300 outline-green-600" :options="part_number"
+              v-model="inspectionDataStore.search_filter"></CSelect>
           </div>
         </div>
       </div>
@@ -47,22 +47,22 @@
         <form method="post" @submit.prevent="submitInspectionData">
           <label class="flex flex-col items-center">
             <i class="text-gray-400">100% of Inspection Data or CPK Data</i>
-            <textarea style="resize:none" class="border-2 rounded w-full h-[10rem] text-center"
+            <textarea style="resize:none" class="border-2 rounded w-full h-[10rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="inspectionDataStore.inspectionDataForm.cpk_data" required></textarea>
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Inspection after Rework</i>
-            <input type="text" class="border-2 rounded w-full h-[3rem] text-center"
+            <input type="text" class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="inspectionDataStore.inspectionDataForm.inspection_rework" required />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Revised Date of IGM</i>
-            <input type="date" class="border-2 rounded w-full h-[3rem] text-center "
+            <input type="date" class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
               v-model="inspectionDataStore.inspectionDataForm.revised_date" required />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Sent Date of IGM</i>
-            <input type="date" class="border-2 rounded w-full h-[3rem] text-center "
+            <input type="date" class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
               v-model="inspectionDataStore.inspectionDataForm.send_date" />
           </label>
           <button type="submit" v-if="!inspectionDataStore.onEdit"
@@ -177,7 +177,7 @@ const updateInspectionData = () => {
 
 const filterPartNumber = computed(() => {
   return inspectionDataStore.getInspectionData.filter((v) =>
-    v.code == inspectionDataStore.search_filter
+    v.part_number == inspectionDataStore.part_number_select.value
   );
 })
 </script>

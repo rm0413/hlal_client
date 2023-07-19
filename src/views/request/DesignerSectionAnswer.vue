@@ -13,32 +13,35 @@
               class="flex flex-col h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3 items-center justify-center">
               Code
             </button>
-            <button class="flex flex-col text-center p-1 border-2 rounded w-[8rem] items-center justify-center">Part
+            <button
+              class="flex flex-col text-center p-1 border-2 rounded w-[8rem] items-center justify-center border-gray-600">Part
               Number
             </button>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass" /></i>
-            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem]"
+            <input
+              class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="designerSectionAnswerStore.search_filter" />
             <button class="bg-gray-400 text-white py-1 px-3 rounded-r-md h-[2.5rem]">
               Search
             </button>
           </div>
           <div>
-            <c-select class="text-center w-[15rem]" :options="part_number" @change="selectPartNumber"
+            <c-select class="text-center w-[15rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              :options="part_number" @change="selectPartNumber"
               v-model="designerSectionAnswerStore.part_number_select"></c-select>
           </div>
         </div>
       </div>
     </div>
-    <button @click="unSelectAll"
-      class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">Unselect All</button>
+    <button @click="selectAll"
+      class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">Select All</button>
     <div class="h-[80vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 overflow-y-scroll">
         <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
-          :filter="designerSectionAnswerStore.part_number_select.value" :items="filterPartNumber"
+          :filter="designerSectionAnswerStore.search_filter" :items="filterPartNumber"
           :fields="designerSectionAnswerStore.getDesignerSectionAnswerFields"
           :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'">
           <template #cell(action)="data">
@@ -55,7 +58,8 @@
         <form method="post" @submit.prevent="submitDesignerSectionAnswer">
           <label class="flex flex-col items-center">
             <i class="text-white bg-[#A10E13] w-full flex justify-center rounded">Request Result</i>
-            <select class="border-2 rounded w-full h-[3rem] text-center"
+            <select
+              class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="designerSectionAnswerStore.designerSectionAnswerForm.request_result" required>
               <option value="" disabled>Select Request Result</option>
               <option value="LSA OK">LSA OK</option>
@@ -70,13 +74,15 @@
               <p class="text-[13px]">Designer section's answer</p>
               <textarea style="resize: none"
                 v-model="designerSectionAnswerStore.designerSectionAnswerForm.designer_section_answer" required
-                class="border-2 rounded w-full h-[4rem] text-center" />
+                class="border-2 rounded w-full h-[4rem] text-center border-gray-600 hover:border-blue-300 outline-green-600" />
               <p class="text-[13px]">Designer In-charge</p>
               <input type="text" v-model="designerSectionAnswerStore.designerSectionAnswerForm.designer_in_charge"
-                class="border-2 rounded w-full text-center h-[2.5rem]" required />
+                class="border-2 rounded w-full text-center border-gray-600 hover:border-blue-300 outline-green-600 h-[2.5rem]"
+                required />
               <p class="text-[13px]">Answer Date:</p>
               <input type="date" v-model="designerSectionAnswerStore.designerSectionAnswerForm.answer_date"
-                class="border-2 rounded text-center w-full h-[2.5rem]" required />
+                class="border-2 rounded text-center border-gray-600 hover:border-blue-300 outline-green-600 w-full h-[2.5rem]"
+                required />
             </div>
           </label>
           <label class="flex flex-col items-center">
@@ -288,7 +294,7 @@ const updateDesignerSectionAnswer = () => {
 
 const filterPartNumber = computed(() => {
   return designerSectionAnswerStore.getDesignerSectionAnswer.filter((v) =>
-    v.code == designerSectionAnswerStore.search_filter
+    v.part_number == designerSectionAnswerStore.part_number_select.value
   );
 })
 
@@ -302,8 +308,9 @@ const clearInputs = () => {
   designerSectionAnswerStore.clearDesignerAnswer()
 }
 
-const unSelectAll = () => {
-  ctable.value.unSelect();
-  select_data.value = [];
+const selectAll = () => {
+  ctable.value.selectAll().then(res => {
+    select_data.value = res
+  })
 }
 </script>
