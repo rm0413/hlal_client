@@ -551,7 +551,7 @@ const submitMultipleRequest = () => {
 
 const selectAll = () => {
   ctable.value.selectAll().then(res => {
-    select_data.value = res
+    checkedData.value = res
   })
 }
 </script>

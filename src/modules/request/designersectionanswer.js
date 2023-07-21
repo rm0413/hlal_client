@@ -129,7 +129,7 @@ export const useDesignerSectionAnswerStore = defineStore({
     },
     getters: {
         getDesignerSectionAnswer() {
-            console.log(this.designerSectionAnswer)
+            // console.log(this.designerSectionAnswer)
             return this.designerSectionAnswer
         },
         getDesignerSectionAnswerFields() {

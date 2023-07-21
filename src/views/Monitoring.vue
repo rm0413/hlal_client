@@ -1,38 +1,68 @@
 <template>
-  <div class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
+  <div
+    class="h-[87vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
+  >
     <div class="lg:col-span-3 min-[100px]:col-span-9 h-full flex flex-col">
-      <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono">
-        <font-awesome-icon class="h-6 w-6 text-black" icon="desktop" /> Hinsei & LSA
-        Monitoring List
+      <label
+        class="text-[24px] tracking-widest font-bold text-gray-600 font-mono"
+      >
+        <font-awesome-icon class="h-6 w-6 text-black" icon="desktop" /> Hinsei &
+        LSA Monitoring List
       </label>
       <div class="flex flex-col">
-        <div class="flex justify-center items-center p-2 bg-[#A10E13] text-white rounded mt-5">
+        <div
+          class="flex justify-center items-center p-2 bg-[#A10E13] text-white rounded mt-5"
+        >
           Search Filters
         </div>
-        <form action="" class="flex flex-col items-center gap-2">
+        <form
+          method="post"
+          @submit.prevent="submitMonitoring"
+          class="flex flex-col items-center gap-2"
+        >
           <label for="" class="flex flex-col mt-3">
             Unit Name
-            <select class="w-[31.5vw] h-[2.7rem] rounded border-black border-2 text-center" v-model="monitoringStore.monitoringForm.monitoring_unit_name">
+            <select
+              class="w-[31.5vw] h-[2.7rem] rounded border-black border-2 text-center"
+              v-model="monitoringStore.monitoringForm.monitoring_unit_name"
+              required
+            >
               <option value="" disabled>Select Unit</option>
-              <option v-for="(i, key) in units" :key="key" :value="i.text">{{ i.text }}</option>
+              <option v-for="(i, key) in units" :key="key" :value="i.unit_id">
+                {{ i.text }}
+              </option>
             </select>
           </label>
           <label for="" class="flex flex-col">
             Supplier
-            <input type="text" class="border p-2 flex text-center w-[31.5vw] rounded border-black"
-              placeholder="Supplier" />
+            <input
+              type="text"
+              class="border p-2 flex text-center w-[31.5vw] rounded border-black"
+              v-model="monitoringStore.monitoringForm.monitoring_supplier"
+              required
+              placeholder="Supplier"
+            />
           </label>
           <label for="" class="flex flex-col">
             Part Number
-            <input type="text" class="border p-2 flex text-center w-[31.5vw] rounded border-black text-black"
-              placeholder="Part Number" />
+            <input
+              type="text"
+              class="border p-2 flex text-center w-[31.5vw] rounded border-black text-black"
+              v-model="monitoringStore.monitoringForm.monitoring_part_number"
+              required
+              placeholder="Part Number"
+            />
           </label>
           <div class="flex gap-5 mt-5">
-            <button type="button" @click="exportFile" class="p-2 bg-green-700 text-white rounded">
+            <button
+              type="button"
+              @click="exportFile"
+              class="p-2 bg-green-700 text-white rounded"
+            >
               <font-awesome-icon icon="download"></font-awesome-icon>
               Export File
             </button>
-            <button type="button" class="p-2 bg-gray-700 text-white rounded">
+            <button type="submit" class="p-2 bg-gray-700 text-white rounded">
               <font-awesome-icon icon="magnifying-glass"></font-awesome-icon>
               Search
             </button>
@@ -42,94 +72,360 @@
     </div>
     <div class="lg:col-span-6 min-[100px]:col-span-9 h-[85vh]">
       <div class="border rounded-[5px] overflow-y-scroll h-full">
-        <c-table :items="[
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-          { unit_name: 'test', supplier: 'test', part_number: 'test' },
-        ]" :fields="monitoringStore.getMonitoringFields" :thStyle="'bg-[#A10E13] text-white p-2'">
-          <template #cell(action)>
+        <c-table
+          :items="monitoringStore.getLoadMonitoring"
+          :fields="monitoringStore.getMonitoringFields"
+          :thStyle="'bg-[#A10E13] text-white p-2'"
+        >
+          <template #cell(action)="data">
             <div class="flex justify-center gap-1">
-              <button class="h-8 w-9 rounded bg-green-700 text-white">
-                <font-awesome-icon icon="download"></font-awesome-icon>
-              </button>
-              <button class="h-8 w-9 rounded bg-cyan-600 text-white">
+              <button
+                @click="openModal(data.item)"
+                data-open-modal
+                class="h-8 w-9 rounded bg-cyan-600 text-white"
+              >
                 <font-awesome-icon icon="eye"></font-awesome-icon>
-              </button>
-              <button class="h-8 w-9 rounded bg-orange-500 text-white">
-                <font-awesome-icon icon="pen"></font-awesome-icon>
-              </button>
-              <button class="h-8 w-9 rounded bg-[#A10E13] text-white">
-                <font-awesome-icon icon="trash"></font-awesome-icon>
               </button>
             </div>
           </template>
           <template #cell(id)="data">{{ data.index + 1 }}</template>
-          <template #cell(select)>
-            <input type="checkbox">
-          </template>
         </c-table>
       </div>
     </div>
+    <dialog
+      ref="viewEditModal"
+      class="p-0 rounded transform duration-300 -translate-y-5"
+    >
+      <div class="h-[80vh] w-[90vw]">
+        <div
+          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
+        >
+          <span
+            ><font-awesome-icon icon="pen" /><label class="ml-2"
+              >Edit Item Modal</label
+            ></span
+          >
+          <button
+            class="px-3 py-2 rounded-full hover:bg-red-600"
+            @click="
+              viewEditModal.close(), monitoringStore.setClearEditMonitoring()
+            "
+          >
+            <font-awesome-icon icon="xmark"></font-awesome-icon>
+          </button>
+        </div>
+        <div class="grid grid-cols-3 p-2 text-[13px]">
+          <div class="border-2 col-span-1 p-2 h-[73vh]">
+            <form
+              class="grid grid-cols-2"
+              action="post"
+              @submit.prevent="submitUpdateEditItemMonitoring"
+            >
+              <div class="col-span-1 p-2">
+                <label class="flex flex-col gap-2">
+                  Trial No.
+                  <input
+                    ref="input_trial_no"
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.trial_number
+                    "
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Request Date
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.request_date
+                    "
+                    type="date"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Additional Request Qty Date
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm
+                        .additional_request_date
+                    "
+                    type="date"
+                    class="h-[2rem] w-full text-center border-2 rounded p-1 outline-green-600"
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  TRI No.
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="monitoringStore.monitoringEditItemForm.tri_number"
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  TRI Quantity
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.tri_quantity
+                    "
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Request Person
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.request_person
+                    "
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Superior Approval
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.supperior_approval
+                    "
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Kind of Request
+                  <!-- <c-select ref="select_kind_request"        :options="kind_request_options" class="text-center"></c-select> -->
+                  <select
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.kind_request
+                    "
+                    class="h-[2rem] outline-green-600 border-2 rounded text-center"
+                    required
+                  >
+                    <option value="null" disabled>
+                      Select Kind of Request
+                    </option>
+                    <option value="LSA Request">LSA Request</option>
+                    <option value="Hinsei Request">Hinsei Request</option>
+                  </select>
+                </label>
+                <label class="flex flex-col gap-2">
+                  Request Quantity
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.request_quantity
+                    "
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <div>
+                  <label class="flex flex-col gap-2">
+                    Request Value
+                    <textarea
+                      v-model="
+                        monitoringStore.monitoringEditItemForm.request_value
+                      "
+                      style="resize: none"
+                      class="w-[33.5rem] border-2 rounded p-1 outline-green-600 h-[4.5rem]"
+                      required
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <div class="col-span-1 p-2">
+                <label class="flex flex-col gap-2">
+                  Supplier
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.supplier_name
+                    "
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Part Number
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="monitoringStore.monitoringEditItemForm.part_number"
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Sub Part Number
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.sub_part_number
+                    "
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Revision
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="monitoringStore.monitoringEditItemForm.revision"
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Coordinates
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="monitoringStore.monitoringEditItemForm.coordinates"
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Dimension
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="monitoringStore.monitoringEditItemForm.dimension"
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Actual Value
+                  <input
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.actual_value
+                    "
+                    type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required
+                  />
+                </label>
+
+                <label class="flex flex-col gap-2">
+                  Critical Parts
+                  <select
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.critical_parts
+                    "
+                    class="h-[2rem] w-full border-2 rounded outline-green-600 text-center"
+                    required
+                  >
+                    <option value="null" disabled>Select Critical Parts</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </label>
+                <label class="flex flex-col gap-2">
+                  Critical Dimension
+                  <select
+                    :disabled="monitoringStore.inputStatus"
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.critical_dimension
+                    "
+                    class="h-[2rem] outline-green-600 border-2 rounded text-center"
+                    required
+                  >
+                    <option value="null" disabled>
+                      Select Critical Dimension
+                    </option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </label>
+                <div class="flex justify-end h-[9rem]">
+                  <div class="flex justify-center items-end mt-5 gap-2">
+                    <button
+                      :disabled="monitoringStore.inputStatus"
+                      type="submit"
+                      class="bg-[#A10E13] text-white p-1 w-[7rem] rounded"
+                    >
+                      Update
+                    </button>
+                    <button
+                      @click="monitoringStore.setClearEditMonitoring"
+                      type="button"
+                      class="bg-gray-700 text-white p-1 w-[7rem] rounded hover:bg-gray-600"
+                    >
+                      Clear
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="border-2 col-span-2 p-3 ml-2 overflow-y-auto h-[73vh]">
+
+            <c-table
+          
+              :items="monitoringStore.getEditMonitoringItems"
+              :fields="monitoringStore.monitoringEditFields"
+              :thStyle="'bg-[#A10E13] text-white p-2'"
+            >
+              <template #cell(#)="data">
+                {{ data.index + 1 }}
+              </template>
+              <template #cell(action)="data">
+                <div class="flex justify-center gap-1">
+                  <button class="h-8 w-9 rounded bg-green-700 text-white">
+                    <font-awesome-icon icon="download"></font-awesome-icon>
+                  </button>
+                  <button class="h-8 w-9 rounded bg-orange-500 text-white">
+                    <font-awesome-icon
+                      @click="edit_monitoring_item(data.item)"
+                      icon="pen"
+                    ></font-awesome-icon>
+                  </button>
+                  <button class="h-8 w-9 rounded bg-[#A10E13] text-white">
+                    <font-awesome-icon
+                      @click="delete_monitoring_item(data.item)"
+                      icon="trash"
+                    ></font-awesome-icon>
+                  </button>
+                </div>
+              </template>
+            </c-table>
+          </div>
+        </div>
+      </div>
+    </dialog>
   </div>
 </template>
 
 <script setup>
 import CTable from "@/components/Datatable.vue";
 import { useMonitoringStore } from "@/modules/monitoring";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, inject } from "vue";
+const swal = inject("$swal");
 const monitoringStore = useMonitoringStore();
-
 const units = ref([]);
-
+const input_trial_no = ref(null);
+const viewEditModal = ref(null);
 onMounted(() => {
   loadUnits();
 });
@@ -145,7 +441,114 @@ const loadUnits = () => {
   });
 };
 
+const submitMonitoring = () => {
+  monitoringStore.setLoadMonitoring();
+};
+const delete_monitoring_item = (data) => {
+  viewEditModal.value.close();
+  swal({
+    icon: "question",
+    title: "Are you sure you want to Delete?",
+    text: "Please make sure before to proceed!",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes",
+  }).then((response) => {
+    if (response.value === true) {
+      monitoringStore
+        .setDeleteMonitoring(parseInt(data.agreement_id_pk))
+        .then((response) => {
+          console.log(response);
+          swal({
+            icon: "success",
+            title: response.message,
+            text: "If problems occur please contact the developer",
+          });
+        });
+    } else {
+      viewEditModal.value.showModal();
+
+      viewEditModal.value.close();
+      swal({
+        icon: "error",
+        title: "CANCELLED",
+        text: "You have cancelled the process",
+      });
+    }
+  });
+};
+const edit_monitoring_item = (data) => {
+  // console.log(data)
+  monitoringStore.inputStatus = false;
+  monitoringStore.monitoringEditItemForm = {
+    id: data.agreement_id_pk,
+    trial_number: data.trial_number,
+    request_date: data.request_date,
+    additional_request_date: data.additional_request_qty_date,
+    tri_number: data.tri_number,
+    tri_quantity: data.tri_quantity,
+    request_person: data.request_person,
+    supperior_approval: data.superior_approval,
+    supplier_name: data.supplier_name,
+    part_number: data.part_number,
+    sub_part_number: data.sub_part_number,
+    revision: data.revision,
+    coordinates: data.coordinates,
+    dimension: data.dimension,
+    actual_value: data.actual_value,
+    critical_dimension: data.critical_dimension,
+    critical_parts: data.critical_parts,
+    kind_request: data.request_type,
+    request_value: data.request_value,
+    request_quantity: data.request_quantity,
+    unit_id: data.unit_id,
+  };
+};
+
 const exportFile = () => {
-  monitoringStore.setUnit()
-}
+  monitoringStore.setUnit();
+};
+const openModal = (data) => {
+  // if (monitoringStore.inputStatus === true) {
+  //   input_trial_no.value.classList.remove(");
+  // } else {
+  //   input_trial_no.value.classList.add("hover:border-blue-300");
+  // }
+  monitoringStore.setEditMonitoringList(data);
+  viewEditModal.value.showModal();
+};
+
+const submitUpdateEditItemMonitoring = () => {
+  viewEditModal.value.close();
+  swal({
+    icon: "question",
+    title: "Update this request?",
+    text: "Please make sure before to proceed!",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes",
+  }).then((response) => {
+    if (response.value === true) {
+      monitoringStore.setUpdateMonitoring().then((response) => {
+        monitoringStore.setEditMonitoringList;
+        swal({
+          icon: "success",
+          title: response.message,
+          text: "Successfully Updeted",
+        });
+      });
+    } else {
+      viewEditModal.value.showModal();
+
+      viewEditModal.value.close();
+      swal({
+        icon: "warning",
+        title: "CANCELLED",
+        text: "Please make sure before to proceed!",
+      });
+    }
+  });
+};
 </script>
