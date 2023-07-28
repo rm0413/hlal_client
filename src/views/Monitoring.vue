@@ -221,12 +221,8 @@
           </div>
           <div class="border-2 col-span-2 p-3 ml-2 overflow-y-auto h-[73vh]">
 
-            <c-table
-          
-              :items="monitoringStore.getEditMonitoringItems"
-              :fields="monitoringStore.monitoringEditFields"
-              :thStyle="'bg-[#A10E13] text-white p-2'"
-            >
+            <c-table :items="monitoringStore.getEditMonitoringItems" :fields="monitoringStore.monitoringEditFields"
+              :thStyle="'bg-[#A10E13] text-white p-2'">
               <template #cell(#)="data">
                 {{ data.index + 1 }}
               </template>
@@ -387,9 +383,27 @@ const edit_monitoring_item = (data) => {
 };
 
 const exportFile = () => {
-  monitoringStore.setExportMonitoringList(select_data.value)
-  ctable.value.unSelect();
-  select_data.value = [];
+  if (select_data.value.length !== 0) {
+    swal({
+      icon: "question",
+      title: "Export File?",
+      text: "Please make sure before to proceed!",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((response) => {
+      if (response.value === true) {
+        monitoringStore.setExportMonitoringList(select_data.value)
+        ctable.value.unSelect();
+        select_data.value = [];
+      } else {
+        toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, });
+      }
+    })
+  } else {
+    toast.add({ severity: 'error', summary: 'Warning', detail: "Please select data in table", life: 2000, });
+  }
 };
 const openModal = (data) => {
   monitoringStore.setEditMonitoringList(data);

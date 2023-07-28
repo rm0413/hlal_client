@@ -39,7 +39,7 @@
               class="h-full"
             />
           </div>
-          <label for="" class="ml-[5rem] text-gray-500 text-[14px]"><b><i>{{dashboardStore.chartData.lsa_request}} Total Hinsei Request as of {{ dashboardStore.date_from }} to {{ dashboardStore.date_to }}</i></b></label>
+          <label for="" class="ml-[5rem] text-gray-500 text-[14px]"><b><i>{{dashboardStore.chartData.lsa_request}} Total LSA Request as of {{ dashboardStore.date_from }} to {{ dashboardStore.date_to }}</i></b></label>
         </div>
         <div class="col-span-1 flex flex-col justify-center items-center gap-2">
           <fieldset

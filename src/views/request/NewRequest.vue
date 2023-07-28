@@ -288,6 +288,7 @@
       <Toast position="bottom-right"></Toast>
       <Toast position="bottom-left" group="bl"></Toast>
     </dialog>
+    <loading :show="show" :label="label"> </loading>
   </div>
 </template>
 
@@ -296,6 +297,9 @@ import CTable from "@/components/Datatable.vue";
 import { useNewRequestStore } from "@/modules/request/newrequest";
 import { ref, onMounted, inject } from "vue";
 import { useToast } from "primevue/usetoast";
+import loading from "vue-full-loading";
+const show = ref(false)
+const label = ref("Processing....")
 const toast = useToast();
 const swal = inject("$swal");
 const newRequestStore = useNewRequestStore();
@@ -305,6 +309,11 @@ const search = ref(null);
 const units = ref([]);
 const checkedData = ref([]); //view-item-details check box
 const ctable = ref(null);
+
+
+const loadingProcess = () => {
+  show.value = true;
+}
 
 const autoAdd = (data) => {
   search.value.close();
@@ -399,24 +408,28 @@ const submitAgreementList = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      newRequestStore.setInsertAgreementList().then((response) => {
-        if (response.status === "success") {
-          newRequestStore.setAgreementList();
-          newRequestStore.search_filter = "";
-          swal({
-            icon: "success",
-            title: response.message,
-            timer: 2500,
-          });
-        } else {
-          swal({
-            icon: "warning",
-            title: response.message,
-            text: "Please input all necessarry details.",
-            timer: 2500,
-          });
-        }
-      });
+      loadingProcess()
+      setTimeout(() => {
+        newRequestStore.setInsertAgreementList().then((response) => {
+          if (response.status === "success") {
+            newRequestStore.setAgreementList();
+            newRequestStore.search_filter = "";
+            show.value = false
+            swal({
+              icon: "success",
+              title: response.message,
+              timer: 2500,
+            });
+          } else {
+            swal({
+              icon: "warning",
+              title: response.message,
+              text: "Please input all necessarry details.",
+              timer: 2500,
+            });
+          }
+        });
+      })
     }
   });
 };
@@ -523,19 +536,22 @@ const submitMultipleRequest = () => {
         confirmButtonText: "Yes",
       }).then((response) => {
         if (response.value === true) {
-          newRequestStore.setUploadMultipleRequest(formData).then((response) => {
-            if (response.status === "success") {
-              document.getElementById("input-file").value = null
-              multiple_input.value.close();
-
-              swal({
-                icon: "success",
-                title: "Multiple Request Added Successfully.",
-                timer: 1500
-              })
-            } else {
-              toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
-            }
+          loadingProcess()
+          setTimeout(() => {
+            newRequestStore.setUploadMultipleRequest(formData).then((response) => {
+              if (response.status === "success") {
+                document.getElementById("input-file").value = null
+                multiple_input.value.close();
+                show.value = false
+                swal({
+                  icon: "success",
+                  title: "Multiple Request Added Successfully.",
+                  timer: 1500
+                })
+              } else {
+                toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
+              }
+            })
           })
         } else {
           multiple_input.value.showModal();

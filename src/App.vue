@@ -120,7 +120,6 @@ const links = [
       </template>
     </CSidebar>
     <router-view v-else />
-
   </div>
 </template>
 
