@@ -24,7 +24,7 @@
           </div>
           <div>
             <CSelect class="text-center p-1 border-2 rounded-md w-[12rem] border-gray-600 hover:border-blue-300 outline-green-600" :options="part_number"
-              v-model="inspectionDataStore.search_filter"></CSelect>
+              v-model="inspectionDataStore.part_number_select"></CSelect>
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[81vh] overflow-y-scroll">
         <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
           :fields="inspectionDataStore.getInspectionDataFields" :items="filterPartNumber"
-          :thStyle="'bg-[#A10E13] p-2 text-white'" :filter="inspectionDataStore.part_number_select.value">
+          :thStyle="'bg-[#A10E13] p-2 text-white'" :filter="inspectionDataStore.search_filter">
           <template #cell(action)="data">
             <button @click="editCpkData(data.item)" v-if="data.item.cpk_data !== null"
               class="h-8 w-9 rounded bg-yellow-500 text-white" v-tooltip.top="'Edit Cpk Data'"><font-awesome-icon
@@ -143,8 +143,6 @@ const editCpkData = (data) => {
 }
 
 const clearInputs = () => {
-  ctable.value.unSelect();
-  select_data.value = [];
   inspectionDataStore.inspectionDataForm = {
     cpk_data: null,
     inspection_rework: null,
@@ -152,6 +150,8 @@ const clearInputs = () => {
     send_date: null,
   }
   inspectionDataStore.onEdit = false
+  ctable.value.unSelect();
+  select_data.value = [];
 }
 
 const updateInspectionData = () => {

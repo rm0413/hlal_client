@@ -210,14 +210,14 @@
           <div class="flex p-5">
             <!-- <FileUploader></FileUploader> -->
             <div class="flex flex-col items-center justify-center mt-2 border-2 border-black rounded-xl border-dashed">
-              <input id="input-file" type="file" accept=".xlsx" @change="uploadFile" :draggable="true" class="text-sm text-grey-500 w-[25rem] h-[15rem] mt-10
+              <input id="input-file" type="file" accept=".xlsx" @change="uploadFile" :draggable="true" class="cursor-pointer text-sm text-grey-500 w-[25rem] h-[15rem] mt-10
             file:mr-5 file:py-2 file:px-6
             file:rounded-full file:border-0
             file:text-sm file:font-medium
             file:bg-blue-50 file:text-blue-700
             hover:file:cursor-pointer hover:file:bg-amber-50
             hover:file:text-amber-700" required />
-              <span class="file-msg">or drag and drop PDF file here</span>
+              <span class="file-msg">or drag and drop Excel file here</span>
             </div>
           </div>
           <button type="button" class="p-3 bg-green-600 text-white hover:bg-green-500 w-full" @click="downloadFormat">
@@ -285,7 +285,7 @@
           </c-table>
         </div>
       </div>
-      <Toast position="bottom-left"></Toast>
+      <Toast position="bottom-right"></Toast>
       <Toast position="bottom-left" group="bl"></Toast>
     </dialog>
   </div>
@@ -377,6 +377,8 @@ const generateCode = () => {
         });
       } else {
         view_items.value.showModal();
+        ctable.value.unSelect();
+        checkedData.value = [];
         toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled', life: 2000, group: 'bl' });
       }
     }))
@@ -552,6 +554,7 @@ const submitMultipleRequest = () => {
 const selectAll = () => {
   ctable.value.selectAll().then(res => {
     checkedData.value = res
+    console.log(res)
   })
 }
 </script>

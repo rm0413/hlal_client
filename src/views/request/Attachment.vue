@@ -35,7 +35,7 @@
           Attachments</p>
         <form method="post" @submit.prevent="submitAttachment">
           <div class="flex flex-col items-center justify-center mt-2 border-2 border-black rounded-xl border-dashed">
-            <input id="input-file" type="file" accept=".pdf" @change="uploadFile" :draggable="true" class="text-sm text-grey-500 w-full h-[10rem] mt-10
+            <input id="input-file" type="file" accept=".pdf" @change="uploadFile" :draggable="true" class="cursor-pointer text-sm text-grey-500 w-full h-[10rem] mt-10
             file:mr-5 file:py-2 file:px-6
             file:rounded-full file:border-0
             file:text-sm file:font-medium

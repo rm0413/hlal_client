@@ -143,4 +143,8 @@ const links = [
 ::-webkit-scrollbar-thumb:hover {
   background: #b30000;
 }
+
+.p-tooltip {
+  z-index: 1105 !important;
+}
 </style>

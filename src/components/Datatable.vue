@@ -127,22 +127,46 @@ const getData = (data, id) => {
 const selectAll = () => {
   return new Promise((resolve) => {
     select_all.value = !select_all.value
-    if (select_all.value === true) {
-      props.items.forEach((v, i) => {
-        if (document.getElementById(`record(${i})`).classList.contains('unchecked')) {
-          selected_value.value.push(v)
-          document.getElementById(`record(${i})`).classList.remove("unchecked");
-          document.getElementById(`record(${i})`).classList.add("bg-red-300");
-          document.getElementById(`record(${i})`).classList.add("hover:bg-red-200");
-          document.getElementById(`record(${i})`).classList.remove("hover:bg-gray-100");
-          resolve(selected_value.value)
-        } else {
-          resolve('error')
-        }
-      })
-    } else {
-      unSelect()
-      resolve(selected_value.value)
+    if (props.filter) {
+      if (select_all.value === true) {
+        onFilter.value.forEach((v, i) => {
+          if (document.getElementById(`record(${i})`).classList.contains('unchecked')) {
+            selected_value.value.push(v)
+            document.getElementById(`record(${i})`).classList.remove("unchecked");
+            document.getElementById(`record(${i})`).classList.add("bg-red-300");
+            document.getElementById(`record(${i})`).classList.add("hover:bg-red-200");
+            document.getElementById(`record(${i})`).classList.remove("hover:bg-gray-100");
+            resolve(selected_value.value)
+          } else {
+            selected_value = []
+            resolve('error')
+          }
+        })
+      } else {
+        selected_value = []
+        unSelect()
+        resolve(selected_value.value)
+      }
+    } else if (props.items) {
+      if (select_all.value === true) {
+        props.items.forEach((v, i) => {
+          if (document.getElementById(`record(${i})`).classList.contains('unchecked')) {
+            selected_value.value.push(v)
+            document.getElementById(`record(${i})`).classList.remove("unchecked");
+            document.getElementById(`record(${i})`).classList.add("bg-red-300");
+            document.getElementById(`record(${i})`).classList.add("hover:bg-red-200");
+            document.getElementById(`record(${i})`).classList.remove("hover:bg-gray-100");
+            resolve(selected_value.value)
+          } else {
+            selected_value = []
+            resolve('error')
+          }
+        })
+      } else {
+        selected_value = []
+        unSelect()
+        resolve(selected_value.value)
+      }
     }
   })
 }

@@ -18,8 +18,10 @@
           >Welcome to Hinsei & LSA Agreement List System</i
         >
       </div>
-      <div class="py-3 px-12 font-bold text-[18px]">Request Status</div>
-      <div class="grid grid-cols-2 h-[70%]">
+      <div class="py-3 px-12 font-bold text-[18px]"><font-awesome-icon icon="chart-simple"/> Request Status</div>
+      <label for="" class="absolute mt-[10.5rem] ml-[5rem] text-gray-500 text-[14px]"><b><i>{{dashboardStore.chartData.hinsei_request}} Total Hinsei Request as of {{ dashboardStore.date_from }} to {{ dashboardStore.date_to }}</i></b></label>
+      <!-- <label for="" class="absolute mt-[47.5rem] ml-[5rem] text-gray-500 text-[14px]"><b><i>{{dashboardStore.chartData.lsa_request}} Total Hinsei Request</i></b></label> -->
+      <div class="grid grid-cols-2 h-[80%]">
         <div class="col-span-1 grid grid-rows-2">
           <div class="row-span-1">
             <Chart
@@ -37,20 +39,7 @@
               class="h-full"
             />
           </div>
-          <!-- <form class="flex flex-col">
-
-            <label for="" class="flex flex-col text-[14px]">
-              From
-              <input type="date" class="p-2 border-2 rounded-[5px] h-[2.5rem] hover:border-[#A10E13]"
-                v-model="dashboardStore.date_from" />
-            </label>
-            <label for="" class="flex flex-col text-[14px]">
-              To
-              <input type="date" class="p-2 border-2 rounded-[5px] h-[2.5rem] mr-3 hover:border-[#A10E13]"
-                v-model="dashboardStore.date_to" />
-            </label>
-            <button class="bg-red-800"></button>
-          </form> -->
+          <label for="" class="ml-[5rem] text-gray-500 text-[14px]"><b><i>{{dashboardStore.chartData.lsa_request}} Total Hinsei Request as of {{ dashboardStore.date_from }} to {{ dashboardStore.date_to }}</i></b></label>
         </div>
         <div class="col-span-1 flex flex-col justify-center items-center gap-2">
           <fieldset
@@ -69,6 +58,7 @@
                   v-model="dashboardStore.date_from"
                   class="p-2 rounded border-2 hover:border-red-600 outline-green-600"
                   required
+                  :max="max_date"
                 />
               </label>
               <label for="" class="flex flex-col text-[14px] w-full">
@@ -78,6 +68,7 @@
                   v-model="dashboardStore.date_to"
                   required
                   class="p-2 rounded border-2 hover:border-red-600 outline-green-600"
+                  :max="max_date"
                 />
               </label>
               <button
@@ -87,23 +78,21 @@
                 Search
               </button>
             </form>
-            <!-- <div class="grid grid-cols-2 gap-3">
-          </div> -->
           </fieldset>
         </div>
       </div>
-      <div class="grid grid-cols-2 h-[10%] mt-9">
+      <div class="grid grid-cols-2 h-[10%] mt-4">
         <div class="col-span-1 flex justify-center items-center gap-2">
           Total number of Hinsei Request
           <button
-            class="w-[10rem] h-[2rem] bg-blue-500 text-white rounded-full flex justify-center text-[14px] items-center font-bold"
+            class="w-[10rem] h-[2rem] bg-blue-900 text-white rounded-full flex justify-center text-[14px] items-center font-bold"
           >
             {{ hinsei_count }}
           </button>
         </div>
         <div class="col-span-1 flex justify-center items-center gap-2">
           Total number of LSA Request<button
-            class="w-[10rem] h-[2rem] bg-orange-600 text-white rounded-full flex justify-center text-[14px] items-center font-bold"
+            class="w-[10rem] h-[2rem] bg-orange-700 text-white rounded-full flex justify-center text-[14px] items-center font-bold"
           >
             {{ lsa_count }}
           </button>
@@ -127,13 +116,12 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useDashboardStore } from "@/modules/dashboard.js";
+import moment from "moment";
 // import { useToast } from "primevue/usetoast";
 // const toast = useToast();
 // const swal = inject("$swal");
 const dashboardStore = useDashboardStore();
-
-
-
+const max_date = moment().format("yyyy-MM-DD");
 const first_name = sessionStorage.getItem("first_name");
 const documentStyle = getComputedStyle(document.body);
 const chartData = ref({
@@ -152,7 +140,6 @@ const chartData = ref({
         documentStyle.getPropertyValue("--red-400"),
         documentStyle.getPropertyValue("--yellow-400"),
       ],
-      // backgroundColor: ["#A10E13"],
     },
   ],
 });
@@ -175,10 +162,7 @@ const chartData2 = ref({
     },
   ],
 });
-/**
- * labels: []
- *
- */
+
 const hinsei_count = ref(null);
 const lsa_count = ref(null);
 onMounted(() => {
@@ -207,6 +191,7 @@ const setChartOptions = () => {
         labels: {
           fontColor: textColor,
         },
+        display: false
       },
     },
     scales: {
@@ -235,8 +220,6 @@ const setChartOptions = () => {
   };
 };
 
-const data_request_result = ref([]);
-
 const submitDateFilter = () => {
   dashboardStore.setLoadCountResult().then((response) => {
     chartData.value = {
@@ -255,7 +238,6 @@ const submitDateFilter = () => {
             documentStyle.getPropertyValue("--red-400"),
             documentStyle.getPropertyValue("--yellow-400"),
           ],
-          // backgroundColor: ["#A10E13"],
         },
       ],
     };
@@ -280,6 +262,5 @@ const submitDateFilter = () => {
       ],
     };
   });
-  // console.log(dashboardStore.getCountResult)
 };
 </script>

@@ -261,17 +261,17 @@
       >
         <div v-for="(navs, n) in links" :key="n">
           <!-- {{ navs }} -->
-          <div v-if="navs.role === undefined || navs.role === role">
+          <div v-if="navs.role === undefined || navs.role === role" >
+            
           <router-link
             v-if="!navs.sub_module"
             :to="{ name: navs.name }"
-            :class="`hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 w-full bg-${
+            :class="`hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 w-full relative bg-${
               themeStore.theme[themeStore.theme_select].sidebar_route_bg
-            } p-3 rounded-full transform ease-in-out duration-500 flex shadow-lg`"
+            } p-3 rounded-full transform ease-in-out duration-500 flex shadow-lg hover:visible`"
           >
-            <div class="relative inline-block hover:visible" v-if="tooltip[0]">
-              <span class="absolute top-[50%] right-[100%] mt-[5px] border-2 after:content-[''] hidden">{{tooltip[1]}}</span>
-            </div>
+          <span class="translate-x-36 bg-black text-white flex items-center px-2 py-1 -translate-y-2 rounded invisible">Testingtesting</span>
+
             <i v-show="navs.class" :style="navs.style" :class="navs.class"></i>
             <i v-show="navs.svg" v-html="navs.svg"></i>
             <font-awesome-icon
@@ -474,4 +474,38 @@ const openNav = () => {
 };
 </script>
 
-<style></style>
+<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 110%;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+</style>

@@ -165,7 +165,7 @@
               accept=".xlsx"
               @change="uploadFile"
               :draggable="true"
-              class="block w-full text-sm text-slate-600 file:mr-5 file:py-2 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:cursor-pointer hover:file:bg-amber-50 hover:file:text-amber-700"
+              class="cursor-pointer block w-full text-sm text-slate-600 file:mr-5 file:py-2 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:cursor-pointer hover:file:bg-amber-50 hover:file:text-amber-700"
             />
           </label>
           <button
@@ -236,6 +236,7 @@ onMounted(() => {
 const selectPartNumber = () => {
   ctable.value.unSelect();
   select_data.value = [];
+  clearInputs()
 };
 
 const file = ref(null);
@@ -405,8 +406,6 @@ const submitDesignerSectionAnswer = () => {
 };
 
 const editDesignerSection = (data) => {
-  ctable.value.unSelect();
-  select_data.value = [];
   designerSectionAnswerStore.onEdit = true;
   designerSectionAnswerStore.onUploading = false;
   designerSectionAnswerStore.onSingle = true;
@@ -418,6 +417,8 @@ const editDesignerSection = (data) => {
     designer_in_charge: data.designer_in_charge,
     answer_date: data.answer_date,
   };
+  ctable.value.unSelect();
+  select_data.value = [];
 };
 
 const updateDesignerSectionAnswer = () => {
@@ -455,14 +456,15 @@ const clearInputs = () => {
   designerSectionAnswerStore.onUploading = false;
   designerSectionAnswerStore.onSingle = false;
   document.getElementById("file-designer").value = null;
+  designerSectionAnswerStore.clearDesignerAnswer();
   ctable.value.unSelect();
   select_data.value = [];
-  designerSectionAnswerStore.clearDesignerAnswer();
 };
 
 const selectAll = () => {
-  ctable.value.selectAll().then((res) => {
-    select_data.value = res;
-  });
-};
+  ctable.value.selectAll().then(res => {
+    select_data.value = res
+    console.log(res)
+  })
+}
 </script>

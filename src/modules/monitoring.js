@@ -189,6 +189,16 @@ export const useMonitoringStore = defineStore({
           });
       });
     },
+    setExportMonitoringList(data) {
+      window.open(
+        `http://10.164.58.62/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
+      )
+      this.monitoringForm = {
+        monitoring_unit_name: null,
+        monitoring_supplier: null,
+        monitoring_part_number: null,
+      }
+    },
   },
   getters: {
     getMonitoringFields() {
