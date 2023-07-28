@@ -380,9 +380,7 @@
             </form>
           </div>
           <div class="border-2 col-span-2 p-3 ml-2 overflow-y-auto h-[73vh]">
-
             <c-table
-          
               :items="monitoringStore.getEditMonitoringItems"
               :fields="monitoringStore.monitoringEditFields"
               :thStyle="'bg-[#A10E13] text-white p-2'"
@@ -536,12 +534,10 @@ const submitUpdateEditItemMonitoring = () => {
         swal({
           icon: "success",
           title: response.message,
-          text: "Successfully Updeted",
+          text: "Successfully Updated",
         });
       });
     } else {
-      viewEditModal.value.showModal();
-
       viewEditModal.value.close();
       swal({
         icon: "warning",

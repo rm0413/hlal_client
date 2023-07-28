@@ -107,6 +107,7 @@ export const useMonitoringStore = defineStore({
           .delete(`agreement-list/${id}`)
           .then((response) => {
             resolve(response.data);
+            this.setEditMonitoringList()
             // console.log(response)
           })
           .catch((err) => {

@@ -88,14 +88,7 @@ router.afterEach((to, from) => {
     var checkToken = sessionStorage.getItem("userdata")
     if (to.name !== 'login') {
         if (!checkToken) {
-            Swal.fire({
-                icon: "warning",
-                title: 'Unauthorized User',
-                text: 'Redirecting to FDTP Portal!!',
-                timer: 3000
-            }).then(() => {
-                window.location.href = "http://10.164.30.174/FDTP-Portal/public/";
-            });
+            window.location.href = 'http://10.164.58.82/FDTP-Portal/public/login'
         } else { console.log('authenticated') }
     }
 })
