@@ -14,7 +14,7 @@ export const useLoginStore = defineStore({
         setLogin(data) {
             axios.defaults.headers.common.Authorization = `Bearer ${data}`;
             return new Promise((resolve, reject) => {
-                axios.post(`http://10.164.58.82/FDTP-Portal/public/api/auth/profile`).then((response) => {
+                axios.post(`http://10.164.58.62/FDTP-Portal/public/api/auth/profile`).then((response) => {
                     resolve(response.data)
                     this.userProfile = response.data.data
                 }).catch((err) => {

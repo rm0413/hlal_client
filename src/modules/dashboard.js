@@ -28,7 +28,7 @@ export const useDashboardStore = defineStore({
                 axios.get(`load-count-result?date_from=${payload.date_from}&date_to=${payload.date_to}`).then(response => {
                     resolve(response.data)
                     this.chartData = response.data.data[0]
-                    console.log(this.chartData)
+                    console.log(response.data)
                 }).catch(err => {
                     reject(err)
                 })
