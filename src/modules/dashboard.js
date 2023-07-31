@@ -13,6 +13,7 @@ export const useDashboardStore = defineStore({
             return new Promise((resolve, reject) => {
                 axios.get('count-request').then(response => {
                     resolve(response.data)
+                    // console.log(response.data)
                 }).catch(err => {
                     reject(err)
                 })
