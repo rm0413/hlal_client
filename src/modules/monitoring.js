@@ -166,13 +166,11 @@ export const useMonitoringStore = defineStore({
           .then((response) => {
             resolve(response.data);
             this.monitoringItems = response.data.data;
-            // console.log(this.monitoringItems)
           })
           .catch((err) => {
             reject(err);
           });
       });
-      // console.log(this.monitoringForm)
     },
     setEditMonitoringList(data) {
       return new Promise((resolve, reject) => {
@@ -193,11 +191,6 @@ export const useMonitoringStore = defineStore({
       window.open(
         `http://10.164.58.62/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
       )
-      this.monitoringForm = {
-        monitoring_unit_name: null,
-        monitoring_supplier: null,
-        monitoring_part_number: null,
-      }
     },
   },
   getters: {

@@ -17,14 +17,17 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600" v-model="attachmentsStore.search_filter" />
+            <input
+              class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              v-model="attachmentsStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
           <div>
-            <CSelect class="text-center p-1 border-2 rounded-md w-[14rem] h-[2.5rem] text-lg border-gray-600 hover:border-blue-300 outline-green-600" :options="part_number"
-              v-model="attachmentsStore.part_number_select"></CSelect>
+            <CSelect
+              class="text-center p-1 border-2 rounded-md w-[14rem] h-[2.5rem] text-lg border-gray-600 hover:border-blue-300 outline-green-600"
+              :options="part_number" v-model="attachmentsStore.part_number_select"></CSelect>
           </div>
         </div>
       </div>
@@ -98,56 +101,56 @@ const uploadFile = (event) => {
 };
 
 const submitAttachment = () => {
-  if (file.value.type === "application/pdf") {
-    if (select_data.value.length !== 0) {
-      var payload = {
-        agreement_request_id: [],
-      };
-      select_data.value.forEach((v) => {
-        payload.agreement_request_id.push(v.agreement_id_pk);
-      });
-      const formData = new FormData();
-      formData.append('file_path_attachment', file.value);
-      payload.agreement_request_id.forEach(function (value) {
-        formData.append("agreement_request_id[]", value) // you have to add array symbol after the key name
-      })
-      swal({
-        icon: "question",
-        title: "Upload a File?",
-        text: "Please make sure before to proceed!",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
-      }).then((response) => {
-        if (response.value === true) {
-          attachmentsStore.setInsertAttachment(formData).then((response) => {
-            if (response.status === "success") {
-              ctable.value.unSelect();
-              select_data.value = [];
-              document.getElementById("input-file").value = null;
-              swal({
-                icon: "success",
-                title: response.message,
-                timer: 1500
-              })
-            } else {
-              swal({
-                icon: "warning",
-                title: response.message,
-                timer: 1500
-              })
-            }
-          })
-        } else {
-          toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
-        }
-      })
-    } else {
-      toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
-    }
+  if (select_data.value.length !== 0) {
+    var payload = {
+      agreement_request_id: [],
+    };
+    select_data.value.forEach((v) => {
+      payload.agreement_request_id.push(v.agreement_id_pk);
+    });
+    const formData = new FormData();
+    formData.append('file_path_attachment', file.value);
+    payload.agreement_request_id.forEach(function (value) {
+      formData.append("agreement_request_id[]", value) // you have to add array symbol after the key name
+    })
+    swal({
+      icon: "question",
+      title: "Upload a File?",
+      text: "Please make sure before to proceed!",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((response) => {
+      if (response.value === true) {
+        attachmentsStore.setInsertAttachment(formData).then((response) => {
+          if (response.status === "success") {
+            ctable.value.unSelect();
+            select_data.value = [];
+            document.getElementById("input-file").value = null;
+            swal({
+              icon: "success",
+              title: response.message,
+              timer: 1500
+            })
+          } else {
+            Object.keys(response.error).forEach((key) => {
+              toast.add({
+                severity: "error",
+                summary: "Warning",
+                detail: response.error[key][0],
+                life: 5000,
+                group: 'bl'
+              });
+            })
+          }
+        })
+      } else {
+        toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
+      }
+    })
   } else {
-    toast.add({ severity: 'error', summary: 'Warning', detail: 'Only PDF File Allowed.', life: 2000, group: 'bl' });
+    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
   }
 }
 
@@ -158,8 +161,8 @@ const filterPartNumber = computed(() => {
 })
 
 const clearFile = () => {
-  document.getElementById('input-file').value= null;
+  document.getElementById('input-file').value = null;
   ctable.value.unSelect();
-  select_data.value = []; 
+  select_data.value = [];
 }
 </script>

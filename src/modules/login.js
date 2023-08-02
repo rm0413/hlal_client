@@ -8,7 +8,7 @@ export const useLoginStore = defineStore({
     state: () => ({
         userProfile: null,
         role: null,
-        section: null
+        section_code: null
     }),
     actions: {
         setLogin(data) {
@@ -45,7 +45,7 @@ export const useLoginStore = defineStore({
                             },
                         };
                         this.role = sessionStorage.getItem('role_access')
-                        this.section = sessionStorage.getItem('section_code')
+                        this.section_code = sessionStorage.getItem('section_code')
                         this.setLoginRole(login_data);
                     }
                 }).catch(err => {

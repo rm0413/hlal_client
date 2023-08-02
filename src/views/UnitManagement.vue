@@ -10,7 +10,8 @@
             <form method="post" @submit.prevent="submitUnit">
                 <div class="mt-2">
                     <label class="">Unit Name</label>
-                    <input type="text" class="w-full border-2 h-[2.5rem] border-gray-600 rounded text-center hover:border-blue-300 outline-green-600"
+                    <input type="text"
+                        class="w-full border-2 h-[2.5rem] border-gray-600 rounded text-center hover:border-blue-300 outline-green-600"
                         v-model="unitManagementStore.unitForm.unit_name" required>
                 </div>
                 <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
@@ -34,12 +35,12 @@
                 <c-table :fields="unitManagementStore.unitManagementFields" :items="unitManagementStore.getUnit">
                     <template #cell(action)="data">
                         <div class="flex items-center justify-center gap-1">
-                            <Button severity="warning" class="w-[1rem] items-center justify-center" v-tooltip.top="'Edit Unit'"
-                                @click="editUnit(data.item)">
+                            <Button severity="warning" class="w-[1rem] items-center justify-center"
+                                v-tooltip.top="'Edit Unit'" @click="editUnit(data.item)">
                                 <font-awesome-icon icon="pen"></font-awesome-icon>
                             </Button>
-                            <Button severity="danger" class="w-[1rem] items-center justify-center" v-tooltip.top="'Delete Unit'"
-                                @click="deleteUnit(data.item)">
+                            <Button severity="danger" class="w-[1rem] items-center justify-center"
+                                v-tooltip.top="'Delete Unit'" @click="deleteUnit(data.item)">
                                 <font-awesome-icon icon="circle-minus"></font-awesome-icon>
                             </Button>
                         </div>
@@ -47,14 +48,17 @@
                 </c-table>
             </div>
         </div>
+        <Toast position="bottom-left"></Toast>
     </div>
 </template>
 <script setup>
 import { inject, onMounted, ref } from "vue";
 import CTable from "@/components/Datatable.vue";
 import { useUnitManagementStore } from "@/modules/management/unitManagement";
+import { useToast } from "primevue/usetoast";
 const unitManagementStore = useUnitManagementStore();
 
+const toast = useToast();
 const swal = inject("$swal");
 const units = ref([])
 
@@ -157,10 +161,13 @@ const submitUnit = () => {
                         timer: 2500
                     })
                 } else {
-                    swal({
-                        icon: "warning",
-                        title: response.message,
-                        timer: 2500
+                    Object.keys(response.error).forEach((key) => {
+                        toast.add({
+                            severity: "error",
+                            summary: "Warning",
+                            detail: response.error[key][0],
+                            life: 5000,
+                        });
                     })
                 }
             })

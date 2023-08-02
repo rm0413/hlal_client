@@ -12,7 +12,6 @@
       <label for="" class="absolute mt-[10.5rem] ml-[5rem] text-gray-500 text-[14px]"><b><i>{{
         dashboardStore.chartData.hinsei_request }}
             Total Hinsei Request as of {{ dashboardStore.date_from }} to {{ dashboardStore.date_to }}</i></b></label>
-      <!-- <label for="" class="absolute mt-[47.5rem] ml-[5rem] text-gray-500 text-[14px]"><b><i>{{dashboardStore.chartData.lsa_request}} Total Hinsei Request</i></b></label> -->
       <div class="grid grid-cols-2 h-[80%]">
         <div class="col-span-1 grid grid-rows-2">
           <div class="row-span-1">
@@ -48,19 +47,16 @@
       <div class="grid grid-cols-2 h-[10%] mt-4">
         <div class="col-span-1 flex justify-center items-center gap-2">
           Total number of Hinsei Request
-          <button
-            @click="openModal('hinseiCount')"
-            class="w-[10rem] h-[2rem] bg-blue-500 text-white rounded-full flex justify-center text-[14px] items-center font-bold"
-          >
+          <button @click="openModal('hinseiCount')"
+            class="w-[10rem] h-[2rem] border-blue-900 border-2 bg-blue-700 text-white rounded-full flex justify-center text-[14px] items-center font-bold">
             {{ hinsei_count }}
+
           </button>
         </div>
         <div class="col-span-1 flex justify-center items-center gap-2">
           Total number of LSA Request
-          <button
-            @click="openModal('lsaCount')"
-            class="w-[10rem] h-[2rem] bg-orange-600 text-white rounded-full flex justify-center text-[14px] items-center font-bold"
-          >
+          <button @click="openModal('lsaCount')"
+            class="w-[10rem] h-[2rem] border-orange-900 border-2 bg-orange-700 text-white rounded-full flex justify-center text-[14px] items-center font-bold">
             {{ lsa_count }}
           </button>
         </div>
@@ -78,55 +74,33 @@
   <!--HINSEI REQUEST COUNT-->
   <dialog ref="hinseiCount" class="w-[70vh] h-[25vh] rounded-lg p-0">
     <div class="flex p-2 items-center justify-between bg-[#A10E13]">
-      <span class="text-white"
-        ><font-awesome-icon
-          icon="chart-line"
-          class="h-5 text-white mr-2 ml-1"
-        />
-        Agreement List Overview (Hinsei Request)</span
-      >
+      <span class="text-white"><font-awesome-icon icon="chart-line" class="h-5 text-white mr-2 ml-1" />
+        Agreement List Overview (Hinsei Request)</span>
       <button @click="closeModal('hinseiCount')">
-        <font-awesome-icon
-          icon="xmark"
-          class="px-3 py-2 rounded-full hover:bg-red-500 text-white"
-        />
+        <font-awesome-icon icon="xmark" class="px-3 py-2 rounded-full hover:bg-red-500 text-white" />
       </button>
     </div>
 
     <div class="h-[77%]">
       <div class="grid grid-cols-3 h-[70%] gap-2 p-3">
-        <div
-          class="grid justify-end h-full bg-green-700 rounded-xl place-content-end border-4 border-green-600 p-2"
-        >
-          <font-awesome-icon
-            icon="thumbs-up"
-            class="absolute text-green-100 opacity-40 h-[5rem] self-center"
-          /><span class="text-white text-[3em] font-bold">{{ hinsei_ok }}</span>
+        <div class="grid justify-end h-full bg-green-700 rounded-xl place-content-end border-4 border-green-600 p-2">
+          <font-awesome-icon icon="thumbs-up" class="absolute text-green-100 opacity-40 h-[5rem] self-center" /><span
+            class="text-white text-[3em] font-bold">{{ hinsei_ok }}</span>
         </div>
 
-        <div
-          class="grid justify-end h-full bg-red-700 rounded-xl place-content-end border-4 border-red-600 p-2"
-        >
-          <font-awesome-icon
-            icon="thumbs-down"
-            class="absolute text-red-100 opacity-40 h-[5rem] self-center"
-          /><span class="text-white text-[3em] font-bold">{{ hinsei_ng }}</span>
+        <div class="grid justify-end h-full bg-red-700 rounded-xl place-content-end border-4 border-red-600 p-2">
+          <font-awesome-icon icon="thumbs-down" class="absolute text-red-100 opacity-40 h-[5rem] self-center" /><span
+            class="text-white text-[3em] font-bold">{{ hinsei_ng }}</span>
         </div>
 
-        <div
-          class="grid justify-end h-full bg-yellow-500 rounded-xl place-content-end border-4 border-yellow-600 p-2"
-        >
-          <font-awesome-icon
-            icon="hourglass-half"
-            class="absolute text-red-100 opacity-40 h-[5rem] self-center"
-          /><span class="text-white text-[3em] font-bold">{{
-            hinsei_pending
-          }}</span>
+        <div class="grid justify-end h-full bg-yellow-500 rounded-xl place-content-end border-4 border-yellow-600 p-2">
+          <font-awesome-icon icon="hourglass-half" class="absolute text-red-100 opacity-40 h-[5rem] self-center" /><span
+            class="text-white text-[3em] font-bold">{{
+              hinsei_pending
+            }}</span>
         </div>
       </div>
-      <div
-        class="h-[20%] grid grid-cols-3 justify-center items-center text-center"
-      >
+      <div class="h-[20%] grid grid-cols-3 justify-center items-center text-center">
         <div>
           <font-awesome-icon icon="square" class="text-green-700" />
           OK
@@ -146,55 +120,33 @@
   <!--LSA REQUEST COUNT-->
   <dialog ref="lsaCount" class="w-[70vh] h-[25vh] rounded-lg p-0">
     <div class="flex p-2 items-center justify-between bg-[#A10E13]">
-      <span class="text-white"
-        ><font-awesome-icon
-          icon="chart-line"
-          class="h-5 text-white mr-2 ml-1"
-        />
-        Agreement List Overview (LSA Request)</span
-      >
+      <span class="text-white"><font-awesome-icon icon="chart-line" class="h-5 text-white mr-2 ml-1" />
+        Agreement List Overview (LSA Request)</span>
       <button @click="closeModal('lsaCount')">
-        <font-awesome-icon
-          icon="xmark"
-          class="px-3 py-2 rounded-full hover:bg-red-500 text-white"
-        />
+        <font-awesome-icon icon="xmark" class="px-3 py-2 rounded-full hover:bg-red-500 text-white" />
       </button>
     </div>
 
     <div class="h-[77%]">
       <div class="grid grid-cols-3 h-[70%] gap-2 p-3">
-        <div
-          class="grid justify-end h-full bg-green-700 rounded-xl place-content-end border-4 border-green-600 p-2"
-        >
-          <font-awesome-icon
-            icon="thumbs-up"
-            class="absolute text-green-100 opacity-40 h-[5rem] self-center"
-          /><span class="text-white text-[3em] font-bold">{{ lsa_ok }}</span>
+        <div class="grid justify-end h-full bg-green-700 rounded-xl place-content-end border-4 border-green-600 p-2">
+          <font-awesome-icon icon="thumbs-up" class="absolute text-green-100 opacity-40 h-[5rem] self-center" /><span
+            class="text-white text-[3em] font-bold">{{ lsa_ok }}</span>
         </div>
 
-        <div
-          class="grid justify-end h-full bg-red-700 rounded-xl place-content-end border-4 border-red-600 p-2"
-        >
-          <font-awesome-icon
-            icon="thumbs-down"
-            class="absolute text-red-100 opacity-40 h-[5rem] self-center"
-          /><span class="text-white text-[3em] font-bold">{{ lsa_ng }}</span>
+        <div class="grid justify-end h-full bg-red-700 rounded-xl place-content-end border-4 border-red-600 p-2">
+          <font-awesome-icon icon="thumbs-down" class="absolute text-red-100 opacity-40 h-[5rem] self-center" /><span
+            class="text-white text-[3em] font-bold">{{ lsa_ng }}</span>
         </div>
 
-        <div
-          class="grid justify-end h-full bg-yellow-500 rounded-xl place-content-end border-4 border-yellow-600 p-2"
-        >
-          <font-awesome-icon
-            icon="hourglass-half"
-            class="absolute text-red-100 opacity-40 h-[5rem] self-center"
-          /><span class="text-white text-[3em] font-bold">{{
-            lsa_pending
-          }}</span>
+        <div class="grid justify-end h-full bg-yellow-500 rounded-xl place-content-end border-4 border-yellow-600 p-2">
+          <font-awesome-icon icon="hourglass-half" class="absolute text-red-100 opacity-40 h-[5rem] self-center" /><span
+            class="text-white text-[3em] font-bold">{{
+              lsa_pending
+            }}</span>
         </div>
       </div>
-      <div
-        class="h-[20%] grid grid-cols-3 justify-center items-center text-center"
-      >
+      <div class="h-[20%] grid grid-cols-3 justify-center items-center text-center">
         <div>
           <font-awesome-icon icon="square" class="text-green-700" />
           OK
@@ -220,6 +172,8 @@ import { useToast } from "primevue/usetoast";
 const toast = useToast();
 const dashboardStore = useDashboardStore();
 const max_date = moment().format("yyyy-MM-DD");
+const date_today = moment().format("yyyy-MM-DD");
+const startOfMonth = moment().startOf('month').format('yyyy-MM-DD');
 
 const hinseiCount = ref();
 const hinsei_ok = ref(null);
@@ -290,6 +244,9 @@ const chartData2 = ref({
 const hinsei_count = ref(null);
 const lsa_count = ref(null);
 onMounted(() => {
+  dashboardStore.date_from = startOfMonth;
+  dashboardStore.date_to = date_today
+  submitDateFilter()
   chartOptions.value = setChartOptions();
   dashboardStore.setCountRequest().then((response) => {
     hinsei_count.value = response.data[0].hinsei_count;
@@ -352,7 +309,6 @@ const setChartOptions = () => {
 
 const submitDateFilter = () => {
   dashboardStore.setLoadCountResult().then((response) => {
-    console.log(response)
     if (response.status === "success") {
 
       chartData.value = {

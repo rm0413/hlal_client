@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[87vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
+  <div class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
     <div class="lg:col-span-3 min-[100px]:col-span-9 h-full flex flex-col">
       <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono">
         <font-awesome-icon class="h-6 w-6 text-black" icon="desktop" /> Hinsei &
@@ -12,7 +12,7 @@
         <form method="post" @submit.prevent="submitMonitoring" class="flex flex-col items-center gap-2">
           <label for="" class="flex flex-col mt-3">
             Unit Name
-            <select class="w-[31.5vw] h-[2.7rem] rounded border-black border-2 text-center"
+            <select class="w-[32rem] h-[2.7rem] rounded border-black border-2 text-center"
               v-model="monitoringStore.monitoringForm.monitoring_unit_name" required>
               <option value="" disabled>Select Unit</option>
               <option v-for="(i, key) in units" :key="key" :value="i.unit_id">
@@ -22,22 +22,21 @@
           </label>
           <label for="" class="flex flex-col">
             Supplier
-            <input type="text" class="border p-2 flex text-center w-[31.5vw] rounded border-black"
+            <input type="text" class="border p-2 flex text-center w-[32rem] rounded border-black"
               v-model="monitoringStore.monitoringForm.monitoring_supplier" required placeholder="Supplier" />
           </label>
           <label for="" class="flex flex-col">
             Part Number
-            <input type="text" class="border p-2 flex text-center w-[31.5vw] rounded border-black text-black"
+            <input type="text" class="border p-2 flex text-center w-[32rem] rounded border-black text-black"
               v-model="monitoringStore.monitoringForm.monitoring_part_number" required placeholder="Part Number" />
           </label>
           <div class="flex gap-5 mt-5">
-            <button type="button" @click="exportFile" class="p-2 bg-green-700 text-white rounded">
-              <font-awesome-icon icon="download"></font-awesome-icon>
-              Export File
+            <button type="button" @click="exportFile"
+              class="bg-green-700 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-gray-600">
+              <font-awesome-icon icon="download" /> Export
             </button>
-            <button type="submit" class="p-2 bg-gray-700 text-white rounded">
-              <font-awesome-icon icon="magnifying-glass"></font-awesome-icon>
-              Search
+            <button type="submit" class="bg-gray-700 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-gray-600">
+              <font-awesome-icon icon="magnifying-glass" /> Search
             </button>
           </div>
         </form>
@@ -254,19 +253,19 @@
               </template>
               <template #cell(action)="data" v-else>
                 <div class="flex justify-center gap-1">
-                  <button class="h-8 w-9 rounded bg-gray-400 text-white z-10" v-tooltip.alignTop="'Download Attachment'"
-                    disabled @click="downloadAttachment(data.item)" v-if="data.item.file_path_attachment !== null">
+                  <button class="h-8 w-9 rounded bg-green-700 text-white z-10" v-tooltip.alignTop="'Download Attachment'"
+                    @click="downloadAttachment(data.item)" v-if="data.item.file_path_attachment !== null">
                     <font-awesome-icon icon="download" />
                   </button>
-                  <button class="h-8 w-9 rounded bg-gray-400 text-white z-10" v-tooltip.alignTop="'Download Attachment'"
-                    disabled @click="downloadAttachment(data.item)" v-else hidden>
+                  <button class="h-8 w-9 rounded bg-green-700 text-white z-10" v-tooltip.alignTop="'Download Attachment'"
+                    @click="downloadAttachment(data.item)" v-else hidden>
                     <font-awesome-icon icon="download" />
                   </button>
-                  <button data-open-modal class="h-8 w-9 rounded bg-gray-400 text-white" disabled
+                  <button data-open-modal class="h-8 w-9 rounded bg-cyan-600 text-white"
                     v-if="data.item.file_path_attachment !== null" @click="viewAttachment(data.item)">
                     <font-awesome-icon icon="eye"></font-awesome-icon>
                   </button>
-                  <button data-open-modal class="h-8 w-9 rounded bg-gray-400 text-white" disabled
+                  <button data-open-modal class="h-8 w-9 rounded bg-cyan-600 text-white"
                     @click="viewAttachment(data.item)" v-else hidden>
                     <font-awesome-icon icon="eye"></font-awesome-icon>
                   </button>
@@ -285,7 +284,7 @@
         </div>
       </div>
     </dialog>
-    <Toast position="bottom-left"></Toast>
+    <Toast position="bottom-right"></Toast>
   </div>
 </template>
 
@@ -383,26 +382,38 @@ const edit_monitoring_item = (data) => {
 };
 
 const exportFile = () => {
-  if (select_data.value.length !== 0) {
-    swal({
-      icon: "question",
-      title: "Export File?",
-      text: "Please make sure before to proceed!",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((response) => {
-      if (response.value === true) {
-        monitoringStore.setExportMonitoringList(select_data.value)
-        ctable.value.unSelect();
-        select_data.value = [];
+  if (monitoringStore.monitoringForm.monitoring_unit_name) {
+    if (monitoringStore.monitoringForm.monitoring_supplier) {
+      if (monitoringStore.monitoringForm.monitoring_part_number) {
+        if (select_data.value.length !== 0) {
+          swal({
+            icon: "question",
+            title: "Export File?",
+            text: "Please make sure before to proceed!",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+          }).then((response) => {
+            if (response.value === true) {
+              monitoringStore.setExportMonitoringList(select_data.value)
+              ctable.value.unSelect();
+              select_data.value = [];
+            } else {
+              toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, });
+            }
+          })
+        } else {
+          toast.add({ severity: 'error', summary: 'Warning', detail: "Please select data in table", life: 2000, });
+        }
       } else {
-        toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, });
+        toast.add({ severity: 'error', summary: 'Warning', detail: 'Please input Part Number.', life: 2000, });
       }
-    })
+    } else {
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Please input Supplier', life: 2000, });
+    }
   } else {
-    toast.add({ severity: 'error', summary: 'Warning', detail: "Please select data in table", life: 2000, });
+    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select Unit Name.', life: 2000, });
   }
 };
 const openModal = (data) => {

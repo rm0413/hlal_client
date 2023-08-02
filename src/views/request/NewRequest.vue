@@ -361,29 +361,33 @@ const generateCode = () => {
         checkedData.value.forEach((v) => {
           payload.agreement_request_id.push(v.agreement_id_pk);
         });
-        newRequestStore.setGenerateCode(payload).then((response) => {
-          if (response.status === "success") {
-            newRequestStore.setShowGenerateCode(response.data.id).then((response) => {
-              if (response.status === "success") {
-                ctable.value.unSelect();
-                checkedData.value = [];
-                swal({
-                  icon: "success",
-                  title: response.data[0].code,
-                  text: "Your code has been generated. An email notification will be sent.",
-                });
-              } else {
-                toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
-              }
-            });
-          } else {
-            swal({
-              icon: "warning",
-              title: response.message,
-              timer: 2000
-            });
-          }
-        });
+        loadingProcess()
+        setTimeout(() => {
+          newRequestStore.setGenerateCode(payload).then((response) => {
+            if (response.status === "success") {
+              newRequestStore.setShowGenerateCode(response.data.id).then((response) => {
+                if (response.status === "success") {
+                  ctable.value.unSelect();
+                  checkedData.value = [];
+                  show.value = false
+                  swal({
+                    icon: "success",
+                    title: response.data[0].code,
+                    text: "Your code has been generated. An email notification will be sent.",
+                  });
+                } else {
+                  toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
+                }
+              });
+            } else {
+              swal({
+                icon: "warning",
+                title: response.message,
+                timer: 2000
+              });
+            }
+          });
+        })
       } else {
         view_items.value.showModal();
         ctable.value.unSelect();
@@ -521,49 +525,52 @@ const uploadFile = (event) => {
 
 const submitMultipleRequest = () => {
   multiple_input.value.close();
-  if (file.value.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-    const formData = new FormData();
-    formData.append('uploaded_file', file.value);
-    formData.append('unit_id', newRequestStore.agreementForm.unit);
-    formData.append('requestor_employee_id', employee_id.value);
-    if (newRequestStore.agreementForm.unit !== null) {
-      swal({
-        icon: "question",
-        title: "Upload File?",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes",
-      }).then((response) => {
-        if (response.value === true) {
-          loadingProcess()
-          setTimeout(() => {
-            newRequestStore.setUploadMultipleRequest(formData).then((response) => {
-              if (response.status === "success") {
-                document.getElementById("input-file").value = null
-                multiple_input.value.close();
-                show.value = false
-                swal({
-                  icon: "success",
-                  title: "Multiple Request Added Successfully.",
-                  timer: 1500
-                })
-              } else {
-                toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
-              }
-            })
+  const formData = new FormData();
+  formData.append('uploaded_file', file.value);
+  formData.append('unit_id', newRequestStore.agreementForm.unit);
+  formData.append('requestor_employee_id', employee_id.value);
+  if (newRequestStore.agreementForm.unit !== null) {
+    swal({
+      icon: "question",
+      title: "Upload File?",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((response) => {
+      if (response.value === true) {
+        loadingProcess()
+        setTimeout(() => {
+          newRequestStore.setUploadMultipleRequest(formData).then((response) => {
+            if (response.status === "success") {
+              document.getElementById("input-file").value = null
+              multiple_input.value.close();
+              show.value = false
+              swal({
+                icon: "success",
+                title: "Multiple Request Added Successfully.",
+                timer: 1500
+              })
+            } else {
+              Object.keys(response.error).forEach((key) => {
+                toast.add({
+                  severity: "error",
+                  summary: "Warning",
+                  detail: response.error[key][0],
+                  life: 5000,
+                });
+              })
+            }
           })
-        } else {
-          multiple_input.value.showModal();
-          toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
-        }
-      })
-    } else {
-      multiple_input.value.showModal();
-      toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select Unit Name', life: 2000, group: 'bl' });
-    }
+        })
+      } else {
+        multiple_input.value.showModal();
+        toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
+      }
+    })
   } else {
-    toast.add({ severity: 'error', summary: 'Warning', detail: 'Only Excel File Allowed.', life: 2000, group: 'bl' });
+    multiple_input.value.showModal();
+    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select Unit Name', life: 2000, group: 'bl' });
   }
 }
 

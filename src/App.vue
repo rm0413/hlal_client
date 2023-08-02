@@ -41,7 +41,7 @@ const links = [
     name: 'request',
     fa: 'layer-group',
     role: 'ADMIN',
-    section: 'QCI',
+    section_code: 'QCI',
     sub_module: [
       {
         title: 'New Request',
@@ -54,7 +54,7 @@ const links = [
         name: 'inspection-data',
         fa: 'magnifying-glass',
         role: 'ADMIN',
-        section: 'QCI'
+        section_code: 'QCI'
       },
       {
         title: 'Edit Item Details',
@@ -113,7 +113,7 @@ const links = [
 
 <template>
   <div class="h-screen">
-    <CSidebar :role="loginStore.role" :section="loginStore.section" :systemDetails="systemDetails" :links="links"
+    <CSidebar :role="loginStore.role" :section_code="loginStore.section_code" :systemDetails="systemDetails" :links="links"
       :signOut="signOut" v-if="route.name !== 'login'">
       <template #page>
         <router-view />
