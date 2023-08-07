@@ -122,18 +122,45 @@
       </div>
     </div>
     <div
-      class="lg:col-span-3 min-[100px]:col-span-9 border-2 rounded-[5px] flex flex-col h-[100%]"
+      class="lg:col-span-3 min-[100px]:col-span-9 border-2 rounded-[5px] flex flex-col h-[89.2vh]"
     >
-      <div class="font-bold bg-gray-100 p-3">Task To Do!</div>
-      <div class="font-bold p-6 h-full">
-        Welcome to Hinsei & LSA Agreement List System
-      </div>
-      <div class="font-bold outline-1 bg-gray-100 p-3">Activity Logs!</div>
-      <div class="p-6 h-full">
-        <span class="font-bold">Welcome to Hinsei & LSA Agreement List System</span>
-        <div class="">sdas</div>
+      <div class="">
+        <div class="font-bold bg-gray-300 p-3 drop-shadow-xl">Task To Do!</div>
+        <div class="font-bold p-6 h-[56vh]">
+          Welcome to Hinsei & LSA Agreement List System
+        </div>
+        <div class="font-bold outline-1 bg-gray-300 p-3 drop-shadow-xl">Activity Logs!</div>
+        <div class="p-6 h-[23vh] overflow-scroll">
+          <div class="flex flex-col pl-2 space-y-3">
+            <ul
+              v-for="(i, key) in logs_activity"
+              :key="key"
+              class="rounded-[5px] border border-black shadow-xl"
+            >
+              <!-- <li class="h-[6rem] shadow p-2 rounded-md"> -->
+              <span
+                class="text-[18px] p-1 rounded font-mono font-bold ml-2"
+                >{{ i.subject }}</span
+              ><br />
+              <p
+                class="indent-10 text-[15px] text-[15px] italic space-y-8 p-1"
+              >
+                <font-awesome-icon icon="user" class="text-blue-700" /> by :
+                {{ i.name }}
+              </p>
+              <p
+                class="indent-10 text-[15px] text-[15px] italic  space-y-8 p-1"
+              >
+                <font-awesome-icon icon="clipboard-list" class="text-green-700" />
+                 Date: {{ i.date }}
+              </p>
+              <!-- </li> -->
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
+    <!-- class="text-[17px] p-1 rounded-md bg-clip-text bg-transparent bg-gradient-to-r from-pink-500 to-violet-500 text-white" -->
 
     <Toast position="bottom-left"></Toast>
   </div>
@@ -294,7 +321,6 @@ const lsaCount = ref();
 const lsa_ok = ref(null);
 const lsa_ng = ref(null);
 const lsa_pending = ref(null);
-const setActivityLogs = ref()
 
 const openModal = (modal) => {
   if (modal === "hinseiCount") {
@@ -370,10 +396,30 @@ onMounted(() => {
     lsa_ng.value = response.data[0].lsa_ng;
     lsa_pending.value = response.data[0].lsa_pending;
   });
-  dashboardStore.setActivityLogs().then((response) => {
-    console.log(response)
-  })
+  // showActivityLogs();
 });
+
+const logs_activity = ref([]);
+
+const showActivityLogs = () => {
+  dashboardStore.setActivityLogs().then((response) => {
+    logs_activity.value = [];
+    // console.log(response.data);
+    var datastorage = [];
+    response.data.forEach((v) => {
+      datastorage = {
+        name: v.name,
+        subject: v.subject,
+        date: v.created_at,
+      };
+      logs_activity.value.push(datastorage);
+    });
+    // console.log(logs_activity);
+
+    // console.log(response.data)
+  });
+};
+
 const chartOptions = ref();
 
 const setChartOptions = () => {
@@ -423,6 +469,7 @@ const setChartOptions = () => {
 };
 
 const submitDateFilter = () => {
+  showActivityLogs();
   dashboardStore.setLoadCountResult().then((response) => {
     if (response.status === "success") {
       chartData.value = {
@@ -477,3 +524,9 @@ const submitDateFilter = () => {
   });
 };
 </script>
+
+<style scoped>
+/* ul.a{
+  list-style-type: circle;
+} */
+</style>

@@ -49,6 +49,7 @@ export const useInspectionDataStore = defineStore({
                 inspection_after_rework: this.inspectionDataForm.inspection_rework,
                 revised_date_igm: this.inspectionDataForm.revised_date,
                 sent_date_igm: this.inspectionDataForm.send_date,
+                emp_id: sessionStorage.getItem('employee_id'),
             }
             data.forEach((v) => {
                 payload.agreement_request_id.push(v.agreement_id_pk)
@@ -70,6 +71,7 @@ export const useInspectionDataStore = defineStore({
                 inspection_after_rework: this.inspectionDataForm.inspection_rework,
                 revised_date_igm: this.inspectionDataForm.revised_date,
                 sent_date_igm: this.inspectionDataForm.send_date,
+                emp_id: sessionStorage.getItem('employee_id'),
             }
             // console.log(payload)
             return new Promise((resolve, reject) => {
