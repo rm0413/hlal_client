@@ -73,7 +73,8 @@ export const useUnitManagementStore = defineStore({
                 id: this.unitForm.id,
                 unit_name: this.unitForm.unit_name,
                 unit_created_by: this.unitForm.unit_created_by,
-                unit_status: this.unitForm.unit_status
+                unit_status: this.unitForm.unit_status,
+                requestor_employee_id: sessionStorage.getItem('employee_id')
             }
             // console.log(unit_data)
             return new Promise((resolve, reject) => {
@@ -88,8 +89,13 @@ export const useUnitManagementStore = defineStore({
             })
         },
         setDeleteUnit(data) {
+            // console.log(data)
+            var payload = {
+                id: data.unit_id,
+                emp_id: sessionStorage.getItem('employee_id'),
+            };
             return new Promise((resolve, reject) => {
-                axios.delete(`unit/${data.unit_id}`).then(response => {
+                axios.delete(`delete-unit/${payload.id}/${payload.emp_id}`).then(response => {
                     resolve(response.data)
                     this.setUnits()
                     // console.log(response.data)

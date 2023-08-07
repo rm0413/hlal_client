@@ -120,7 +120,7 @@
       <div ref="maxSidebar" :class="`max hidden text-white mt-20 flex-col space-y-2 w-full h-[calc(100vh)]`">
         <div v-for="(navs, n) in links" :key="n">
 
-          <div v-if="navs.role === undefined || navs.role === role">
+          <div v-if="navs.role === undefined || navs.role === userprofile.role">
             <router-link v-if="!navs.sub_module" :to="{ name: navs.name }"
               :class="`hover:ml-4 w-full shadow-lg text-${themeStore.theme[themeStore.theme_select].sidebar_text
                 } hover:text-rose-900 dark:hover:text-blue-500 bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg
@@ -142,7 +142,7 @@
               <div>{{ navs.title }}</div>
             </div>
             <div v-for="(sub, s) in navs.sub_module" :key="s">
-              <router-link v-if="sub.role === role || sub.section_code === section_code" :to="{ name: sub.name }">
+              <router-link v-if="sub.role === userprofile.role || sub.section_code === section_code" :to="{ name: sub.name }">
                 <div ref="sub_module"
                   :class="`submodule(${n}) hover:ml-4 w-full shadow-lg text-${themeStore.theme[themeStore.theme_select].sidebar_text
                     } hover:text-rose-900 text-[12px] dark:hover:text-blue-500 bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg
@@ -162,7 +162,7 @@
       <div ref="miniSidebar" class="mini mt-20 flex flex-col space-y-2 w-full h-[calc(100vh)]">
         <div v-for="(navs, n) in links" :key="n">
           <!-- {{ navs.sub_module }} -->
-          <div v-if="navs.role === undefined || navs.role === role">
+          <div v-if="navs.role === undefined || navs.role === userprofile.role">
             <router-link v-if="!navs.sub_module" :to="{ name: navs.name }" :class="`hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 w-full relative bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg
               } p-3 rounded-full transform ease-in-out duration-500 flex shadow-lg hover:visible`">
               <span
@@ -182,7 +182,7 @@
               <font-awesome-icon v-if="navs.fa" class="h-5 w-5" :icon="navs.fa"></font-awesome-icon>
             </div>
             <div v-for="(sub, s) in navs.sub_module" :key="s">
-              <router-link v-if="sub.role === role || sub.section_code === section_code" :to="{ name: sub.name }">
+              <router-link v-if="sub.role === userprofile.role || sub.section_code === section_code" :to="{ name: sub.name }">
                 <div ref="sub_module" :class="`submodule(${n}) transform duration-300 absolute hover:ml-4 opacity-0 -translate-x-[15rem] justify-end pr-5 text-${themeStore.theme[themeStore.theme_select].sidebar_sub_icon
                   } dark:hover:text-red-200 hover:text-red-900 w-full rounded bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg
                   } text-${themeStore.theme[themeStore.theme_select].sidebar_text} p-3 flex shadow-lg`">

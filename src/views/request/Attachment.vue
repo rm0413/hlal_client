@@ -110,6 +110,7 @@ const submitAttachment = () => {
     });
     const formData = new FormData();
     formData.append('file_path_attachment', file.value);
+    formData.append('emp_id', sessionStorage.getItem('employee_id'));
     payload.agreement_request_id.forEach(function (value) {
       formData.append("agreement_request_id[]", value) // you have to add array symbol after the key name
     })

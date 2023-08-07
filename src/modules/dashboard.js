@@ -19,7 +19,7 @@ export const useDashboardStore = defineStore({
                 })
             })
         },
-        setLoadCountResult(){
+        setLoadCountResult() {
             var payload = {
                 date_from: this.date_from,
                 date_to: this.date_to
@@ -33,10 +33,24 @@ export const useDashboardStore = defineStore({
                     reject(err)
                 })
             })
+        },
+        setActivityLogs() {
+            return new Promise((resolve, reject) => {
+                axios.get('load-activity-logs', {
+                    headers: {
+                        Authorization: 'Bearer ' + JSON.parse(localStorage.getItem('employee_id'))
+                    }
+                }).then(response => {
+                    resolve(response.data)
+                    console.log(response.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
         }
     },
     getters: {
-        getCountResult(){
+        getCountResult() {
             return this.chartData;
         }
     }

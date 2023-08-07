@@ -277,6 +277,7 @@ const submitUpdateAgreementList = () => {
 }
 
 const deleteRequest = (data) => {
+  console.log(data)
   swal({
     icon: "question",
     title: "Delete this request?",

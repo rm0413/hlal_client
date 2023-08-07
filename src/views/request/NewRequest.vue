@@ -357,6 +357,7 @@ const generateCode = () => {
         view_items.value.close();
         var payload = {
           agreement_request_id: [],
+          emp_id:sessionStorage.getItem('employee_id')
         };
         checkedData.value.forEach((v) => {
           payload.agreement_request_id.push(v.agreement_id_pk);
@@ -508,7 +509,7 @@ const downloadFormat = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      window.location.href = 'http://10.164.58.62/hinsei/server/public/download-format';
+      window.location.href = 'http://10.164.58.82/hinsei/server/public/download-format';
     } else {
       multiple_input.value.showModal();
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000 });

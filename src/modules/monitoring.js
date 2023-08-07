@@ -139,7 +139,7 @@ export const useMonitoringStore = defineStore({
         request_quantity: this.monitoringEditItemForm.request_quantity,
         unit_id: this.monitoringEditItemForm.unit_id,
         requestor_employee_id: sessionStorage.getItem("employee_id"),
-      };
+      }
       return new Promise((resolve, reject) => {
         axios
           .patch(`agreement-list/${payload.id}`, payload)
@@ -189,7 +189,7 @@ export const useMonitoringStore = defineStore({
     },
     setExportMonitoringList(data) {
       window.open(
-        `http://10.164.58.62/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
+        `http://10.164.58.82/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
       )
     },
   },

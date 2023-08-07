@@ -20,5 +20,5 @@ export default defineConfig({
       }
     }
   },
-  base: `http://10.164.58.62/hinsei`,
+  base: `http://10.164.58.82/HINSEI`,
 })

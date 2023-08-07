@@ -67,7 +67,7 @@ export const useUserManagementStore = defineStore({
         },
         setUserRequest() {
             return new Promise((resolve, reject) => {
-                axios.get(`http://10.164.58.62/FDTP-Portal/public/api/system-request-users/${system_id}`).then((response) => {
+                axios.get(`http://10.164.58.82/FDTP-Portal/public/api/system-request-users/${system_id}`).then((response) => {
                     resolve(response.data)
                     // console.log(response.data.data)
                     this.userRequest = response.data.data
@@ -80,7 +80,7 @@ export const useUserManagementStore = defineStore({
         setAddUser(data) {
             // console.log(data)
             return new Promise((resolve, reject) => {
-                axios.post('http://10.164.58.62/FDTP-Portal/public/api/role-access', data).then((response) => {
+                axios.post('http://10.164.58.82/FDTP-Portal/public/api/role-access', data).then((response) => {
                     resolve(response.data)
                     this.userRole = response.data
                 }).catch(err => {
@@ -117,7 +117,7 @@ export const useUserManagementStore = defineStore({
 
         setRemoveUser() {
             return new Promise((resolve, reject) => {
-                axios.get(`http://10.164.58.62/FDTP-Portal/public/api/system-load-all-users/${system_id}`).then((response) => {
+                axios.get(`http://10.164.58.82/FDTP-Portal/public/api/system-load-all-users/${system_id}`).then((response) => {
                     // console.log(response.data)
                     resolve(response.data)
                     this.setUserRequest()
@@ -128,7 +128,7 @@ export const useUserManagementStore = defineStore({
         },
         setRemoveFdtpPortalAccess(data) {
             return new Promise((resolve, reject) => {
-                axios.delete(`http://10.164.58.62/FDTP-Portal/public/api/role-access/${data}`)
+                axios.delete(`http://10.164.58.82/FDTP-Portal/public/api/role-access/${data}`)
                     .then(function (response) {
                         resolve(response.data);
                         this.setUserRequest()
@@ -176,7 +176,7 @@ export const useUserManagementStore = defineStore({
             }
             console.log(data)
             return new Promise((resolve, reject) => {
-                axios.put(`http://10.164.58.62/FDTP-Portal/public/api/role-access/${data.id}`, data)
+                axios.put(`http://10.164.58.82/FDTP-Portal/public/api/role-access/${data.id}`, data)
                     .then(function (response) {
                         resolve(response.data);
                         // console.log(response.data)

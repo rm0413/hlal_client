@@ -267,6 +267,7 @@ const excelUploadingDesignerAnswer = () => {
           confirmButtonText: "Yes",
         }).then((response) => {
           if (response.value === true) {
+            var emp_id = sessionStorage.getItem("employee_id")
             const name = "data";
             console.log(select_data.value);
             const formData = new FormData();
@@ -295,6 +296,7 @@ const excelUploadingDesignerAnswer = () => {
               formData.append((`${name}[${i}]${["[requestor_employee_id]"]}`), item["requestor_employee_id"]);
             })
             formData.append("uploaded_file", file.value);
+            formData.append("emp_id", emp_id);
             formData.append(
               "request_result",
               designerSectionAnswerStore.designerSectionAnswerForm

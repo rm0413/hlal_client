@@ -51,7 +51,8 @@ onMounted(() => {
 const generateCode = () => {
     if (select_data.value.length !== 0) {
         var payload = {
-            agreement_request_id: []
+            agreement_request_id: [],
+            emp_id: sessionStorage.getItem('employee_id')
         }
         select_data.value.forEach((v) => {
             payload.agreement_request_id.push(v.agreement_id_pk)

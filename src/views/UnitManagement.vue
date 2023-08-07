@@ -80,6 +80,7 @@ const loadUnits = () => {
     })
 }
 const deleteUnit = (data) => {
+    // console.log(data)
     swal({
         icon: "question",
         title: "Delete Unit?",

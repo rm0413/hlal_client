@@ -79,7 +79,8 @@ export const useDesignerSectionAnswerStore = defineStore({
                 request_result: this.designerSectionAnswerForm.request_result,
                 designer_answer: this.designerSectionAnswerForm.designer_section_answer,
                 designer_in_charge: this.designerSectionAnswerForm.designer_in_charge,
-                answer_date: this.designerSectionAnswerForm.answer_date
+                answer_date: this.designerSectionAnswerForm.answer_date,
+                emp_id: sessionStorage.getItem('employee_id')
             }
             return new Promise((resolve, reject) => {
                 axios.patch(`designer-section-answer/${payload.id}`, payload).then(response => {
@@ -110,7 +111,8 @@ export const useDesignerSectionAnswerStore = defineStore({
                 designer_answer: this.designerSectionAnswerForm.designer_section_answer,
                 designer_in_charge: this.designerSectionAnswerForm.designer_in_charge,
                 request_result: this.designerSectionAnswerForm.request_result,
-                answer_date: this.designerSectionAnswerForm.answer_date
+                answer_date: this.designerSectionAnswerForm.answer_date,
+                emp_id: sessionStorage.getItem('employee_id')
             }
             data.forEach(v => {
                 payload.agreement_request_id.push(v.agreement_request_id_fk)
