@@ -1,29 +1,36 @@
 <template>
   <div
-    class="h-[89vh] w-full grid grid-cols-9 min-[50px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
+    class="h-[89vh] w-full grid grid-cols-12 min-[50px]:overflow-y-scroll lg:overflow-y-hidden gap-2 select-none"
   >
-    <div class="lg:col-span-6 min-[100px]:col-span-9 h-full flex flex-col">
-      <label
-        class="text-[24px] tracking-widest font-bold text-gray-600 font-mono"
-      >
-        <font-awesome-icon class="h-6 w-6 text-black" icon="home" /> Dashboard
-      </label>
+    <div class="lg:col-span-10 min-[100px]:col-span-9 h-full flex flex-col">
+      <div class="grid grid-cols-2">
+        <label
+          class="col-span-1 text-[24px] tracking-widest font-bold text-gray-600 font-mono"
+        >
+          <font-awesome-icon class="h-6 w-6 text-black" icon="home" /> Dashboard
+        </label>
+        <label
+          class="flex col-span-1 text-center items-center justify-end italic mr-6"
+        >
+          Today is {{ today }}
+        </label>
+      </div>
       <div
         class="flex flex-col justify-center py-4 px-16 bg-[#A10E13] rounded-full text-white"
       >
-        <span class="text-[1.5rem]"
+        <span class="flex-col-2 text-[1.5rem]"
           >Hello, <strong>{{ first_name }}</strong></span
         >
         <i class="text-[1rem] opacity-90"
           >Welcome to Hinsei & LSA Agreement List System</i
         >
       </div>
-      <div class="py-3 px-12 font-bold text-[18px]">
+      <div class="py-3 px-12 font-bold text-[22px] mb-2">
         <font-awesome-icon icon="chart-simple" /> Request Status
       </div>
       <label
         for=""
-        class="absolute mt-[10.5rem] ml-[5rem] text-gray-500 text-[14px]"
+        class="absolute mt-[11rem] ml-[5rem] text-gray-500 text-[14px]"
         ><b
           ><i
             >{{ dashboardStore.chartData.hinsei_request }} Total Hinsei Request
@@ -32,7 +39,7 @@
           ></b
         ></label
       >
-      <div class="grid grid-cols-2 h-[80%]">
+      <div class="grid grid-cols-2 h-[70%] mt-4">
         <div class="col-span-1 grid grid-rows-2">
           <div class="row-span-1">
             <Chart
@@ -60,14 +67,16 @@
             ></label
           >
         </div>
-        <div class="col-span-1 flex flex-col justify-center items-center gap-2">
-          <fieldset
-            class="w-[40%] flex flex-col justify-center items-center gap-2 border-2"
-          >
-            <legend class="ml-2">Date Filter</legend>
+        <div class="col-span-1 grid grid-rows-2">
+          <div class="col-span-1 flex flex-col gap-2 items-center">
+            <legend
+              class="flex col-span-2 text-center shadow-md justify-center items-center w-[80%] p-2 rounded bg-[#A10E13] text-white"
+            >
+              Date Filter
+            </legend>
             <form
               method="post"
-              class="w-full p-2"
+              class="w-[80%] p-2 grid grid-cols-2 p-3 gap-2 border-2 shadow-lg rounded-md bg-gray-100"
               @submit.prevent="submitDateFilter"
             >
               <label for="" class="flex flex-col text-[14px] w-full">
@@ -92,81 +101,87 @@
               </label>
               <button
                 type="submit"
-                class="bg-red-800 w-full p-2 rounded text-white hover:bg-red-700 mt-2"
+                class="flex col-span-2 bg-red-800 w-[50%] p-2 rounded text-white hover:bg-red-700 mt-2 justify-center justify-self-center"
               >
                 Search
               </button>
             </form>
-          </fieldset>
-        </div>
-      </div>
-      <div class="grid grid-cols-2 h-[10%] mt-4">
-        <div class="col-span-1 flex justify-center items-center gap-2">
-          Total number of Hinsei Request
-          <button
-            @click="openModal('hinseiCount')"
-            class="w-[10rem] h-[2rem] border-blue-900 border-2 bg-blue-700 text-white rounded-full flex justify-center text-[14px] items-center font-bold"
-          >
-            {{ hinsei_count }}
-          </button>
-        </div>
-        <div class="col-span-1 flex justify-center items-center gap-2">
-          Total number of LSA Request
-          <button
-            @click="openModal('lsaCount')"
-            class="w-[10rem] h-[2rem] border-orange-900 border-2 bg-orange-700 text-white rounded-full flex justify-center text-[14px] items-center font-bold"
-          >
-            {{ lsa_count }}
-          </button>
-        </div>
-      </div>
-    </div>
-    <div
-      class="lg:col-span-3 min-[100px]:col-span-9 border-2 rounded-[5px] flex flex-col h-[89.2vh]"
-    >
-      <div class="">
-        <div class="font-bold bg-gray-300 p-3 drop-shadow-xl">Task To Do!</div>
-        <div class="font-bold p-6 h-[56vh]">
-          Welcome to Hinsei & LSA Agreement List System
-        </div>
-        <div class="font-bold outline-1 bg-gray-300 p-3 drop-shadow-xl">Activity Logs!</div>
-        <div class="p-6 h-[23vh] overflow-scroll">
-          <div class="flex flex-col pl-2 space-y-3">
-            <ul
-              v-for="(i, key) in logs_activity"
-              :key="key"
-              class="rounded-[5px] border border-black shadow-xl"
+          </div>
+
+          <div class="col-span-1 flex flex-col gap-8 items-center">
+            <div
+              class="col-span-1 flex justify-center items-center gap-2 h-[10vh] w-[25vw] bg-gray-200 rounded-full shadow-lg"
             >
-              <!-- <li class="h-[6rem] shadow p-2 rounded-md"> -->
-              <span
-                class="text-[18px] p-1 rounded font-mono font-bold ml-2"
-                >{{ i.subject }}</span
-              ><br />
-              <p
-                class="indent-10 text-[15px] text-[15px] italic space-y-8 p-1"
+              Total number of Hinsei Request
+              <button
+                @click="openModal('hinseiCount')"
+                class="w-[10rem] h-[2rem] border-blue-900 border-2 bg-blue-300 text-blue-800 rounded-full flex justify-center text-[14px] items-center font-bold"
               >
-                <font-awesome-icon icon="user" class="text-blue-700" /> by :
-                {{ i.name }}
-              </p>
-              <p
-                class="indent-10 text-[15px] text-[15px] italic  space-y-8 p-1"
+                {{ hinsei_count }}
+              </button>
+            </div>
+            <div
+              class="col-span-1 flex justify-center items-center gap-2 h-[10vh] w-[25vw] bg-gray-200 rounded-full shadow-lg"
+            >
+              Total number of LSA Request
+              <button
+                @click="openModal('lsaCount')"
+                class="w-[10rem] h-[2rem] border-orange-900 border-2 bg-orange-300 text-orange-800 rounded-full flex justify-center text-[14px] items-center font-bold"
               >
-                <font-awesome-icon icon="clipboard-list" class="text-green-700" />
-                 Date: {{ i.date }}
-              </p>
-              <!-- </li> -->
-            </ul>
+                {{ lsa_count }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- class="text-[17px] p-1 rounded-md bg-clip-text bg-transparent bg-gradient-to-r from-pink-500 to-violet-500 text-white" -->
+    <div
+      class="lg:col-span-2 min-[100px]:col-span-9 border-2 rounded-md flex flex-col h-[88vh]"
+    >
+      <div
+        class="font-bold bg-[#A10E13] p-3 drop-shadow-xl text-white rounded-t-md"
+      >
+        Task To Do!
+      </div>
+      <div class="font-bold p-6 h-[35vh]">
+        Welcome to Hinsei & LSA Agreement List System
+      </div>
+      <div
+        class="font-bold outline-1 bg-[#A10E13] p-3 drop-shadow-xl text-white"
+      >
+        Activity Logs!
+      </div>
+      <div class="p-4 overflow-scroll w-[15.5vw] h-[53vh]">
+        <div class="flex flex-col space-y-3">
+          <ul
+            v-for="(i, key) in logs_activity"
+            :key="key"
+            class="rounded-lg border border-black shadow-xl select-none text-center"
+          >
+            <span class="text-[13.5px] p-2 rounded font-mono font-bold">
+              {{ i.subject }}</span
+            ><br />
+            <p class="text-[12px] italic p-1">
+              <font-awesome-icon icon="user" class="text-blue-700" /> by :
+              {{ i.name }}
+            </p>
+            <p class="text-[12px] italic p-1">
+              <font-awesome-icon icon="clipboard-list" class="text-green-700" />
+              Date: {{ i.date }}
+            </p>
+          </ul>
+        </div>
+      </div>
+    </div>
 
     <Toast position="bottom-left"></Toast>
   </div>
 
   <!--HINSEI REQUEST COUNT-->
-  <dialog ref="hinseiCount" class="w-[70vh] h-[25vh] rounded-lg p-0">
+  <dialog
+    ref="hinseiCount"
+    class="w-[70vh] h-[25vh] rounded-lg p-0 select-none"
+  >
     <div class="flex p-2 items-center justify-between bg-[#A10E13]">
       <span class="text-white"
         ><font-awesome-icon
@@ -234,7 +249,7 @@
   </dialog>
 
   <!--LSA REQUEST COUNT-->
-  <dialog ref="lsaCount" class="w-[70vh] h-[25vh] rounded-lg p-0">
+  <dialog ref="lsaCount" class="w-[70vh] h-[25vh] rounded-lg p-0 select-none">
     <div class="flex p-2 items-center justify-between bg-[#A10E13]">
       <span class="text-white"
         ><font-awesome-icon
@@ -312,7 +327,7 @@ const dashboardStore = useDashboardStore();
 const max_date = moment().format("yyyy-MM-DD");
 const date_today = moment().format("yyyy-MM-DD");
 const startOfMonth = moment().startOf("month").format("yyyy-MM-DD");
-
+const today = moment().format("MMMM D , Y");
 const hinseiCount = ref();
 const hinsei_ok = ref(null);
 const hinsei_ng = ref(null);
@@ -396,15 +411,12 @@ onMounted(() => {
     lsa_ng.value = response.data[0].lsa_ng;
     lsa_pending.value = response.data[0].lsa_pending;
   });
-  // showActivityLogs();
 });
 
 const logs_activity = ref([]);
-
 const showActivityLogs = () => {
   dashboardStore.setActivityLogs().then((response) => {
     logs_activity.value = [];
-    // console.log(response.data);
     var datastorage = [];
     response.data.forEach((v) => {
       datastorage = {
@@ -414,9 +426,6 @@ const showActivityLogs = () => {
       };
       logs_activity.value.push(datastorage);
     });
-    // console.log(logs_activity);
-
-    // console.log(response.data)
   });
 };
 
@@ -439,7 +448,6 @@ const setChartOptions = () => {
         labels: {
           fontColor: textColor,
         },
-        display: false,
       },
     },
     scales: {
@@ -461,7 +469,7 @@ const setChartOptions = () => {
         },
         grid: {
           color: surfaceBorder,
-          drawBorder: false,
+          drawBorder: true,
         },
       },
     },
@@ -524,9 +532,3 @@ const submitDateFilter = () => {
   });
 };
 </script>
-
-<style scoped>
-/* ul.a{
-  list-style-type: circle;
-} */
-</style>
