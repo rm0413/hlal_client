@@ -76,7 +76,7 @@
             </legend>
             <form
               method="post"
-              class="w-[80%] p-2 grid grid-cols-2 p-3 gap-2 border-2 shadow-lg rounded-md bg-gray-100"
+              class="w-[80%] grid grid-cols-2 p-3 gap-2 border-2 shadow-lg rounded-md bg-gray-100"
               @submit.prevent="submitDateFilter"
             >
               <label for="" class="flex flex-col text-[14px] w-full">
