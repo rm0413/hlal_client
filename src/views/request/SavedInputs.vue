@@ -25,7 +25,8 @@
                     :fields="savedInputsStore.getSavedInputsFields" :filter="savedInputsStore.search_filter"
                     :isSelectable="true" @selectable="(data) => (select_data = data)"></c-table>
             </div>
-            <button class="bg-[#A10E13] hover:bg-red-600 w-full h-[2.5rem] text-white tracking-widest font-serif text-[20px]"
+            <button
+                class="bg-[#A10E13] hover:bg-red-600 w-full h-[2.5rem] text-white tracking-widest font-serif text-[20px]"
                 @click="generateCode">
                 <font-awesome-icon icon="floppy-disk" class="h-5 w-5"></font-awesome-icon> GENERATE</button>
         </div>
@@ -50,33 +51,54 @@ onMounted(() => {
 
 const generateCode = () => {
     if (select_data.value.length !== 0) {
-        var payload = {
-            agreement_request_id: [],
-            emp_id: sessionStorage.getItem('employee_id')
-        }
-        select_data.value.forEach((v) => {
-            payload.agreement_request_id.push(v.agreement_id_pk)
-        })
-        savedInputsStore.setGenerateCode(payload).then((response) => {
-            // console.log(response.data)
-            if (response.status === "success") {
-                savedInputsStore.setShowGenerateCode(response.data.id).then((response) => {
-                    if (response.status === "success") {
-                        ctable.value.unSelect();
-                        select_data.value = [];
-                        swal({
-                            icon: "success",
-                            title: response.data[0].code,
-                            text: "Your code has been generated.",
-                        });
-                    }
-                });
+        swal({
+            icon: "question",
+            title: "Generate Code?",
+            text: "Please make sure before to proceed!",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+        }).then((response) => {
+            if (response.value === true) {
+                var payload = {
+                    agreement_request_id: []
+                }
+                select_data.value.forEach((v) => {
+                    payload.agreement_request_id.push(v.agreement_id_pk)
+                })
+                const loader = $loading.show()
+                setTimeout(() => {
+                    savedInputsStore.setGenerateCode(payload).then((response) => {
+                        // console.log(response.data)
+                        if (response.status === "success") {
+                            savedInputsStore.setShowGenerateCode(response.data.id).then((response) => {
+                                if (response.status === "success") {
+                                    ctable.value.unSelect();
+                                    select_data.value = [];
+                                    loader.hide()
+                                    swal({
+                                        icon: "success",
+                                        title: response.data[0].code,
+                                        text: "Your code has been generated. An email notification will be sent.",
+                                    });
+                                }
+                            });
+                        } else {
+                            loader.hide()
+                            Object.keys(response.error).forEach((key) => {
+                                toast.add({
+                                    severity: "error",
+                                    summary: "Warning",
+                                    detail: response.error[key][0],
+                                    life: 5000,
+                                });
+                            })
+                        }
+                    })
+                })
             } else {
-                swal({
-                    icon: "warning",
-                    title: response.message,
-                    timer: 2000
-                });
+                toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
             }
         })
     } else {

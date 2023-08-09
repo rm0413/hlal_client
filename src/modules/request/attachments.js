@@ -25,7 +25,6 @@ export const useAttachmentsStore = defineStore({
           .get("load-with-code-attachment")
           .then((response) => {
             resolve(response.data.data);
-            // console.log(response.data)
             this.attachments = response.data.data;
           })
           .catch((err) => {
@@ -34,7 +33,6 @@ export const useAttachmentsStore = defineStore({
       });
     },
     setInsertAttachment(data) {
-      // console.log(data)
       return new Promise((resolve, reject) => {
         axios
           .post("attachment", data, {
@@ -64,7 +62,6 @@ export const useAttachmentsStore = defineStore({
       });
     },
     downloadAttachment(datastorage) {
-      console.log(datastorage);
       return new Promise((resolve, reject) => {
         axios
           .post(`download-attachment`, datastorage, {
@@ -81,8 +78,6 @@ export const useAttachmentsStore = defineStore({
             document.body.appendChild(link);
             link.click();
             resolve(response.data);
-            console.log(response.data)
-            // document.createElement('a')
           })
           .catch((err) => {
             reject(err);

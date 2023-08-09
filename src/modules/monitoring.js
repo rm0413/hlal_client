@@ -38,8 +38,7 @@ export const useMonitoringStore = defineStore({
       unit_id: null,
     },
     monitoringEditFields: [
-      // { label: 'Select', key: 'select' },
-      { label: "#", key: "#" },
+      { label: "No", key: "#" },
       { label: "Code", key: "code" },
       { label: "Trial Number.", key: "trial_number" },
       { label: "Request Date", key: "request_date" },
@@ -49,6 +48,30 @@ export const useMonitoringStore = defineStore({
       { label: "Revision", key: "revision" },
       { label: "Action", key: "action" },
     ],
+    monitoringAttachmentFields: [
+      { label: "No.", key: "#" },
+      { label: "Request Date", key: "request_date" },
+      { label: "Part Number", key: "part_number" },
+      { label: "Action", key: "action" },
+    ],
+    monitoringDesignerFields: [
+      { label: "No.", key: "#" },
+      { label: "Trial No.", key: "trial_number" },
+      { label: "Request Date", key: "request_date" },
+      { label: "TRI No.", key: "tri_number" },
+      { label: "Part Number", key: "part_number" },
+      { label: "Sub Part Number", key: "sub_part_number" },
+      { label: "Revision", key: "revision" },
+      { label: "Coordinates", key: "coordinates" },
+      { label: "Dimension", key: "dimension" },
+      { label: "Actual Value", key: "actual_value" },
+      { label: "Kind of Request", key: "request_type" },
+      { label: "Request Value", key: "request_value" },
+      { label: "Request Quantity", key: "request_quantity" },
+      { label: "Designer Answer", key: "designer_answer" },
+      { label: "Designer in charge", key: "designer_in_charge" },
+      { label: "Answer Date", key: "answer_date" },
+    ],
     monitoringForm: {
       monitoring_unit_name: "",
       monitoring_supplier: "",
@@ -56,7 +79,7 @@ export const useMonitoringStore = defineStore({
     },
     monitoringItems: [],
     monitoringEditItems: [],
-
+    monitoringAttachmentItems: [],
     onEdit: false,
     onEditIndex: null,
     units: [],
@@ -117,7 +140,7 @@ export const useMonitoringStore = defineStore({
     },
     setUpdateMonitoring() {
       var payload = {
-        id: this.monitoringEditItemForm.id,
+        id: parseInt(this.monitoringEditItemForm.id),
         trial_number: this.monitoringEditItemForm.trial_number,
         request_date: this.monitoringEditItemForm.request_date,
         additional_request_qty_date: this.monitoringEditItemForm.additional_request_date,
@@ -139,13 +162,13 @@ export const useMonitoringStore = defineStore({
         request_quantity: this.monitoringEditItemForm.request_quantity,
         unit_id: this.monitoringEditItemForm.unit_id,
         requestor_employee_id: sessionStorage.getItem("employee_id"),
-      }
+      };
+      // console.log(payload)
       return new Promise((resolve, reject) => {
         axios
           .patch(`agreement-list/${payload.id}`, payload)
           .then((response) => {
             resolve(response.data);
-            console.log(response.data)
             // this.setEditMonitoringList();
             this.setClearEditMonitoring()
           })
@@ -187,9 +210,24 @@ export const useMonitoringStore = defineStore({
           });
       });
     },
+    setAttachmentMonitoringList(data) {
+      return new Promise((resolve, reject) => {
+        axios
+          .get(
+            `show-monitoring-list-attachment/${data.unit_id}/${data.supplier_name}/${data.part_number}`
+          )
+          .then((response) => {
+            resolve(response.data);
+            this.monitoringAttachmentItems = response.data.data;
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
     setExportMonitoringList(data) {
       window.open(
-        `http://10.164.58.82/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
+        `http://10.164.58.62/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
       )
     },
   },
@@ -197,8 +235,17 @@ export const useMonitoringStore = defineStore({
     getMonitoringFields() {
       return this.monitoringFields;
     },
+    getAttachmentMonitoringFields() {
+      return this.monitoringAttachmentFields;
+    },
+    getDesignerMonitoringFields() {
+      return this.monitoringDesignerFields;
+    },
     getEditMonitoringItems() {
       return this.monitoringEditItems;
+    },
+    getAttachmentMonitoringItems() {
+      return this.monitoringAttachmentItems;
     },
     getEditMonitoringFields() {
       return this.monitoringEditFields;

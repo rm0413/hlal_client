@@ -11,7 +11,7 @@
       <span v-if="onFilter.length === 0" class="flex justify-center w-full absolute italic">
         {{ emptyMsg }}</span>
       <tr v-else :class="`${tdStyle} unchecked`" v-for="(item, index) in onFilter" :key="index"
-        @click="getData(item, `record(${index})`)" :id="`record(${index})`">
+        @click="getData(item, `record(${index})`, index)" :id="`record(${index})`">
         <th class="font-normal relative border-r" v-for="(column, t) in fields" :key="t">
           <slot :name="`cell(${column.key})`" :item="item" :index="index"></slot>
           <span v-if="item[column.key]">{{ item[column.key] }}</span>
@@ -21,8 +21,8 @@
     <tbody v-else-if="items">
       <span v-if="items.length === 0" class="flex justify-center w-full absolute italic">
         {{ emptyMsg }}</span>
-      <tr :class="`${tdStyle} unchecked`" v-for="(item, index) in items" :key="index"
-        @click="getData(item, `record(${index})`)" :id="`record(${index})`">
+      <tr :class="`${tdStyle} unchecked ${index % 2 ? 'bg-white' : 'bg-gray-200'}`" v-for="(item, index) in items"
+        :key="index" @click="getData(item, `record(${index})`, index)" :id="`record(${index})`">
         <!-- , $emit('selectable', selected_value) -->
         <th v-for="(column, t) in fields" :key="t" :id="`cell(${index},${t})`"
           @click="getCellData(item[column.key], `cell(${index},${t})`)" class="font-normal border-r">
@@ -54,7 +54,7 @@ const props = defineProps({
   },
   tdStyle: {
     type: String,
-    default: "mt-3 h-[5vh] hover:bg-gray-100 border-b-2 border-gray-200",
+    default: "mt-3 h-[5vh] hover:bg-gray-300 border-b-2 border-gray-200",
   },
   filter: String,
   isSelectable: Boolean,
@@ -85,42 +85,46 @@ const unSelect = () => {
     records.push({ record: document.getElementById(`record(${i})`) });
   });
 
-  records.forEach((v) => {
+  records.forEach((v, i) => {
     if (!v.record.classList.contains("unchecked")) {
       v.record.classList.remove("bg-red-300");
       v.record.classList.remove("hover:bg-red-200");
-      v.record.classList.add("hover:bg-gray-100");
+      v.record.classList.add("hover:bg-gray-300");
       v.record.classList.add("unchecked");
+      i % 2 ? v.record.classList.add("bg-white") : v.record.classList.add("bg-gray-200")
     }
   });
   select_all.value = false
   selected_value.value = [];
 };
 
-const getData = (data, id) => {
+const getData = (data, id, idx) => {
   if (!props.isSelectable) return;
-
   const record = document.getElementById(id);
   if (record.classList.contains("unchecked")) {
     record.classList.remove("unchecked");
     record.classList.add("bg-red-300");
     record.classList.add("hover:bg-red-200");
-    record.classList.remove("hover:bg-gray-100");
+    record.classList.remove("hover:bg-gray-300");
+    selected_value.value.push(data);
+    emit("selectable", selected_value.value);
+    console.log(selected_value.value)
+    if (record.classList.contains("bg-gray-200")) {
+      record.classList.remove("bg-gray-200")
+    } else {
+      record.classList.remove("bg-white")
+    }
   } else {
     record.classList.remove("bg-red-300");
     record.classList.remove("hover:bg-red-200");
-    record.classList.add("hover:bg-gray-100");
+    record.classList.add("hover:bg-gray-300");
     record.classList.add("unchecked");
-  }
-  if (!record.classList.contains("unchecked")) {
-    selected_value.value.push(data);
-    emit("selectable", selected_value.value);
-  }
-  else {
-    var agreementIdSplicer = selected_value.value.findIndex(
-      (obj) => obj.agreement_id === data.agreement_id
-    );
-    selected_value.value.splice(agreementIdSplicer, 1);
+    idx % 2 ? record.classList.add("bg-white") : record.classList.add("bg-gray-200")
+    selected_value.value.forEach((v,i) => {
+      if(v.agreement_id_pk === data.agreement_id_pk){
+        selected_value.value.splice(i, 1)
+      }
+    })
   }
 };
 
@@ -132,18 +136,19 @@ const selectAll = () => {
         onFilter.value.forEach((v, i) => {
           if (document.getElementById(`record(${i})`).classList.contains('unchecked')) {
             selected_value.value.push(v)
+            document.getElementById(`record(${i})`).classList.contains("bg-gray-200") ? document.getElementById(`record(${i})`).classList.remove("bg-gray-200") : document.getElementById(`record(${i})`).classList.remove("bg-white")
             document.getElementById(`record(${i})`).classList.remove("unchecked");
             document.getElementById(`record(${i})`).classList.add("bg-red-300");
             document.getElementById(`record(${i})`).classList.add("hover:bg-red-200");
-            document.getElementById(`record(${i})`).classList.remove("hover:bg-gray-100");
+            document.getElementById(`record(${i})`).classList.remove("hover:bg-gray-300");
             resolve(selected_value.value)
           } else {
-            selected_value = []
+            // selected_value = []
             resolve('error')
           }
         })
       } else {
-        selected_value = []
+        // selected_value = []
         unSelect()
         resolve(selected_value.value)
       }
@@ -152,18 +157,19 @@ const selectAll = () => {
         props.items.forEach((v, i) => {
           if (document.getElementById(`record(${i})`).classList.contains('unchecked')) {
             selected_value.value.push(v)
+            document.getElementById(`record(${i})`).classList.contains("bg-gray-200") ? document.getElementById(`record(${i})`).classList.remove("bg-gray-200") : document.getElementById(`record(${i})`).classList.remove("bg-white")
             document.getElementById(`record(${i})`).classList.remove("unchecked");
             document.getElementById(`record(${i})`).classList.add("bg-red-300");
             document.getElementById(`record(${i})`).classList.add("hover:bg-red-200");
-            document.getElementById(`record(${i})`).classList.remove("hover:bg-gray-100");
+            document.getElementById(`record(${i})`).classList.remove("hover:bg-gray-300");
             resolve(selected_value.value)
           } else {
-            selected_value = []
+            selected_value.value = []
             resolve('error')
           }
         })
       } else {
-        selected_value = []
+        selected_value.value = []
         unSelect()
         resolve(selected_value.value)
       }

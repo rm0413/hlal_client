@@ -17,15 +17,16 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
+            <input
+              class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="editItemDetailsStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
           <div>
-            <c-select class="text-center w-[15rem] border-gray-600 hover:border-blue-300 outline-green-600" :options="part_number"
-              v-model="editItemDetailsStore.part_number_select"></c-select>
+            <c-select class="text-center w-[15rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              :options="part_number" v-model="editItemDetailsStore.part_number_select"></c-select>
           </div>
         </div>
       </div>
@@ -47,7 +48,7 @@
         </c-table>
       </div>
     </div>
-    <dialog ref="edit_item" class="p-0 rounded transform duration-300 -translate-y-5">
+    <dialog ref="edit_item" class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13]">
       <div class="flex flex-col">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <span><font-awesome-icon icon="pen" /><label class="ml-2">Edit Item Modal</label></span>
@@ -55,7 +56,7 @@
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
-        <form class="grid grid-cols-3" action="post" @submit.prevent="submitUpdateAgreementList">
+        <form class="grid grid-cols-3" method="post" @submit.prevent="submitUpdateAgreementList">
           <div class="col-span-1 p-10">
             <label class="flex flex-col gap-2">
               Trial No.
@@ -195,10 +196,12 @@ import { ref, onMounted, inject, computed } from "vue";
 import CTable from "@/components/Datatable.vue";
 import CSelect from "@/components/CSelect.vue";
 import { useEditItemDetailsStore } from "@/modules/request/edititemdetails";
-const editItemDetailsStore = useEditItemDetailsStore();
 import { useToast } from "primevue/usetoast";
-const toast = useToast();
+import { useLoading } from "vue-loading-overlay";
 
+const $loading = useLoading()
+const editItemDetailsStore = useEditItemDetailsStore();
+const toast = useToast();
 const swal = inject("$swal");
 const part_number = ref([]);
 const edit_item = ref(null);
@@ -259,16 +262,29 @@ const submitUpdateAgreementList = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      editItemDetailsStore.setUpdateAgreementList().then((response) => {
-        if (response.status === "success") {
-          swal({
-            icon: "success",
-            title: response.message,
-            timer: 1500
-          })
-        } else {
-          toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
-        }
+      const loader = $loading.show()
+      setTimeout(() => {
+        editItemDetailsStore.setUpdateAgreementList().then((response) => {
+          if (response.status === "success") {
+            loader.hide()
+            swal({
+              icon: "success",
+              title: response.message,
+              timer: 1500
+            })
+          } else {
+            loader.hide()
+            Object.keys(response.error).forEach((key) => {
+              toast.add({
+                severity: "error",
+                summary: "Warning",
+                detail: response.error[key][0],
+                life: 5000,
+                group: 'bl'
+              });
+            })
+          }
+        })
       })
     } else {
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
@@ -288,16 +304,29 @@ const deleteRequest = (data) => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      editItemDetailsStore.setDeleteAgreementList(data).then((response) => {
-        if (response.status === "success") {
-          swal({
-            icon: "success",
-            title: response.message,
-            timer: 1500
-          })
-        } else {
-          toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
-        }
+      const loader = $loading.show()
+      setTimeout(() => {
+        editItemDetailsStore.setDeleteAgreementList(data).then((response) => {
+          if (response.status === "success") {
+            loader.hide()
+            swal({
+              icon: "success",
+              title: response.message,
+              timer: 1500
+            })
+          } else {
+            loader.hide()
+            Object.keys(response.error).forEach((key) => {
+              toast.add({
+                severity: "error",
+                summary: "Warning",
+                detail: response.error[key][0],
+                life: 5000,
+                group: 'bl'
+              });
+            })
+          }
+        })
       })
     } else {
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });

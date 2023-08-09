@@ -198,7 +198,7 @@
       </button>
     </div>
     <!--Multiple Input-->
-    <dialog ref="multiple_input" class="p-0 rounded transform duration-300 -translate-y-5">
+    <dialog ref="multiple_input" class="p-0 rounded transform duration-300 -translate-y-5 border-2 border-[#A10E13]">
       <div class="flex flex-col">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <p><font-awesome-icon icon="file-import" class="h-5 w-5 mr-2" />Multiple Input</p>
@@ -230,7 +230,7 @@
       </div>
     </dialog>
     <!--View Items-->
-    <dialog ref="view_items" class="p-0 rounded transform duration-300 -translate-y-2 w-full">
+    <dialog ref="view_items" class="p-0 rounded transform duration-300 -translate-y-5 w-full border-2 border-[#A10E13]">
       <div class="flex flex-col">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <p><font-awesome-icon icon="file-lines" class="h-5 w-5 mr-2" />View Item Details</p>
@@ -238,12 +238,12 @@
             <font-awesome-icon icon="xmark" />
           </button>
         </div>
-        <div class="flex flex-row ml-5 mt-2">
+        <div class="flex flex-row ml-2 mb-1">
           <button @click="selectAll"
             class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">Select
             All</button>
         </div>
-        <div class="flex flex-row p-5 max-h-[70vh] overflow-y-scroll">
+        <div class="flex max-h-[70vh] overflow-y-scroll mx-2">
           <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (checkedData = data)"
             :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
             :items="newRequestStore.getNoCode">
@@ -254,13 +254,14 @@
             </template>
           </CTable>
         </div>
-        <button class="bg-[#A10E13] hover:bg-red-600 w-full h-[2.8rem] text-white tracking-widest font-serif text-[20px]"
+        <button
+          class="mt-6 bg-[#A10E13] hover:bg-red-600 w-full h-[2.8rem] text-white tracking-widest font-serif text-[20px]"
           @click="generateCode">
           <font-awesome-icon icon="floppy-disk" class="h-5 w-5" /> GENERATE</button>
       </div>
     </dialog>
     <!--Search-->
-    <dialog ref="search" class="p-0 rounded transform duration-300 -translate-y-5 w-full">
+    <dialog ref="search" class="p-0 rounded transform duration-300 -translate-y-5 w-full border-2 border-[#A10E13]">
       <div class="flex flex-col">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <span>Search</span>
@@ -285,10 +286,9 @@
           </c-table>
         </div>
       </div>
-      <Toast position="bottom-right"></Toast>
-      <Toast position="bottom-left" group="bl"></Toast>
     </dialog>
-    <loading :show="show" :label="label"> </loading>
+    <Toast position="bottom-right"></Toast>
+    <Toast position="bottom-left" group="bl"></Toast>
   </div>
 </template>
 
@@ -297,9 +297,9 @@ import CTable from "@/components/Datatable.vue";
 import { useNewRequestStore } from "@/modules/request/newrequest";
 import { ref, onMounted, inject } from "vue";
 import { useToast } from "primevue/usetoast";
-import loading from "vue-full-loading";
-const show = ref(false)
-const label = ref("Processing....")
+import { useLoading } from "vue-loading-overlay";
+
+const $loading = useLoading()
 const toast = useToast();
 const swal = inject("$swal");
 const newRequestStore = useNewRequestStore();
@@ -309,11 +309,6 @@ const search = ref(null);
 const units = ref([]);
 const checkedData = ref([]); //view-item-details check box
 const ctable = ref(null);
-
-
-const loadingProcess = () => {
-  show.value = true;
-}
 
 const autoAdd = (data) => {
   search.value.close();
@@ -354,15 +349,14 @@ const generateCode = () => {
       confirmButtonText: "Yes",
     }).then((response => {
       if (response.value === true) {
-        view_items.value.close();
         var payload = {
           agreement_request_id: [],
-          emp_id:sessionStorage.getItem('employee_id')
+          emp_id: sessionStorage.getItem('employee_id')
         };
         checkedData.value.forEach((v) => {
           payload.agreement_request_id.push(v.agreement_id_pk);
         });
-        loadingProcess()
+        const loader = $loading.show()
         setTimeout(() => {
           newRequestStore.setGenerateCode(payload).then((response) => {
             if (response.status === "success") {
@@ -370,22 +364,28 @@ const generateCode = () => {
                 if (response.status === "success") {
                   ctable.value.unSelect();
                   checkedData.value = [];
-                  show.value = false
+                  loader.hide()
                   swal({
                     icon: "success",
                     title: response.data[0].code,
                     text: "Your code has been generated. An email notification will be sent.",
                   });
                 } else {
+                  show.value = false
                   toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
                 }
               });
             } else {
-              swal({
-                icon: "warning",
-                title: response.message,
-                timer: 2000
-              });
+              loader.hide()
+              Object.keys(response.error).forEach((key) => {
+                toast.add({
+                  severity: "error",
+                  summary: "Warning",
+                  detail: response.error[key][0],
+                  life: 5000,
+                  group: 'bl'
+                });
+              })
             }
           });
         })
@@ -413,25 +413,29 @@ const submitAgreementList = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      loadingProcess()
+      const loader = $loading.show()
       setTimeout(() => {
         newRequestStore.setInsertAgreementList().then((response) => {
           if (response.status === "success") {
             newRequestStore.setAgreementList();
             newRequestStore.search_filter = "";
-            show.value = false
+            loader.hide()
             swal({
               icon: "success",
               title: response.message,
               timer: 2500,
             });
           } else {
-            swal({
-              icon: "warning",
-              title: response.message,
-              text: "Please input all necessarry details.",
-              timer: 2500,
-            });
+            loader.hide()
+            Object.keys(response.error).forEach((key) => {
+              toast.add({
+                severity: "error",
+                summary: "Warning",
+                detail: response.error[key][0],
+                life: 5000,
+                group: 'bl'
+              });
+            })
           }
         });
       })
@@ -481,7 +485,6 @@ const closeModal = (modal) => {
 
 const loadUnits = () => {
   newRequestStore.setUnits().then((response) => {
-    // console.log(response)
     units.value = [];
     response.forEach((v) => {
       units.value.push({
@@ -509,7 +512,7 @@ const downloadFormat = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      window.location.href = 'http://10.164.58.82/hinsei/server/public/download-format';
+      window.location.href = 'http://10.164.58.62/hinsei/server/public/download-format';
     } else {
       multiple_input.value.showModal();
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000 });
@@ -520,7 +523,6 @@ const downloadFormat = () => {
 const file = ref(null);
 const employee_id = ref(sessionStorage.getItem("employee_id"))
 const uploadFile = (event) => {
-  // startProgress();
   file.value = event.target.files[0];
 };
 
@@ -540,19 +542,20 @@ const submitMultipleRequest = () => {
       confirmButtonText: "Yes",
     }).then((response) => {
       if (response.value === true) {
-        loadingProcess()
+        const loader = $loading.show()
         setTimeout(() => {
           newRequestStore.setUploadMultipleRequest(formData).then((response) => {
             if (response.status === "success") {
               document.getElementById("input-file").value = null
               multiple_input.value.close();
-              show.value = false
+              loader.hide()
               swal({
                 icon: "success",
                 title: "Multiple Request Added Successfully.",
                 timer: 1500
               })
             } else {
+              loader.hide()
               Object.keys(response.error).forEach((key) => {
                 toast.add({
                   severity: "error",
@@ -578,7 +581,6 @@ const submitMultipleRequest = () => {
 const selectAll = () => {
   ctable.value.selectAll().then(res => {
     checkedData.value = res
-    console.log(res)
   })
 }
 </script>

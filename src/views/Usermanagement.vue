@@ -12,7 +12,8 @@
           <label class="">Employee Name</label>
           <!-- <c-select ref="empSelectComponent" v-model="userManagementStore.employeeForm.system_access_id"
           :options="userManagementStore.options_employee_name" class="text-center"></c-select> -->
-          <select class="h-[2.5rem] border-2 rounded text-center w-full border-gray-600 hover:border-blue-300 outline-green-600"
+          <select
+            class="h-[2.5rem] border-2 rounded text-center w-full border-gray-600 hover:border-blue-300 outline-green-600"
             v-model="userManagementStore.employeeForm.system_access_id" required>
             <option value="" disabled>Select Name</option>
             <option v-for="(i, key) in userManagementStore.options_employee_name" :key="key" :value="i">{{ i.text }}
@@ -23,7 +24,8 @@
           <label class="">Employee Role</label>
           <!-- <c-select ref="roleSelectComponent" v-model="userManagementStore.employeeForm.role_id"
           :options="userManagementStore.role_options" class="text-center"></c-select> -->
-          <select class="h-[2.5rem] border-2 rounded text-center w-full border-gray-600 hover:border-blue-300 outline-green-600"
+          <select
+            class="h-[2.5rem] border-2 rounded text-center w-full border-gray-600 hover:border-blue-300 outline-green-600"
             v-model="userManagementStore.employeeForm.role_id" required>
             <option value="" disabled>Select Role</option>
             <option v-for="(i, key) in userManagementStore.role_options" :key="key" :value="i">{{ i.text }}</option>
@@ -69,10 +71,10 @@
           </template>
           <template #cell(action)="data">
             <div class="flex items-center justify-center gap-1">
-              <Button @click="edit_user_modal(data)" severity="warning" class="w-[1rem] items-center justify-center">
+              <Button @click="edit_user_modal(data)" severity="warning" class="w-[1rem] items-center justify-center" v-tooltip.top="'Update Role'">
                 <font-awesome-icon icon="gear"></font-awesome-icon>
               </Button>
-              <Button severity="danger" class="w-[1rem] items-center justify-center" @click="removeUser(data.item)">
+              <Button severity="danger" class="w-[1rem] items-center justify-center" @click="removeUser(data.item)" v-tooltip.top="'Delete User'">
                 <font-awesome-icon icon="circle-minus"></font-awesome-icon>
               </Button>
             </div>
@@ -130,11 +132,12 @@ import { onMounted, ref, inject } from "vue";
 import CTable from "@/components/Datatable.vue";
 import { useUserManagementStore } from "@/modules/userManagement";
 import { useToast } from "primevue/usetoast";
-const swal = inject("$swal");
+import { useLoading } from "vue-loading-overlay";
 
+const $loading = useLoading()
+const swal = inject("$swal");
 const toast = useToast();
 const userManagementStore = useUserManagementStore();
-
 const edit_modal = ref(null);
 const edit_user_form = ref({
   item: {},
@@ -145,7 +148,6 @@ const user_employee_id = ref(null);
 const user_data = [];
 
 const edit_user_modal = (data) => {
-  console.log(data)
   edit_modal.value.showModal();
   edit_modal.value.classList.remove("-translate-y-5");
   edit_user_form.value = data;
@@ -163,27 +165,55 @@ const edit_user_modal = (data) => {
     });
   });
 };
+
 const edit_user_close_modal = () => {
   edit_modal.value.close();
   edit_modal.value.classList.add("-translate-y-5");
 };
 
 const updateRole = () => {
-  userManagementStore.setUpdatePortalRoleAccess(user_data, role_selected.value);
-  userManagementStore
-    .setUpdateUserRole(user_employee_id, role_selected.value)
-    .then((response) => {
-      if (response.status === "success") {
-        swal({
-          icon: "success",
-          title: response.message,
-          timer: 2000,
-        });
-        edit_modal.value.close();
-      } else {
-        console.log(response.message);
-      }
-    });
+  edit_modal.value.close();
+  swal({
+    icon: "question",
+    title: "Update Role?",
+    text: "Please make sure before to proceed!",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes",
+  }).then((response) => {
+    if (response.value === true) {
+      userManagementStore.setUpdatePortalRoleAccess(user_data, role_selected.value);
+      const loader = $loading.show()
+      setTimeout(() => {
+        userManagementStore
+          .setUpdateUserRole(user_employee_id, role_selected.value)
+          .then((response) => {
+            if (response.status === "success") {
+              loader.hide()
+              swal({
+                icon: "success",
+                title: response.message,
+                timer: 2000,
+              });
+            } else {
+              loader.hide()
+              Object.keys(response.error).forEach((key) => {
+                toast.add({
+                  severity: "error",
+                  summary: "Warning",
+                  detail: response.error[key][0],
+                  life: 5000,
+                });
+              })
+            }
+          });
+      })
+    } else {
+      edit_modal.value.showModal();
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 1500, group: 'br' });
+    }
+  })
 };
 
 onMounted(() => {
@@ -205,20 +235,33 @@ const addHinseiUser = () => {
     confirmButtonText: "Submit",
   }).then((response) => {
     if (response.value === true) {
+      const loader = $loading.show()
       setTimeout(() => {
         userManagementStore.setAddHinseiUser().then((response) => {
           if (response.status === "success") {
             loadAll();
+            loader.hide()
             swal({
               icon: "success",
               title: response.message,
               timer: 2000,
             });
           } else {
-            toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 1500, group: 'br' });
+            loader.hide()
+            Object.keys(response.error).forEach((key) => {
+              toast.add({
+                severity: "error",
+                summary: "Warning",
+                detail: response.error[key][0],
+                life: 5000,
+                group: 'br'
+              });
+            })
           }
         });
       });
+    } else {
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 1500, group: 'br' });
     }
   });
 };
@@ -239,33 +282,43 @@ const removeUser = (data) => {
       var role_id = "";
       userManagementStore.setRemoveUser().then((response) => {
         response.data.forEach((v) => {
-          // console.log(v);
           if (employee_id === v.emp_id) {
             role_id = v.role_id;
           }
         });
         // console.log(role_id)
         if (role_id !== "") {
-          userManagementStore.removeUserRole(role_id, user_id).then((response) => {
-            if (response.status === "success") {
-              loadAll();
-              swal({
-                icon: "success",
-                title: response.message,
-                timer: 2000,
-              });
-            } else if (response.status === "warning") {
-              swal({
-                icon: "success",
-                title: response.message,
-                timer: 2000,
-              });
-            }
-          });
+          const loader = $loading.show()
+          setTimeout(() => {
+            userManagementStore.removeUserRole(role_id, user_id).then((response) => {
+              if (response.status === "success") {
+                loadAll();
+                loader.hide()
+                swal({
+                  icon: "success",
+                  title: response.message,
+                  timer: 2000,
+                });
+              } else {
+                loader.hide()
+                Object.keys(response.error).forEach((key) => {
+                  toast.add({
+                    severity: "error",
+                    summary: "Warning",
+                    detail: response.error[key][0],
+                    life: 5000,
+                    group: 'br'
+                  });
+                })
+              }
+            });
+          })
         } else {
           console.log("User has no role id");
         }
       });
+    } else {
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 1500, group: 'br' });
     }
   });
 };

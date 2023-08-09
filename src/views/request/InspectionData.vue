@@ -17,18 +17,25 @@
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
-            <input class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600" v-model="inspectionDataStore.search_filter" />
+            <input
+              class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              v-model="inspectionDataStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
               Search
             </button>
           </div>
           <div>
-            <CSelect class="text-center p-1 border-2 rounded-md w-[12rem] border-gray-600 hover:border-blue-300 outline-green-600" :options="part_number"
-              v-model="inspectionDataStore.part_number_select"></CSelect>
+            <CSelect @change="selectPartNumber"
+              class="text-center p-1 border-2 rounded-md w-[12rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              :options="part_number" v-model="inspectionDataStore.part_number_select"></CSelect>
           </div>
         </div>
       </div>
     </div>
+    <button @click="selectAll"
+      class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">
+      Select All
+    </button>
     <div class="h-[85vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[81vh] overflow-y-scroll">
         <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
@@ -47,23 +54,27 @@
         <form method="post" @submit.prevent="submitInspectionData">
           <label class="flex flex-col items-center">
             <i class="text-gray-400">100% of Inspection Data or CPK Data</i>
-            <textarea style="resize:none" class="border-2 rounded w-full h-[10rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
+            <textarea style="resize:none"
+              class="border-2 rounded w-full h-[10rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="inspectionDataStore.inspectionDataForm.cpk_data" required></textarea>
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Inspection after Rework</i>
-            <input type="text" class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
+            <input type="text"
+              class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="inspectionDataStore.inspectionDataForm.inspection_rework" required />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Revised Date of IGM</i>
-            <input type="date" class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
+            <input type="date"
+              class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
               v-model="inspectionDataStore.inspectionDataForm.revised_date" required />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-gray-400">Sent Date of IGM</i>
-            <input type="date" class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
-              v-model="inspectionDataStore.inspectionDataForm.send_date" />
+            <input type="date"
+              class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
+              v-model="inspectionDataStore.inspectionDataForm.send_date" required/>
           </label>
           <button type="submit" v-if="!inspectionDataStore.onEdit"
             class="flex gap-2 bg-[#A10E13] hover:bg-red-600 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
@@ -86,12 +97,16 @@ import CTable from "@/components/Datatable.vue";
 import CSelect from "@/components/CSelect.vue";
 import { useInspectionDataStore } from "@/modules/request/inspectiondata";
 import { useToast } from "primevue/usetoast";
+import { useLoading } from "vue-loading-overlay";
+
+const $loading = useLoading()
 const inspectionDataStore = useInspectionDataStore();
 const swal = inject("$swal");
 const toast = useToast();
 const ctable = ref()
 const select_data = ref([])
 const part_number = ref([]);
+
 onMounted(() => {
   inspectionDataStore.setInspectionDataRequest()
   inspectionDataStore.setLoadPartNumber().then((response) => {
@@ -104,23 +119,54 @@ onMounted(() => {
   })
 })
 
+const selectPartNumber = () => {
+  ctable.value.unSelect();
+  select_data.value = [];
+  clearInputs()
+};
+
+const selectAll = () => {
+  ctable.value.selectAll().then(res => {
+    select_data.value = res
+    console.log(res)
+  })
+}
+
 const submitInspectionData = () => {
   if (select_data.value.length !== 0) {
-    inspectionDataStore.setInsertInspectionData(select_data.value).then((response) => {
-      // console.log(response)
-      if (response.status === "success") {
-        clearInputs();
-        ctable.value.unSelect();
-        select_data.value = [];
-        swal({
-          icon: "success",
-          title: response.message,
-          timer: 1500
+    swal({
+      icon: "question",
+      title: "Add Inspection Data?",
+      text: "Please make sure before to proceed!",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((response) => {
+      if (response.value === true) {
+        const loader = $loading.show()
+        setTimeout(() => {
+          inspectionDataStore.setInsertInspectionData(select_data.value).then((response) => {
+            if (response.status === "success") {
+              clearInputs();
+              ctable.value.unSelect();
+              select_data.value = [];
+              loader.hide()
+              swal({
+                icon: "success",
+                title: response.message,
+                timer: 1500
+              })
+            } else {
+              loader.hide()
+              Object.keys(response.error).forEach((key) => {
+                toast.add({ severity: 'warn', summary: 'Warning', detail: response.error[key][0], life: 2000, group: 'bl' });
+              })
+            }
+          })
         })
       } else {
-        Object.keys(response.error).forEach((key) => {
-          toast.add({ severity: 'warn', summary: 'Warning', detail: response.error[key][0], life: 2000, group: 'bl' });
-        })
+        toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled', life: 2000, group: 'bl' });
       }
     })
   } else {
@@ -157,20 +203,43 @@ const clearInputs = () => {
 const updateInspectionData = () => {
   ctable.value.unSelect()
   select_data.value = [];
-  inspectionDataStore.setUpdateInspectionData().then((response) => {
-    if (response.status === "success") {
-      clearInputs()
-      swal({
-        icon: "success",
-        title: response.message,
-        timer: 1500
+  swal({
+    icon: "question",
+    title: "Update Inspection Data?",
+    text: "Please make sure before to proceed!",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes",
+  }).then((response) => {
+    if (response.value === true) {
+      const loader = $loading.show()
+      setTimeout(() => {
+        inspectionDataStore.setUpdateInspectionData().then((response) => {
+          if (response.status === "success") {
+            clearInputs()
+            loader.hide()
+            swal({
+              icon: "success",
+              title: response.message,
+              timer: 1500
+            })
+          } else {
+            loader.hide()
+            Object.keys(response.error).forEach((key) => {
+              toast.add({
+                severity: "error",
+                summary: "Warning",
+                detail: response.error[key][0],
+                life: 5000,
+                group: 'bl'
+              });
+            })
+          }
+        })
       })
     } else {
-      swal({
-        icon: "warning",
-        title: response.message,
-        timer: 1500
-      })
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
     }
   })
 }

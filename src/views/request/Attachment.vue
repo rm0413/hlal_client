@@ -70,14 +70,16 @@
 
 <script setup>
 import { ref, onMounted, inject, computed } from "vue";
-const swal = inject("$swal");
 import CTable from "@/components/Datatable.vue"
 import CSelect from "@/components/CSelect.vue"
 import { useAttachmentsStore } from '@/modules/request/attachments'
-const attachmentsStore = useAttachmentsStore()
 import { useToast } from "primevue/usetoast";
-const toast = useToast();
+import { useLoading } from "vue-loading-overlay";
 
+const $loading = useLoading()
+const attachmentsStore = useAttachmentsStore()
+const swal = inject("$swal");
+const toast = useToast();
 const ctable = ref();
 const select_data = ref([]); //select table
 const part_number = ref([])
@@ -94,6 +96,10 @@ onMounted(() => {
     })
   })
 })
+
+const loadingProcess = () => {
+  show.value = true;
+}
 
 const file = ref(null);
 const uploadFile = (event) => {
@@ -124,27 +130,32 @@ const submitAttachment = () => {
       confirmButtonText: "Yes",
     }).then((response) => {
       if (response.value === true) {
-        attachmentsStore.setInsertAttachment(formData).then((response) => {
-          if (response.status === "success") {
-            ctable.value.unSelect();
-            select_data.value = [];
-            document.getElementById("input-file").value = null;
-            swal({
-              icon: "success",
-              title: response.message,
-              timer: 1500
-            })
-          } else {
-            Object.keys(response.error).forEach((key) => {
-              toast.add({
-                severity: "error",
-                summary: "Warning",
-                detail: response.error[key][0],
-                life: 5000,
-                group: 'bl'
-              });
-            })
-          }
+        const loader = $loading.show()
+        setTimeout(() => {
+          attachmentsStore.setInsertAttachment(formData).then((response) => {
+            if (response.status === "success") {
+              ctable.value.unSelect();
+              select_data.value = [];
+              document.getElementById("input-file").value = null;
+              loader.hide()
+              swal({
+                icon: "success",
+                title: response.message,
+                timer: 1500
+              })
+            } else {
+              loader.hide()
+              Object.keys(response.error).forEach((key) => {
+                toast.add({
+                  severity: "error",
+                  summary: "Warning",
+                  detail: response.error[key][0],
+                  life: 5000,
+                  group: 'bl'
+                });
+              })
+            }
+          })
         })
       } else {
         toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });

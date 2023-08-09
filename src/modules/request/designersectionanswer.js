@@ -16,8 +16,6 @@ export const useDesignerSectionAnswerStore = defineStore({
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
             { label: 'Critical Dimension', key: 'critical_dimension' },
-            // { label: 'Inspection Data', key: 'cpk_data' },
-            // { label: 'Request Result', key: 'request_result' },
             { label: 'Action', key: 'action' },
         ],
         designerSectionAnswerForm: {
@@ -64,7 +62,6 @@ export const useDesignerSectionAnswerStore = defineStore({
                     }
                 }).then(response => {
                     resolve(response.data)
-                    console.log(response.data)
                     this.setLoadDesignerSection()
                     this.clearDesignerAnswer()
                 }).catch(err => {

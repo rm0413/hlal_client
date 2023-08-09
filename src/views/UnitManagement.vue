@@ -56,8 +56,10 @@ import { inject, onMounted, ref } from "vue";
 import CTable from "@/components/Datatable.vue";
 import { useUnitManagementStore } from "@/modules/management/unitManagement";
 import { useToast } from "primevue/usetoast";
-const unitManagementStore = useUnitManagementStore();
+import { useLoading } from "vue-loading-overlay";
 
+const $loading = useLoading()
+const unitManagementStore = useUnitManagementStore();
 const toast = useToast();
 const swal = inject("$swal");
 const units = ref([])
@@ -68,14 +70,12 @@ onMounted(() => {
 
 const loadUnits = () => {
     unitManagementStore.setUnits().then((response) => {
-        // console.log(response)
         units.value = [];
         response.forEach((v) => {
             units.value.push({
                 text: v.unit_name,
                 unit_id: v.unit_id
             })
-            // console.log(units.value)
         })
     })
 }
@@ -91,21 +91,36 @@ const deleteUnit = (data) => {
         confirmButtonText: "Submit",
     }).then((response) => {
         if (response.value === true) {
-            unitManagementStore.setDeleteUnit(data).then((response) => {
-                if (response.status === "success") {
-                    swal({
-                        icon: "success",
-                        title: response.message,
-                        timer: 2500
-                    })
-                } else {
-                    swal({
-                        icon: "warning",
-                        title: response.message,
-                        timer: 2500
-                    })
-                }
+            const loader = $loading.show()
+            setTimeout(() => {
+                unitManagementStore.setDeleteUnit(data).then((response) => {
+                    if (response.status === "success") {
+                        loader.hide()
+                        swal({
+                            icon: "success",
+                            title: response.message,
+                            timer: 2500
+                        })
+                    } else {
+                        loader.hide()
+                        Object.keys(response.error).forEach((key) => {
+                            toast.add({
+                                severity: "error",
+                                summary: "Warning",
+                                detail: response.error[key][0],
+                                life: 5000,
+                            });
+                        })
+                    }
+                })
             })
+        } else {
+            toast.add({
+                severity: "error",
+                summary: "Warning",
+                detail: 'Cancelled',
+                life: 5000,
+            });
         }
     })
 }
@@ -125,21 +140,36 @@ const submitUpdateUnit = () => {
         confirmButtonText: "Submit",
     }).then((response) => {
         if (response.value === true) {
-            unitManagementStore.setUpdateUnit().then((response) => {
-                if (response.status === "success") {
-                    swal({
-                        icon: "success",
-                        title: response.message,
-                        timer: 2500
-                    })
-                } else {
-                    swal({
-                        icon: "warning",
-                        title: response.message,
-                        timer: 2500
-                    })
-                }
+            const loader = $loading.show()
+            setTimeout(() => {
+                unitManagementStore.setUpdateUnit().then((response) => {
+                    if (response.status === "success") {
+                        loader.hide()
+                        swal({
+                            icon: "success",
+                            title: response.message,
+                            timer: 2500
+                        })
+                    } else {
+                        loader.hide()
+                        Object.keys(response.error).forEach((key) => {
+                            toast.add({
+                                severity: "error",
+                                summary: "Warning",
+                                detail: response.error[key][0],
+                                life: 5000,
+                            });
+                        })
+                    }
+                })
             })
+        } else {
+            toast.add({
+                severity: "error",
+                summary: "Warning",
+                detail: 'Cancelled',
+                life: 5000,
+            });
         }
     })
 }
@@ -154,24 +184,36 @@ const submitUnit = () => {
         confirmButtonText: "Submit",
     }).then((response) => {
         if (response.value === true) {
-            unitManagementStore.setInsertUnit().then((response) => {
-                if (response.status === "success") {
-                    swal({
-                        icon: "success",
-                        title: response.message,
-                        timer: 2500
-                    })
-                } else {
-                    Object.keys(response.error).forEach((key) => {
-                        toast.add({
-                            severity: "error",
-                            summary: "Warning",
-                            detail: response.error[key][0],
-                            life: 5000,
-                        });
-                    })
-                }
+            const loader = $loading.show()
+            setTimeout(() => {
+                unitManagementStore.setInsertUnit().then((response) => {
+                    if (response.status === "success") {
+                        loader.hide()
+                        swal({
+                            icon: "success",
+                            title: response.message,
+                            timer: 2500
+                        })
+                    } else {
+                        loader.hide()
+                        Object.keys(response.error).forEach((key) => {
+                            toast.add({
+                                severity: "error",
+                                summary: "Warning",
+                                detail: response.error[key][0],
+                                life: 5000,
+                            });
+                        })
+                    }
+                })
             })
+        } else {
+            toast.add({
+                severity: "error",
+                summary: "Warning",
+                detail: 'Cancelled.',
+                life: 5000,
+            });
         }
     })
 }

@@ -17,7 +17,7 @@ onMounted(() => {
 const signOut = () => {
   localStorage.clear()
   sessionStorage.clear()
-  window.location.href = "http://10.164.58.82/FDTP-Portal/public/";
+  window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
 }
 
 const systemDetails = {
@@ -92,6 +92,7 @@ const links = [
     title: 'Management',
     name: 'management',
     fa: 'gears',
+    role: 'ADMIN',
     sub_module: [
       {
         title: 'User Management',
@@ -113,7 +114,7 @@ const links = [
 
 <template>
   <div class="h-screen">
-    <CSidebar :role="loginStore.role" :section_code="loginStore.section_code" :systemDetails="systemDetails" :links="links"
+    <CSidebar :systemDetails="systemDetails" :links="links"
       :signOut="signOut" v-if="route.name !== 'login'">
       <template #page>
         <router-view />
