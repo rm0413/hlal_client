@@ -8,12 +8,18 @@ export const useDashboardStore = defineStore({
         date_from: null,
         date_to: null,
         activity_logs: [],
+        count_request: [],
     }),
     actions: {
         setCountRequest() {
+            var payload = {
+                date_from: this.date_from,
+                date_to: this.date_to
+            }
             return new Promise((resolve, reject) => {
-                axios.get('count-request').then(response => {
+                axios.get(`count-request?date_from=${payload.date_from}&date_to=${payload.date_to}`).then(response => {
                     resolve(response.data)
+                    this.count_request = response.data.data[0]
                     // console.log(response.data)
                 }).catch(err => {
                     reject(err)
@@ -36,7 +42,6 @@ export const useDashboardStore = defineStore({
             })
         },
         setActivityLogs() {
-     
             var payload = {
                 date_from: this.date_from,
                 date_to: this.date_to
@@ -47,7 +52,7 @@ export const useDashboardStore = defineStore({
                     resolve(response.data)
                     // alert(1)
                     this.activity_logs = response.data.data[0]
-                    console.log(response.data) 
+                    // console.log(response.data) 
                 }).catch(err => {
                     reject(err)
                 })
@@ -60,6 +65,9 @@ export const useDashboardStore = defineStore({
         },
         getActivityLogs() {
             return this.activity_logs;
-        }
+        },
+        getCountRequest() {
+            return this.count_request;
+        },
     }
 })

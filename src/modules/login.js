@@ -58,6 +58,7 @@ export const useLoginStore = defineStore({
                 id: data.employee_id.emp_id,
                 role_access: data.role_access.role_access,
                 employee_id: data.employee_id.emp_id,
+                emp_id: sessionStorage.getItem('employee_id')
             }
             return new Promise((resolve, reject) => {
                 axios.patch(`user/${payload.id}`, payload).then(response => {

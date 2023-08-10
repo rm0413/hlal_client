@@ -100,7 +100,7 @@ export const useEditItemDetailsStore = defineStore({
     setDeleteAgreementList(data) {
       var payload = {
         id: data.agreement_id_pk,
-        emp_id: data.requestor_employee_id,
+        emp_id: sessionStorage.getItem('employee_id'),
       };
       return new Promise((resolve, reject) => {
         axios

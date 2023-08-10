@@ -97,7 +97,8 @@ export const useUserManagementStore = defineStore({
         setAddHinseiUser() {
             var add_user_data = {
                 employee_id: this.employeeForm.system_access_id.emp_id,
-                role_access: this.employeeForm.role_id.text
+                role_access: this.employeeForm.role_id.text,
+                emp_id: sessionStorage.getItem('employee_id')
             }
             var employee_data = {
                 system_access_id: this.employeeForm.system_access_id.system_access_id,
@@ -139,8 +140,9 @@ export const useUserManagementStore = defineStore({
             });
         },
         removeUserRole(role_id, user_id) {
+            var emp_id = sessionStorage.getItem('employee_id')
             return new Promise((resolve, reject) => {
-                axios.delete(`user/${user_id}`).then(response => {
+                axios.delete(`delete-user/${user_id}/${emp_id}`).then(response => {
                     resolve(response.data)
                     this.setRemoveFdtpPortalAccess(role_id)
                     this.setUserManagement()
@@ -155,7 +157,8 @@ export const useUserManagementStore = defineStore({
             var data = {
                 id: user_employee_id.value,
                 employee_id: user_employee_id.value,
-                role_access: role_selected.text
+                role_access: role_selected.text,
+                emp_id: sessionStorage.getItem('employee_id')
             }
             // console.log(data)
             return new Promise((resolve, reject) => {
