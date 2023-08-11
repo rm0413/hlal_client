@@ -9,12 +9,12 @@
           <div class="flex gap-2 mr-10">
             <div class="flex flex-row w-[18rem]">
               <p
-                class="flex flex-col text-white bg-[#A10E13] h-[2.5rem] w-[5rem] items-center justify-center rounded-l-md">
-                Unit</p>
+                class="flex flex-col text-white bg-[#A10E13] h-[2.5rem] w-[5rem] items-center justify-center rounded-l-md rounded-r-none">
+                <b>Unit</b></p>
               <!-- <c-select ref="select_unit" class="h-[2.5rem] text-center" :options="units"
               v-model="newRequestStore.agreementForm.unit"></c-select> -->
               <select
-                class="h-[2.5rem] border-2 rounded text-center w-[16rem] rounded-r-md border-gray-600 hover:border-blue-300 outline-green-600"
+                class="h-[2.5rem] border-2 rounded text-center w-[16rem] rounded-l-none rounded-r-md border-gray-600 hover:border-blue-300 outline-green-600"
                 v-model="newRequestStore.agreementForm.unit" required>
                 <option value="" disabled>Select Unit</option>
                 <option v-for="(i, key) in units" :key="key" :value="i.unit_id">{{ i.text }}</option>
@@ -28,7 +28,7 @@
                 v-model="newRequestStore.search_filter" />
               <button type="button" @click="openModal('search')"
                 class="h-[2.5rem] bg-gray-400 text-white py-1 px-3 rounded-r-md">
-                Search
+                <b>Search</b>
               </button>
             </div>
           </div>
@@ -172,12 +172,12 @@
                 v-model="newRequestStore.agreementForm.request_quantity" required />
             </label>
             <div class="flex justify-center items-center mt-8 gap-2">
-              <button type="submit" class="bg-[#A10E13] text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-red-600">
-                <font-awesome-icon icon="arrow-turn-right" /> Enter
+              <button type="submit" class="bg-red-500 border-2 border-red-900 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-red-600">
+                <font-awesome-icon icon="arrow-turn-right" /> <b>ENTER</b>
               </button>
-              <button type="button" class="bg-gray-700 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-gray-600"
+              <button type="button" class="bg-gray-500 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-gray-600 border-2 border-gray-800"
                 @click="newRequestStore.setClearAgreementList">
-                <font-awesome-icon icon="eraser" /> Clear
+                <font-awesome-icon icon="eraser" /> <b>CLEAR</b>
               </button>
             </div>
           </div>
@@ -186,15 +186,15 @@
     </div>
     <div class="lg:col-span-2 min-[100px]:col-span-9 h-full flex flex-col mt-10 gap-2">
       <button @click="openModal('multiple_input')"
-        class="w-full p-3 flex justify-center items-center bg-[#A10E13] text-white rounded hover:bg-red-600"
+        class="w-full p-3 flex justify-center items-center bg-red-500 text-white rounded hover:bg-red-700 border-2 border-red-900"
         data-open-modal>
         <font-awesome-icon icon="file-import" class="h-5 w-5" />
-        <p class="ml-3">Multiple Input</p>
+        <p class="ml-3"><b>MULTIPLE INPUT</b></p>
       </button>
       <button @click="openModal('view_items')"
-        class="w-full p-3 flex justify-center items-center bg-green-600 text-white rounded hover:bg-green-500">
+        class="w-full p-3 flex justify-center items-center bg-green-500 text-white rounded hover:bg-green-600 border-2 border-green-800">
         <font-awesome-icon icon="file-lines" class="h-5 w-5" />
-        <p class="ml-3">View Item Details</p>
+        <p class="ml-3"><b>VIEW ITEM DETAILS</b></p>
       </button>
     </div>
     <!--Multiple Input-->
@@ -246,7 +246,8 @@
         <div class="flex max-h-[70vh] overflow-y-scroll mx-2">
           <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (checkedData = data)"
             :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
-            :items="newRequestStore.getNoCode">
+            :items="newRequestStore.getNoCode"
+            :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
@@ -264,14 +265,15 @@
     <dialog ref="search" class="p-0 rounded transform duration-300 -translate-y-5 w-full border-2 border-[#A10E13]">
       <div class="flex flex-col">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
-          <span>Search</span>
+          <span><font-awesome-icon icon="magnifying-glass" class="h-5 w-5 mr-2" />Search</span>
           <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('search')">
             <font-awesome-icon icon="xmark" />
           </button>
         </div>
         <div class="flex p-5 overflow-y-scroll">
-          <c-table :filter="newRequestStore.search_filter" :fields="newRequestStore.search_fields"
-            :items="newRequestStore.getAgreementList" class="w-full">
+          <CTable :filter="newRequestStore.search_filter" :fields="newRequestStore.search_fields"
+            :items="newRequestStore.getAgreementList"
+            :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
@@ -283,12 +285,13 @@
                 ADD
               </button>
             </template>
-          </c-table>
+          </CTable>
         </div>
       </div>
     </dialog>
     <Toast position="bottom-right"></Toast>
     <Toast position="bottom-left" group="bl"></Toast>
+    <!-- <GToast ref="g_toast"></GToast> -->
   </div>
 </template>
 
@@ -298,7 +301,9 @@ import { useNewRequestStore } from "@/modules/request/newrequest";
 import { ref, onMounted, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
+// import GToast from "@/components/GToast.vue";
 
+// const g_toast = ref(null)
 const $loading = useLoading()
 const toast = useToast();
 const swal = inject("$swal");
@@ -421,10 +426,15 @@ const submitAgreementList = () => {
             newRequestStore.search_filter = "";
             loader.hide()
             swal({
-              icon: "success",
+              icon: response.status,
               title: response.message,
               timer: 2500,
             });
+            // g_toast.value.show({
+            //   status: response.status,
+            //   message: response.message,
+            //   timer: 2000
+            // })
           } else {
             loader.hide()
             Object.keys(response.error).forEach((key) => {

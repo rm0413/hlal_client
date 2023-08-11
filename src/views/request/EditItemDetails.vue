@@ -9,39 +9,40 @@
         <div class="flex gap-2">
           <div class="flex">
             <label class="flex flex-col items-center justify-center">Search by: </label>
-            <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3">
-              Code
+            <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center">
+              <b>Code</b>
             </div>
-            <div class="text-center p-1 border-2 rounded w-[8rem] border-gray-600">Part Number</div>
+            <div class="text-center p-1 border-2 rounded-r-md w-[8rem] border-gray-600 flex flex-col justify-center items-center"><b>Part Number</b></div>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
             <input
-              class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              class="text-center p-1 border-2 rounded-l-md h-[2.8rem] border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="editItemDetailsStore.search_filter" />
-            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
-              Search
+            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md rounded-l-none">
+              <b>Search</b>
             </button>
           </div>
           <div>
-            <c-select class="text-center w-[15rem] border-gray-600 hover:border-blue-300 outline-green-600"
+            <c-select class="text-center rounded-md h-[2.8rem] w-[15rem] border-2 border-gray-600 hover:border-blue-300 outline-green-600"
               :options="part_number" v-model="editItemDetailsStore.part_number_select"></c-select>
           </div>
         </div>
       </div>
       <div class="h-[80vh] w-full mt-3 overflow-y-scroll">
         <c-table :items="filterPartNumber" :filter="editItemDetailsStore.search_filter"
-          :fields="editItemDetailsStore.getEditItemDetailsFields" :thStyle="'bg-[#A10E13] text-white p-2 text-[13px]'">
+          class="border-solid border-2 border-[#A10E13]" :fields="editItemDetailsStore.getEditItemDetailsFields"
+          :thStyle="'bg-[#A10E13] text-white p-2 text-[13px] border-2 border-solid border-red-900'">
           <template #cell(action)="data">
             <div class="flex justify-center gap-1">
-              <button class="h-8 w-9 rounded bg-yellow-500 text-white" @click="openModal(data.item)" data-open-modal
-                v-tooltip.top="'Edit Request'">
+              <button class="h-8 w-9 rounded bg-orange-400 text-white border-2 border-orange-700 hover:bg-orange-500"
+                @click="openModal(data.item)" data-open-modal v-tooltip.top="'Edit Request'">
                 <font-awesome-icon icon="pen"></font-awesome-icon>
               </button>
-              <button class="h-8 w-9 rounded bg-[#A10E13] text-white" v-tooltip.top="'Delete Request'"
-                @click="deleteRequest(data.item)">
-                <font-awesome-icon icon="trash"></font-awesome-icon>
+              <button class="h-8 w-9 rounded bg-red-500 border-2 border-red-900 hover:bg-red-800 text-white"
+                v-tooltip.top="'Delete Request'" @click="deleteRequest(data.item)">
+                <font-awesome-icon icon="trash" />
               </button>
             </div>
           </template>
@@ -209,7 +210,9 @@ const edit_item = ref(null);
 onMounted(() => {
   editItemDetailsStore.setAgreementListCode()
   editItemDetailsStore.setLoadPartNumber().then((response) => {
+  
     response.data.forEach((v) => {
+      console.log(v)
       part_number.value.push({
         text: v,
         value: v

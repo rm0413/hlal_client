@@ -100,7 +100,11 @@ export const useEditItemDetailsStore = defineStore({
     setDeleteAgreementList(data) {
       var payload = {
         id: data.agreement_id_pk,
+<<<<<<< Updated upstream
         emp_id: sessionStorage.getItem('employee_id'),
+=======
+        emp_id: sessionStorage.getItem("employee_id")
+>>>>>>> Stashed changes
       };
       return new Promise((resolve, reject) => {
         axios
@@ -119,6 +123,7 @@ export const useEditItemDetailsStore = defineStore({
         axios
           .get("load-part-number-with-code")
           .then((response) => {
+            console.log(response.data)
             resolve(response.data);
           })
           .catch((err) => {

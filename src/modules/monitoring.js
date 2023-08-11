@@ -125,13 +125,16 @@ export const useMonitoringStore = defineStore({
       });
     },
     setDeleteMonitoring(id) {
+      var payload = {
+        id: id,
+        emp_id: sessionStorage.getItem("employee_id")
+      }
       return new Promise((resolve, reject) => {
         axios
-          .delete(`agreement-list/${id}`)
+          .delete(`delete-agreement-list/${payload.id}/${payload.emp_id}`)
           .then((response) => {
             resolve(response.data);
             this.setEditMonitoringList()
-            // console.log(response)
           })
           .catch((err) => {
             reject(err);

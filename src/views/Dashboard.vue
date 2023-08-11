@@ -548,7 +548,6 @@ import { onMounted, ref } from "vue";
 import { useDashboardStore } from "@/modules/dashboard.js";
 import moment from "moment";
 import { useToast } from "primevue/usetoast";
-import { TooltipComponent as EjsTooltip } from "@syncfusion/ej2-vue-popups";
 const toast = useToast();
 const dashboardStore = useDashboardStore();
 const max_date = moment().format("yyyy-MM-DD");

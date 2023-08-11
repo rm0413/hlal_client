@@ -9,24 +9,24 @@
         <div class="flex gap-2">
           <div class="flex">
             <label class="flex flex-col items-center justify-center">Search by: </label>
-            <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3">
-              Code
+            <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center">
+              <b>Code</b>
             </div>
-            <div class="text-center p-1 border-2 rounded w-[8rem] border-gray-600">Part Number</div>
+            <div class="text-center p-1 border-2 rounded w-[8rem] border-gray-600 flex flex-col justify-center items-center"><b>Part Number</b></div>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
             <input
-              class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              class="text-center p-1 border-2 rounded-l-md h-[2.8rem] border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="attachmentsStore.search_filter" />
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
-              Search
+              <b>Search</b>
             </button>
           </div>
           <div>
             <CSelect
-              class="text-center p-1 border-2 rounded-md w-[14rem] h-[2.5rem] text-lg border-gray-600 hover:border-blue-300 outline-green-600"
+              class="text-center p-1 border-2 rounded-md w-[14rem] h-[2.8rem] text-lg border-gray-600 hover:border-blue-300 outline-green-600"
               :options="part_number" v-model="attachmentsStore.part_number_select"></CSelect>
           </div>
         </div>
@@ -48,16 +48,16 @@
             <span class="file-msg">or drag and drop PDF file here</span>
           </div>
           <div class="flex flex-col items-center justify-center w-full">
-            <button class="bg-[#A10E13] text-white p-1 w-full h-[3rem] rounded mt-5 " type="submit">Save</button>
-            <button class="bg-gray-700 hover:bg-gray-500 text-white p-1 w-full h-[3rem] rounded mt-1" @click="clearFile"
-              type="button">Clear</button>
+            <button class="bg-red-500 hover:bg-red-600 text-white p-1 w-full h-[3rem] rounded mt-5 border-2 border-red-800" type="submit"><font-awesome-icon icon="floppy-disk"/> <b>SAVE</b></button>
+            <button class="bg-gray-500 hover:bg-gray-600 border-2 border-gray-800 text-white p-1 w-full h-[3rem] rounded mt-1" @click="clearFile"
+              type="button"><font-awesome-icon icon="eraser"/> <b>CLEAR</b></button>
           </div>
         </form>
       </div>
       <div class="col-span-7 my-5 overflow-y-scroll">
         <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
           :filter="attachmentsStore.search_filter" :items="filterPartNumber"
-          :fields="attachmentsStore.getAttachmentsFields" :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'">
+          :fields="attachmentsStore.getAttachmentsFields" :thStyle="'bg-[#A10E13] p-2 text-white text-[13px] border-2 border-solid border-red-900'">
           <template #cell(action)="data">
           </template>
         </CTable>

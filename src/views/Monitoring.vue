@@ -1,67 +1,47 @@
 <template>
-  <div
-    class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2"
-  >
+  <div class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
     <div class="lg:col-span-3 min-[100px]:col-span-9 h-full flex flex-col">
-      <label
-        class="text-[24px] tracking-widest font-bold text-gray-600 font-mono"
-      >
+      <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono">
         <font-awesome-icon class="h-6 w-6 text-black" icon="desktop" /> Hinsei &
         LSA Monitoring List
       </label>
       <div class="flex flex-col">
-        <div
-          class="flex justify-center items-center p-2 bg-[#A10E13] text-white rounded mt-5"
-        >
+        <div class="flex justify-center items-center p-2 bg-[#A10E13] text-white rounded mt-5">
           Search Filters
         </div>
-        <form
-          method="post"
-          @submit.prevent="submitMonitoring"
-          class="flex flex-col items-center gap-2"
-        >
-          <label for="" class="flex flex-col mt-3">
+        <form method="post" @submit.prevent="submitMonitoring" class="flex flex-col items-center gap-2 px-[10%]">
+          <label for="" class="flex flex-col mt-3 w-full">
             Unit Name
-            <select
-              class="w-[32rem] h-[2.7rem] rounded border-black border-2 text-center"
-              v-model="monitoringStore.monitoringForm.monitoring_unit_name"
-              required
-            >
+            <select class="h-[2.7rem] rounded border-black border-2 text-center"
+              v-model="monitoringStore.monitoringForm.monitoring_unit_name" required>
               <option value="" disabled>Select Unit</option>
               <option v-for="(i, key) in units" :key="key" :value="i.unit_id">
                 {{ i.text }}
               </option>
             </select>
+            <!-- <c-select class="text-center border-black outline-green-600"
+              :options="units"
+              v-model="monitoringStore.monitoringForm.monitoring_unit_name"></c-select> -->
           </label>
-          <label for="" class="flex flex-col">
+          <label for="" class="flex flex-col w-full">
             Supplier
-            <input
-              type="text"
-              class="border p-2 flex text-center w-[32rem] rounded border-black"
-              v-model="monitoringStore.monitoringForm.monitoring_supplier"
-              required
-              placeholder="Supplier"
-            />
+            <input type="text" class="border p-2 flex text-center rounded border-black"
+              v-model="monitoringStore.monitoringForm.monitoring_supplier" required placeholder="Supplier" />
           </label>
-          <label for="" class="flex flex-col">
+          <label for="" class="flex flex-col w-full">
             Part Number
             <input @change="inputPartNumber" type="text"
-              class="border p-2 flex text-center w-[32rem] rounded border-black text-black"
+              class="border p-2 flex text-center rounded border-black text-black"
               v-model="monitoringStore.monitoringForm.monitoring_part_number" required placeholder="Part Number" />
           </label>
           <div class="flex gap-5 mt-5">
-            <button
-              type="button"
-              @click="exportFile"
-              class="bg-green-700 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-gray-600"
-            >
-              <font-awesome-icon icon="download" /> Export
+            <button type="button" @click="exportFile"
+              class="bg-green-500 text-black p-1 w-[10rem] h-[2.5rem] rounded border-2 hover:bg-green-600 border-green-700">
+              <font-awesome-icon icon="download" /> <b>EXPORT</b>
             </button>
-            <button
-              type="submit"
-              class="bg-gray-700 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-gray-600"
-            >
-              <font-awesome-icon icon="magnifying-glass" /> Search
+            <button type="submit"
+              class="bg-gray-500 text-white p-1 w-[10rem] h-[2.5rem] border-2 rounded hover:bg-gray-600 border-gray-700">
+              <font-awesome-icon icon="magnifying-glass" /> <b>SEARCH</b>
             </button>
           </div>
         </form>
@@ -70,19 +50,24 @@
     <div class="lg:col-span-6 min-[100px]:col-span-9 h-[85vh]">
       <div class="border rounded-[5px] overflow-y-scroll h-full">
         <c-table :items="monitoringStore.getLoadMonitoring" :fields="monitoringStore.getMonitoringFields" ref="ctable"
-          :isSelectable="true" @selectable="(data) => (select_data = data)" :thStyle="'bg-[#A10E13] text-white p-2'">
+          :isSelectable="true" @selectable="(data) => (select_data = data)"
+          :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'">
           <template #cell(action)="data" v-if="role === 'ADMIN'">
             <div class="flex justify-center gap-1">
               <button @click="openModal('viewEditModal'), monitoringStore.setEditMonitoringList(data.item)"
-                data-open-modal class="h-8 w-9 rounded bg-yellow-500 text-white" v-tooltip.top="'Edit/Delete Request'">
+                data-open-modal
+                class="h-8 w-9 rounded bg-yellow-400 text-white border-2 border-yellow-600 hover:bg-yellow-500"
+                v-tooltip.top="'Edit/Delete Request'">
                 <font-awesome-icon icon="eraser"></font-awesome-icon>
               </button>
               <button @click="openModal('attachmentModal'), monitoringStore.setAttachmentMonitoringList(data.item)"
-                v-tooltip.top="'Attached Files'" data-open-modal class="h-8 w-9 rounded bg-blue-600 text-white">
+                v-tooltip.top="'Attached Files'" data-open-modal
+                class="h-8 w-9 rounded bg-blue-500 text-white border-2 border-blue-700 hover:bg-blue-600">
                 <font-awesome-icon icon="download"></font-awesome-icon>
               </button>
               <button @click="openModal('viewDesignerModal'), designerOpenModal(data.item)"
-                v-tooltip.top="'View Agreement Lists'" data-open-modal class="h-8 w-9 rounded bg-cyan-600 text-white">
+                v-tooltip.top="'View Agreement Lists'" data-open-modal
+                class="h-8 w-9 rounded bg-cyan-500 text-white border-2 border-cyan-700 hover:bg-cyan-600">
                 <font-awesome-icon icon="eye"></font-awesome-icon>
               </button>
             </div>
@@ -98,7 +83,8 @@
                 <font-awesome-icon icon="download"></font-awesome-icon>
               </button>
               <button @click="openModal('viewDesignerModal'), designerOpenModal(data.item)"
-                v-tooltip.top="'View Agreement Lists'" data-open-modal class="h-8 w-9 rounded bg-cyan-600 text-white">
+                v-tooltip.top="'View Agreement Lists'" data-open-modal
+                class="h-8 w-9 rounded bg-cyan-600 text-white border-2 border-cyan-700 hover:bg-cyan-600">
                 <font-awesome-icon icon="eye"></font-awesome-icon>
               </button>
             </div>
@@ -118,90 +104,49 @@
           </button>
         </div>
         <div class="grid grid-cols-3 p-2 text-[13px]">
-          <div class="border-2 col-span-1 p-2 h-[73vh]">
+          <div class="border-2 col-span-1 p-2 h-[73vh] overflow-y-auto">
             <form class="grid grid-cols-2" method="post" @submit.prevent="submitUpdateEditItemMonitoring">
               <div class="col-span-1 p-2">
                 <label class="flex flex-col gap-2">
                   Trial No.
-                  <input
-                    ref="input_trial_no"
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.trial_number
-                    "
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  <input ref="input_trial_no" :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.trial_number
+                    " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required />
                 </label>
                 <label class="flex flex-col gap-2">
                   Request Date
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.request_date
-                    "
-                    type="date"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                  />
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.request_date
+                    " type="date" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center" />
                 </label>
                 <label class="flex flex-col gap-2">
                   Additional Request Qty Date
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm
-                        .additional_request_date
-                    "
-                    type="date"
-                    class="h-[2rem] w-full text-center border-2 rounded p-1 outline-green-600"
-                  />
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm
+                    .additional_request_date
+                    " type="date" class="h-[2rem] w-full text-center border-2 rounded p-1 outline-green-600" />
                 </label>
                 <label class="flex flex-col gap-2">
                   TRI No.
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="monitoringStore.monitoringEditItemForm.tri_number"
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  <input :disabled="monitoringStore.inputStatus"
+                    v-model="monitoringStore.monitoringEditItemForm.tri_number" type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center" required />
                 </label>
                 <label class="flex flex-col gap-2">
                   TRI Quantity
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.tri_quantity
-                    "
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.tri_quantity
+                    " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required />
                 </label>
                 <label class="flex flex-col gap-2">
                   Request Person
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.request_person
-                    "
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.request_person
+                    " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required />
                 </label>
                 <label class="flex flex-col gap-2">
                   Superior Approval
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.supperior_approval
-                    "
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.supperior_approval
+                    " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required />
                 </label>
                 <label class="flex flex-col gap-2">
                   Kind of Request
@@ -215,106 +160,53 @@
                   </select>
                 </label>
                 <label class="flex flex-col gap-2">
-                  Request Quantity
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.request_quantity
-                    "
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  Supplier
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.supplier_name
+                    " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required />
+                </label>
+                <label class="flex flex-col gap-2">
+                  Part Number
+                  <input :disabled="monitoringStore.inputStatus"
+                    v-model="monitoringStore.monitoringEditItemForm.part_number" type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center" required />
                 </label>
               </div>
               <div class="col-span-1 p-2">
                 <label class="flex flex-col gap-2">
-                  Supplier
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.supplier_name
-                    "
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
-                </label>
-                <label class="flex flex-col gap-2">
-                  Part Number
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="monitoringStore.monitoringEditItemForm.part_number"
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
-                </label>
-                <label class="flex flex-col gap-2">
                   Sub Part Number
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.sub_part_number
-                    "
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.sub_part_number
+                    " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required />
                 </label>
                 <label class="flex flex-col gap-2">
                   Revision
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="monitoringStore.monitoringEditItemForm.revision"
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.revision"
+                    type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center" required />
                 </label>
                 <label class="flex flex-col gap-2">
                   Coordinates
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="monitoringStore.monitoringEditItemForm.coordinates"
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  <input :disabled="monitoringStore.inputStatus"
+                    v-model="monitoringStore.monitoringEditItemForm.coordinates" type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center" required />
                 </label>
                 <label class="flex flex-col gap-2">
                   Dimension
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="monitoringStore.monitoringEditItemForm.dimension"
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  <input :disabled="monitoringStore.inputStatus"
+                    v-model="monitoringStore.monitoringEditItemForm.dimension" type="text"
+                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center" required />
                 </label>
                 <label class="flex flex-col gap-2">
                   Actual Value
-                  <input
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.actual_value
-                    "
-                    type="text"
-                    class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required
-                  />
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.actual_value
+                    " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required />
                 </label>
 
                 <label class="flex flex-col gap-2">
                   Critical Parts
-                  <select
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.critical_parts
-                    "
-                    class="h-[2rem] w-full border-2 rounded outline-green-600 text-center"
-                    required
-                  >
+                  <select :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.critical_parts
+                    " class="h-[2rem] w-full border-2 rounded outline-green-600 text-center" required>
                     <option value="null" disabled>Select Critical Parts</option>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
@@ -322,14 +214,8 @@
                 </label>
                 <label class="flex flex-col gap-2">
                   Critical Dimension
-                  <select
-                    :disabled="monitoringStore.inputStatus"
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.critical_dimension
-                    "
-                    class="h-[2rem] outline-green-600 border-2 rounded text-center"
-                    required
-                  >
+                  <select :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.critical_dimension
+                    " class="h-[2rem] outline-green-600 border-2 rounded text-center" required>
                     <option value="null" disabled>
                       Select Critical Dimension
                     </option>
@@ -337,38 +223,44 @@
                     <option value="No">No</option>
                   </select>
                 </label>
-              </div>
-              <div class="col-span-1 p-2 w-full">
-                <label class="flex flex-col gap-2">
+                <label class="flex flex-col gap-2 w-full">
                   Request Value
                   <textarea v-model="monitoringStore.monitoringEditItemForm.request_value
-                    " style="resize: none" class="w-full border-2 rounded p-1 outline-green-600 h-[4.5rem]" required />
+                    " style="resize: none" class="w-full border-2 rounded p-1 outline-green-600 h-[5.8rem]" required />
                 </label>
-              </div>
-              <div class="flex justify-end h-[9rem]">
-                <div class="flex justify-center items-end mt-5 gap-2">
-                  <button :disabled="monitoringStore.inputStatus" type="submit"
-                    class="bg-[#A10E13] text-white p-1 w-[7rem] rounded">
-                    Update
-                  </button>
-                  <button @click="monitoringStore.setClearEditMonitoring" type="button"
-                    class="bg-gray-700 text-white p-1 w-[7rem] rounded hover:bg-gray-600">
-                    Clear
-                  </button>
+                <label class="flex flex-col gap-2 w-full">
+                  Request Quantity
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.request_quantity
+                    " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required />
+                </label>
+                <div class="flex flex-col justify-end items-end mt-[2rem]">
+                  <div class="flex justify-center items-end gap-2">
+                    <button :disabled="monitoringStore.inputStatus" type="submit"
+                      class="bg-yellow-500 border-2 border-yellow-900 hover:bg-yellow-600 text-black p-1 w-[7rem] rounded">
+                      <font-awesome-icon icon="floppy-disk"/> <b>UPDATE</b>
+                    </button>
+                    <button @click="monitoringStore.setClearEditMonitoring" type="button"
+                      class="bg-gray-500 border-2 border-gray-800 text-white p-1 w-[7rem] rounded hover:bg-gray-600">
+                      <font-awesome-icon icon="eraser"/> <b>CLEAR</b>
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
           </div>
-          <div class="border-2 col-span-2 p-3 ml-2 overflow-y-auto h-[73vh]">
+          <div class="border-2 col-span-2 ml-2 max-h-[73vh] overflow-y-scroll mx-2">
             <c-table :items="monitoringStore.getEditMonitoringItems" :fields="monitoringStore.monitoringEditFields"
-              :thStyle="'bg-[#A10E13] text-white p-2'">
+              :thStyle="'bg-[#A10E13] p-2 text-white top-0  border-solid border-red-900'">
               <template #cell(#)="data">
                 {{ data.index + 1 }}
               </template>
               <template #cell(action)="data">
                 <div class="flex justify-center gap-1">
                   <div class="group flex relative">
-                    <button class="h-8 w-9 rounded bg-orange-500 text-white" @click="edit_monitoring_item(data.item)">
+                    <button
+                      class="h-8 w-9 rounded bg-orange-400 text-white border-2 border-orange-700 hover:bg-orange-500"
+                      @click="edit_monitoring_item(data.item)">
                       <font-awesome-icon icon="pen"></font-awesome-icon>
                     </button>
                     <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm
@@ -379,7 +271,8 @@ text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opac
                     </span>
                   </div>
                   <div class="group flex relative">
-                    <button class="h-8 w-9 rounded bg-[#A10E13] text-white" @click="delete_monitoring_item(data.item)">
+                    <button class="h-8 w-9 rounded bg-red-500 border-2 border-red-900 hover:bg-red-800 text-white"
+                      @click="delete_monitoring_item(data.item)">
                       <font-awesome-icon icon="trash" />
                     </button>
                     <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm
@@ -407,7 +300,8 @@ text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opac
         </div>
         <div class="flex flex-col overflow-y-scroll mx-2 h-[35vh] mt-1 w-[40wh]">
           <c-table :items="monitoringStore.getAttachmentMonitoringItems"
-            :fields="monitoringStore.getAttachmentMonitoringFields" :thStyle="'bg-[#A10E13] text-white p-2'">
+            :fields="monitoringStore.getAttachmentMonitoringFields"
+            :thStyle="'bg-[#A10E13] p-2 text-white border-2 top-0 border-solid border-red-900'">
             <template #cell(#)="data">
               {{ data.index + 1 }}
             </template>
@@ -452,7 +346,7 @@ text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opac
         </div>
         <div class="flex flex-col overflow-y-auto mx-2 h-[70vh] mt-1">
           <c-table :items="monitoringStore.getEditMonitoringItems" :fields="monitoringStore.getDesignerMonitoringFields"
-            :thStyle="'bg-[#A10E13] text-white p-2 border-spacing-2'">
+            :thStyle="'bg-[#A10E13] p-2 text-white border-2 top-0 border-solid border-red-900'">
             <template #cell(#)="data">
               {{ data.index + 1 }}
             </template>
@@ -471,6 +365,7 @@ import { useAttachmentsStore } from "@/modules/request/attachments";
 import { ref, onMounted, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
+import CSelect from "@/components/CSelect.vue";
 
 const $loading = useLoading()
 const toast = useToast();

@@ -1,6 +1,6 @@
 <template>
   <table :class="`${table_class} select-none`">
-    <thead class="sticky top-0">
+    <thead class="sticky top-0 z-50">
       <tr>
         <th :class="thStyle" v-for="(column, t) in fields" :key="t">
           {{ column.label }}
@@ -18,14 +18,14 @@
         </th>
       </tr>
     </tbody>
-    <tbody v-else-if="items">
+    <tbody v-else-if="items" class="">
       <span v-if="items.length === 0" class="flex justify-center w-full absolute italic">
         {{ emptyMsg }}</span>
       <tr :class="`${tdStyle} unchecked ${index % 2 ? 'bg-white' : 'bg-gray-200'}`" v-for="(item, index) in items"
         :key="index" @click="getData(item, `record(${index})`, index)" :id="`record(${index})`">
         <!-- , $emit('selectable', selected_value) -->
         <th v-for="(column, t) in fields" :key="t" :id="`cell(${index},${t})`"
-          @click="getCellData(item[column.key], `cell(${index},${t})`)" class="font-normal border-r">
+          @click="getCellData(item[column.key], `cell(${index},${t})`)" class="font-normal border-2 border-gray-300">
           <slot :name="`cell(${column.key})`" :item="item" :index="index"></slot>
           {{ item[column.key] }}
         </th>
@@ -50,11 +50,11 @@ const props = defineProps({
   },
   thStyle: {
     type: String,
-    default: "p-3 bg-[#A10E13] text-white text-[13px]",
+    default: "p-3 bg-[#A10E13] text-white text-[13px] border-solid z-50",
   },
   tdStyle: {
     type: String,
-    default: "mt-3 h-[5vh] hover:bg-gray-300 border-b-2 border-gray-200",
+    default: "mt-3 h-[5vh] hover:bg-gray-300",
   },
   filter: String,
   isSelectable: Boolean,

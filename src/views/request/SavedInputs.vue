@@ -12,18 +12,18 @@
                             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                                     icon="magnifying-glass"></font-awesome-icon></i>
                             <input v-model="savedInputsStore.search_filter"
-                                class="text-center p-1 border-2 rounded-l-md w-[15rem] h-[2.5rem]" />
+                                class="text-center p-1 border-2 border-black rounded-l-md w-[15rem] h-[2.5rem]" />
                             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
-                                Search
+                                <b>Search</b>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="h-[82vh] w-full mt-3 overflow-y-scroll">
-                <c-table :items="savedInputsStore.getAgreementRequest" :thStyle="'bg-[#A10E13] p-3 text-white'" ref="ctable"
+                <c-table :items="savedInputsStore.getAgreementRequest" ref="ctable"
                     :fields="savedInputsStore.getSavedInputsFields" :filter="savedInputsStore.search_filter"
-                    :isSelectable="true" @selectable="(data) => (select_data = data)"></c-table>
+                    :isSelectable="true" @selectable="(data) => (select_data = data)" :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'"></c-table>
             </div>
             <button
                 class="bg-[#A10E13] hover:bg-red-600 w-full h-[2.5rem] text-white tracking-widest font-serif text-[20px]"

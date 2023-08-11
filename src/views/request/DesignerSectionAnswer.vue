@@ -11,26 +11,26 @@
             <label class="flex flex-col items-center justify-center">Search by:
             </label>
             <button
-              class="flex flex-col h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3 items-center justify-center">
-              Code
+              class="flex flex-col h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md rounded-r-none ml-3 items-center justify-center">
+              <b>Code</b>
             </button>
             <button
-              class="flex flex-col text-center p-1 border-2 rounded w-[8rem] items-center justify-center border-gray-600">
-              Part Number
+              class="flex flex-col text-center p-1 border-2 rounded-r-md w-[8rem] items-center justify-center border-gray-600">
+              <b>Part Number</b>
             </button>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass" /></i>
             <input
-              class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              class="text-center p-1 border-2 rounded-l-md h-[2.8rem] border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="designerSectionAnswerStore.search_filter" />
-            <button class="bg-gray-400 text-white py-1 px-3 rounded-r-md h-[2.5rem]">
-              Search
+            <button class="bg-gray-400 text-white py-1 px-3 rounded-r-md h-[2.8rem]">
+              <b>Search</b>
             </button>
           </div>
           <div>
-            <c-select class="text-center w-[15rem] border-gray-600 hover:border-blue-300 outline-green-600"
+            <c-select class="text-center w-[15rem] h-[2.8rem] border-2 rounded-md border-black hover:border-blue-300 outline-green-600"
               :options="part_number" @change="selectPartNumber"
               v-model="designerSectionAnswerStore.part_number_select"></c-select>
           </div>
@@ -46,10 +46,10 @@
         <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
           :filter="designerSectionAnswerStore.search_filter" :items="filterPartNumber"
           :fields="designerSectionAnswerStore.getDesignerSectionAnswerFields"
-          :thStyle="'bg-[#A10E13] p-2 text-white text-[13px]'">
+          :thStyle="'bg-[#A10E13] p-2 text-white text-[13px] border-2 border-solid border-red-900'">
           <template #cell(action)="data">
             <button @click="editDesignerSection(data.item)" v-if="data.item.request_result !== null"
-              class="h-8 w-9 rounded bg-yellow-500 text-white" v-tooltip.top="'Edit Designer Section Answer'">
+              class="h-8 w-9 rounded bg-yellow-500 text-white border-2 border-yellow-700 hover:bg-yellow-600" v-tooltip.top="'Edit Designer Section Answer'">
               <font-awesome-icon icon="pen"></font-awesome-icon>
             </button>
             <button @click="editDesignerSection(data.item)" v-else class="h-8 w-9 rounded bg-yellow-500 text-white"
@@ -103,20 +103,20 @@
               class="cursor-pointer block w-full text-sm text-slate-600 file:mr-5 file:py-2 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:cursor-pointer hover:file:bg-amber-50 hover:file:text-amber-700" />
           </label>
           <button type="submit" v-if="!designerSectionAnswerStore.onSingle"
-            class="w-full flex gap-2 bg-green-400 p-3 hover:bg-green-200 text-black rounded justify-center items-center mt-2">
-            <font-awesome-icon icon="floppy-disk" />Save Inputs
+            class="w-full flex gap-2 bg-green-500 p-3 hover:bg-green-700 border-2 border-green-800 text-black rounded justify-center items-center mt-2">
+            <font-awesome-icon icon="floppy-disk" /><b>SAVE INPUTS</b>
           </button>
           <button type="button" @click="excelUploadingDesignerAnswer" v-else-if="designerSectionAnswerStore.onUploading"
-            class="w-full flex gap-2 bg-[#A10E13] p-3 text-white rounded justify-center items-center mt-5">
-            <font-awesome-icon icon="floppy-disk" />Submit File
+            class="w-full flex gap-2 bg-red-500 border-2 border-red-800 hover:bg-red-600 p-3 text-white rounded justify-center items-center mt-5">
+            <font-awesome-icon icon="floppy-disk" /><b>SUBMIT FILE</b>
           </button>
           <button type="button" @click="updateDesignerSectionAnswer" v-else-if="designerSectionAnswerStore.onEdit"
-            class="w-full flex gap-2 bg-yellow-400 p-3 hover:bg-yellow-200 text-black rounded justify-center items-center mt-5">
+            class="w-full flex gap-2 bg-yellow-400 border-2 border-yellow-700 p-3 hover:bg-yellow-200 text-black rounded justify-center items-center mt-5">
             <font-awesome-icon icon="floppy-disk" />Update
           </button>
           <button type="button" @click="clearInputs"
-            class="w-full flex gap-2 bg-gray-600 hover:bg-gray-500 p-3 text-white rounded justify-center items-center mt-2">
-            <font-awesome-icon icon="eraser" />Clear
+            class="w-full flex gap-2 bg-gray-500 border-2 border-gray-800 hover:bg-gray-600 p-3 text-white rounded justify-center items-center mt-2">
+            <font-awesome-icon icon="eraser" /><b>CLEAR</b>
           </button>
         </form>
       </div>

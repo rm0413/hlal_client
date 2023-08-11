@@ -9,24 +9,27 @@
         <div class="flex gap-2">
           <div class="flex">
             <label class="flex flex-col items-center justify-center">Search by: </label>
-            <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3">
-              Code
+            <div
+              class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3 flex flex-col items-center justify-center">
+              <b>Code</b>
             </div>
-            <div class="text-center p-1 border-2 rounded w-[8rem] border-gray-600">Part Number</div>
+            <div
+              class="text-center p-1 border-2 rounded-l-none rounded-r-md w-[8rem] border-gray-600 flex flex-col justify-center items-center">
+              <b>Part Number</b></div>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
             <input
-              class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              class="text-center p-1 border-2 rounded-l-md h-[2.8rem] border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="inspectionDataStore.search_filter" />
-            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md">
-              Search
+            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-l-none rounded-r-md">
+              <b>Search</b>
             </button>
           </div>
           <div>
             <CSelect @change="selectPartNumber"
-              class="text-center p-1 border-2 rounded-md w-[12rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              class="text-center p-1 border-2 rounded-md w-[12rem] h-[2.8rem] border-gray-600 hover:border-blue-300 outline-green-600"
               :options="part_number" v-model="inspectionDataStore.part_number_select"></CSelect>
           </div>
         </div>
@@ -40,13 +43,19 @@
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[81vh] overflow-y-scroll">
         <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
           :fields="inspectionDataStore.getInspectionDataFields" :items="filterPartNumber"
-          :thStyle="'bg-[#A10E13] p-2 text-white'" :filter="inspectionDataStore.search_filter">
+          :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'"
+          :filter="inspectionDataStore.search_filter">
           <template #cell(action)="data">
-            <button @click="editCpkData(data.item)" v-if="data.item.cpk_data !== null"
-              class="h-8 w-9 rounded bg-yellow-500 text-white" v-tooltip.top="'Edit Cpk Data'"><font-awesome-icon
-                icon="pen"></font-awesome-icon></button>
-            <button @click="editCpkData(data.item)" v-else class="h-8 w-9 rounded bg-yellow-500 text-white"
-              v-tooltip.top="'Edit Cpk Data'" hidden><font-awesome-icon icon="pen"></font-awesome-icon></button>
+            <button v-tooltip.top="'Edit Cpk Data'"
+              class="h-8 w-9 rounded bg-orange-400 text-white border-2 border-orange-700 hover:bg-orange-500"
+              @click="editCpkData(data.item)" v-if="data.item.cpk_data !== null">
+              <font-awesome-icon icon="pen"></font-awesome-icon>
+            </button>
+            <button v-tooltip.top="'Edit Cpk Data'"
+              class="h-8 w-9 rounded bg-orange-400 text-white border-2 border-orange-700 hover:bg-orange-500"
+              @click="editCpkData(data.item)" hidden v-else>
+              <font-awesome-icon icon="pen"></font-awesome-icon>
+            </button>
           </template>
         </c-table>
       </div>
@@ -74,17 +83,17 @@
             <i class="text-gray-400">Sent Date of IGM</i>
             <input type="date"
               class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
-              v-model="inspectionDataStore.inspectionDataForm.send_date" required/>
+              v-model="inspectionDataStore.inspectionDataForm.send_date" required />
           </label>
           <button type="submit" v-if="!inspectionDataStore.onEdit"
-            class="flex gap-2 bg-[#A10E13] hover:bg-red-600 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
-              icon="floppy-disk"></font-awesome-icon>Save</button>
+            class="flex gap-2 bg-red-500 border-2 border-red-900 hover:bg-red-600 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
+              icon="floppy-disk"></font-awesome-icon><b>SAVE</b></button>
           <button type="button" v-else @click="updateInspectionData"
-            class="flex gap-2 bg-yellow-400 p-3 hover:bg-yellow-200 text-black rounded justify-center items-center w-full mt-2"><font-awesome-icon
+            class="flex gap-2 bg-yellow-400 p-3 hover:bg-yellow-200 text-black rounded justify-center items-center w-full mt-2 border-2 border-yellow-600"><font-awesome-icon
               icon="floppy-disk"></font-awesome-icon>Update</button>
           <button type="button" @click="clearInputs"
-            class="flex gap-2 bg-gray-600 hover:bg-gray-500 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
-              icon="eraser" class="h-5 w-5" />Clear</button>
+            class="flex gap-2 bg-gray-600 hover:bg-gray-500 p-3 text-white rounded justify-center items-center w-full mt-2 border-2 border-gray-800"><font-awesome-icon
+              icon="eraser" class="h-5 w-5" /><b>CLEAR</b></button>
         </form>
       </div>
     </div>

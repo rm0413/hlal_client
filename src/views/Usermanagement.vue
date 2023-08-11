@@ -32,13 +32,15 @@
           </select>
         </div>
         <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
-          <button type="submit" class="w-[15rem] bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">
-            Save
+          <button type="submit"
+            class="w-[15rem] bg-red-500 rounded hover:bg-red-600 p-3 text-white border-2 border-red-700">
+            <font-awesome-icon icon="floppy-disk"/> <b>SAVE</b>
           </button>
-          <button class="gap-2 w-[15rem] bg-gray-600 rounded hover:bg-gray-500 p-3 text-white" @click="
-            userManagementStore.clearUser()
-            ">
-            Clear
+          <button class="gap-2 w-[15rem] bg-gray-500 rounded hover:bg-gray-600 p-3 text-white border-2 border-gray-700"
+            @click="
+              userManagementStore.clearUser()
+              ">
+            <font-awesome-icon icon="eraser"/> <b>CLEAR</b>
           </button>
         </div>
       </form>
@@ -53,7 +55,8 @@
       </div>
       <div class="border rounded-[5px] overflow-y-scroll h-full mt-2">
         <c-table :filter="userManagementStore.search_filter" :fields="userManagementStore.getUserManagementFields"
-          :thStyle="'bg-[#A10E13] text-white p-3'" :items="userManagementStore.getUserManagement">
+          :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'"
+          :items="userManagementStore.getUserManagement">
           <template #cell(#)="data">
             <div class="flex items-center justify-center">
               {{ data.index + 1 }}
@@ -71,12 +74,14 @@
           </template>
           <template #cell(action)="data">
             <div class="flex items-center justify-center gap-1">
-              <Button @click="edit_user_modal(data)" severity="warning" class="w-[1rem] items-center justify-center" v-tooltip.top="'Update Role'">
-                <font-awesome-icon icon="gear"></font-awesome-icon>
-              </Button>
-              <Button severity="danger" class="w-[1rem] items-center justify-center" @click="removeUser(data.item)" v-tooltip.top="'Delete User'">
-                <font-awesome-icon icon="circle-minus"></font-awesome-icon>
-              </Button>
+              <button type="button" @click="edit_user_modal(data)"
+                class="flex fle-col items-center justify-center w-[2.5rem] h-[2.5rem] bg-yellow-400 rounded hover:bg-yellow-500 p-3 text-white border-2 border-yellow-600">
+                <font-awesome-icon icon="gear"/>
+              </button>
+              <button type="button" @click="removeUser(data.item)"
+                class="flex fle-col items-center justify-center w-[2.5rem] h-[2.5rem] bg-red-500 rounded hover:bg-red-700 p-3 text-white border-2 border-red-700">
+                <font-awesome-icon icon="circle-minus"/>
+              </button>
             </div>
           </template>
         </c-table>

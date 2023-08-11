@@ -98,7 +98,11 @@ export const useUserManagementStore = defineStore({
             var add_user_data = {
                 employee_id: this.employeeForm.system_access_id.emp_id,
                 role_access: this.employeeForm.role_id.text,
+<<<<<<< Updated upstream
                 emp_id: sessionStorage.getItem('employee_id')
+=======
+                emp_id: sessionStorage.getItem("employee_id")
+>>>>>>> Stashed changes
             }
             var employee_data = {
                 system_access_id: this.employeeForm.system_access_id.system_access_id,
@@ -140,7 +144,11 @@ export const useUserManagementStore = defineStore({
             });
         },
         removeUserRole(role_id, user_id) {
+<<<<<<< Updated upstream
             var emp_id = sessionStorage.getItem('employee_id')
+=======
+            var emp_id = sessionStorage.getItem("employee_id")
+>>>>>>> Stashed changes
             return new Promise((resolve, reject) => {
                 axios.delete(`delete-user/${user_id}/${emp_id}`).then(response => {
                     resolve(response.data)
@@ -158,9 +166,12 @@ export const useUserManagementStore = defineStore({
                 id: user_employee_id.value,
                 employee_id: user_employee_id.value,
                 role_access: role_selected.text,
+<<<<<<< Updated upstream
                 emp_id: sessionStorage.getItem('employee_id')
+=======
+                emp_id: sessionStorage.getItem("employee_id")
+>>>>>>> Stashed changes
             }
-            // console.log(data)
             return new Promise((resolve, reject) => {
                 axios.patch(`user/${data.id}`, data).then(response => {
                     resolve(response.data)
@@ -177,7 +188,6 @@ export const useUserManagementStore = defineStore({
                 system_access_id: user_data[0].user_system_access_id,
                 role_id: role_selected.value
             }
-            console.log(data)
             return new Promise((resolve, reject) => {
                 axios.put(`http://10.164.58.62/FDTP-Portal/public/api/role-access/${data.id}`, data)
                     .then(function (response) {

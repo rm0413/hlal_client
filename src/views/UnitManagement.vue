@@ -16,11 +16,14 @@
                 </div>
                 <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
                     <button type="submit" v-if="!unitManagementStore.onEdit"
-                        class="w-[10rem] bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">Save</button>
-                    <button type="button" v-else class="w-[10rem] bg-yellow-400 rounded hover:bg-yellow-200 p-3 text-black"
-                        @click="submitUpdateUnit">Update</button>
+                        class="w-[10rem] bg-red-500 hover:bg-red-600 border-2 border-red-800 rounded p-3 text-white"><font-awesome-icon
+                            icon="eraser" /> <b>SAVE</b></button>
+                    <button type="button" v-else
+                        class="w-[10rem] bg-yellow-400 rounded border-2 border-yellow-700 hover:bg-yellow-200 p-3 text-black"
+                        @click="submitUpdateUnit"><font-awesome-icon icon="floppy-disk" /> <b>UPDATE</b></button>
                     <button type="button" @click="unitManagementStore.setClearUnit"
-                        class="w-[10rem] bg-gray-600 rounded hover:bg-gray-500 p-3 text-white">Clear</button>
+                        class="w-[10rem] bg-gray-500 rounded hover:bg-gray-600 border-2 border-gray-900 p-3 text-white"><font-awesome-icon
+                            icon="eraser" /> <b>CLEAR</b></button>
                 </div>
             </form>
         </div>
@@ -32,17 +35,19 @@
                 </span>
             </div>
             <div class="border rounded-[5px] overflow-y-scroll h-full mt-2">
-                <c-table :fields="unitManagementStore.unitManagementFields" :items="unitManagementStore.getUnit">
+                <c-table :fields="unitManagementStore.unitManagementFields" :items="unitManagementStore.getUnit"
+                    :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'">
                     <template #cell(action)="data">
                         <div class="flex items-center justify-center gap-1">
-                            <Button severity="warning" class="w-[1rem] items-center justify-center"
-                                v-tooltip.top="'Edit Unit'" @click="editUnit(data.item)">
+                            <button
+                                class="h-8 w-9 rounded bg-orange-400 text-white border-2 border-orange-700 hover:bg-orange-500"
+                                @click="editUnit(data.item)" data-open-modal v-tooltip.top="'Edit Unit'">
                                 <font-awesome-icon icon="pen"></font-awesome-icon>
-                            </Button>
-                            <Button severity="danger" class="w-[1rem] items-center justify-center"
+                            </button>
+                            <button class="h-8 w-9 rounded bg-red-500 border-2 border-red-900 hover:bg-red-800 text-white"
                                 v-tooltip.top="'Delete Unit'" @click="deleteUnit(data.item)">
-                                <font-awesome-icon icon="circle-minus"></font-awesome-icon>
-                            </Button>
+                                <font-awesome-icon icon="trash" />
+                            </button>
                         </div>
                     </template>
                 </c-table>
