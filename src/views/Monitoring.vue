@@ -30,9 +30,14 @@
           </label>
           <label for="" class="flex flex-col w-full">
             Part Number
-            <input @change="inputPartNumber" type="text"
-              class="border p-2 flex text-center rounded border-black text-black"
-              v-model="monitoringStore.monitoringForm.monitoring_part_number" required placeholder="Part Number" />
+            <input
+              @change="inputPartNumber"
+              type="text"
+              class="border p-2 flex text-center w-[32rem] rounded border-black text-black"
+              v-model="monitoringStore.monitoringForm.monitoring_part_number"
+              required
+              placeholder="Part Number"
+            />
           </label>
           <div class="flex gap-5 mt-5">
             <button type="button" @click="exportFile"
@@ -50,41 +55,51 @@
     <div class="lg:col-span-6 min-[100px]:col-span-9 h-[85vh]">
       <div class="border rounded-[5px] overflow-y-scroll h-full">
         <c-table :items="monitoringStore.getLoadMonitoring" :fields="monitoringStore.getMonitoringFields" ref="ctable"
-          :isSelectable="true" @selectable="(data) => (select_data = data)"
-          :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'">
+          :isSelectable="true" @selectable="(data) => (select_data = data)" :thStyle="'bg-[#A10E13] text-white p-2'">
           <template #cell(action)="data" v-if="role === 'ADMIN'">
             <div class="flex justify-center gap-1">
               <button @click="openModal('viewEditModal'), monitoringStore.setEditMonitoringList(data.item)"
-                data-open-modal
-                class="h-8 w-9 rounded bg-yellow-400 text-white border-2 border-yellow-600 hover:bg-yellow-500"
-                v-tooltip.top="'Edit/Delete Request'">
+                data-open-modal class="h-8 w-9 rounded bg-yellow-500 text-white" v-tooltip.top="'Edit/Delete Request'">
                 <font-awesome-icon icon="eraser"></font-awesome-icon>
               </button>
               <button @click="openModal('attachmentModal'), monitoringStore.setAttachmentMonitoringList(data.item)"
-                v-tooltip.top="'Attached Files'" data-open-modal
-                class="h-8 w-9 rounded bg-blue-500 text-white border-2 border-blue-700 hover:bg-blue-600">
+                v-tooltip.top="'Attached Files'" data-open-modal class="h-8 w-9 rounded bg-blue-600 text-white">
                 <font-awesome-icon icon="download"></font-awesome-icon>
               </button>
               <button @click="openModal('viewDesignerModal'), designerOpenModal(data.item)"
-                v-tooltip.top="'View Agreement Lists'" data-open-modal
-                class="h-8 w-9 rounded bg-cyan-500 text-white border-2 border-cyan-700 hover:bg-cyan-600">
+                v-tooltip.top="'View Agreement Lists'" data-open-modal class="h-8 w-9 rounded bg-cyan-600 text-white">
                 <font-awesome-icon icon="eye"></font-awesome-icon>
               </button>
             </div>
           </template>
           <template #cell(action)="data" v-else>
             <div class="flex justify-center gap-1">
-              <button @click="openModal('viewEditModal'), monitoringStore.setEditMonitoringList(data.item)" disabled
-                data-open-modal class="h-8 w-9 rounded bg-gray-400 text-white" v-tooltip.top="'Edit/Delete Request'">
+              <button
+                @click="
+                  openModal('viewEditModal'),
+                    monitoringStore.setEditMonitoringList(data.item)
+                "
+                disabled
+                data-open-modal
+                class="h-8 w-9 rounded bg-gray-400 text-white"
+                v-tooltip.top="'Edit/Delete Request'"
+              >
                 <font-awesome-icon icon="eraser"></font-awesome-icon>
               </button>
-              <button @click="openModal('attachmentModal'), monitoringStore.setAttachmentMonitoringList(data.item)"
-                disabled v-tooltip.top="'Attached Files'" data-open-modal class="h-8 w-9 rounded bg-gray-400 text-white">
+              <button
+                @click="
+                  openModal('attachmentModal'),
+                    monitoringStore.setAttachmentMonitoringList(data.item)
+                "
+                disabled
+                v-tooltip.top="'Attached Files'"
+                data-open-modal
+                class="h-8 w-9 rounded bg-gray-400 text-white"
+              >
                 <font-awesome-icon icon="download"></font-awesome-icon>
               </button>
               <button @click="openModal('viewDesignerModal'), designerOpenModal(data.item)"
-                v-tooltip.top="'View Agreement Lists'" data-open-modal
-                class="h-8 w-9 rounded bg-cyan-600 text-white border-2 border-cyan-700 hover:bg-cyan-600">
+                v-tooltip.top="'View Agreement Lists'" data-open-modal class="h-8 w-9 rounded bg-cyan-600 text-white">
                 <font-awesome-icon icon="eye"></font-awesome-icon>
               </button>
             </div>
@@ -93,18 +108,28 @@
         </c-table>
       </div>
     </div>
-    <dialog ref="viewEditModal"
-      class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13] w-[80%]">
+    <dialog
+      ref="viewEditModal"
+      class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13] w-[80%]"
+    >
       <div class="border-2 col-span-2">
-        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
-          <span><font-awesome-icon icon="pen" /><label class="ml-2">Edit Item Modal</label></span>
-          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('viewEditModal')
-            ">
+        <div
+          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
+        >
+          <span
+            ><font-awesome-icon icon="pen" /><label class="ml-2"
+              >Edit Item Modal</label
+            ></span
+          >
+          <button
+            class="px-3 py-2 rounded-full hover:bg-red-600"
+            @click="closeModal('viewEditModal')"
+          >
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
         <div class="grid grid-cols-3 p-2 text-[13px]">
-          <div class="border-2 col-span-1 p-2 h-[73vh] overflow-y-auto">
+          <div class="border-2 col-span-1 p-2 h-[73vh]">
             <form class="grid grid-cols-2" method="post" @submit.prevent="submitUpdateEditItemMonitoring">
               <div class="col-span-1 p-2">
                 <label class="flex flex-col gap-2">
@@ -150,8 +175,13 @@
                 </label>
                 <label class="flex flex-col gap-2">
                   Kind of Request
-                  <select v-model="monitoringStore.monitoringEditItemForm.kind_request
-                    " class="h-[2rem] outline-green-600 border-2 rounded text-center" required>
+                  <select
+                    v-model="
+                      monitoringStore.monitoringEditItemForm.kind_request
+                    "
+                    class="h-[2rem] outline-green-600 border-2 rounded text-center"
+                    required
+                  >
                     <option value="null" disabled>
                       Select Kind of Request
                     </option>
@@ -226,58 +256,55 @@
                 <label class="flex flex-col gap-2 w-full">
                   Request Value
                   <textarea v-model="monitoringStore.monitoringEditItemForm.request_value
-                    " style="resize: none" class="w-full border-2 rounded p-1 outline-green-600 h-[5.8rem]" required />
+                    " style="resize: none" class="w-full border-2 rounded p-1 outline-green-600 h-[4.5rem]" required />
                 </label>
-                <label class="flex flex-col gap-2 w-full">
-                  Request Quantity
-                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.request_quantity
-                    " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
-                    required />
-                </label>
-                <div class="flex flex-col justify-end items-end mt-[2rem]">
-                  <div class="flex justify-center items-end gap-2">
-                    <button :disabled="monitoringStore.inputStatus" type="submit"
-                      class="bg-yellow-500 border-2 border-yellow-900 hover:bg-yellow-600 text-black p-1 w-[7rem] rounded">
-                      <font-awesome-icon icon="floppy-disk"/> <b>UPDATE</b>
-                    </button>
-                    <button @click="monitoringStore.setClearEditMonitoring" type="button"
-                      class="bg-gray-500 border-2 border-gray-800 text-white p-1 w-[7rem] rounded hover:bg-gray-600">
-                      <font-awesome-icon icon="eraser"/> <b>CLEAR</b>
-                    </button>
-                  </div>
+              </div>
+              <div class="flex justify-end h-[9rem]">
+                <div class="flex justify-center items-end mt-5 gap-2">
+                  <button :disabled="monitoringStore.inputStatus" type="submit"
+                    class="bg-[#A10E13] text-white p-1 w-[7rem] rounded">
+                    Update
+                  </button>
+                  <button @click="monitoringStore.setClearEditMonitoring" type="button"
+                    class="bg-gray-700 text-white p-1 w-[7rem] rounded hover:bg-gray-600">
+                    Clear
+                  </button>
                 </div>
               </div>
             </form>
           </div>
-          <div class="border-2 col-span-2 ml-2 max-h-[73vh] overflow-y-scroll mx-2">
+          <div class="border-2 col-span-2 p-3 ml-2 overflow-y-auto h-[73vh]">
             <c-table :items="monitoringStore.getEditMonitoringItems" :fields="monitoringStore.monitoringEditFields"
-              :thStyle="'bg-[#A10E13] p-2 text-white top-0  border-solid border-red-900'">
+              :thStyle="'bg-[#A10E13] text-white p-2'">
               <template #cell(#)="data">
                 {{ data.index + 1 }}
               </template>
               <template #cell(action)="data">
                 <div class="flex justify-center gap-1">
                   <div class="group flex relative">
-                    <button
-                      class="h-8 w-9 rounded bg-orange-400 text-white border-2 border-orange-700 hover:bg-orange-500"
-                      @click="edit_monitoring_item(data.item)">
+                    <button class="h-8 w-9 rounded bg-orange-500 text-white" @click="edit_monitoring_item(data.item)">
                       <font-awesome-icon icon="pen"></font-awesome-icon>
                     </button>
-                    <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm
-text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50">
-                      <div class="h-[3vh] w-[5rem] flex flex-col justify-center items-center">
+                    <span
+                      class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50"
+                    >
+                      <div
+                        class="h-[3vh] w-[5rem] flex flex-col justify-center items-center"
+                      >
                         Edit
                       </div>
                     </span>
                   </div>
                   <div class="group flex relative">
-                    <button class="h-8 w-9 rounded bg-red-500 border-2 border-red-900 hover:bg-red-800 text-white"
-                      @click="delete_monitoring_item(data.item)">
+                    <button class="h-8 w-9 rounded bg-[#A10E13] text-white" @click="delete_monitoring_item(data.item)">
                       <font-awesome-icon icon="trash" />
                     </button>
-                    <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm
-text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50">
-                      <div class="h-[3vh] w-[5rem] flex flex-col justify-center items-center">
+                    <span
+                      class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50"
+                    >
+                      <div
+                        class="h-[3vh] w-[5rem] flex flex-col justify-center items-center"
+                      >
                         Delete
                       </div>
                     </span>
@@ -289,43 +316,69 @@ text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opac
         </div>
       </div>
     </dialog>
-    <dialog ref="attachmentModal"
-      class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13] w-[30rem] ">
+    <dialog
+      ref="attachmentModal"
+      class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13] w-[30rem]"
+    >
       <div class="border-2 col-span-2">
-        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
-          <p><font-awesome-icon icon="download" class="h-5 w-5 mr-2" />Attached Files</p>
-          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('attachmentModal')">
+        <div
+          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
+        >
+          <p>
+            <font-awesome-icon icon="download" class="h-5 w-5 mr-2" />Attached
+            Files
+          </p>
+          <button
+            class="px-3 py-2 rounded-full hover:bg-red-600"
+            @click="closeModal('attachmentModal')"
+          >
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
-        <div class="flex flex-col overflow-y-scroll mx-2 h-[35vh] mt-1 w-[40wh]">
-          <c-table :items="monitoringStore.getAttachmentMonitoringItems"
+        <div
+          class="flex flex-col overflow-y-scroll mx-2 h-[35vh] mt-1 w-[40wh]"
+        >
+          <c-table
+            :items="monitoringStore.getAttachmentMonitoringItems"
             :fields="monitoringStore.getAttachmentMonitoringFields"
-            :thStyle="'bg-[#A10E13] p-2 text-white border-2 top-0 border-solid border-red-900'">
+            :thStyle="'bg-[#A10E13] text-white p-2'"
+          >
             <template #cell(#)="data">
               {{ data.index + 1 }}
             </template>
             <template #cell(action)="data">
               <div class="flex justify-center gap-1">
                 <div class="group flex relative">
-                  <button class="h-8 w-9 rounded bg-green-700 text-white" @click="downloadAttachment(data.item)">
+                  <button
+                    class="h-8 w-9 rounded bg-green-700 text-white"
+                    @click="downloadAttachment(data.item)"
+                  >
                     <font-awesome-icon icon="download" />
                   </button>
-                  <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm
-text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50">
-                    <div class="h-[3vh] w-[5rem] flex flex-col justify-center items-center">
+                  <span
+                    class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50"
+                  >
+                    <div
+                      class="h-[3vh] w-[5rem] flex flex-col justify-center items-center"
+                    >
                       Download
                     </div>
                   </span>
                 </div>
                 <div class="group flex relative">
-                  <button data-open-modal class="h-8 w-9 rounded bg-cyan-600 text-white"
-                    @click="viewAttachment(data.item)">
+                  <button
+                    data-open-modal
+                    class="h-8 w-9 rounded bg-cyan-600 text-white"
+                    @click="viewAttachment(data.item)"
+                  >
                     <font-awesome-icon icon="eye"></font-awesome-icon>
                   </button>
-                  <span class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm
-text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50">
-                    <div class="h-[3vh] w-[3rem] flex flex-col justify-center items-center">
+                  <span
+                    class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50"
+                  >
+                    <div
+                      class="h-[3vh] w-[3rem] flex flex-col justify-center items-center"
+                    >
                       View
                     </div>
                   </span>
@@ -336,17 +389,29 @@ text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opac
         </div>
       </div>
     </dialog>
-    <dialog ref="viewDesignerModal" class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13]">
+    <dialog
+      ref="viewDesignerModal"
+      class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13]"
+    >
       <div class="border-2 col-span-2">
-        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
-          <p><font-awesome-icon icon="table" class="h-5 w-5 mr-2" />{{ designer_unit_name }}</p>
-          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('viewDesignerModal')">
+        <div
+          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
+        >
+          <p>
+            <font-awesome-icon icon="table" class="h-5 w-5 mr-2" />{{
+              designer_unit_name
+            }}
+          </p>
+          <button
+            class="px-3 py-2 rounded-full hover:bg-red-600"
+            @click="closeModal('viewDesignerModal')"
+          >
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
         <div class="flex flex-col overflow-y-auto mx-2 h-[70vh] mt-1">
           <c-table :items="monitoringStore.getEditMonitoringItems" :fields="monitoringStore.getDesignerMonitoringFields"
-            :thStyle="'bg-[#A10E13] p-2 text-white border-2 top-0 border-solid border-red-900'">
+            :thStyle="'bg-[#A10E13] text-white p-2 border-spacing-2'">
             <template #cell(#)="data">
               {{ data.index + 1 }}
             </template>
@@ -367,7 +432,7 @@ import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
 import CSelect from "@/components/CSelect.vue";
 
-const $loading = useLoading()
+const $loading = useLoading();
 const toast = useToast();
 const swal = inject("$swal");
 const monitoringStore = useMonitoringStore();
@@ -377,7 +442,7 @@ const input_trial_no = ref(null);
 const viewEditModal = ref(null);
 const attachmentModal = ref(null);
 const viewDesignerModal = ref(null);
-const role = sessionStorage.getItem("role_access")
+const role = sessionStorage.getItem("role_access");
 const select_data = ref([]);
 const ctable = ref();
 
@@ -385,17 +450,17 @@ onMounted(() => {
   loadUnits();
 });
 
-const designer_unit_name = ref(null)
+const designer_unit_name = ref(null);
 
 const designerOpenModal = (data) => {
-  designer_unit_name.value = data.unit_name
-  monitoringStore.setEditMonitoringList(data)
-}
+  designer_unit_name.value = data.unit_name;
+  monitoringStore.setEditMonitoringList(data);
+};
 
 const inputPartNumber = () => {
   ctable.value.unSelect();
   select_data.value = [];
-}
+};
 
 const loadUnits = () => {
   monitoringStore.setUnits().then((response) => {
@@ -423,13 +488,13 @@ const delete_monitoring_item = (data) => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      const loader = $loading.show()
+      const loader = $loading.show();
       setTimeout(() => {
         monitoringStore
-          .setDeleteMonitoring(parseInt(data.agreement_id_pk))
+          .setDeleteMonitoring(data)
           .then((response) => {
             if (response.status === "success") {
-              loader.hide()
+              loader.hide();
               swal({
                 icon: "success",
                 title: response.message,
@@ -437,7 +502,7 @@ const delete_monitoring_item = (data) => {
                 timer: 1500,
               });
             } else {
-              loader.hide()
+              loader.hide();
               Object.keys(response.error).forEach((key) => {
                 toast.add({
                   severity: "error",
@@ -445,10 +510,10 @@ const delete_monitoring_item = (data) => {
                   detail: response.error[key][0],
                   life: 5000,
                 });
-              })
+              });
             }
           });
-      })
+      });
     } else {
       viewEditModal.value.showModal();
       toast.add({
@@ -554,10 +619,10 @@ const openModal = (modal) => {
     viewEditModal.value.showModal();
     viewEditModal.value.classList.remove("-translate-y-5");
   } else if (modal === "attachmentModal") {
-    attachmentModal.value.showModal()
+    attachmentModal.value.showModal();
     attachmentModal.value.classList.remove("-translate-y-5");
   } else if (modal === "viewDesignerModal") {
-    viewDesignerModal.value.showModal()
+    viewDesignerModal.value.showModal();
     viewDesignerModal.value.classList.remove("-translate-y-5");
   }
 };
@@ -570,10 +635,10 @@ const closeModal = (modal) => {
     attachmentModal.value.close();
     attachmentModal.value.classList.add("-translate-y-5");
   } else if (modal === "viewDesignerModal") {
-    viewDesignerModal.value.close()
+    viewDesignerModal.value.close();
     viewDesignerModal.value.classList.add("-translate-y-5");
   }
-}
+};
 
 const submitUpdateEditItemMonitoring = () => {
   viewEditModal.value.close();
@@ -587,22 +652,27 @@ const submitUpdateEditItemMonitoring = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      const loader = $loading.show()
+      const loader = $loading.show();
       setTimeout(() => {
         monitoringStore.setUpdateMonitoring().then((response) => {
           monitoringStore.setEditMonitoringList();
-          loader.hide()
+          loader.hide();
           swal({
             icon: "success",
             title: response.message,
-            timer: 1500
+            timer: 1500,
           });
         });
-      })
+      });
     } else {
-      loader.hide()
+      loader.hide();
       viewEditModal.value.showModal();
-      toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, });
+      toast.add({
+        severity: "error",
+        summary: "Warning",
+        detail: "Cancelled.",
+        life: 2000,
+      });
     }
   });
 };
@@ -611,7 +681,7 @@ const viewAttachment = (data) => {
   var path = data.file_path_attachment;
   // console.log(path)
   window.open(
-    `http://10.164.58.62/hinsei/server/public/view-attachment?file_path_attachment=${path}`
+    `http://10.164.58.82/hinsei/server/public/view-attachment?file_path_attachment=${path}`
   );
 };
 
@@ -630,7 +700,7 @@ const downloadAttachment = (data) => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      attachmentStore.downloadAttachment(datastorage)
+      attachmentStore.downloadAttachment(datastorage);
       // window.location.href = `http://10.164.58.62/hinsei/server/public/download-attachment/${emp_id}?file_path_attachment=${path}`;
       attachmentModal.value.showModal();
     } else {

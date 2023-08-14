@@ -40,8 +40,6 @@
                   class="flex w-[30%] justify-center bg-gray-500 h-full items-center rounded-l"
                   >From:</label
                 >
-
-                <!-- <div class="col-span-2"> -->
                 <input
                   type="date"
                   v-model="dashboardStore.date_from"
@@ -49,7 +47,6 @@
                   class="rounded border-2 hover:border-red-600 outline-green-600 w-[70%] h-full text-center px-3 text-black"
                   :max="max_date"
                 />
-                <!-- </div> -->
               </div>
               <div
                 class="flex col-span-3 items-center justify-center text-white rounded-l"
@@ -58,8 +55,6 @@
                   class="flex w-[30%] justify-center bg-gray-500 h-full items-center rounded-l"
                   >To:</label
                 >
-
-                <!-- <div class="col-span-2"> -->
                 <input
                   type="date"
                   v-model="dashboardStore.date_to"
@@ -67,7 +62,6 @@
                   class="rounded border-2 hover:border-red-600 outline-green-600 w-[70%] h-full text-center px-3 text-black"
                   :max="max_date"
                 />
-                <!-- </div> -->
               </div>
               <div class="col-span-1 bg-pink-200">
                 <button
@@ -138,7 +132,7 @@
                     >OK</label
                   >
                   <span
-                    class="flex justify-center h-[74%] text-[60px] bg-white"
+                    class="flex justify-center h-[74%] text-[45px] bg-white items-center text-center"
                     >{{ hinsei_ok }}</span
                   >
                 </div>
@@ -153,7 +147,7 @@
                     >NG</label
                   >
                   <span
-                    class="flex justify-center h-[74%] text-[60px] bg-white"
+                    class="flex justify-center h-[74%] text-[45px] bg-white items-center text-center"
                     >{{ hinsei_ng }}</span
                   >
                 </div>
@@ -168,7 +162,7 @@
                     >PENDING</label
                   >
                   <span
-                    class="flex justify-center h-[74%] text-[60px] bg-white"
+                    class="flex justify-center h-[74%] text-[45px] bg-white items-center text-center"
                     >{{ hinsei_pending }}</span
                   >
                 </div>
@@ -184,7 +178,7 @@
                   </div>
                   <button
                     @click="openModal('hinseiCount')"
-                    class="flex col-span-1 h-[6vh] justify-center items-center font-bold text-[40px] text-blue-100 bg-blue-500 rounded-r-full"
+                    class="flex col-span-1 h-[6vh] justify-center items-center font-bold text-[40px] text-white bg-[#A10A13] rounded-r-full hover:bg-red-600"
                   >
                     {{ hinsei_count }}
                   </button>
@@ -207,7 +201,7 @@
                     >OK</label
                   >
                   <span
-                    class="flex justify-center h-[74%] text-[60px] bg-white"
+                    class="flex justify-center h-[74%] text-[45px] bg-white items-center text-center"
                     >{{ lsa_ok }}</span
                   >
                 </div>
@@ -222,7 +216,7 @@
                     >NG</label
                   >
                   <span
-                    class="flex justify-center h-[74%] text-[60px] bg-white"
+                    class="flex justify-center h-[74%] text-[45px] bg-white items-center text-center"
                     >{{ lsa_ng }}</span
                   >
                 </div>
@@ -237,7 +231,7 @@
                     >PENDING</label
                   >
                   <span
-                    class="flex justify-center h-[74%] text-[60px] bg-white"
+                    class="flex justify-center h-[74%] text-[45px] bg-white items-center text-center"
                     >{{ lsa_pending }}</span
                   >
                 </div>
@@ -253,7 +247,7 @@
                   </div>
                   <button
                     @click="openModal('lsaCount')"
-                    class="flex col-span-1 h-[6vh] justify-center items-center font-bold text-[40px] text-orange-100 bg-orange-500 rounded-r-full"
+                    class="flex col-span-1 h-[6vh] justify-center items-center font-bold text-[40px] text-white bg-[#A10A13] rounded-r-full hover:bg-red-600"
                   >
                     {{ lsa_count }}
                   </button>
@@ -270,99 +264,156 @@
       <div
         class="font-bold bg-[#A10E13] p-3 drop-shadow-xl text-white rounded-t-md"
       >
+        <font-awesome-icon icon="bookmark" class="w-[15px] h-[17px]" />
         Task To Do!
       </div>
       <div class="p-4 overflow-scroll w-[15.5vw] h-[53vh]">
         <div class="flex flex-col space-y-3">
-          <!-- <div
-            class="grid grid-cols-7 rounded-lg border border-black shadow-xl select-none text-center"
-            v-for="(item, key) in task_to_do"
-            :key="key"
-          >
-            <div
-              class="flex col-span-1 justify-center bg-gray-600 rounded-l-md"
-            >
-              <font-awesome-icon
-                icon="bookmark"
-                class="self-center h-5 text-white"
-              />
-            </div>
-            <div class="col-span-6">
-              <span
-                class="font-mono text-[14px] font-bold"
-                v-tooltip.top="'13'"
-                >{{ item.value }}</span
-              >
-              <p>{{ item.req }}</p>
-            </div>
-          </div> -->
           <div
-            class="grid grid-cols-7 rounded-lg border border-gray-800 shadow-xl select-none text-center h-[8vh]"
+            class="grid grid-cols-7 rounded-lg border-t-4 border-gray-800 shadow-xl select-none text-center h-[8vh]"
           >
-            <div
-              class="flex col-span-1 justify-center bg-gray-800 rounded-l-md"
+            <dialog
+              ref="request_generate_data_dialog"
+              class="h-[30%] w-[15%] ml-[69.2%] mt-[7.6%] border-2 border-[#A10A13] p-0 select-none"
             >
-              <font-awesome-icon
-                icon="bookmark"
-                class="self-center h-6 text-white"
-              />
+              <div
+                class="flex bg-[#A10A13] h-[13%] pl-2 items-center text-white font-mono font-bold text-[20px] justify-between sticky top-0"
+              >
+                PART NUMBER
+                <button @click="closeModal('request_generate_data_dialog')">
+                  <font-awesome-icon
+                    icon="xmark"
+                    class="flex px-3 py-2 rounded-full hover:bg-red-500 text-white"
+                  />
+                </button>
+              </div>
+              <div
+                v-for="(i, key) in task_to_do_generate"
+                :key="key"
+                class="pb-0.5"
+              >
+                <div class="w-full border border-black">
+                  {{ i.part_number }}
+                </div>
+              </div>
+            </dialog>
+            <div
+              class="flex col-span-1 justify-center bg-gray-800 rounded-l-md select-none cursor-pointer hover:bg-gray-500"
+              @click="openModal('request_generate_data_dialog')"
+            >
+              <div
+                ref="forGenerate"
+                class="flex flex-col justify-center items-center rotate-360 transition transform ease-in-out"
+              >
+                <font-awesome-icon
+                  icon="circle-arrow-right"
+                  class="self-center h-6 text-white"
+                />
+              </div>
             </div>
             <div class="col-span-6 self-center">
-              <span
-                class="font-mono text-[14px] font-bold"
-                v-tooltip.left="{
-                  value: `<b>PART NUMBER:</b> <br> KD23232323 <br> KD23232323 <br> KD23232323 <br> KD23232323`,
-                  escape: true,
-                }"
+              <span class="font-mono text-[14px] font-bold"
                 >Request needs to have CODE</span
               >
-              <p>13</p>
+              <p>{{ requestGenerateData.total_count }}</p>
             </div>
           </div>
           <div
-            class="grid grid-cols-7 rounded-lg border border-gray-800 shadow-xl select-none text-center h-[8vh]"
+            class="grid grid-cols-7 rounded-lg border-t-4 border-gray-800 shadow-xl select-none text-center h-[8vh] w-full"
           >
-            <div
-              class="flex col-span-1 justify-center bg-gray-800 rounded-l-md"
+            <dialog
+              ref="designer_data_dialog"
+              class="h-[30%] w-[15%] ml-[69.2%] mt-[12.4%] border-2 border-[#A10A13] p-0 select-none gap-2"
             >
-              <font-awesome-icon
-                icon="bookmark"
-                class="self-center h-6 text-white"
-              />
+              <div
+                class="flex bg-[#A10A13] h-[13%] pl-2 items-center text-white font-mono font-bold text-[20px] justify-between sticky top-0"
+              >
+                PART NUMBER
+                <button @click="closeModal('designer_data_dialog')">
+                  <font-awesome-icon
+                    icon="xmark"
+                    class="flex px-3 py-2 rounded-full hover:bg-red-500 text-white"
+                  />
+                </button>
+              </div>
+              <div
+                v-for="(i, key) in task_to_do_designer"
+                :key="key"
+                class="pb-0.5"
+              >
+                <div class="w-full border border-black">
+                  {{ i.part_number }}
+                </div>
+              </div>
+            </dialog>
+            <div
+              class="flex col-span-1 justify-center bg-gray-800 rounded-l-md select-none cursor-pointer hover:bg-gray-500"
+              @click="openModal('designer_data_dialog')"
+            >
+              <div
+                ref="forDesigner"
+                class="flex flex-col justify-center items-center rotate-360 transition transform ease-in-out"
+              >
+                <font-awesome-icon
+                  icon="circle-arrow-right"
+                  class="self-center h-6 text-white"
+                />
+              </div>
             </div>
             <div class="col-span-6 self-center">
-              <span
-                class="font-mono text-[14px] font-bold"
-                v-tooltip.left="{
-                  value: `<b>PART NUMBER:</b> <br> KD23232323 <br> KD23232323 <br> KD23232323 <br> KD23232323`,
-                  escape: true,
-                }"
+              <span class="font-mono text-[14px] font-bold"
                 >Request needs to have DESIGNER ANSWER</span
               >
-              <p>13</p>
+              <p>{{ designerData.total_count }}</p>
             </div>
           </div>
           <div
-            class="grid grid-cols-7 rounded-lg border border-gray-800 shadow-xl select-none text-center h-[8vh]"
+            class="grid grid-cols-7 rounded-lg border-t-4 border-gray-800 shadow-xl select-none text-center h-[8vh]"
           >
-            <div
-              class="flex col-span-1 justify-center bg-gray-800 rounded-l-md"
+            <dialog
+              ref="inspection_data_dialog"
+              class="h-[30%] w-[15%] ml-[69.2%] mt-[17.1%] border-2 border-[#A10A13] p-0 select-none"
             >
-              <font-awesome-icon
-                icon="bookmark"
-                class="self-center h-6 text-white"
-              />
+              <div
+                class="flex bg-[#A10A13] h-[13%] pl-2 items-center text-white font-mono font-bold text-[20px] justify-between sticky top-0"
+              >
+                PART NUMBER
+                <button @click="closeModal('inspection_data_dialog')">
+                  <font-awesome-icon
+                    icon="xmark"
+                    class="flex px-3 py-2 rounded-full hover:bg-red-500 text-white"
+                  />
+                </button>
+              </div>
+              <div
+                v-for="(i, key) in task_to_do_inspection"
+                :key="key"
+                class="pb-0.5"
+              >
+                <div class="w-full border border-black p-1">
+                  {{ i.part_number }}
+                </div>
+              </div>
+            </dialog>
+            <div
+              class="flex col-span-1 justify-center bg-gray-800 rounded-l-md select-none cursor-pointer hover:bg-gray-500"
+              @click="openModal('inspection_data_dialog')"
+            >
+              <div
+                ref="forInspection"
+                class="flex flex-col justify-center items-center rotate-360 transition transform ease-in-out"
+              >
+                <font-awesome-icon
+                  icon="circle-arrow-right"
+                  class="self-center h-6 text-white"
+                />
+              </div>
             </div>
             <div class="col-span-6 self-center">
-              <span
-                class="font-mono text-[14px] font-bold"
-                v-tooltip.left="{
-                  value: `<b>PART NUMBER:</b> <br> KD23232323 <br> KD23232323 <br> KD23232323 <br> KD23232323`,
-                  escape: true,
-                }"
+              <span class="font-mono text-[14px] font-bold"
                 >Request that have CRITICAL PARTS
               </span>
-              <p>13</p>
+              <p>{{ inspectionData.total_count }}</p>
             </div>
           </div>
         </div>
@@ -370,9 +421,10 @@
       <div
         class="font-bold outline-1 bg-[#A10E13] p-3 drop-shadow-xl text-white"
       >
+        <font-awesome-icon icon="table-list" class="w-5 h-[17px]" />
         Activity Logs!
       </div>
-      <div class="p-4 overflow-scroll w-[15.5vw] h-[53vh]">
+      <div class="p-4 overflow-scroll w-[15.5vw] h-[85vh]">
         <div class="flex flex-col space-y-3">
           <ul
             v-for="(i, key) in logs_activity"
@@ -406,7 +458,7 @@
   <!--HINSEI REQUEST COUNT-->
   <dialog
     ref="hinseiCount"
-    class="w-[70vh] h-[25vh] rounded-lg p-0 select-none"
+    class="w-[70vh] h-[25vh] rounded-lg p-0 select-none border-2 border-[#A10A13]"
   >
     <div class="flex p-2 items-center justify-between bg-[#A10E13]">
       <span class="text-white"
@@ -475,7 +527,10 @@
   </dialog>
 
   <!--LSA REQUEST COUNT-->
-  <dialog ref="lsaCount" class="w-[70vh] h-[25vh] rounded-lg p-0 select-none">
+  <dialog
+    ref="lsaCount"
+    class="w-[70vh] h-[25vh] rounded-lg p-0 select-none border-2 border-[#A10A13]"
+  >
     <div class="flex p-2 items-center justify-between bg-[#A10E13]">
       <span class="text-white"
         ><font-awesome-icon
@@ -562,21 +617,127 @@ const lsaCount = ref();
 const lsa_ok = ref(null);
 const lsa_ng = ref(null);
 const lsa_pending = ref(null);
+const inspection_data_dialog = ref(null);
+const designer_data_dialog = ref(null);
+const request_generate_data_dialog = ref(null);
 
 const openModal = (modal) => {
   if (modal === "hinseiCount") {
     hinseiCount.value.showModal();
-  } else {
+  } else if (modal === "lsaCount") {
     lsaCount.value.showModal();
+  } else if (modal === "inspection_data_dialog") {
+    forInspection.value.classList.replace("rotate-360", "rotate-180");
+    inspection_data_dialog.value.showModal();
+  } else if (modal === "designer_data_dialog") {
+    forDesigner.value.classList.replace("rotate-360", "rotate-180");
+    designer_data_dialog.value.showModal();
+  } else if (modal === "request_generate_data_dialog") {
+    forGenerate.value.classList.replace("rotate-360", "rotate-180");
+    request_generate_data_dialog.value.showModal();
   }
 };
+
+const forInspection = ref(null);
+const forDesigner = ref(null);
+const forGenerate = ref(null);
 
 const closeModal = (modal) => {
   if (modal === "hinseiCount") {
     hinseiCount.value.close();
-  } else {
+  } else if (modal === "lsaCount") {
     lsaCount.value.close();
+  } else if (modal === "inspection_data_dialog") {
+    forInspection.value.classList.replace("rotate-180", "rotate-360");
+    inspection_data_dialog.value.close();
+  } else if (modal === "designer_data_dialog") {
+    forDesigner.value.classList.replace("rotate-180", "rotate-360");
+    designer_data_dialog.value.close();
+  } else if (modal === "request_generate_data_dialog") {
+    forGenerate.value.classList.replace("rotate-180", "rotate-360");
+    request_generate_data_dialog.value.close();
   }
+};
+
+const hinsei_count = ref(null);
+const lsa_count = ref(null);
+onMounted(() => {
+  dashboardStore.date_from = startOfMonth;
+  dashboardStore.date_to = date_today;
+  submitDateFilter();
+  chartOptions.value = setChartOptions();
+  taskToDo();
+});
+
+const countRequest = () => {
+  dashboardStore.setCountRequest().then((response) => {
+    hinsei_count.value = response.data[0].hinsei_count;
+    lsa_count.value = response.data[0].count_lsa;
+    hinsei_ok.value = response.data[0].hinsei_ok;
+    hinsei_ng.value = response.data[0].hinsei_ng;
+    hinsei_pending.value = response.data[0].hinsei_pending;
+    lsa_ok.value = response.data[0].lsa_ok;
+    lsa_ng.value = response.data[0].lsa_ng;
+    lsa_pending.value = response.data[0].lsa_pending;
+  });
+};
+const requestGenerateData = ref([]);
+const inspectionData = ref([]);
+const designerData = ref([]);
+const part_number = ref([]);
+const task_to_do_designer = ref([]);
+const task_to_do_generate = ref([]);
+const task_to_do_inspection = ref([]);
+
+const taskToDo = () => {
+  dashboardStore.setLoadTaskList().then((response) => {
+    requestGenerateData.value = response.data.request_generate_data;
+    inspectionData.value = response.data.inspection_data;
+    designerData.value = response.data.designer_data;
+
+    task_to_do_designer.value = [];
+    response.data.designer_data.part_number.forEach((v) => {
+      var datastorage = {
+        part_number: v.part_number,
+      };
+      task_to_do_designer.value.push(datastorage);
+    });
+
+    task_to_do_generate.value = [];
+    response.data.request_generate_data.part_number.forEach((v) => {
+      var datastorage1 = {
+        part_number: v.part_number,
+      };
+      task_to_do_generate.value.push(datastorage1);
+    });
+
+    task_to_do_inspection.value = [];
+    response.data.inspection_data.part_number.forEach((v) => {
+      var datastorage2 = {
+        part_number: v.part_number,
+      };
+      task_to_do_inspection.value.push(datastorage2);
+    });
+  });
+};
+
+const logs_activity = ref([]);
+const showActivityLogs = () => {
+  dashboardStore.setActivityLogs().then((response) => {
+    logs_activity.value = [];
+    var datastorage = [];
+    response.data.forEach((v) => {
+      datastorage = {
+        name: v.name,
+        subject: v.subject,
+        date: v.created_at,
+        agent: v.agent,
+        ip: v.ip,
+        url: v.url,
+      };
+      logs_activity.value.push(datastorage);
+    });
+  });
 };
 
 const first_name = sessionStorage.getItem("first_name");
@@ -620,55 +781,7 @@ const chartData2 = ref({
   ],
 });
 
-const hinsei_count = ref(null);
-const lsa_count = ref(null);
-onMounted(() => {
-  dashboardStore.date_from = startOfMonth;
-  dashboardStore.date_to = date_today;
-  submitDateFilter();
-  chartOptions.value = setChartOptions();
-});
-
-const countRequest = () => {
-  dashboardStore.setCountRequest().then((response) => {
-    hinsei_count.value = response.data[0].hinsei_count;
-    lsa_count.value = response.data[0].count_lsa;
-    hinsei_ok.value = response.data[0].hinsei_ok;
-    hinsei_ng.value = response.data[0].hinsei_ng;
-    hinsei_pending.value = response.data[0].hinsei_pending;
-    lsa_ok.value = response.data[0].lsa_ok;
-    lsa_ng.value = response.data[0].lsa_ng;
-    lsa_pending.value = response.data[0].lsa_pending;
-  });
-};
-
-const logs_activity = ref([]);
-const showActivityLogs = () => {
-  dashboardStore.setActivityLogs().then((response) => {
-    logs_activity.value = [];
-    var datastorage = [];
-    response.data.forEach((v) => {
-      datastorage = {
-        name: v.name,
-        subject: v.subject,
-        date: v.created_at,
-        agent: v.agent,
-        ip: v.ip,
-        url: v.url,
-      };
-      logs_activity.value.push(datastorage);
-    });
-  });
-};
-
-// const task_to_do = ref([
-//   { value: "Request needs to have CODE", req: "13" },
-//   { value: "Request needs to have DESIGNER ANSWER", req: "13" },
-//   { value: "Request that have CRITICAL PARTS", req: "13" },
-// ]);
-
 const chartOptions = ref();
-
 const setChartOptions = () => {
   const documentStyle = getComputedStyle(document.documentElement);
   const textColor = documentStyle.getPropertyValue("--text-color");
@@ -772,6 +885,11 @@ const submitDateFilter = () => {
     }
   });
 };
+
+// const isClick_generate = ref(null);
+// const isClick_designer = ref(null);
+// const isClick_inspection = ref(null);
+
 </script>
 <style>
 .custom-error {
@@ -781,7 +899,12 @@ const submitDateFilter = () => {
   color: white;
   justify-content: center;
 }
-/* .custom-error .p-tooltip-left .p-tooltip-arrow {
-  border-right-color: var(--red-800);
+/* .rotate {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease-in-out;
+} */
+/* .rotate_back {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease-in-out;
 } */
 </style>

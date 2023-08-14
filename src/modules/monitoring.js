@@ -124,14 +124,14 @@ export const useMonitoringStore = defineStore({
           });
       });
     },
-    setDeleteMonitoring(id) {
+    setDeleteMonitoring(data) {
       var payload = {
-        id: id,
-        emp_id: sessionStorage.getItem("employee_id")
+        id: data.agreement_id_pk,
+        emp_id: sessionStorage.getItem('employee_id'), 
       }
       return new Promise((resolve, reject) => {
         axios
-          .delete(`delete-agreement-list/${payload.id}/${payload.emp_id}`)
+          .delete(`delete-monitoring/${payload.id}/${payload.emp_id}`)
           .then((response) => {
             resolve(response.data);
             this.setEditMonitoringList()
@@ -230,7 +230,7 @@ export const useMonitoringStore = defineStore({
     },
     setExportMonitoringList(data) {
       window.open(
-        `http://10.164.58.62/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
+        `http://10.164.58.82/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
       )
     },
   },

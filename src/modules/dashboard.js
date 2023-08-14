@@ -9,6 +9,8 @@ export const useDashboardStore = defineStore({
         date_to: null,
         activity_logs: [],
         count_request: [],
+        task_list: [],
+        clicked: false,
     }),
     actions: {
         setCountRequest() {
@@ -57,7 +59,18 @@ export const useDashboardStore = defineStore({
                     reject(err)
                 })
             })
-        }
+        },
+        setLoadTaskList(){
+            return new Promise((resolve, reject) => {
+                axios.get('load-task-to-do').then(response => {
+                    resolve(response.data)
+                    this.task_list = response.data.data
+                    // console.log(response.data.data)
+                }).catch(err => {
+                    reject(err)
+                })
+            })
+        },
     },
     getters: {
         getCountResult() {
@@ -68,6 +81,9 @@ export const useDashboardStore = defineStore({
         },
         getCountRequest() {
             return this.count_request;
+        },
+        getTaskList() {
+            return this.task_list;
         },
     }
 })
