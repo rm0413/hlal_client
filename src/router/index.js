@@ -93,4 +93,19 @@ router.afterEach((to, from) => {
     }
 })
 
+setInterval(() => {
+    if (localStorage.getItem("userdata") === null || localStorage.getItem("userdata") === "") {
+        Swal.fire({
+            icon: "warning",
+            title: "Unauthorized User",
+            text: "Please Login to FDTP Portal",
+            showCloseButton: false,
+            showConfirmButton: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+        }).then(() => {
+            window.close()
+        })
+    }
+}, 2500)
 export default router;

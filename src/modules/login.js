@@ -38,15 +38,15 @@ export const useLoginStore = defineStore({
                         sessionStorage.setItem("role_access", role)
                         sessionStorage.setItem("section", this.userProfile.section)
                         sessionStorage.setItem("section_code", this.userProfile.section_code)
-                        var login_data = {
-                            employee_id: data,
-                            role_access: {
-                                role_access: role,
-                            },
-                        };
+                        // var login_data = {
+                        //     employee_id: data,
+                        //     role_access: {
+                        //         role_access: role,
+                        //     },
+                        // };
                         this.role = sessionStorage.getItem('role_access')
                         this.section_code = sessionStorage.getItem('section_code')
-                        this.setLoginRole(login_data);
+                        // this.setLoginRole(login_data);
                     }
                 }).catch(err => {
                     reject(err)
@@ -58,11 +58,7 @@ export const useLoginStore = defineStore({
                 id: data.employee_id.emp_id,
                 role_access: data.role_access.role_access,
                 employee_id: data.employee_id.emp_id,
-<<<<<<< Updated upstream
                 emp_id: sessionStorage.getItem('employee_id')
-=======
-                emp_id: sessionStorage.getItem("employee_id")
->>>>>>> Stashed changes
             }
             return new Promise((resolve, reject) => {
                 axios.patch(`user/${payload.id}`, payload).then(response => {
