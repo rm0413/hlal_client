@@ -14,7 +14,7 @@ export const useLoginStore = defineStore({
         setLogin(data) {
             axios.defaults.headers.common.Authorization = `Bearer ${data}`;
             return new Promise((resolve, reject) => {
-                axios.post(`http://10.164.58.82/FDTP-Portal/public/api/auth/profile`).then((response) => {
+                axios.post(`http://10.164.58.65/FDTP-Portal/public/api/auth/profile`).then((response) => {
                     resolve(response.data)
                     this.userProfile = response.data.data
                 }).catch((err) => {
@@ -58,7 +58,7 @@ export const useLoginStore = defineStore({
                 id: data.employee_id.emp_id,
                 role_access: data.role_access.role_access,
                 employee_id: data.employee_id.emp_id,
-                emp_id: sessionStorage.getItem('employee_id')
+                emp_id: sessionStorage.getItem("employee_id")
             }
             return new Promise((resolve, reject) => {
                 axios.patch(`user/${payload.id}`, payload).then(response => {

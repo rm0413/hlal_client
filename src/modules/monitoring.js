@@ -230,7 +230,7 @@ export const useMonitoringStore = defineStore({
     },
     setExportMonitoringList(data) {
       window.open(
-        `http://10.164.58.82/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
+        `http://10.164.58.65/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
       )
     },
   },
