@@ -233,7 +233,7 @@ export const useMonitoringStore = defineStore({
     },
     setExportMonitoringList(data) {
       window.open(
-        `http://10.164.30.174/HLAL/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
+        `http://10.164.58.62/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
       )
     },
   },

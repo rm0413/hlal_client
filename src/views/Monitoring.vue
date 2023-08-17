@@ -627,7 +627,7 @@ const viewAttachment = (data) => {
   var path = data.file_path_attachment;
   // console.log(path)
   window.open(
-    `http://10.164.30.174/HLAL/server/public/view-attachment?file_path_attachment=${path}`
+    `http://10.164.58.62/hinsei/server/public/view-attachment?file_path_attachment=${path}`
   );
 };
 
@@ -647,7 +647,7 @@ const downloadAttachment = (data) => {
   }).then((response) => {
     if (response.value === true) {
       attachmentStore.downloadAttachment(datastorage);
-      // window.location.href = `http://10.164.30.174/hinsei/server/public/download-attachment/${emp_id}?file_path_attachment=${path}`;
+      // window.location.href = `http://10.164.58.62/hinsei/server/public/download-attachment/${emp_id}?file_path_attachment=${path}`;
       attachmentModal.value.showModal();
     } else {
       attachmentModal.value.showModal();

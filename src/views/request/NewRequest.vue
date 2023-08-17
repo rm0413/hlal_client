@@ -10,7 +10,8 @@
             <div class="flex flex-row w-[18rem]">
               <p
                 class="flex flex-col text-white bg-[#A10E13] h-[2.5rem] w-[5rem] items-center justify-center rounded-l-md rounded-r-none">
-                <b>Unit</b></p>
+                <b>Unit</b>
+              </p>
               <!-- <c-select ref="select_unit" class="h-[2.5rem] text-center" :options="units"
               v-model="newRequestStore.agreementForm.unit"></c-select> -->
               <select
@@ -172,10 +173,12 @@
                 v-model="newRequestStore.agreementForm.request_quantity" required />
             </label>
             <div class="flex justify-center items-center mt-8 gap-2">
-              <button type="submit" class="bg-red-500 border-2 border-red-900 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-red-600">
+              <button type="submit"
+                class="bg-red-500 border-2 border-red-900 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-red-600">
                 <font-awesome-icon icon="arrow-turn-right" /> <b>ENTER</b>
               </button>
-              <button type="button" class="bg-gray-500 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-gray-600 border-2 border-gray-800"
+              <button type="button"
+                class="bg-gray-500 text-white p-1 w-[10rem] h-[2.5rem] rounded hover:bg-gray-600 border-2 border-gray-800"
                 @click="newRequestStore.setClearAgreementList">
                 <font-awesome-icon icon="eraser" /> <b>CLEAR</b>
               </button>
@@ -522,7 +525,7 @@ const downloadFormat = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      window.location.href = 'http://10.164.30.174/HLAL/server/public/download-format';
+      window.location.href = 'http://10.164.58.62/hinsei/server/public/download-format';
     } else {
       multiple_input.value.showModal();
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000 });
@@ -566,14 +569,15 @@ const submitMultipleRequest = () => {
               })
             } else {
               loader.hide()
-              Object.keys(response.error).forEach((key) => {
-                toast.add({
-                  severity: "error",
-                  summary: "Warning",
-                  detail: response.error[key][0],
-                  life: 5000,
-                });
-              })
+              // Object.keys(response.error).forEach((key) => {
+              toast.add({
+                severity: response.status,
+                summary: "Warning",
+                detail: response.message,
+                life: 5000,
+                group: 'bl'
+              });
+              // })
             }
           })
         })

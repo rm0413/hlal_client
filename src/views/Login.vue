@@ -51,9 +51,9 @@ import { useRouter } from "vue-router";
 
 const loginStore = useLoginStore();
 const router = useRouter();
-const token = ref(window.location.href.split("/")[7]);
-const role = ref( window.location.href.split("/")[8].split("#")[0]);
-const system_id = ref(window.location.href.split("/")[9].split("#")[0]);
+const token = ref(window.location.href.split("/")[6]);
+const role = ref( window.location.href.split("/")[7].split("#")[0]);
+const system_id = ref(window.location.href.split("/")[8].split("#")[0]);
 const swal = inject("$swal");
 
 onMounted(() => {
@@ -94,7 +94,7 @@ onMounted(() => {
                 showConfirmButton: false,
                 timer: 2000,
               }).then(() => {
-                window.location.href = "http://10.164.30.174/FDTP-Portal/public/";
+                window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
               });
             }
           });
@@ -106,7 +106,7 @@ onMounted(() => {
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
-            window.location.href = "http://10.164.30.174/FDTP-Portal/public/";
+            window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
           });
         }
       });
@@ -117,7 +117,7 @@ onMounted(() => {
         text: "Redirecting to FDTP-Portal!!",
         timer: 2000,
       }).then(() => {
-        window.location.href = "http://10.164.30.174/FDTP-Portal/public/";
+        window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
       });
     }
   });
@@ -128,7 +128,7 @@ onMounted(() => {
         text: "Redirecting to FDTP-Portal!!",
         timer: 2000,
       }).then(() => {
-        window.location.href = "http://10.164.30.174/FDTP-Portal/public/";
+        window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
       });
 }
 });
