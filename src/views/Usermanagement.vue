@@ -61,11 +61,11 @@
           >
             Save
           </button>
-          <button
-            class="gap-2 w-[15rem] bg-gray-600 rounded hover:bg-gray-500 p-3 text-white"
-            @click="userManagementStore.clearUser()"
-          >
-            Clear
+          <button type="button" class="gap-2 w-[15rem] bg-gray-500 rounded hover:bg-gray-600 p-3 text-white border-2 border-gray-700"
+            @click="
+              userManagementStore.clearUser()
+              ">
+            <font-awesome-icon icon="eraser"/> <b>CLEAR</b>
           </button>
         </div>
       </form>

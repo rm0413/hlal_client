@@ -239,15 +239,15 @@ const excelUploadingDesignerAnswer = () => {
                     select_data.value = [];
                   } else {
                     loader.hide()
-                    Object.keys(response.error).forEach((key) => {
+                    // Object.keys(response.error).forEach((key) => {
                       toast.add({
-                        severity: "error",
+                        severity: response.status,
                         summary: "Warning",
-                        detail: response.error[key][0],
+                        detail: response.message,
                         life: 5000,
                         group: 'bl'
                       });
-                    })
+                    // })
                   }
                 });
             })

@@ -50,15 +50,18 @@ export const useMonitoringStore = defineStore({
     ],
     monitoringAttachmentFields: [
       { label: "No.", key: "#" },
+      { label: "Code", key: "code" },
       { label: "Request Date", key: "request_date" },
       { label: "Part Number", key: "part_number" },
       { label: "Action", key: "action" },
     ],
     monitoringDesignerFields: [
       { label: "No.", key: "#" },
+      { label: "Code", key: "code" },
       { label: "Trial No.", key: "trial_number" },
       { label: "Request Date", key: "request_date" },
       { label: "TRI No.", key: "tri_number" },
+      { label: "Supplier", key: "supplier_name" },
       { label: "Part Number", key: "part_number" },
       { label: "Sub Part Number", key: "sub_part_number" },
       { label: "Revision", key: "revision" },
@@ -230,7 +233,7 @@ export const useMonitoringStore = defineStore({
     },
     setExportMonitoringList(data) {
       window.open(
-        `http://10.164.58.65/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
+        `http://10.164.30.174/HLAL/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
       )
     },
   },

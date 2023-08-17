@@ -85,7 +85,8 @@ const loadUnits = () => {
     })
 }
 const deleteUnit = (data) => {
-    // console.log(data)
+    unitManagementStore.onEdit = false;
+    unitManagementStore.unitForm.unit_name = ""
     swal({
         icon: "question",
         title: "Delete Unit?",

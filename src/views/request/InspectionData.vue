@@ -39,7 +39,7 @@
       class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">
       Select All
     </button>
-    <div class="h-[85vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
+    <div class="h-[81vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[81vh] overflow-y-scroll">
         <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
           :fields="inspectionDataStore.getInspectionDataFields" :items="filterPartNumber"
@@ -59,7 +59,7 @@
           </template>
         </c-table>
       </div>
-      <div class="lg:col-span-2 min-[100px]:col-span-9 h-full flex flex-col mt-10 gap-2 px-10">
+      <div class="lg:col-span-2 min-[100px]:col-span-9 h-[81vh] flex flex-col mt-5 gap-2 px-10">
         <form method="post" @submit.prevent="submitInspectionData">
           <label class="flex flex-col items-center">
             <i class="text-gray-400">100% of Inspection Data or CPK Data</i>

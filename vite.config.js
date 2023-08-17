@@ -20,5 +20,5 @@ export default defineConfig({
       }
     }
   },
-  base: `http://10.164.58.65/HINSEI`,
+  base: `http://10.164.30.174/HLAL/client`,
 })

@@ -13,8 +13,8 @@ import "./style.css";
 import { LoadingPlugin } from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 
-import axios from "axios";
-axios.defaults.baseURL = "http://10.164.58.65/hinsei/server/public/api/";
+import axios from 'axios'
+axios.defaults.baseURL = 'http://10.164.30.174/HLAL/server/public/api/';
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {

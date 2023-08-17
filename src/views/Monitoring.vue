@@ -30,14 +30,9 @@
           </label>
           <label for="" class="flex flex-col w-full">
             Part Number
-            <input
-              @change="inputPartNumber"
-              type="text"
-              class="border p-2 flex text-center w-[32rem] rounded border-black text-black"
-              v-model="monitoringStore.monitoringForm.monitoring_part_number"
-              required
-              placeholder="Part Number"
-            />
+            <input @change="inputPartNumber" type="text"
+              class="border p-2 flex text-center rounded border-black text-black"
+              v-model="monitoringStore.monitoringForm.monitoring_part_number" required placeholder="Part Number" />
           </label>
           <div class="flex gap-5 mt-5">
             <button type="button" @click="exportFile"
@@ -59,43 +54,37 @@
           <template #cell(action)="data" v-if="role === 'ADMIN'">
             <div class="flex justify-center gap-1">
               <button @click="openModal('viewEditModal'), monitoringStore.setEditMonitoringList(data.item)"
-                data-open-modal class="h-8 w-9 rounded bg-yellow-500 text-white" v-tooltip.top="'Edit/Delete Request'">
+                data-open-modal
+                class="h-8 w-9 rounded bg-yellow-400 hover:bg-yellow-500 border-2 border-yellow-600 text-white"
+                v-tooltip.top="'Edit/Delete Request'">
                 <font-awesome-icon icon="eraser"></font-awesome-icon>
               </button>
               <button @click="openModal('attachmentModal'), monitoringStore.setAttachmentMonitoringList(data.item)"
-                v-tooltip.top="'Attached Files'" data-open-modal class="h-8 w-9 rounded bg-blue-600 text-white">
+                v-tooltip.top="'Attached Files'" data-open-modal
+                class="h-8 w-9 rounded bg-blue-500 hover:bg-blue-700 border-2 border-blue-900 text-white">
                 <font-awesome-icon icon="download"></font-awesome-icon>
               </button>
               <button @click="openModal('viewDesignerModal'), designerOpenModal(data.item)"
-                v-tooltip.top="'View Agreement Lists'" data-open-modal class="h-8 w-9 rounded bg-cyan-600 text-white">
+                v-tooltip.top="'View Agreement Lists'" data-open-modal
+                class="h-8 w-9 rounded bg-cyan-500 hover:bg-cyan-700 border-2 border-cyan-900 text-white">
                 <font-awesome-icon icon="eye"></font-awesome-icon>
               </button>
             </div>
           </template>
           <template #cell(action)="data" v-else>
             <div class="flex justify-center gap-1">
-              <button
-                @click="
+              <button @click="
                   openModal('viewEditModal'),
                     monitoringStore.setEditMonitoringList(data.item)
-                "
-                disabled
-                data-open-modal
-                class="h-8 w-9 rounded bg-gray-400 text-white"
-                v-tooltip.top="'Edit/Delete Request'"
-              >
+                " disabled data-open-modal class="h-8 w-9 rounded bg-gray-400 text-white"
+                v-tooltip.top="'Edit/Delete Request'">
                 <font-awesome-icon icon="eraser"></font-awesome-icon>
               </button>
-              <button
-                @click="
+              <button @click="
                   openModal('attachmentModal'),
                     monitoringStore.setAttachmentMonitoringList(data.item)
-                "
-                disabled
-                v-tooltip.top="'Attached Files'"
-                data-open-modal
-                class="h-8 w-9 rounded bg-gray-400 text-white"
-              >
+                " disabled v-tooltip.top="'Attached Files'" data-open-modal
+                class="h-8 w-9 rounded bg-gray-400 text-white">
                 <font-awesome-icon icon="download"></font-awesome-icon>
               </button>
               <button @click="openModal('viewDesignerModal'), designerOpenModal(data.item)"
@@ -108,23 +97,12 @@
         </c-table>
       </div>
     </div>
-    <dialog
-      ref="viewEditModal"
-      class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13] w-[80%]"
-    >
+    <dialog ref="viewEditModal"
+      class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13] w-[80%]">
       <div class="border-2 col-span-2">
-        <div
-          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
-        >
-          <span
-            ><font-awesome-icon icon="pen" /><label class="ml-2"
-              >Edit Item Modal</label
-            ></span
-          >
-          <button
-            class="px-3 py-2 rounded-full hover:bg-red-600"
-            @click="closeModal('viewEditModal')"
-          >
+        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
+          <span><font-awesome-icon icon="pen" /><label class="ml-2">Edit/Delete Item Modal</label></span>
+          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('viewEditModal')">
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
@@ -174,22 +152,6 @@
                     required />
                 </label>
                 <label class="flex flex-col gap-2">
-                  Kind of Request
-                  <select
-                    v-model="
-                      monitoringStore.monitoringEditItemForm.kind_request
-                    "
-                    class="h-[2rem] outline-green-600 border-2 rounded text-center"
-                    required
-                  >
-                    <option value="null" disabled>
-                      Select Kind of Request
-                    </option>
-                    <option value="LSA Request">LSA Request</option>
-                    <option value="Hinsei Request">Hinsei Request</option>
-                  </select>
-                </label>
-                <label class="flex flex-col gap-2">
                   Supplier
                   <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.supplier_name
                     " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
@@ -201,14 +163,14 @@
                     v-model="monitoringStore.monitoringEditItemForm.part_number" type="text"
                     class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center" required />
                 </label>
-              </div>
-              <div class="col-span-1 p-2">
                 <label class="flex flex-col gap-2">
                   Sub Part Number
                   <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.sub_part_number
                     " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
                     required />
                 </label>
+              </div>
+              <div class="col-span-1 p-2">
                 <label class="flex flex-col gap-2">
                   Revision
                   <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.revision"
@@ -232,7 +194,6 @@
                     " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
                     required />
                 </label>
-
                 <label class="flex flex-col gap-2">
                   Critical Parts
                   <select :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.critical_parts
@@ -253,27 +214,45 @@
                     <option value="No">No</option>
                   </select>
                 </label>
+                <label class="flex flex-col gap-2">
+                  Kind of Request
+                  <select :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.kind_request
+                    " class="h-[2rem] outline-green-600 border-2 rounded text-center" required>
+                    <option value="null" disabled>
+                      Select Kind of Request
+                    </option>
+                    <option value="LSA Request">LSA Request</option>
+                    <option value="Hinsei Request">Hinsei Request</option>
+                  </select>
+                </label>
                 <label class="flex flex-col gap-2 w-full">
                   Request Value
-                  <textarea v-model="monitoringStore.monitoringEditItemForm.request_value
-                    " style="resize: none" class="w-full border-2 rounded p-1 outline-green-600 h-[4.5rem]" required />
+                  <textarea :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.request_value
+                    " style="resize: none" class="w-full border-2 rounded p-1 outline-green-600 h-[5.8rem]" required />
                 </label>
-              </div>
-              <div class="flex justify-end h-[9rem]">
-                <div class="flex justify-center items-end mt-5 gap-2">
-                  <button :disabled="monitoringStore.inputStatus" type="submit"
-                    class="bg-[#A10E13] text-white p-1 w-[7rem] rounded">
-                    Update
-                  </button>
-                  <button @click="monitoringStore.setClearEditMonitoring" type="button"
-                    class="bg-gray-700 text-white p-1 w-[7rem] rounded hover:bg-gray-600">
-                    Clear
-                  </button>
+                <label class="flex flex-col gap-2">
+                  Request Quantity
+                  <input :disabled="monitoringStore.inputStatus" v-model="monitoringStore.monitoringEditItemForm.request_quantity
+                    " type="text" class="h-[2rem] w-full border-2 rounded p-1 outline-green-600 text-center"
+                    required />
+                </label>
+                <div class="flex flex-col justify-end items-end h-[5rem]">
+                  <div class="flex justify-center items-end mt-5 gap-2">
+                    <button :disabled="monitoringStore.inputStatus" type="submit"
+                      class="bg-yellow-400 hover:bg-yellow-500 border-2 border-yellow-700 text-black p-1 w-[7rem] rounded">
+                      <font-awesome-icon icon="floppy-disk" />
+                      <b> UPDATE</b>
+                    </button>
+                    <button @click="monitoringStore.setClearEditMonitoring" type="button"
+                      class="bg-gray-500 text-white p-1 w-[7rem] rounded border-2 hover:bg-gray-700 border-gray-900">
+                      Clear
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
           </div>
-          <div class="border-2 col-span-2 p-3 ml-2 overflow-y-auto h-[73vh]">
+          <div class="border-2 col-span-2 ml-2 overflow-y-auto h-[73vh]">
             <c-table :items="monitoringStore.getEditMonitoringItems" :fields="monitoringStore.monitoringEditFields"
               :thStyle="'bg-[#A10E13] text-white p-2'">
               <template #cell(#)="data">
@@ -282,29 +261,26 @@
               <template #cell(action)="data">
                 <div class="flex justify-center gap-1">
                   <div class="group flex relative">
-                    <button class="h-8 w-9 rounded bg-orange-500 text-white" @click="edit_monitoring_item(data.item)">
+                    <button
+                      class="h-8 w-9 rounded bg-yellow-400 hover:bg-yellow-500 border-2 border-yellow-700 text-white"
+                      @click="edit_monitoring_item(data.item)">
                       <font-awesome-icon icon="pen"></font-awesome-icon>
                     </button>
                     <span
-                      class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50"
-                    >
-                      <div
-                        class="h-[3vh] w-[5rem] flex flex-col justify-center items-center"
-                      >
+                      class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50">
+                      <div class="h-[3vh] w-[5rem] flex flex-col justify-center items-center">
                         Edit
                       </div>
                     </span>
                   </div>
                   <div class="group flex relative">
-                    <button class="h-8 w-9 rounded bg-[#A10E13] text-white" @click="delete_monitoring_item(data.item)">
+                    <button class="h-8 w-9 rounded bg-red-500 hover:bg-red-700 border-2 border-red-800 text-white"
+                      @click="delete_monitoring_item(data.item)">
                       <font-awesome-icon icon="trash" />
                     </button>
                     <span
-                      class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50"
-                    >
-                      <div
-                        class="h-[3vh] w-[5rem] flex flex-col justify-center items-center"
-                      >
+                      class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50">
+                      <div class="h-[3vh] w-[5rem] flex flex-col justify-center items-center">
                         Delete
                       </div>
                     </span>
@@ -316,69 +292,47 @@
         </div>
       </div>
     </dialog>
-    <dialog
-      ref="attachmentModal"
-      class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13] w-[30rem]"
-    >
+    <dialog ref="attachmentModal"
+      class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13] w-[35rem]">
       <div class="border-2 col-span-2">
-        <div
-          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
-        >
+        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <p>
             <font-awesome-icon icon="download" class="h-5 w-5 mr-2" />Attached
             Files
           </p>
-          <button
-            class="px-3 py-2 rounded-full hover:bg-red-600"
-            @click="closeModal('attachmentModal')"
-          >
+          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('attachmentModal')">
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
-        <div
-          class="flex flex-col overflow-y-scroll mx-2 h-[35vh] mt-1 w-[40wh]"
-        >
-          <c-table
-            :items="monitoringStore.getAttachmentMonitoringItems"
-            :fields="monitoringStore.getAttachmentMonitoringFields"
-            :thStyle="'bg-[#A10E13] text-white p-2'"
-          >
+        <div class="flex flex-col overflow-y-scroll h-[35vh] mt-1 ml-[0.15rem] w-full">
+          <c-table :items="monitoringStore.getAttachmentMonitoringItems"
+            :fields="monitoringStore.getAttachmentMonitoringFields" :thStyle="'bg-[#A10E13] text-white p-2'">
             <template #cell(#)="data">
               {{ data.index + 1 }}
             </template>
             <template #cell(action)="data">
               <div class="flex justify-center gap-1">
                 <div class="group flex relative">
-                  <button
-                    class="h-8 w-9 rounded bg-green-700 text-white"
-                    @click="downloadAttachment(data.item)"
-                  >
+                  <button class="h-8 w-9 rounded bg-green-500 hover:bg-green-700 border-2 border-green-900 text-white"
+                    @click="downloadAttachment(data.item)">
                     <font-awesome-icon icon="download" />
                   </button>
                   <span
-                    class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50"
-                  >
-                    <div
-                      class="h-[3vh] w-[5rem] flex flex-col justify-center items-center"
-                    >
+                    class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50">
+                    <div class="h-[3vh] w-[5rem] flex flex-col justify-center items-center">
                       Download
                     </div>
                   </span>
                 </div>
                 <div class="group flex relative">
-                  <button
-                    data-open-modal
-                    class="h-8 w-9 rounded bg-cyan-600 text-white"
-                    @click="viewAttachment(data.item)"
-                  >
+                  <button data-open-modal
+                    class="h-8 w-9 rounded bg-cyan-500 hover:bg-cyan-700 border-2 border-cyan-900 text-white"
+                    @click="viewAttachment(data.item)">
                     <font-awesome-icon icon="eye"></font-awesome-icon>
                   </button>
                   <span
-                    class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50"
-                  >
-                    <div
-                      class="h-[3vh] w-[3rem] flex flex-col justify-center items-center"
-                    >
+                    class="group-hover:opacity-100 transition-opacity bg-gray-700 px-1 text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-1/2 -translate-y-10 opacity-0 m-4 mx-auto z-50">
+                    <div class="h-[3vh] w-[3rem] flex flex-col justify-center items-center">
                       View
                     </div>
                   </span>
@@ -389,23 +343,15 @@
         </div>
       </div>
     </dialog>
-    <dialog
-      ref="viewDesignerModal"
-      class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13]"
-    >
+    <dialog ref="viewDesignerModal" class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13]">
       <div class="border-2 col-span-2">
-        <div
-          class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]"
-        >
+        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <p>
             <font-awesome-icon icon="table" class="h-5 w-5 mr-2" />{{
               designer_unit_name
             }}
           </p>
-          <button
-            class="px-3 py-2 rounded-full hover:bg-red-600"
-            @click="closeModal('viewDesignerModal')"
-          >
+          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('viewDesignerModal')">
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
@@ -681,7 +627,7 @@ const viewAttachment = (data) => {
   var path = data.file_path_attachment;
   // console.log(path)
   window.open(
-    `http://10.164.58.65/hinsei/server/public/view-attachment?file_path_attachment=${path}`
+    `http://10.164.30.174/HLAL/server/public/view-attachment?file_path_attachment=${path}`
   );
 };
 
@@ -700,8 +646,8 @@ const downloadAttachment = (data) => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      attachmentStore.downloadAttachment(datastorage)
-      // window.location.href = `http://10.164.58.65/hinsei/server/public/download-attachment/${emp_id}?file_path_attachment=${path}`;
+      attachmentStore.downloadAttachment(datastorage);
+      // window.location.href = `http://10.164.30.174/hinsei/server/public/download-attachment/${emp_id}?file_path_attachment=${path}`;
       attachmentModal.value.showModal();
     } else {
       attachmentModal.value.showModal();
@@ -715,8 +661,6 @@ const downloadAttachment = (data) => {
   });
 };
 </script>
-<style scoped>
-.p-tooltip {
+<style scoped>.p-tooltip {
   z-index: 10 !important;
-}
-</style>
+}</style>
