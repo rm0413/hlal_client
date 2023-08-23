@@ -30,9 +30,14 @@
           </label>
           <label for="" class="flex flex-col w-full">
             Part Number
-            <input @change="inputPartNumber" type="text"
-              class="border p-2 flex text-center rounded border-black text-black"
-              v-model="monitoringStore.monitoringForm.monitoring_part_number" required placeholder="Part Number" />
+            <input
+              @change="inputPartNumber"
+              type="text"
+              class="border p-2 flex text-center w-full rounded border-black text-black"
+              v-model="monitoringStore.monitoringForm.monitoring_part_number"
+              required
+              placeholder="Part Number"
+            />
           </label>
           <div class="flex gap-5 mt-5">
             <button type="button" @click="exportFile"
@@ -627,7 +632,7 @@ const viewAttachment = (data) => {
   var path = data.file_path_attachment;
   // console.log(path)
   window.open(
-    `http://10.164.58.62/hinsei/server/public/view-attachment?file_path_attachment=${path}`
+    `http://10.164.58.82/hinsei/server/public/view-attachment?file_path_attachment=${path}`
   );
 };
 
@@ -647,7 +652,7 @@ const downloadAttachment = (data) => {
   }).then((response) => {
     if (response.value === true) {
       attachmentStore.downloadAttachment(datastorage);
-      // window.location.href = `http://10.164.58.62/hinsei/server/public/download-attachment/${emp_id}?file_path_attachment=${path}`;
+      // window.location.href = `http://10.164.58.82/hinsei/server/public/download-attachment/${emp_id}?file_path_attachment=${path}`;
       attachmentModal.value.showModal();
     } else {
       attachmentModal.value.showModal();

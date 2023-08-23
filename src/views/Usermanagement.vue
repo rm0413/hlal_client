@@ -139,6 +139,7 @@
           </template>
           <template #cell(action)="data">
             <div class="flex items-center justify-center gap-1">
+              <!-- {{data.item}} -->
               <Button
                 @click="edit_user_modal(data)"
                 severity="warning"
@@ -252,7 +253,7 @@ const user_employee_id = ref(null);
 const user_data = [];
 
 const edit_user_modal = (data) => {
-  console.log(data);
+  // console.log(data);
   edit_modal.value.showModal();
   edit_modal.value.classList.remove("-translate-y-5");
   edit_user_form.value = data;
