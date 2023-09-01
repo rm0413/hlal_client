@@ -7,7 +7,6 @@ export const useMonitoringStore = defineStore({
     monitoring: [],
     inputStatus: true,
     monitoringFields: [
-      // { label: 'Select', key: 'select' },
       { label: "Action", key: "action" },
       { label: "Item No.", key: "id" },
       { label: "Unit Name", key: "unit_name" },
@@ -232,9 +231,8 @@ export const useMonitoringStore = defineStore({
       });
     },
     setExportMonitoringList(data) {
-      window.open(
-        `http://10.164.58.82/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
-      )
+      window.location.href = `http://10.164.58.62/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
+      
     },
   },
   getters: {

@@ -31,12 +31,15 @@
             <div class="flex items-end justify-end">
                 <span class="p-input-icon-left">
                     <font-awesome-icon icon="magnifying-glass" />
-                    <input-text placeholder="Search" class="w-[17rem] h-[4.5vh] rounded-md" />
+                    <input-text placeholder="Search" class="w-[17rem] h-[4.5vh] rounded-md border-2 border-black" v-model="unitManagementStore.search_filter"/>
                 </span>
             </div>
             <div class="border rounded-[5px] overflow-y-scroll h-full mt-2">
-                <c-table :fields="unitManagementStore.unitManagementFields" :items="unitManagementStore.getUnit"
+                <c-table :fields="unitManagementStore.unitManagementFields" :items="unitManagementStore.getUnit" :filter="unitManagementStore.search_filter"
                     :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'">
+                    <template #cell(#)="data">
+                        {{ data.index + 1 }}
+                    </template>
                     <template #cell(action)="data">
                         <div class="flex items-center justify-center gap-1">
                             <button

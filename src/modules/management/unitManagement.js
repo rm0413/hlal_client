@@ -7,7 +7,7 @@ export const useUnitManagementStore = defineStore({
         unitManagement: [],
         units: [],
         unitManagementFields: [
-            { label: '#', key: 'unit_id' },
+            { label: '#', key: '#' },
             { label: 'Unit Name', key: 'unit_name' },
             { label: 'Created By', key: 'emp_full_name' },
             { label: 'Date Created', key: 'unit_created_date' },
@@ -18,6 +18,7 @@ export const useUnitManagementStore = defineStore({
             unit_created_by: null,
             unit_status: null
         },
+        search_filter: "",
         onEdit: false,
         onEditIndex: null
     }),

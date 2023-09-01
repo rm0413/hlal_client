@@ -49,18 +49,6 @@ export const useAttachmentsStore = defineStore({
           });
       });
     },
-    setLoadPartNumber() {
-      return new Promise((resolve, reject) => {
-        axios
-          .get("load-part-number-with-code")
-          .then((response) => {
-            resolve(response.data);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
-    },
     downloadAttachment(datastorage) {
       return new Promise((resolve, reject) => {
         axios

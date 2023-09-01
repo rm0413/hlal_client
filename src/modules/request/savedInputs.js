@@ -19,51 +19,12 @@ export const useSavedInputsStore = defineStore({
             { label: 'Critical Parts', key: 'critical_parts' },
         ],
         search_filter: "",
-        savedInputsForm: {
-            savedInputs_unit_name: '',
-            savedInputs_supplier: '',
-            savedInputs_part_number: '',
-        },
-        onEdit: false,
-        onEditIndex: null
     }),
     actions: {
-        loadRequestWithNoCode() {
-            return new Promise((resolve, reject) => {
-                axios.get('load-with-no-code-request').then(response => {
-                    resolve(response.data.data)
-                    this.savedInputs = response.data.data
-                }).catch(err => {
-                    reject(err)
-                })
-            })
-        },
-        setGenerateCode(data) {
-            return new Promise((resolve, reject) => {
-                axios.post('generate-agreement-code', data).then(response => {
-                    resolve(response.data)
-                    this.loadRequestWithNoCode()
-                }).catch(err => {
-                    reject(err)
-                })
-            })
-        },
-        setShowGenerateCode(id) {
-            return new Promise((resolve, reject) => {
-                axios.get(`agreement-list-code/${id}`).then(response => {
-                    resolve(response.data)
-                }).catch(err => {
-                    reject(err)
-                })
-            })
-        }
     },
     getters: {
         getSavedInputsFields() {
             return this.savedInputsFields
         },
-        getAgreementRequest() {
-            return this.savedInputs
-        }
     }
 })

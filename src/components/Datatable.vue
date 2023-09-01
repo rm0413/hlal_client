@@ -54,7 +54,7 @@ const props = defineProps({
   },
   tdStyle: {
     type: String,
-    default: "mt-3 h-[5vh] hover:bg-gray-300",
+    default: "mt-3 h-[5vh] hover:bg-gray-300 border-2 border-gray-300",
   },
   filter: String,
   isSelectable: Boolean,
@@ -87,8 +87,8 @@ const unSelect = () => {
 
   records.forEach((v, i) => {
     if (!v.record.classList.contains("unchecked")) {
-      v.record.classList.remove("bg-red-300");
-      v.record.classList.remove("hover:bg-red-200");
+      v.record.classList.remove("bg-green-300");
+      v.record.classList.remove("hover:bg-green-200");
       v.record.classList.add("hover:bg-gray-300");
       v.record.classList.add("unchecked");
       i % 2 ? v.record.classList.add("bg-white") : v.record.classList.add("bg-gray-200")
@@ -103,8 +103,8 @@ const getData = (data, id, idx) => {
   const record = document.getElementById(id);
   if (record.classList.contains("unchecked")) {
     record.classList.remove("unchecked");
-    record.classList.add("bg-red-300");
-    record.classList.add("hover:bg-red-200");
+    record.classList.add("bg-green-300");
+    record.classList.add("hover:bg-green-200");
     record.classList.remove("hover:bg-gray-300");
     selected_value.value.push(data);
     emit("selectable", selected_value.value);
@@ -115,8 +115,8 @@ const getData = (data, id, idx) => {
       record.classList.remove("bg-white")
     }
   } else {
-    record.classList.remove("bg-red-300");
-    record.classList.remove("hover:bg-red-200");
+    record.classList.remove("bg-green-300");
+    record.classList.remove("hover:bg-green-200");
     record.classList.add("hover:bg-gray-300");
     record.classList.add("unchecked");
     idx % 2 ? record.classList.add("bg-white") : record.classList.add("bg-gray-200")
@@ -138,8 +138,8 @@ const selectAll = () => {
             selected_value.value.push(v)
             document.getElementById(`record(${i})`).classList.contains("bg-gray-200") ? document.getElementById(`record(${i})`).classList.remove("bg-gray-200") : document.getElementById(`record(${i})`).classList.remove("bg-white")
             document.getElementById(`record(${i})`).classList.remove("unchecked");
-            document.getElementById(`record(${i})`).classList.add("bg-red-300");
-            document.getElementById(`record(${i})`).classList.add("hover:bg-red-200");
+            document.getElementById(`record(${i})`).classList.add("bg-green-300");
+            document.getElementById(`record(${i})`).classList.add("hover:bg-green-200");
             document.getElementById(`record(${i})`).classList.remove("hover:bg-gray-300");
             resolve(selected_value.value)
           } else {
@@ -159,8 +159,8 @@ const selectAll = () => {
             selected_value.value.push(v)
             document.getElementById(`record(${i})`).classList.contains("bg-gray-200") ? document.getElementById(`record(${i})`).classList.remove("bg-gray-200") : document.getElementById(`record(${i})`).classList.remove("bg-white")
             document.getElementById(`record(${i})`).classList.remove("unchecked");
-            document.getElementById(`record(${i})`).classList.add("bg-red-300");
-            document.getElementById(`record(${i})`).classList.add("hover:bg-red-200");
+            document.getElementById(`record(${i})`).classList.add("bg-green-300");
+            document.getElementById(`record(${i})`).classList.add("hover:bg-green-200");
             document.getElementById(`record(${i})`).classList.remove("hover:bg-gray-300");
             resolve(selected_value.value)
           } else {

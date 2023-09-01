@@ -5,8 +5,8 @@
         <font-awesome-icon class="h-6 w-6 text-black" icon="desktop" /> Hinsei &
         LSA Monitoring List
       </label>
-      <div class="flex flex-col">
-        <div class="flex justify-center items-center p-2 bg-[#A10E13] text-white rounded mt-5">
+      <div class="flex flex-col bg-gray-100 rounded h-[36vh] min-[100px]:overflow-y-scroll shadow-md">
+        <div class="flex justify-center items-center p-2 bg-[#A10E13] text-white rounded">
           Search Filters
         </div>
         <form method="post" @submit.prevent="submitMonitoring" class="flex flex-col items-center gap-2 px-[10%]">
@@ -25,7 +25,7 @@
           </label>
           <label for="" class="flex flex-col w-full">
             Supplier
-            <input type="text" class="border p-2 flex text-center rounded border-black"
+            <input type="text" class="border-2 p-2 flex text-center rounded border-black"
               v-model="monitoringStore.monitoringForm.monitoring_supplier" required placeholder="Supplier" />
           </label>
           <label for="" class="flex flex-col w-full">
@@ -33,7 +33,7 @@
             <input
               @change="inputPartNumber"
               type="text"
-              class="border p-2 flex text-center w-full rounded border-black text-black"
+              class="border-2 p-2 flex text-center w-full rounded border-black text-black"
               v-model="monitoringStore.monitoringForm.monitoring_part_number"
               required
               placeholder="Part Number"
@@ -52,7 +52,7 @@
         </form>
       </div>
     </div>
-    <div class="lg:col-span-6 min-[100px]:col-span-9 h-[85vh]">
+    <div class="lg:col-span-6 min-[100px]:col-span-9 h-[85vh] mt-[2.3rem]">
       <div class="border rounded-[5px] overflow-y-scroll h-full">
         <c-table :items="monitoringStore.getLoadMonitoring" :fields="monitoringStore.getMonitoringFields" ref="ctable"
           :isSelectable="true" @selectable="(data) => (select_data = data)" :thStyle="'bg-[#A10E13] text-white p-2'">
@@ -519,7 +519,9 @@ const exportFile = () => {
             confirmButtonText: "Yes",
           }).then((response) => {
             if (response.value === true) {
-              monitoringStore.setExportMonitoringList(select_data.value);
+              monitoringStore.setExportMonitoringList(select_data.value).then((response)=>{
+                console.log(response)
+              });
               ctable.value.unSelect();
               select_data.value = [];
             } else {
@@ -631,9 +633,9 @@ const submitUpdateEditItemMonitoring = () => {
 const viewAttachment = (data) => {
   var path = data.file_path_attachment;
   // console.log(path)
-  window.open(
-    `http://10.164.58.82/hinsei/server/public/view-attachment?file_path_attachment=${path}`
-  );
+  window.location.href = 
+    `http://10.164.58.62/hinsei/server/public/view-attachment?file_path_attachment=${path}`
+  ;
 };
 
 const downloadAttachment = (data) => {
@@ -652,7 +654,7 @@ const downloadAttachment = (data) => {
   }).then((response) => {
     if (response.value === true) {
       attachmentStore.downloadAttachment(datastorage);
-      // window.location.href = `http://10.164.58.82/hinsei/server/public/download-attachment/${emp_id}?file_path_attachment=${path}`;
+      // window.location.href = `http://10.164.58.62/hinsei/server/public/download-attachment/${emp_id}?file_path_attachment=${path}`;
       attachmentModal.value.showModal();
     } else {
       attachmentModal.value.showModal();

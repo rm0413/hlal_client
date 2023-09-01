@@ -21,17 +21,6 @@
                 <option v-for="(i, key) in units" :key="key" :value="i.unit_id">{{ i.text }}</option>
               </select>
             </div>
-            <div class="relative">
-              <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
-                  icon="magnifying-glass"></font-awesome-icon></i>
-              <input
-                class="text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-blue-300 outline-green-600"
-                v-model="newRequestStore.search_filter" />
-              <button type="button" @click="openModal('search')"
-                class="h-[2.5rem] bg-gray-400 text-white py-1 px-3 rounded-r-md">
-                <b>Search</b>
-              </button>
-            </div>
           </div>
         </div>
         <div class="grid grid-cols-3">
@@ -187,18 +176,31 @@
         </div>
       </form>
     </div>
-    <div class="lg:col-span-2 min-[100px]:col-span-9 h-full flex flex-col mt-10 gap-2">
-      <button @click="openModal('multiple_input')"
-        class="w-full p-3 flex justify-center items-center bg-red-500 text-white rounded hover:bg-red-700 border-2 border-red-900"
-        data-open-modal>
-        <font-awesome-icon icon="file-import" class="h-5 w-5" />
-        <p class="ml-3"><b>MULTIPLE INPUT</b></p>
-      </button>
-      <button @click="openModal('view_items')"
-        class="w-full p-3 flex justify-center items-center bg-green-500 text-white rounded hover:bg-green-600 border-2 border-green-800">
-        <font-awesome-icon icon="file-lines" class="h-5 w-5" />
-        <p class="ml-3"><b>VIEW ITEM DETAILS</b></p>
-      </button>
+    <div class="lg:col-span-2 min-[100px]:col-span-9 h-full w-full flex flex-col">
+      <div class="relative flex ml-9">
+        <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
+            icon="magnifying-glass"></font-awesome-icon></i>
+        <input
+          class="w-[15rem] text-center p-1 border-2 rounded-l-md h-[2.5rem] border-gray-600 hover:border-red-500 outline-green-600"
+          v-model="newRequestStore.search_filter" />
+        <button type="button" @click="openModal('search')"
+          class="h-[2.5rem] w-[10rem] bg-gray-400 text-white py-1 px-3 rounded-r-md">
+          <b>Search</b>
+        </button>
+      </div>
+      <div class="flex flex-col rounded mt-[4.5rem] bg-gray-100 shadow-md h-[15vh] justify-center items-center w-full">
+        <button @click="openModal('multiple_input')"
+          class="w-[25rem] p-3 flex justify-center items-center bg-red-500 text-white rounded hover:bg-red-700 border-2 border-red-900"
+          data-open-modal>
+          <font-awesome-icon icon="file-import" class="h-5 w-5" />
+          <p class="ml-3"><b>MULTIPLE INPUT</b></p>
+        </button>
+        <button @click="openModal('view_items')"
+          class="w-[25rem] mt-2 p-3 flex justify-center items-center bg-green-500 text-white rounded hover:bg-green-600 border-2 border-green-800">
+          <font-awesome-icon icon="file-lines" class="h-5 w-5" />
+          <p class="ml-3"><b>VIEW ITEM DETAILS</b></p>
+        </button>
+      </div>
     </div>
     <!--Multiple Input-->
     <dialog ref="multiple_input" class="p-0 rounded transform duration-300 -translate-y-5 border-2 border-[#A10E13]">
@@ -246,7 +248,7 @@
             class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">Select
             All</button>
         </div>
-        <div class="flex max-h-[70vh] overflow-y-scroll mx-2">
+        <div class="flex h-[70vh] overflow-y-scroll mx-2">
           <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (checkedData = data)"
             :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
             :items="newRequestStore.getNoCode"
@@ -273,10 +275,10 @@
             <font-awesome-icon icon="xmark" />
           </button>
         </div>
-        <div class="flex p-5 overflow-y-scroll">
+        <div class="flex overflow-y-scroll h-[73vh] mx-1">
           <CTable :filter="newRequestStore.search_filter" :fields="newRequestStore.search_fields"
             :items="newRequestStore.getAgreementList"
-            :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'">
+            :thStyle="'bg-[#A10E13] text-white p-2 text-[13px] border-2 border-solid border-red-900'">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
@@ -294,7 +296,6 @@
     </dialog>
     <Toast position="bottom-right"></Toast>
     <Toast position="bottom-left" group="bl"></Toast>
-    <!-- <GToast ref="g_toast"></GToast> -->
   </div>
 </template>
 
@@ -304,9 +305,9 @@ import { useNewRequestStore } from "@/modules/request/newrequest";
 import { ref, onMounted, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
-// import GToast from "@/components/GToast.vue";
+import { useUnitManagementStore } from "@/modules/management/unitManagement";
 
-// const g_toast = ref(null)
+const unitManagementStore = useUnitManagementStore();
 const $loading = useLoading()
 const toast = useToast();
 const swal = inject("$swal");
@@ -379,7 +380,7 @@ const generateCode = () => {
                     text: "Your code has been generated. An email notification will be sent.",
                   });
                 } else {
-                  show.value = false
+                  loader.hide()
                   toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
                 }
               });
@@ -425,7 +426,6 @@ const submitAgreementList = () => {
       setTimeout(() => {
         newRequestStore.setInsertAgreementList().then((response) => {
           if (response.status === "success") {
-            newRequestStore.setAgreementList();
             newRequestStore.search_filter = "";
             loader.hide()
             swal({
@@ -433,11 +433,6 @@ const submitAgreementList = () => {
               title: response.message,
               timer: 2500,
             });
-            // g_toast.value.show({
-            //   status: response.status,
-            //   message: response.message,
-            //   timer: 2000
-            // })
           } else {
             loader.hide()
             Object.keys(response.error).forEach((key) => {
@@ -497,7 +492,7 @@ const closeModal = (modal) => {
 };
 
 const loadUnits = () => {
-  newRequestStore.setUnits().then((response) => {
+  unitManagementStore.setUnits().then((response) => {
     units.value = [];
     response.forEach((v) => {
       units.value.push({
@@ -525,7 +520,7 @@ const downloadFormat = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      window.location.href = 'http://10.164.58.82/hinsei/server/public/download-format';
+      window.location.href = 'http://10.164.58.62/hinsei/server/public/download-format';
     } else {
       multiple_input.value.showModal();
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000 });
@@ -563,8 +558,8 @@ const submitMultipleRequest = () => {
               multiple_input.value.close();
               loader.hide()
               swal({
-                icon: "success",
-                title: "Multiple Request Added Successfully.",
+                icon: response.status,
+                title: response.message,
                 timer: 1500
               })
             } else {

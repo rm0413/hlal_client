@@ -18,7 +18,7 @@
     >
       <div v-if="!selected_value">
         <option
-          class="p-2 hover:bg-gray-200"
+          class="p-5 hover:bg-gray-200 text-[20px]"
           v-for="(data, i) in filterList"
           :key="i"
           @click="selectVal(data.value)"
@@ -29,7 +29,7 @@
 
       <div v-else>
         <option
-          class="p-2 hover:bg-gray-200"
+          class="p-5 hover:bg-gray-200 text-[20px]"
           v-for="(data, i) in filterSelection"
           :key="i"
           @click="selectVal(data.value)"

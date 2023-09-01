@@ -75,48 +75,6 @@ export const useNewRequestStore = defineStore({
           });
       });
     },
-    setClearUnit() {
-      this.unitForm = {
-        unit_name: null,
-        unit_created_by: null,
-        unit_status: null,
-      };
-    },
-    setInsertUnits() {
-      var unit_data = {
-        unit_name: this.unitForm.unit_name,
-        unit_created_by: JSON.parse(sessionStorage.getItem("employee_id")),
-        unit_status: "ACTIVE",
-      };
-      // console.log(unit_data)
-      return new Promise((resolve, reject) => {
-        axios
-          .post("unit", unit_data)
-          .then((response) => {
-            resolve(response.data);
-            this.setUnits();
-            // console.log(response.data)
-            this.setClearUnit();
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
-    },
-    setUnits() {
-      return new Promise((resolve, reject) => {
-        axios
-          .get("unit")
-          .then((response) => {
-            resolve(response.data.data);
-            // console.log(response.data)
-            this.units = response.data.data;
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
-    },
     setClearAgreementList() {
       this.agreementForm = {
         trial_number: null,
@@ -172,6 +130,7 @@ export const useNewRequestStore = defineStore({
             resolve(response.data);
             this.setClearAgreementList();
             this.setNoCodeAgreementList();
+            this.setAgreementList()
           })
           .catch((err) => {
             reject(err);
@@ -192,7 +151,6 @@ export const useNewRequestStore = defineStore({
       });
     },
     setGenerateCode(data) {
-      console.log(data);
       return new Promise((resolve, reject) => {
         axios
           .post("generate-agreement-code", data)

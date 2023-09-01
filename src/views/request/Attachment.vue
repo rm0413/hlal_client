@@ -9,10 +9,19 @@
         <div class="flex gap-2">
           <div class="flex">
             <label class="flex flex-col items-center justify-center">Search by: </label>
-            <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center">
+            <div @click="code_part_number = true"
+              :class="`${code_part_number ? 'bg-red-700 text-white' : 'bg-gray-300'} select-none cursor-pointer h-full border border-gray-600 py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center`">
               <b>Code</b>
             </div>
-            <div class="text-center p-1 border-2 rounded w-[8rem] border-gray-600 flex flex-col justify-center items-center"><b>Part Number</b></div>
+            <div @click="code_part_number = false"
+              :class="`${code_part_number ? 'bg-gray-300 ' : 'bg-red-700 text-white '}cursor-pointer text-center select-none p-1 border rounded-r-md w-[8rem] border-gray-600 flex flex-col justify-center items-center`">
+              <b>Part Number</b>
+            </div>
+          </div>
+          <div>
+            <CSelect @change="changeSelect"
+              class="text-center p-1 border-2 rounded-md w-[18rem] h-[2.8rem] text-lg border-gray-600 hover:border-blue-300 outline-green-600"
+              :options="code_part_number ? code : part_number" v-model="attachmentsStore.part_number_select"></CSelect>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
@@ -24,40 +33,39 @@
               <b>Search</b>
             </button>
           </div>
-          <div>
-            <CSelect
-              class="text-center p-1 border-2 rounded-md w-[14rem] h-[2.8rem] text-lg border-gray-600 hover:border-blue-300 outline-green-600"
-              :options="part_number" v-model="attachmentsStore.part_number_select"></CSelect>
-          </div>
         </div>
       </div>
     </div>
-    <div class="h-[80vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
-      <div class="lg:col-span-2 lex flex-col mt-4 rounded-3xl h-[40vh]">
-        <p class="flex flex-col text-white bg-[#A10E13] h-[2.5rem] w-full items-center justify-center rounded mt-5">
-          Attachments</p>
+    <div class="h-[85vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
+      <div class="lg:col-span-2 min-[100px]:overflow-y-scroll h-[18vh] flex flex-col bg-gray-100 rounded shadow-md mt-1">
+        <div class="flex justify-center items-center p-2 bg-[#A10E13] text-white rounded">
+          Attachments
+        </div>
         <form method="post" @submit.prevent="submitAttachment">
-          <div class="flex flex-col items-center justify-center mt-2 border-2 border-black rounded-xl border-dashed">
-            <input id="input-file" type="file" accept=".pdf" @change="uploadFile" :draggable="true" class="cursor-pointer text-sm text-grey-500 w-full h-[10rem] mt-10
+          <div class="flex justify-center items-center mt-2 border-2 border-black rounded w-full">
+            <input id="input-file" type="file" accept=".pdf" @change="uploadFile" :draggable="true" class="cursor-pointer text-sm text-grey-500 bg-white w-full
             file:mr-5 file:py-2 file:px-6
-            file:rounded-full file:border-0
+            file:rounded file:border-0
             file:text-sm file:font-medium
             file:bg-blue-50 file:text-blue-700
             hover:file:cursor-pointer hover:file:bg-amber-50
-            hover:file:text-amber-700" required />
-            <span class="file-msg">or drag and drop PDF file here</span>
+            hover:file:text-amber-700 rounded" required />
+            <!-- <span class="file-msg">or drag and drop PDF file here</span> -->
           </div>
-          <div class="flex flex-col items-center justify-center w-full">
-            <button class="bg-red-500 hover:bg-red-600 text-white p-1 w-full h-[3rem] rounded mt-5 border-2 border-red-800" type="submit"><font-awesome-icon icon="floppy-disk"/> <b>SAVE</b></button>
-            <button class="bg-gray-500 hover:bg-gray-600 border-2 border-gray-800 text-white p-1 w-full h-[3rem] rounded mt-1" @click="clearFile"
-              type="button"><font-awesome-icon icon="eraser"/> <b>CLEAR</b></button>
+          <div class="flex items-center justify-center w-full gap-2 mt-3">
+            <button class="w-[12rem] bg-red-500 hover:bg-red-600 text-white p-1 h-[3rem] rounded border-2 border-red-800"
+              type="submit"><font-awesome-icon icon="floppy-disk" /> <b>SAVE</b></button>
+            <button
+              class="w-[12rem] bg-gray-500 hover:bg-gray-600 border-2 border-gray-800 text-white p-1 h-[3rem] rounded"
+              @click="clearFile" type="button"><font-awesome-icon icon="eraser" /> <b>CLEAR</b></button>
           </div>
         </form>
       </div>
-      <div class="col-span-7 my-5 overflow-y-scroll">
+      <div class="lg:col-span-7 min-[100px]:col-span-9 h-[85vh] overflow-y-scroll mt-1">
         <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
           :filter="attachmentsStore.search_filter" :items="filterPartNumber"
-          :fields="attachmentsStore.getAttachmentsFields" :thStyle="'bg-[#A10E13] p-2 text-white text-[13px] border-2 border-solid border-red-900'">
+          :fields="attachmentsStore.getAttachmentsFields"
+          :thStyle="'bg-[#A10E13] p-2 text-white text-[13px] border-2 border-solid border-red-900'">
           <template #cell(action)="data">
           </template>
         </CTable>
@@ -75,7 +83,9 @@ import CSelect from "@/components/CSelect.vue"
 import { useAttachmentsStore } from '@/modules/request/attachments'
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
+import { useEditItemDetailsStore } from "@/modules/request/edititemdetails";
 
+const editItemDetailsStore = useEditItemDetailsStore();
 const $loading = useLoading()
 const attachmentsStore = useAttachmentsStore()
 const swal = inject("$swal");
@@ -83,13 +93,20 @@ const toast = useToast();
 const ctable = ref();
 const select_data = ref([]); //select table
 const part_number = ref([])
-const path = ref(null);
+const code = ref([])
+const code_part_number = ref(false);
 
 onMounted(() => {
   attachmentsStore.setAgreementListCode()
-  attachmentsStore.setLoadPartNumber().then((response) => {
-    response.data.forEach((v) => {
+  editItemDetailsStore.setLoadPartNumber().then((response) => {
+    response.data.part_number.forEach((v) => {
       part_number.value.push({
+        text: v,
+        value: v
+      })
+    })
+    response.data.code.forEach((v) => {
+      code.value.push({
         text: v,
         value: v
       })
@@ -97,8 +114,9 @@ onMounted(() => {
   })
 })
 
-const loadingProcess = () => {
-  show.value = true;
+const changeSelect = () => {
+  ctable.value.unSelect();
+  select_data.value = [];
 }
 
 const file = ref(null);
@@ -167,9 +185,15 @@ const submitAttachment = () => {
 }
 
 const filterPartNumber = computed(() => {
-  return attachmentsStore.getAttachment.filter((v) =>
-    v.part_number == attachmentsStore.part_number_select.value
-  );
+  if (!code_part_number.value) {
+    return attachmentsStore.getAttachment.filter((v) =>
+      v.part_number == attachmentsStore.part_number_select.value
+    );
+  } else {
+    return attachmentsStore.getAttachment.filter((v) =>
+      v.code == attachmentsStore.part_number_select.value
+    );
+  }
 })
 
 const clearFile = () => {

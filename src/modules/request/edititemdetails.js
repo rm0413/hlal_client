@@ -119,7 +119,7 @@ export const useEditItemDetailsStore = defineStore({
         axios
           .get("load-part-number-with-code")
           .then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
             resolve(response.data);
           })
           .catch((err) => {

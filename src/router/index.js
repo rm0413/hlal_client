@@ -6,7 +6,7 @@ const Dashboard = () => import('@/views/Dashboard.vue')
 const Monitoring = () => import('@/views/Monitoring.vue')
 const Usermanagement = () => import('@/views/Usermanagement.vue')
 const Unitmanagement = () => import('@/views/UnitManagement.vue')
-const Request = () => import('@/views/Request.vue')
+// const Request = () => import('@/views/Request.vue')
 const NewRequest = () => import('@/views/request/NewRequest.vue')
 const InspectionData = () => import('@/views/request/InspectionData.vue')
 const EditItemDetails = () => import('@/views/request/EditItemDetails.vue')
@@ -26,11 +26,11 @@ const routes = [
         name: 'dashboard',
         component: Dashboard
     },
-    {
-        path: '/request',
-        name: 'request',
-        component: Request,
-    },
+    // {
+    //     path: '/request',
+    //     name: 'request',
+    //     component: Request,
+    // },
     {
         path: '/new-request',
         name: 'new-request',
@@ -88,7 +88,7 @@ router.afterEach((to, from) => {
     var checkToken = sessionStorage.getItem("userdata")
     if (to.name !== 'login') {
         if (!checkToken) {
-            window.location.href = 'http://10.164.58.82/FDTP-Portal/public/login'
+            window.location.href = 'http://10.164.58.62/FDTP-Portal/public/login'
         } else { console.log('authenticated') }
     }
 })

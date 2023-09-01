@@ -57,11 +57,11 @@
         >
           <button
             type="submit"
-            class="w-[15rem] bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white"
+            class="w-[10rem] bg-red-500 hover:bg-red-600 border-2 border-red-800 p-3 text-white rounded"
           >
-            Save
+          <font-awesome-icon icon="floppy-disk"/> <b>SAVE</b>
           </button>
-          <button type="button" class="gap-2 w-[15rem] bg-gray-500 rounded hover:bg-gray-600 p-3 text-white border-2 border-gray-700"
+          <button type="button" class="gap-2 w-[10rem] bg-gray-500 rounded hover:bg-gray-600 p-3 text-white border-2 border-gray-700"
             @click="
               userManagementStore.clearUser()
               ">
@@ -89,7 +89,7 @@
           <input-text
             v-model="userManagementStore.search_filter"
             placeholder="Search"
-            class="w-[17rem] h-[4.5vh] rounded-md"
+            class="w-[17rem] h-[4.5vh] rounded-md border-2 border-black"
           />
         </span>
       </div>
@@ -139,21 +139,18 @@
           </template>
           <template #cell(action)="data">
             <div class="flex items-center justify-center gap-1">
-              <!-- {{data.item}} -->
-              <Button
+              <button v-tooltip.top="'Update User Role'"
                 @click="edit_user_modal(data)"
-                severity="warning"
-                class="w-[1rem] items-center justify-center"
+                class="h-8 w-9 rounded items-center justify-center text-black bg-yellow-400 border-2 border-yellow-700 hover:bg-yellow-500"
               >
                 <font-awesome-icon icon="gear"></font-awesome-icon>
-              </Button>
-              <Button
-                severity="danger"
-                class="w-[1rem] items-center justify-center"
+              </button>
+              <button v-tooltip.top="'Delete User'"
+                class="h-8 w-9 rounded items-center justify-center text-white bg-red-400 border-2 border-red-700 hover:bg-red-500"
                 @click="removeUser(data.item)"
               >
-                <font-awesome-icon icon="circle-minus"></font-awesome-icon>
-              </Button>
+                <font-awesome-icon icon="xmark"></font-awesome-icon>
+              </button>
             </div>
           </template>
         </c-table>
@@ -177,7 +174,7 @@
             class="px-3 py-2 rounded-full hover:bg-red-600"
             @click="edit_user_close_modal()"
           >
-            <font-awesome-icon icon="xmark"></font-awesome-icon>
+            <font-awesome-icon icon="xmark"/>
           </button>
         </div>
         <form method="post" @submit.prevent="updateRole">
@@ -216,14 +213,14 @@
             type="submit"
             class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white"
           >
-            Save
+            <font-awesome-icon icon="floppy-disk"/> <b>SAVE</b>
           </button>
           <button
             type="button"
             @click="edit_user_close_modal()"
             class="w-full bg-gray-600 rounded hover:bg-gray-500 p-3 text-white"
           >
-            Cancel
+          <font-awesome-icon icon="ban"/> <b>CANCEL</b>
           </button>
         </form>
       </div>
@@ -246,7 +243,6 @@ const edit_modal = ref(null);
 const edit_user_form = ref({
   item: {},
 });
-const email_list = ref();
 const user_id = ref(null); //id of an item
 const role_selected = ref(null); //edit user modal selected
 const user_employee_id = ref(null);
@@ -271,12 +267,6 @@ const edit_user_modal = (data) => {
     });
   });
 };
-// const email_list_dropdown = () => {
-// if(email_list.value.classList.contains('w-full')){
-//   email_list.value.classList.add('h-full')
-//   email_list.value.classList.add('')
-// }
-// }
 const edit_user_close_modal = () => {
   edit_modal.value.close();
   edit_modal.value.classList.add("-translate-y-5");

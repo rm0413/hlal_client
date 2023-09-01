@@ -3,16 +3,27 @@
     <div class="h-full w-full">
       <div class="flex justify-between">
         <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono">
-          <font-awesome-icon class="h-6 w-6 text-black" icon="eraser" />
+          <font-awesome-icon class="h-6 w-6 " icon="eraser" />
           Edit Item Details
         </label>
         <div class="flex gap-2">
           <div class="flex">
             <label class="flex flex-col items-center justify-center">Search by: </label>
-            <div class="h-full bg-[#A10E13] text-white py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center">
+            <!-- <button :class="``"></button> -->
+            <div @click="code_part_number = true"
+              :class="`${code_part_number ? 'bg-red-700 text-white' : 'bg-gray-300'} select-none cursor-pointer h-full border border-gray-600 py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center`">
               <b>Code</b>
             </div>
-            <div class="text-center p-1 border-2 rounded-r-md w-[8rem] border-gray-600 flex flex-col justify-center items-center"><b>Part Number</b></div>
+            <div @click="code_part_number = false"
+              :class="`${code_part_number ? 'bg-gray-300 ' : 'bg-red-700 text-white '}cursor-pointer text-center select-none p-1 border rounded-r-md w-[8rem] border-gray-600 flex flex-col justify-center items-center`">
+              <b>Part Number</b>
+            </div>
+          </div>
+          <div>
+            <c-select
+              class="text-center rounded-md h-[2.8rem] w-[18rem] border-2 border-gray-600 hover:border-blue-300 outline-green-600"
+              :options="code_part_number ? code : part_number"
+              v-model="editItemDetailsStore.part_number_select"></c-select>
           </div>
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
@@ -23,10 +34,6 @@
             <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md rounded-l-none">
               <b>Search</b>
             </button>
-          </div>
-          <div>
-            <c-select class="text-center rounded-md h-[2.8rem] w-[15rem] border-2 border-gray-600 hover:border-blue-300 outline-green-600"
-              :options="part_number" v-model="editItemDetailsStore.part_number_select"></c-select>
           </div>
         </div>
       </div>
@@ -193,7 +200,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, inject, computed } from "vue";
+import { ref, onMounted, inject, computed, watch } from "vue";
 import CTable from "@/components/Datatable.vue";
 import CSelect from "@/components/CSelect.vue";
 import { useEditItemDetailsStore } from "@/modules/request/edititemdetails";
@@ -205,26 +212,38 @@ const editItemDetailsStore = useEditItemDetailsStore();
 const toast = useToast();
 const swal = inject("$swal");
 const part_number = ref([]);
+const code = ref([]);
 const edit_item = ref(null);
+const code_part_number = ref(false);
 
 onMounted(() => {
-  editItemDetailsStore.setAgreementListCode()
   editItemDetailsStore.setLoadPartNumber().then((response) => {
-  
-    response.data.forEach((v) => {
-      console.log(v)
+    response.data.part_number.forEach((v) => {
       part_number.value.push({
         text: v,
         value: v
       })
     })
+    response.data.code.forEach((v) => {
+      code.value.push({
+        text: v,
+        value: v
+      })
+    })
   })
+  editItemDetailsStore.setAgreementListCode()
 })
 
 const filterPartNumber = computed(() => {
-  return editItemDetailsStore.getEditItemDetails.filter((v) =>
-    v.part_number == editItemDetailsStore.part_number_select.value
-  );
+  if (!code_part_number.value) {
+    return editItemDetailsStore.getEditItemDetails.filter((v) =>
+      v.part_number == editItemDetailsStore.part_number_select.value
+    );
+  } else {
+    return editItemDetailsStore.getEditItemDetails.filter((v) =>
+      v.code == editItemDetailsStore.part_number_select.value
+    );
+  }
 })
 
 const openModal = (data) => {
@@ -296,7 +315,7 @@ const submitUpdateAgreementList = () => {
 }
 
 const deleteRequest = (data) => {
-  console.log(data)
+  // console.log(data)
   swal({
     icon: "question",
     title: "Delete this request?",

@@ -5,7 +5,9 @@ export const useInspectionDataStore = defineStore({
     id: 'inspectiondata',
     state: () => ({
         inspectionData: [],
+        inspectionDataAnswer: [],
         inspectionDataFields: [
+            { label: '#', key: '#' },
             { label: 'Code', key: 'code' },
             { label: 'Trial Number', key: 'trial_number' },
             { label: 'Request Date', key: 'request_date' },
@@ -15,7 +17,21 @@ export const useInspectionDataStore = defineStore({
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
             { label: 'Critical Parts', key: 'critical_parts' },
-            { label: 'Cpk', key: 'cpk_data' },
+            { label: 'CPK Data', key: 'cpk_data' },
+            { label: 'Action', key: 'action' },
+        ],
+        inspectionDataAnswerFields: [
+            { label: '#', key: '#' },
+            { label: 'Code', key: 'code' },
+            { label: 'Trial Number', key: 'trial_number' },
+            { label: 'Request Date', key: 'request_date' },
+            { label: 'TRI Number', key: 'tri_number' },
+            { label: 'Supplier', key: 'supplier_name' },
+            { label: 'Part Number', key: 'part_number' },
+            { label: 'Revision', key: 'revision' },
+            { label: 'Dimension', key: 'dimension' },
+            { label: 'Critical Parts', key: 'critical_parts' },
+            { label: 'CPK Data', key: 'cpk_data' },
             { label: 'Action', key: 'action' },
         ],
         inspectionDataForm: {
@@ -27,6 +43,7 @@ export const useInspectionDataStore = defineStore({
             send_date: null,
         },
         onEdit: false,
+        onEditAnswer: false,
         onEditIndex: null,
         search_filter: "",
         part_number_select: ""
@@ -78,6 +95,7 @@ export const useInspectionDataStore = defineStore({
                 axios.patch(`inspection-data/${payload.id}`, payload).then(response => {
                     resolve(response.data)
                     this.setInspectionDataRequest()
+                    this.setShowInspectionAnswer()
                 }).catch(err => {
                     reject(err)
                 })
@@ -91,6 +109,17 @@ export const useInspectionDataStore = defineStore({
                     reject(err)
                 })
             })
+        },
+        setShowInspectionAnswer(){
+            return new Promise((resolve, reject) => {
+                axios.get('inspection-data').then((response) =>{
+                    resolve(response.data)
+                    console.log(response.data)
+                    this.inspectionDataAnswer = response.data.data
+                }).catch(err => {
+                    reject(err)
+                })
+            })
         }
     },
     getters: {
@@ -99,6 +128,9 @@ export const useInspectionDataStore = defineStore({
         },
         getInspectionData() {
             return this.inspectionData
+        },
+        getShowInspectionAnswer(){
+            return this.inspectionDataAnswer
         }
     }
 })
