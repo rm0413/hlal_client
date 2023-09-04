@@ -30,17 +30,12 @@
           </label>
           <label for="" class="flex flex-col w-full">
             Part Number
-            <input
-              @change="inputPartNumber"
-              type="text"
+            <input @change="inputPartNumber" type="text"
               class="border-2 p-2 flex text-center w-full rounded border-black text-black"
-              v-model="monitoringStore.monitoringForm.monitoring_part_number"
-              required
-              placeholder="Part Number"
-            />
+              v-model="monitoringStore.monitoringForm.monitoring_part_number" required placeholder="Part Number" />
           </label>
           <div class="flex gap-5 mt-5">
-            <button type="button" @click="exportFile"
+            <button type="button" @click="exportFile" :disabled="select_item.length === 0"
               class="bg-green-500 text-black p-1 w-[10rem] h-[2.5rem] rounded border-2 hover:bg-green-600 border-green-700">
               <font-awesome-icon icon="download" /> <b>EXPORT</b>
             </button>
@@ -54,8 +49,14 @@
     </div>
     <div class="lg:col-span-6 min-[100px]:col-span-9 h-[85vh] mt-[2.3rem]">
       <div class="border rounded-[5px] overflow-y-scroll h-full">
-        <c-table :items="monitoringStore.getLoadMonitoring" :fields="monitoringStore.getMonitoringFields" ref="ctable"
-          :isSelectable="true" @selectable="(data) => (select_data = data)" :thStyle="'bg-[#A10E13] text-white p-2'">
+        <c-table :items="monitoringStore.getLoadMonitoring" :fields="monitoringStore.getMonitoringFields"
+          :thStyle="'bg-[#A10E13] text-white p-2'">
+          <template #cell(#)="data">
+            {{ data.index + 1 }}
+          </template>
+          <template #cell(selected)="data">
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data">
+          </template>
           <template #cell(action)="data" v-if="role === 'ADMIN'">
             <div class="flex justify-center gap-1">
               <button @click="openModal('viewEditModal'), monitoringStore.setEditMonitoringList(data.item)"
@@ -381,7 +382,6 @@ import { useAttachmentsStore } from "@/modules/request/attachments";
 import { ref, onMounted, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
-import CSelect from "@/components/CSelect.vue";
 
 const $loading = useLoading();
 const toast = useToast();
@@ -394,7 +394,7 @@ const viewEditModal = ref(null);
 const attachmentModal = ref(null);
 const viewDesignerModal = ref(null);
 const role = sessionStorage.getItem("role_access");
-const select_data = ref([]);
+const select_item = ref([]);
 const ctable = ref();
 
 onMounted(() => {
@@ -409,8 +409,6 @@ const designerOpenModal = (data) => {
 };
 
 const inputPartNumber = () => {
-  ctable.value.unSelect();
-  select_data.value = [];
 };
 
 const loadUnits = () => {
@@ -508,39 +506,26 @@ const exportFile = () => {
   if (monitoringStore.monitoringForm.monitoring_unit_name) {
     if (monitoringStore.monitoringForm.monitoring_supplier) {
       if (monitoringStore.monitoringForm.monitoring_part_number) {
-        if (select_data.value.length !== 0) {
-          swal({
-            icon: "question",
-            title: "Export File?",
-            text: "Please make sure before to proceed!",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes",
-          }).then((response) => {
-            if (response.value === true) {
-              monitoringStore.setExportMonitoringList(select_data.value).then((response)=>{
-                console.log(response)
-              });
-              ctable.value.unSelect();
-              select_data.value = [];
-            } else {
-              toast.add({
-                severity: "error",
-                summary: "Warning",
-                detail: "Cancelled.",
-                life: 2000,
-              });
-            }
-          });
-        } else {
-          toast.add({
-            severity: "error",
-            summary: "Warning",
-            detail: "Please select data in table",
-            life: 2000,
-          });
-        }
+        swal({
+          icon: "question",
+          title: "Export File?",
+          text: "Please make sure before to proceed!",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes",
+        }).then((response) => {
+          if (response.value === true) {
+            monitoringStore.setExportMonitoringList(select_item.value)
+          } else {
+            toast.add({
+              severity: "error",
+              summary: "Warning",
+              detail: "Cancelled.",
+              life: 2000,
+            });
+          }
+        });
       } else {
         toast.add({
           severity: "error",
@@ -632,10 +617,7 @@ const submitUpdateEditItemMonitoring = () => {
 
 const viewAttachment = (data) => {
   var path = data.file_path_attachment;
-  // console.log(path)
-  window.location.href = 
-    `http://10.164.58.62/hinsei/server/public/view-attachment?file_path_attachment=${path}`
-  ;
+  window.open(`http://10.164.58.62/hinsei/server/public/view-attachment?file_path_attachment=${path}`)
 };
 
 const downloadAttachment = (data) => {
@@ -654,7 +636,6 @@ const downloadAttachment = (data) => {
   }).then((response) => {
     if (response.value === true) {
       attachmentStore.downloadAttachment(datastorage);
-      // window.location.href = `http://10.164.58.62/hinsei/server/public/download-attachment/${emp_id}?file_path_attachment=${path}`;
       attachmentModal.value.showModal();
     } else {
       attachmentModal.value.showModal();
@@ -668,6 +649,8 @@ const downloadAttachment = (data) => {
   });
 };
 </script>
-<style scoped>.p-tooltip {
+<style scoped>
+.p-tooltip {
   z-index: 10 !important;
-}</style>
+}
+</style>

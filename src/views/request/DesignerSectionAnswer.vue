@@ -10,8 +10,8 @@
     </div>
     <div class="flex justify-between">
       <div>
-        <button class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">
-          <input type="checkbox" @click="selectAll" v-model="checkAll" id="myCheckBox" :disabled="!disableCheckbox">
+        <button @click="selectAll"
+          class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem] p-2">
           Select All
         </button>
       </div>
@@ -48,23 +48,15 @@
     </div>
     <div class="h-[80vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 overflow-y-scroll">
-        <!-- :isSelectable="true" @selectable="(data) => (select_data = data)" -->
-        <c-table ref="ctable" :filter="designerSectionAnswerStore.search_filter" :items="filterPartNumber"
+        <c-table :filter="designerSectionAnswerStore.search_filter" :items="filterPartNumber"
           :fields="designerSectionAnswerStore.getDesignerSectionAnswerFields"
           :thStyle="'bg-[#A10E13] p-2 text-white text-[13px] border-2 border-solid border-red-900'">
           <template #cell(#)="data">
             {{ data.index + 1 }}
           </template>
           <template #cell(selected)="data">
-            <!-- <input type="checkbox" :value="data.item" v-model="select_item"> -->
-            <!-- <tr v-for="check_data in data"> -->
-            <!-- <td> {{ }}</td> -->
-            <!-- <td> -->
-            <div v-for="item in data">
-              <input type="checkbox" :value="item.agreement_id_pk" @click="select" v-model="select_item" id="cb_data">
-            </div>
-            <!-- </td> -->
-            <!-- </tr> -->
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item"
+              id="cb_data">
           </template>
           <template #cell(action)="data">
             <button @click="editDesignerSection(data.item)" v-if="data.item.request_result !== null"
@@ -155,21 +147,16 @@ import { useDesignerSectionAnswerStore } from "@/modules/request/designersection
 import { useEditItemDetailsStore } from "@/modules/request/edititemdetails";
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
-import { faL, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const editItemDetailsStore = useEditItemDetailsStore();
 const $loading = useLoading()
 const designerSectionAnswerStore = useDesignerSectionAnswerStore();
 const toast = useToast();
 const swal = inject("$swal");
-const select_data = ref([]);
-const ctable = ref();
 const part_number = ref([]);
 const code = ref([]);
 const code_part_number = ref(false);
-const checkAll = ref(false);
 const select_item = ref([])
-const disableCheckbox = ref(false)
 
 onMounted(() => {
   // console.log(select_item.value)
@@ -191,9 +178,7 @@ onMounted(() => {
 });
 
 const selectPartNumber = () => {
-  ctable.value.unSelect();
-  select_data.value = [];
-  disableCheckbox.value = true
+  select_item.value = []
   clearInputs()
 };
 
@@ -206,7 +191,6 @@ const uploadFile = (event) => {
 };
 
 const excelUploadingDesignerAnswer = () => {
-  // if (select_data.value.length !== 0) {
   if (
     file.value.type ===
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -227,8 +211,12 @@ const excelUploadingDesignerAnswer = () => {
         if (response.value === true) {
           var emp_id = sessionStorage.getItem("employee_id")
           const name = "data";
+          const data_storage = []
+          select_item.value.forEach(v => {
+            data_storage.push(JSON.parse(v))
+          })
           const formData = new FormData();
-          select_data.value.forEach((item, i) => {
+          data_storage.forEach((item, i) => {
             formData.append((`${name}[${i}]${["[agreement_request_id]"]}`), item["agreement_request_id_fk"]);
             formData.append((`${name}[${i}]${["[trial_number]"]}`), item["trial_number"]);
             formData.append((`${name}[${i}]${["[request_date]"]}`), item["request_date"]);
@@ -272,8 +260,6 @@ const excelUploadingDesignerAnswer = () => {
                     title: response.message,
                     timer: 1500,
                   });
-                  ctable.value.unSelect();
-                  select_data.value = [];
                 } else {
                   loader.hide()
                   // Object.keys(response.error).forEach((key) => {
@@ -308,19 +294,9 @@ const excelUploadingDesignerAnswer = () => {
       group: "bl",
     });
   }
-  // } else {
-  //   toast.add({
-  //     severity: "error",
-  //     summary: "Warning",
-  //     detail: "Please select data in table",
-  //     life: 1500,
-  //     group: "bl",
-  //   });
-  // }
 };
 
 const submitDesignerSectionAnswer = () => {
-  // if (select_data.value.length !== 0) {
   swal({
     icon: "question",
     title: "Add Designer Section Answer?",
@@ -334,11 +310,10 @@ const submitDesignerSectionAnswer = () => {
       const loader = $loading.show()
       setTimeout(() => {
         designerSectionAnswerStore
-          .setInsertSingleMultipleDesigner(select_data.value)
+          .setInsertSingleMultipleDesigner(select_item.value)
           .then((response) => {
+            console.log(response)
             if (response.status === "success") {
-              ctable.value.unSelect();
-              select_data.value = [];
               loader.hide()
               swal({
                 icon: "success",
@@ -369,15 +344,6 @@ const submitDesignerSectionAnswer = () => {
       });
     }
   });
-  // } else {
-  //   toast.add({
-  //     severity: "error",
-  //     summary: "Warning",
-  //     detail: "Please select data in table",
-  //     life: 1500,
-  //     group: "bl",
-  //   });
-  // }
 };
 
 const editDesignerSection = (data) => {
@@ -392,8 +358,6 @@ const editDesignerSection = (data) => {
     designer_in_charge: data.designer_in_charge,
     answer_date: data.answer_date,
   };
-  ctable.value.unSelect();
-  select_data.value = [];
 };
 
 const updateDesignerSectionAnswer = () => {
@@ -413,8 +377,6 @@ const updateDesignerSectionAnswer = () => {
           .setUpdateDesignerSectionAnswer()
           .then((response) => {
             if (response.status === "success") {
-              ctable.value.unSelect();
-              select_data.value = [];
               loader.hide()
               swal({
                 icon: "success",
@@ -460,43 +422,27 @@ const clearInputs = () => {
   designerSectionAnswerStore.onSingle = false;
   document.getElementById("file-designer").value = null;
   designerSectionAnswerStore.clearDesignerAnswer();
-  ctable.value.unSelect();
-  select_data.value = [];
+  select_item.value = []
 };
 
 // const items_table = ref([]);
 const selectAll = () => {
-  // console.log(filterPartNumber.value)
-  select_item.value = [];
-  if(checkAll){
-    for(var items in filterPartNumber.value)
-    {
-      select_item.value.push(filterPartNumber.value[items].agreement_id_pk)
-    }
-    // console.log(select_item.value)
+  var selected_checkbox = document.querySelectorAll(
+    "input[type='checkbox']"
+  );
+  if (select_item.value.length === filterPartNumber.value.length) {
+    selected_checkbox.forEach((v) => {
+      v.checked = false
+    })
+    select_item.value = []
+  } else {
+    selected_checkbox.forEach((v) => {
+      if (!v.checked) {
+        v.checked = true
+        select_item.value.push(v.value)
+      }
+    })
   }
-  // var cb = document.getElementById("myCheckBox")
-  // var checbox_data = document.getElementById("cb_data")
-  // if (cb.checked) {
-  //   // console.log(select_item.value)
-  //   checbox_data.checked = true;
-  // }else{
-  //   checbox_data.checked = false
-  // }
-  // items_table.value = [];
-  // select_item.value = [];
-  // if(checkAll){
-  //   for(var data_item in filterPartNumber){
-  //     select_item.value.push(filterPartNumber[data_item])
-  //     // checkAll.value = true
-  //     console.log(select_item.value)
-  //   }
-  // }
-}
-
-const select = () => {
-  checkAll.value = false
-  // return select_item.value.includes(check_data)
 }
 
 </script>

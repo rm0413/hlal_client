@@ -6,6 +6,8 @@ export const useAttachmentsStore = defineStore({
   state: () => ({
     attachments: [],
     attachmentsField: [
+      { label: "Selected", key: "selected" },
+      { label: "#", key: "#" },
       { label: "Code", key: "code" },
       { label: "Trial No.", key: "trial_number" },
       { label: "Request Date", key: "request_date" },
@@ -19,6 +21,19 @@ export const useAttachmentsStore = defineStore({
     search_filter: "",
   }),
   actions: {
+    setLoadPartNumber() {
+      return new Promise((resolve, reject) => {
+        axios
+          .get("load-part-number-with-attachment")
+          .then((response) => {
+            // console.log(response.data)
+            resolve(response.data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
     setAgreementListCode() {
       return new Promise((resolve, reject) => {
         axios

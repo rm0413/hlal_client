@@ -43,7 +43,7 @@
         </div>
         <form method="post" @submit.prevent="submitAttachment">
           <div class="flex justify-center items-center mt-2 border-2 border-black rounded w-full">
-            <input id="input-file" type="file" accept=".pdf" @change="uploadFile" :draggable="true" class="cursor-pointer text-sm text-grey-500 bg-white w-full
+            <input id="input-file" type="file" accept=".pdf" @change="uploadFile" :disabled="select_item.length === 0" :draggable="true" class="cursor-pointer text-sm text-grey-500 bg-white w-full
             file:mr-5 file:py-2 file:px-6
             file:rounded file:border-0
             file:text-sm file:font-medium
@@ -53,7 +53,7 @@
             <!-- <span class="file-msg">or drag and drop PDF file here</span> -->
           </div>
           <div class="flex items-center justify-center w-full gap-2 mt-3">
-            <button class="w-[12rem] bg-red-500 hover:bg-red-600 text-white p-1 h-[3rem] rounded border-2 border-red-800"
+            <button :disabled="select_item.length === 0" class="w-[12rem] bg-red-500 hover:bg-red-600 text-white p-1 h-[3rem] rounded border-2 border-red-800"
               type="submit"><font-awesome-icon icon="floppy-disk" /> <b>SAVE</b></button>
             <button
               class="w-[12rem] bg-gray-500 hover:bg-gray-600 border-2 border-gray-800 text-white p-1 h-[3rem] rounded"
@@ -62,11 +62,15 @@
         </form>
       </div>
       <div class="lg:col-span-7 min-[100px]:col-span-9 h-[85vh] overflow-y-scroll mt-1">
-        <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
-          :filter="attachmentsStore.search_filter" :items="filterPartNumber"
+        <CTable :filter="attachmentsStore.search_filter" :items="filterPartNumber"
           :fields="attachmentsStore.getAttachmentsFields"
           :thStyle="'bg-[#A10E13] p-2 text-white text-[13px] border-2 border-solid border-red-900'">
-          <template #cell(action)="data">
+          <template #cell(#)="data">
+            {{ data.index + 1 }}
+          </template>
+          <template #cell(selected)="data">
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data" v-if="data.item.file_path_attachment === null">
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data" v-else hidden>
           </template>
         </CTable>
       </div>
@@ -83,22 +87,19 @@ import CSelect from "@/components/CSelect.vue"
 import { useAttachmentsStore } from '@/modules/request/attachments'
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
-import { useEditItemDetailsStore } from "@/modules/request/edititemdetails";
 
-const editItemDetailsStore = useEditItemDetailsStore();
 const $loading = useLoading()
 const attachmentsStore = useAttachmentsStore()
 const swal = inject("$swal");
 const toast = useToast();
-const ctable = ref();
-const select_data = ref([]); //select table
 const part_number = ref([])
 const code = ref([])
 const code_part_number = ref(false);
+const select_item = ref([])
 
 onMounted(() => {
   attachmentsStore.setAgreementListCode()
-  editItemDetailsStore.setLoadPartNumber().then((response) => {
+  attachmentsStore.setLoadPartNumber().then((response) => {
     response.data.part_number.forEach((v) => {
       part_number.value.push({
         text: v,
@@ -115,8 +116,8 @@ onMounted(() => {
 })
 
 const changeSelect = () => {
-  ctable.value.unSelect();
-  select_data.value = [];
+  select_item.value = []
+  clearFile()
 }
 
 const file = ref(null);
@@ -125,11 +126,14 @@ const uploadFile = (event) => {
 };
 
 const submitAttachment = () => {
-  if (select_data.value.length !== 0) {
     var payload = {
       agreement_request_id: [],
     };
-    select_data.value.forEach((v) => {
+    const data_storage = []
+    select_item.value.forEach((v) => {
+      data_storage.push(JSON.parse(v))
+    })
+    data_storage.forEach((v) => {
       payload.agreement_request_id.push(v.agreement_id_pk);
     });
     const formData = new FormData();
@@ -152,8 +156,6 @@ const submitAttachment = () => {
         setTimeout(() => {
           attachmentsStore.setInsertAttachment(formData).then((response) => {
             if (response.status === "success") {
-              ctable.value.unSelect();
-              select_data.value = [];
               document.getElementById("input-file").value = null;
               loader.hide()
               swal({
@@ -179,10 +181,7 @@ const submitAttachment = () => {
         toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000, group: 'bl' });
       }
     })
-  } else {
-    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
   }
-}
 
 const filterPartNumber = computed(() => {
   if (!code_part_number.value) {
@@ -198,7 +197,6 @@ const filterPartNumber = computed(() => {
 
 const clearFile = () => {
   document.getElementById('input-file').value = null;
-  ctable.value.unSelect();
-  select_data.value = [];
+  select_item.value = []
 }
 </script>

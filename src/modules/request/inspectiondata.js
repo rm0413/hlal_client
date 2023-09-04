@@ -7,20 +7,7 @@ export const useInspectionDataStore = defineStore({
         inspectionData: [],
         inspectionDataAnswer: [],
         inspectionDataFields: [
-            { label: '#', key: '#' },
-            { label: 'Code', key: 'code' },
-            { label: 'Trial Number', key: 'trial_number' },
-            { label: 'Request Date', key: 'request_date' },
-            { label: 'TRI Number', key: 'tri_number' },
-            { label: 'Supplier', key: 'supplier_name' },
-            { label: 'Part Number', key: 'part_number' },
-            { label: 'Revision', key: 'revision' },
-            { label: 'Dimension', key: 'dimension' },
-            { label: 'Critical Parts', key: 'critical_parts' },
-            { label: 'CPK Data', key: 'cpk_data' },
-            { label: 'Action', key: 'action' },
-        ],
-        inspectionDataAnswerFields: [
+            { label: 'Selected', key: 'selected' },
             { label: '#', key: '#' },
             { label: 'Code', key: 'code' },
             { label: 'Trial Number', key: 'trial_number' },
@@ -60,6 +47,10 @@ export const useInspectionDataStore = defineStore({
             })
         },
         setInsertInspectionData(data) {
+            var datastorage = []
+            data.forEach(v => {
+                datastorage.push(JSON.parse(v))
+            });
             var payload = {
                 agreement_request_id: [],
                 cpk_data: this.inspectionDataForm.cpk_data,
@@ -68,7 +59,7 @@ export const useInspectionDataStore = defineStore({
                 sent_date_igm: this.inspectionDataForm.send_date,
                 emp_id: sessionStorage.getItem('employee_id'),
             }
-            data.forEach((v) => {
+            datastorage.forEach((v) => {
                 payload.agreement_request_id.push(v.agreement_id_pk)
             })
             return new Promise((resolve, reject) => {

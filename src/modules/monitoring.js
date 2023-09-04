@@ -7,8 +7,9 @@ export const useMonitoringStore = defineStore({
     monitoring: [],
     inputStatus: true,
     monitoringFields: [
+      { label: "Selected", key: "selected" },
       { label: "Action", key: "action" },
-      { label: "Item No.", key: "id" },
+      { label: "Item No.", key: "#" },
       { label: "Unit Name", key: "unit_name" },
       { label: "Supplier", key: "supplier_name" },
       { label: "Part Number", key: "part_number" },
@@ -231,8 +232,8 @@ export const useMonitoringStore = defineStore({
       });
     },
     setExportMonitoringList(data) {
-      window.location.href = `http://10.164.58.62/hinsei/server/public/export/${data[0].unit_id}/${data[0].supplier_name}/${data[0].part_number}`
-      
+      var datastorage = JSON.parse(data)
+      window.location.href = `http://10.164.58.62/hinsei/server/public/export/${datastorage.unit_id}/${datastorage.supplier_name}/${datastorage.part_number}`
     },
   },
   getters: {

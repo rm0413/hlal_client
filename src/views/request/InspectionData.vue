@@ -10,7 +10,7 @@
       <div class="flex justify-between">
         <div>
           <button @click="selectAll"
-            class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">
+            class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem] p-2">
             Select All
           </button>
         </div>
@@ -46,12 +46,17 @@
     </div>
     <div class="h-[81vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[81vh] overflow-y-scroll">
-        <c-table ref="ctable" :isSelectable="true" @selectable="(data) => (select_data = data)"
-          :fields="inspectionDataStore.getInspectionDataFields" :items="filterPartNumber"
+        <c-table :fields="inspectionDataStore.getInspectionDataFields" :items="filterPartNumber"
           :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'"
           :filter="inspectionDataStore.search_filter">
           <template #cell(#)="data">
             {{ data.index + 1 }}
+          </template>
+          <template #cell(selected)="data">
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data"
+              v-if="data.item.cpk_data !== null" hidden>
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data"
+              v-else>
           </template>
           <template #cell(action)="data">
             <button v-tooltip.top="'Edit Cpk Data'"
@@ -74,28 +79,28 @@
             <i class="text-black">100% of Inspection Data or CPK Data</i>
             <textarea style="resize:none"
               class="border-2 rounded w-full h-[10rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
-              :disabled="select_data.length === 0" v-model="inspectionDataStore.inspectionDataForm.cpk_data"
+              :disabled="select_item.length === 0" v-model="inspectionDataStore.inspectionDataForm.cpk_data"
               required></textarea>
           </label>
           <label class="flex flex-col items-center">
             <i class="text-black">Inspection after Rework</i>
-            <input type="text" :disabled="select_data.length === 0"
+            <input type="text" :disabled="select_item.length === 0"
               class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="inspectionDataStore.inspectionDataForm.inspection_rework" />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-black">Revised Date of IGM</i>
-            <input type="date" :disabled="select_data.length === 0"
+            <input type="date" :disabled="select_item.length === 0"
               class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
               v-model="inspectionDataStore.inspectionDataForm.revised_date" required />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-black">Sent Date of IGM</i>
-            <input type="date" :disabled="select_data.length === 0"
+            <input type="date" :disabled="select_item.length === 0"
               class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
               v-model="inspectionDataStore.inspectionDataForm.send_date" required />
           </label>
-          <button type="submit" v-if="!inspectionDataStore.onEdit" :disabled="select_data.length === 0"
+          <button type="submit" v-if="!inspectionDataStore.onEdit" :disabled="select_item.length === 0"
             class="flex gap-2 bg-red-500 border-2 border-red-900 hover:bg-red-600 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
               icon="floppy-disk"></font-awesome-icon><b>SAVE</b></button>
           <button type="button" v-else @click="updateInspectionData"
@@ -122,13 +127,10 @@ const $loading = useLoading()
 const inspectionDataStore = useInspectionDataStore();
 const swal = inject("$swal");
 const toast = useToast();
-const ctable = ref()
-const select_data = ref([])
 const part_number = ref([]);
 const code = ref([]);
 const code_part_number = ref(false);
-const inspection_modal = ref(null)
-const isDisable = ref(true)
+const select_item = ref([])
 
 onMounted(() => {
   inspectionDataStore.setShowInspectionAnswer()
@@ -150,20 +152,30 @@ onMounted(() => {
 })
 
 const selectPartNumber = () => {
-  ctable.value.unSelect();
-  select_data.value = [];
+  select_item.value = []
   clearInputs()
 };
 
 const selectAll = () => {
-  ctable.value.selectAll().then(res => {
-    select_data.value = res
-    console.log(res)
-  })
+  var selected_checkbox = document.querySelectorAll(
+    "input[type='checkbox']"
+  );
+  if (select_item.value.length === filterPartNumber.value.length) {
+    selected_checkbox.forEach((v) => {
+      v.checked = false
+    })
+    select_item.value = []
+  } else {
+    selected_checkbox.forEach((v) => {
+      if (!v.checked) {
+        v.checked = true
+        select_item.value.push(v.value)
+      }
+    })
+  }
 }
 
 const submitInspectionData = () => {
-  // if (select_data.value.length !== 0) {
   swal({
     icon: "question",
     title: "Add Inspection Data?",
@@ -176,38 +188,31 @@ const submitInspectionData = () => {
     if (response.value === true) {
       const loader = $loading.show()
       setTimeout(() => {
-        inspectionDataStore.setInsertInspectionData(select_data.value).then((response) => {
-          if (response.status === "success") {
-            clearInputs();
-            ctable.value.unSelect();
-            select_data.value = [];
-            loader.hide()
-            swal({
-              icon: "success",
-              title: response.message,
-              timer: 1500
-            })
-          } else {
-            loader.hide()
-            Object.keys(response.error).forEach((key) => {
-              toast.add({ severity: 'warn', summary: 'Warning', detail: response.error[key][0], life: 2000, group: 'bl' });
-            })
-          }
-        })
+        inspectionDataStore.setInsertInspectionData(select_item.value)
+          .then((response) => {
+            if (response.status === "success") {
+              clearInputs();
+              loader.hide()
+              swal({
+                icon: "success",
+                title: response.message,
+                timer: 1500
+              })
+            } else {
+              loader.hide()
+              Object.keys(response.error).forEach((key) => {
+                toast.add({ severity: 'warn', summary: 'Warning', detail: response.error[key][0], life: 2000, group: 'bl' });
+              })
+            }
+          })
       })
     } else {
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled', life: 2000, group: 'bl' });
     }
   })
-  // } else {
-  //   toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table', life: 2000, group: 'bl' });
-  // }
 }
 
-//original
 const editCpkData = (data) => {
-  ctable.value.unSelect();
-  select_data.value = [];
   inspectionDataStore.onEdit = true;
   inspectionDataStore.inspectionDataForm = {
     id: data.inspection_id,
@@ -227,14 +232,10 @@ const clearInputs = () => {
     send_date: null,
   }
   inspectionDataStore.onEdit = false
-  ctable.value.unSelect();
-  select_data.value = [];
+  select_item.value = []
 }
 
-// original
 const updateInspectionData = () => {
-  ctable.value.unSelect()
-  select_data.value = [];
   swal({
     icon: "question",
     title: "Update Inspection Data?",

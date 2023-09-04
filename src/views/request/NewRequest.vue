@@ -236,7 +236,7 @@
     </dialog>
     <!--View Items-->
     <dialog ref="view_items" class="p-0 rounded transform duration-300 -translate-y-5 w-full border-2 border-[#A10E13]">
-      <div class="flex flex-col">
+      <div class="flex flex-col h-[75vh]">
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <p><font-awesome-icon icon="file-lines" class="h-5 w-5 mr-2" />View Item Details</p>
           <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('view_items')">
@@ -245,12 +245,12 @@
         </div>
         <div class="flex flex-row ml-2 mb-1">
           <button @click="selectAll"
-            class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem]">Select
-            All</button>
+          class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem] p-2">
+          Select All
+        </button>
         </div>
-        <div class="flex h-[70vh] overflow-y-scroll mx-2">
-          <CTable ref="ctable" :isSelectable="true" @selectable="(data) => (checkedData = data)"
-            :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
+        <div class="h-[65vh] overflow-y-scroll mx-2">
+          <CTable :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
             :items="newRequestStore.getNoCode"
             :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'">
             <template #cell(#)="data">
@@ -258,9 +258,12 @@
                 {{ data.index + 1 }}
               </div>
             </template>
+            <template #cell(selected)="data">
+              <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data">
+            </template>
           </CTable>
         </div>
-        <button
+        <button :disabled="select_item.length === 0"
           class="mt-6 bg-[#A10E13] hover:bg-red-600 w-full h-[2.8rem] text-white tracking-widest font-serif text-[20px]"
           @click="generateCode">
           <font-awesome-icon icon="floppy-disk" class="h-5 w-5" /> GENERATE</button>
@@ -316,8 +319,7 @@ const multiple_input = ref(null);
 const view_items = ref(null);
 const search = ref(null);
 const units = ref([]);
-const checkedData = ref([]); //view-item-details check box
-const ctable = ref(null);
+const select_item = ref([]); //view-item-details check box
 
 const autoAdd = (data) => {
   search.value.close();
@@ -347,68 +349,63 @@ const autoAdd = (data) => {
 
 const generateCode = () => {
   view_items.value.close();
-  if (checkedData.value.length !== 0) {
-    swal({
-      icon: "question",
-      title: "Generate Code?",
-      text: "Please make sure. Cannot be undone",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((response => {
-      if (response.value === true) {
-        var payload = {
-          agreement_request_id: [],
-          emp_id: sessionStorage.getItem('employee_id')
-        };
-        checkedData.value.forEach((v) => {
-          payload.agreement_request_id.push(v.agreement_id_pk);
-        });
-        const loader = $loading.show()
-        setTimeout(() => {
-          newRequestStore.setGenerateCode(payload).then((response) => {
-            if (response.status === "success") {
-              newRequestStore.setShowGenerateCode(response.data.id).then((response) => {
-                if (response.status === "success") {
-                  ctable.value.unSelect();
-                  checkedData.value = [];
-                  loader.hide()
-                  swal({
-                    icon: "success",
-                    title: response.data[0].code,
-                    text: "Your code has been generated. An email notification will be sent.",
-                  });
-                } else {
-                  loader.hide()
-                  toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
-                }
-              });
-            } else {
-              loader.hide()
-              Object.keys(response.error).forEach((key) => {
-                toast.add({
-                  severity: "error",
-                  summary: "Warning",
-                  detail: response.error[key][0],
-                  life: 5000,
-                  group: 'bl'
+  swal({
+    icon: "question",
+    title: "Generate Code?",
+    text: "Please make sure. Cannot be undone",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes",
+  }).then((response => {
+    if (response.value === true) {
+      var payload = {
+        agreement_request_id: [],
+        emp_id: sessionStorage.getItem('employee_id')
+      };
+      const datastorage = []
+      select_item.value.forEach(v => {
+        datastorage.push(JSON.parse(v))
+      })
+      datastorage.forEach((v) => {
+        payload.agreement_request_id.push(v.agreement_id_pk);
+      });
+      const loader = $loading.show()
+      setTimeout(() => {
+        newRequestStore.setGenerateCode(payload).then((response) => {
+          if (response.status === "success") {
+            newRequestStore.setShowGenerateCode(response.data.id).then((response) => {
+              if (response.status === "success") {
+                loader.hide()
+                swal({
+                  icon: "success",
+                  title: response.data[0].code,
+                  text: "Your code has been generated. An email notification will be sent.",
                 });
-              })
-            }
-          });
-        })
-      } else {
-        view_items.value.showModal();
-        ctable.value.unSelect();
-        checkedData.value = [];
-        toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled', life: 2000, group: 'bl' });
-      }
-    }))
-  } else {
-    view_items.value.showModal();
-    toast.add({ severity: 'error', summary: 'Warning', detail: 'Please select data in table.', life: 2000, group: 'bl' });
-  }
+              } else {
+                loader.hide()
+                toast.add({ severity: 'error', summary: 'Warning', detail: response.message, life: 2000, group: 'bl' });
+              }
+            });
+          } else {
+            loader.hide()
+            Object.keys(response.error).forEach((key) => {
+              toast.add({
+                severity: "error",
+                summary: "Warning",
+                detail: response.error[key][0],
+                life: 5000,
+                group: 'bl'
+              });
+            })
+          }
+        });
+      })
+    } else {
+      view_items.value.showModal();
+      toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled', life: 2000, group: 'bl' });
+    }
+  }))
 };
 
 const submitAgreementList = () => {
@@ -588,8 +585,21 @@ const submitMultipleRequest = () => {
 }
 
 const selectAll = () => {
-  ctable.value.selectAll().then(res => {
-    checkedData.value = res
-  })
+  var selected_checkbox = document.querySelectorAll(
+    "input[type='checkbox']"
+  );
+  if (select_item.value.length === newRequestStore.getNoCode.length) {
+    selected_checkbox.forEach((v) => {
+      v.checked = false
+    })
+    select_item.value = []
+  } else {
+    selected_checkbox.forEach((v) => {
+      if (!v.checked) {
+        v.checked = true
+        select_item.value.push(v.value)
+      }
+    })
+  }
 }
 </script>

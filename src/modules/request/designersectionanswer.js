@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 
 import axios from 'axios'
 import { faL } from "@fortawesome/free-solid-svg-icons";
+import { split } from "postcss/lib/list";
 
 export const useDesignerSectionAnswerStore = defineStore({
     id: "designSectionAnswer",
@@ -104,7 +105,10 @@ export const useDesignerSectionAnswerStore = defineStore({
             })
         },
         setInsertSingleMultipleDesigner(data) {
-            // console.log(data)
+            var datastorage = []
+            data.forEach(v => {
+                datastorage.push(JSON.parse(v))
+            });
             var payload = {
                 agreement_request_id: [],
                 designer_answer: this.designerSectionAnswerForm.designer_section_answer,
@@ -113,8 +117,8 @@ export const useDesignerSectionAnswerStore = defineStore({
                 answer_date: this.designerSectionAnswerForm.answer_date,
                 emp_id: sessionStorage.getItem('employee_id')
             }
-            data.forEach(v => {
-                payload.agreement_request_id.push(v.agreement_request_id_fk)
+            datastorage.forEach(v => {
+                payload.agreement_request_id.push(v.agreement_id_pk)
             });
             return new Promise((resolve, reject) => {
                 axios.post('insert-designer-answer', payload).then(response => {

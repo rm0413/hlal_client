@@ -6,6 +6,8 @@ export const useSavedInputsStore = defineStore({
     state: () => ({
         savedInputs: [],
         savedInputsFields: [
+            { label: 'Selected', key: 'selected' },
+            { label: '#', key: '#' },
             { label: 'Trial Number', key: 'trial_number' },
             { label: 'Request Date', key: 'request_date' },
             { label: 'TRI No.', key: 'tri_number' },
