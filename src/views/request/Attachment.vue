@@ -43,7 +43,7 @@
         </div>
         <form method="post" @submit.prevent="submitAttachment">
           <div class="flex justify-center items-center mt-2 border-2 border-black rounded w-full">
-            <input id="input-file" type="file" accept=".pdf" @change="uploadFile" :disabled="select_item.length === 0" :draggable="true" class="cursor-pointer text-sm text-grey-500 bg-white w-full
+            <input id="input-file" type="file" accept=".pdf" @change="uploadFile" data-open-modal :disabled="select_item.length === 0" :draggable="true" class="cursor-pointer text-sm text-grey-500 bg-white w-full
             file:mr-5 file:py-2 file:px-6
             file:rounded file:border-0
             file:text-sm file:font-medium

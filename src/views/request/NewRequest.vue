@@ -245,9 +245,9 @@
         </div>
         <div class="flex flex-row ml-2 mb-1">
           <button @click="selectAll"
-          class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem] p-2">
-          Select All
-        </button>
+            class="bg-[#A10E13] text-white rounded justify-center items-center mt-1 h-[2.5rem] w-[10rem] p-2">
+            Select All
+          </button>
         </div>
         <div class="h-[65vh] overflow-y-scroll mx-2">
           <CTable :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
@@ -309,6 +309,7 @@ import { ref, onMounted, inject } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
 import { useUnitManagementStore } from "@/modules/management/unitManagement";
+import logo from "@/assets/images/space.png"
 
 const unitManagementStore = useUnitManagementStore();
 const $loading = useLoading()
@@ -451,7 +452,18 @@ const submitAgreementList = () => {
 const openModal = (modal) => {
   if (modal === "multiple_input") {
     if (newRequestStore.agreementForm.unit !== null) {
-      multiple_input.value.showModal();
+      swal({
+        icon: "info",
+        title: "Please make sure the upload excel file wont have:",
+        html: `<li>Merge cells</li><li>Wrap Text</li><li>Space before you input text in cells. Please see image above</li>`,
+        imageUrl: logo,
+        imageWidth: 800,
+        imageHeight: 400,
+      }).then((response) => {
+        if (response.value === true) {
+          multiple_input.value.showModal();
+        }
+      })
       multiple_input.value.classList.remove("-translate-y-5");
     } else {
       toast.add({

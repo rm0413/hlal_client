@@ -55,8 +55,7 @@
             {{ data.index + 1 }}
           </template>
           <template #cell(selected)="data">
-            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item"
-              id="cb_data">
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data">
           </template>
           <template #cell(action)="data">
             <button @click="editDesignerSection(data.item)" v-if="data.item.request_result !== null"
@@ -147,6 +146,7 @@ import { useDesignerSectionAnswerStore } from "@/modules/request/designersection
 import { useEditItemDetailsStore } from "@/modules/request/edititemdetails";
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
+import logo from "@/assets/images/space.png"
 
 const editItemDetailsStore = useEditItemDetailsStore();
 const $loading = useLoading()
@@ -160,7 +160,11 @@ const select_item = ref([])
 
 onMounted(() => {
   // console.log(select_item.value)
-  designerSectionAnswerStore.setLoadDesignerSection().then;
+  designerSectionAnswerStore.setLoadDesignerSection()
+  loadPartNumberCode()
+});
+
+const loadPartNumberCode = () => {
   editItemDetailsStore.setLoadPartNumber().then((response) => {
     response.data.part_number.forEach((v) => {
       part_number.value.push({
@@ -175,7 +179,7 @@ onMounted(() => {
       });
     });
   });
-});
+}
 
 const selectPartNumber = () => {
   select_item.value = []

@@ -517,6 +517,7 @@ const exportFile = () => {
         }).then((response) => {
           if (response.value === true) {
             monitoringStore.setExportMonitoringList(select_item.value)
+            select_item.value = []
           } else {
             toast.add({
               severity: "error",
