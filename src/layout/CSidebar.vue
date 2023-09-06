@@ -166,34 +166,38 @@
           <!-- {{ navs.sub_module }} -->
           <div
             v-if="navs.role === undefined || navs.role === userprofile.role || navs.section_code === userprofile.section_code">
-            <router-link v-if="!navs.sub_module" :to="{ name: navs.name }" :class="`hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 w-full relative bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg
-              } p-3 rounded-full transform ease-in-out duration-500 flex shadow-lg hover:visible`">
-              <span
-                class="translate-x-36 bg-black text-white flex items-center px-2 py-1 -translate-y-2 rounded invisible">Testingtesting</span>
+            <GTooltip :tooltype="'right'" :message="navs.title">
+              <router-link v-if="!navs.sub_module" :to="{ name: navs.name }" :class="`hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 w-full relative bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg
+                } p-3 rounded-full transform ease-in-out duration-500 flex shadow-lg hover:visible`">
+                <span
+                  class="translate-x-36 bg-black text-white flex items-center px-2 py-1 -translate-y-2 rounded invisible">Testingtesting</span>
 
-              <i v-show="navs.class" :style="navs.style" :class="navs.class"></i>
-              <i v-show="navs.svg" v-html="navs.svg"></i>
-              <font-awesome-icon v-if="navs.fa" :class="`h-5 w-5 text-${themeStore.theme[themeStore.theme_select].sidebar_icon
-                }`" :icon="navs.fa"></font-awesome-icon>
-            </router-link>
-            <div :class="` hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 duration-500  w-full p-3 bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg
-              }  ${openSubModule ? 'rounded text-[#A10E13]' : 'rounded-full text-blue-400'
-              } transform ease-in-out duration-300 flex shadow-lg cursor-pointer`"
-              @click="(openSubModule = !openSubModule), expand_submodule(`submodule(${n})`)" v-else>
-              <i v-show="navs.class" :style="navs.style" :class="navs.class"></i>
-              <i v-show="navs.svg" v-html="navs.svg"></i>
-              <font-awesome-icon v-if="navs.fa" class="h-5 w-5" :icon="navs.fa"></font-awesome-icon>
-            </div>
+                <i v-show="navs.class" :style="navs.style" :class="navs.class"></i>
+                <i v-show="navs.svg" v-html="navs.svg"></i>
+                <font-awesome-icon v-if="navs.fa" :class="`h-5 w-5 text-${themeStore.theme[themeStore.theme_select].sidebar_icon
+                  }`" :icon="navs.fa"></font-awesome-icon>
+              </router-link>
+              <div :class="` hover:ml-4 justify-end pr-5 hover:text-red-900 dark:hover:text-red-200 duration-500  w-full p-3 bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg
+                }  ${openSubModule ? 'rounded text-[#A10E13]' : 'rounded-full text-blue-400'
+                } transform ease-in-out duration-300 flex shadow-lg cursor-pointer`"
+                @click="(openSubModule = !openSubModule), expand_submodule(`submodule(${n})`)" v-else>
+                <i v-show="navs.class" :style="navs.style" :class="navs.class"></i>
+                <i v-show="navs.svg" v-html="navs.svg"></i>
+                <font-awesome-icon v-if="navs.fa" class="h-5 w-5" :icon="navs.fa"></font-awesome-icon>
+              </div>
+            </GTooltip>
             <div v-for="(sub, s) in navs.sub_module" :key="s">
               <router-link :to="{ name: sub.name }">
-                <div v-show="sub.role === userprofile.role || sub.section_code === userprofile.section_code"
-                  ref="sub_module" :class="`submodule(${n}) transform duration-300 absolute hover:ml-4 opacity-0 -translate-x-[15rem] justify-end pr-5 text-${themeStore.theme[themeStore.theme_select].sidebar_sub_icon
-                    } dark:hover:text-red-200 hover:text-red-900 w-full rounded bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg
-                    } text-${themeStore.theme[themeStore.theme_select].sidebar_text} p-3 flex shadow-lg`">
-                  <i v-show="sub.class" :style="sub.style" :class="sub.class"></i>
-                  <i v-show="sub.svg" v-html="sub.svg"></i>
-                  <font-awesome-icon v-if="sub.fa" class="h-4 w-4 " :icon="sub.fa"></font-awesome-icon>
-                </div>
+                <GTooltip :tooltype="'right'" :message="sub.title">
+                  <div v-show="sub.role === userprofile.role || sub.section_code === userprofile.section_code"
+                    ref="sub_module" :class="`submodule(${n}) transform duration-300 absolute hover:ml-4 opacity-0 -translate-x-[15rem] justify-end pr-5 text-${themeStore.theme[themeStore.theme_select].sidebar_sub_icon
+                      } dark:hover:text-red-200 hover:text-red-900 w-full rounded bg-${themeStore.theme[themeStore.theme_select].sidebar_route_bg
+                      } text-${themeStore.theme[themeStore.theme_select].sidebar_text} p-3 flex shadow-lg`">
+                    <i v-show="sub.class" :style="sub.style" :class="sub.class"></i>
+                    <i v-show="sub.svg" v-html="sub.svg"></i>
+                    <font-awesome-icon v-if="sub.fa" class="h-4 w-4 " :icon="sub.fa"></font-awesome-icon>
+                  </div>
+                </GTooltip>
               </router-link>
             </div>
           </div>
@@ -218,6 +222,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useThemeStore } from "@/modules/alpha";
+import GTooltip from "@/components/GTooltip.vue";
+
 const themeStore = useThemeStore();
 const props = defineProps({
   links: Array,

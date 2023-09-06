@@ -11,7 +11,7 @@ export const useNewRequestStore = defineStore({
       additional_request_date: null,
       tri_number: null,
       tri_quantity: null,
-      request_person: null,
+      request_person: sessionStorage.getItem("first_name"),
       supperior_approval: null,
       supplier_name: null,
       part_number: null,

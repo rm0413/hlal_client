@@ -21,7 +21,7 @@
     <tbody v-else-if="items" class="">
       <span v-if="items.length === 0" class="flex justify-center w-full absolute italic">
         {{ emptyMsg }}</span>
-      <tr :class="`${tdStyle} unchecked ${index % 2 ? 'bg-white' : 'bg-gray-200'}`" v-for="(item, index) in items"
+      <tr :class="`${tdStyle} unchecked ${index % 2 ? 'bg-white' : 'bg-white'}`" v-for="(item, index) in items"
         :key="index" @click="getData(item, `record(${index})`, index)" :id="`record(${index})`">
         <!-- , $emit('selectable', selected_value) -->
         <th v-for="(column, t) in fields" :key="t" :id="`cell(${index},${t})`"

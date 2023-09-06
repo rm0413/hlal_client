@@ -14,8 +14,8 @@
             Select All
           </button>
         </div>
-        <div class="flex gap-2">
-          <div class="flex">
+        <div class="flex">
+          <!-- <div class="flex">
             <label class="flex flex-col items-center justify-center">Search by: </label>
             <div @click="code_part_number = true"
               :class="`${code_part_number ? 'bg-red-700 text-white' : 'bg-gray-300'} select-none cursor-pointer h-full border border-gray-600 py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center`">
@@ -30,7 +30,7 @@
             <CSelect @change="selectPartNumber"
               class="text-center p-1 border-2 rounded-md h-[2.8rem] border-gray-600 hover:border-blue-300 outline-green-600"
               :options="code_part_number ? code : part_number" v-model="inspectionDataStore.part_number_select"></CSelect>
-          </div>
+          </div> -->
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
@@ -46,7 +46,7 @@
     </div>
     <div class="h-[81vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
       <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col mt-2 h-[81vh] overflow-y-scroll">
-        <c-table :fields="inspectionDataStore.getInspectionDataFields" :items="filterPartNumber"
+        <c-table :fields="inspectionDataStore.getInspectionDataFields" :items="inspectionDataStore.getInspectionData"
           :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'"
           :filter="inspectionDataStore.search_filter">
           <template #cell(#)="data">
@@ -277,15 +277,15 @@ const updateInspectionData = () => {
   })
 }
 
-const filterPartNumber = computed(() => {
-  if (!code_part_number.value) {
-    return inspectionDataStore.getInspectionData.filter((v) =>
-      v.part_number == inspectionDataStore.part_number_select.value
-    );
-  } else {
-    return inspectionDataStore.getInspectionData.filter((v) =>
-      v.code == inspectionDataStore.part_number_select.value
-    );
-  }
-})
+// const filterPartNumber = computed(() => {
+//   if (!code_part_number.value) {
+//     return inspectionDataStore.getInspectionData.filter((v) =>
+//       v.part_number == inspectionDataStore.part_number_select.value
+//     );
+//   } else {
+//     return inspectionDataStore.getInspectionData.filter((v) =>
+//       v.code == inspectionDataStore.part_number_select.value
+//     );
+//   }
+// })
 </script>

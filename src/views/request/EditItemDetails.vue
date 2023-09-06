@@ -6,10 +6,9 @@
           <font-awesome-icon class="h-6 w-6 " icon="eraser" />
           Edit Item Details
         </label>
-        <div class="flex gap-2">
-          <div class="flex">
+        <div class="flex">
+          <!-- <div class="flex">
             <label class="flex flex-col items-center justify-center">Search by: </label>
-            <!-- <button :class="``"></button> -->
             <div @click="code_part_number = true"
               :class="`${code_part_number ? 'bg-red-700 text-white' : 'bg-gray-300'} select-none cursor-pointer h-full border border-gray-600 py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center`">
               <b>Code</b>
@@ -24,7 +23,7 @@
               class="text-center rounded-md h-[2.8rem] w-[18rem] border-2 border-gray-600 hover:border-blue-300 outline-green-600"
               :options="code_part_number ? code : part_number"
               v-model="editItemDetailsStore.part_number_select"></c-select>
-          </div>
+          </div> -->
           <div class="relative">
             <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
@@ -38,7 +37,7 @@
         </div>
       </div>
       <div class="h-[80vh] w-full mt-3 overflow-y-scroll">
-        <c-table :items="filterPartNumber" :filter="editItemDetailsStore.search_filter"
+        <c-table :items="editItemDetailsStore.getEditItemDetails" :filter="editItemDetailsStore.search_filter"
           class="border-solid border-2 border-[#A10E13]" :fields="editItemDetailsStore.getEditItemDetailsFields"
           :thStyle="'bg-[#A10E13] text-white p-2 text-[13px] border-2 border-solid border-red-900'">
           <template #cell(action)="data">
@@ -234,17 +233,17 @@ onMounted(() => {
   editItemDetailsStore.setAgreementListCode()
 })
 
-const filterPartNumber = computed(() => {
-  if (!code_part_number.value) {
-    return editItemDetailsStore.getEditItemDetails.filter((v) =>
-      v.part_number == editItemDetailsStore.part_number_select.value
-    );
-  } else {
-    return editItemDetailsStore.getEditItemDetails.filter((v) =>
-      v.code == editItemDetailsStore.part_number_select.value
-    );
-  }
-})
+// const filterPartNumber = computed(() => {
+//   if (!code_part_number.value) {
+//     return editItemDetailsStore.getEditItemDetails.filter((v) =>
+//       v.part_number == editItemDetailsStore.part_number_select.value
+//     );
+//   } else {
+//     return editItemDetailsStore.getEditItemDetails.filter((v) =>
+//       v.code == editItemDetailsStore.part_number_select.value
+//     );
+//   }
+// })
 
 const openModal = (data) => {
   edit_item.value.showModal()
