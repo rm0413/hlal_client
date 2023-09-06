@@ -202,12 +202,13 @@
         </button>
       </div>
       <div class="flex flex-col rounded mt-[1rem] shadow-lg h-[35vh] w-full">
-        <span class="font-bold p-2">NOTE: <i class=" text-red-600"> Please make sure the excel file to be uploaded doesn't contain the following: </i>
-        <li>Merge cells</li>
-        <li>Wrap text</li>
-        <li>Space before inputting the text.</li>
-        <span class="ml-5">(Please see below image.)</span>
-        <img :src="logo" alt="" class="h-[13rem] w-full hover:scale-150 trasition duration-500 cursor-pointer" />
+        <span class="font-bold p-2">NOTE: <i class=" text-red-600"> Please make sure the excel file to be uploaded doesn't
+            contain the following: </i>
+          <li>Merge cells</li>
+          <li>Wrap text</li>
+          <li>Space before inputting the text.</li>
+          <span class="ml-5">(Please see below image.)</span>
+          <img :src="logo" alt="" class="h-[13rem] w-full hover:scale-150 trasition duration-500 cursor-pointer" />
         </span>
       </div>
     </div>
@@ -268,7 +269,8 @@
               </div>
             </template>
             <template #cell(selected)="data">
-              <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data">
+              <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data"
+                class="h-5 w-5">
             </template>
           </CTable>
         </div>
@@ -462,18 +464,7 @@ const submitAgreementList = () => {
 const openModal = (modal) => {
   if (modal === "multiple_input") {
     if (newRequestStore.agreementForm.unit !== null) {
-      swal({
-        icon: "info",
-        title: "Please make sure the upload excel file wont have:",
-        html: `<li>Merge cells</li><li>Wrap Text</li><li>Space before you input text in cells. Please see image above</li>`,
-        imageUrl: logo,
-        imageWidth: 800,
-        imageHeight: 400,
-      }).then((response) => {
-        if (response.value === true) {
-          multiple_input.value.showModal();
-        }
-      })
+      multiple_input.value.showModal();
       multiple_input.value.classList.remove("-translate-y-5");
     } else {
       toast.add({

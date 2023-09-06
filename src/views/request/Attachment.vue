@@ -69,8 +69,7 @@
             {{ data.index + 1 }}
           </template>
           <template #cell(selected)="data">
-            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data" v-if="data.item.file_path_attachment === null">
-            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data" v-else hidden>
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data" class="h-5 w-5">
           </template>
         </CTable>
       </div>
