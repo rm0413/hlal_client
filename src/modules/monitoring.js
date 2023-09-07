@@ -190,7 +190,7 @@ export const useMonitoringStore = defineStore({
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `show-monitoring-list/${this.monitoringForm.monitoring_unit_name}/${this.monitoringForm.monitoring_supplier}/${this.monitoringForm.monitoring_part_number}`
+            `show-monitoring-list/${this.monitoringForm.monitoring_part_number}`
           )
           .then((response) => {
             resolve(response.data);

@@ -201,7 +201,7 @@
           <p class="ml-3"><b>VIEW ITEM DETAILS</b></p>
         </button>
       </div>
-      <div class="flex flex-col rounded mt-[1rem] shadow-lg h-[35vh] w-full">
+      <!-- <div class="flex flex-col rounded mt-[1rem] shadow-lg h-[35vh] w-full">
         <span class="font-bold p-2">NOTE: <i class=" text-red-600"> Please make sure the excel file to be uploaded doesn't
             contain the following: </i>
           <li>Merge cells</li>
@@ -210,7 +210,7 @@
           <span class="ml-5">(Please see below image.)</span>
           <img :src="logo" alt="" class="h-[13rem] w-full hover:scale-150 trasition duration-500 cursor-pointer" />
         </span>
-      </div>
+      </div> -->
     </div>
     <!--Multiple Input-->
     <dialog ref="multiple_input" class="p-0 rounded transform duration-300 -translate-y-5 border-2 border-[#A10E13]">
@@ -332,7 +332,6 @@ const view_items = ref(null);
 const search = ref(null);
 const units = ref([]);
 const select_item = ref([]); //view-item-details check box
-const request_person = sessionStorage.getItem("first_name")
 
 const autoAdd = (data) => {
   search.value.close();
@@ -530,7 +529,14 @@ const downloadFormat = () => {
     confirmButtonText: "Yes",
   }).then((response) => {
     if (response.value === true) {
-      window.location.href = 'http://10.164.58.62/hinsei/server/public/download-format';
+      var unit_id = newRequestStore.agreementForm.unit
+      newRequestStore.setShowUnit(unit_id).then((response) => {
+        if(response.status === "success")
+        {
+          var unit_name = response.data[0].unit_name
+          window.location.href = `http://10.164.58.62/hinsei/server/public/download-format/${unit_name}`;
+        }
+      })
     } else {
       multiple_input.value.showModal();
       toast.add({ severity: 'error', summary: 'Warning', detail: 'Cancelled.', life: 2000 });

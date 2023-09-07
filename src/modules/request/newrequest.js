@@ -176,7 +176,6 @@ export const useNewRequestStore = defineStore({
       });
     },
     setUploadMultipleRequest(data) {
-      // console.log(data)
       return new Promise((resolve, reject) => {
         axios
           .post("upload-multiple-agreement-request", data, {
@@ -195,6 +194,16 @@ export const useNewRequestStore = defineStore({
           });
       });
     },
+    setShowUnit(unit_id){
+      return new Promise((resolve, reject) => {
+        axios.get(`unit/${unit_id}`).then((response) => {
+          resolve(response.data)
+        })
+        .catch((err) => {
+          reject(err)
+        })
+      })
+    }
   },
   getters: {
     getViewItemDetailsFields() {

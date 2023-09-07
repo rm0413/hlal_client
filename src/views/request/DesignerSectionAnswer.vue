@@ -264,6 +264,7 @@ const excelUploadingDesignerAnswer = () => {
                     title: response.message,
                     timer: 1500,
                   });
+                  select_item.value = []
                 } else {
                   loader.hide()
                   // Object.keys(response.error).forEach((key) => {
