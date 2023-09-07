@@ -9,7 +9,9 @@
         <div class="flex justify-center items-center p-2 bg-[#A10E13] text-white rounded">
           Search Filters
         </div>
-        <form method="post" @submit.prevent="exportFile" class="flex flex-col items-center gap-2 px-[10%]">
+        <!-- <form method="post" @submit.prevent="exportFile" > -->
+
+        <div class="flex flex-col items-center gap-2 px-[10%]">
           <label for="" class="flex flex-col mt-3 w-full">
             Unit Name
             <select class="h-[2.7rem] rounded border-black border-2 text-center"
@@ -26,16 +28,16 @@
           <label for="" class="flex flex-col w-full">
             Supplier
             <input type="text" class="border-2 p-2 flex text-center rounded border-black"
-              v-model="monitoringStore.monitoringForm.monitoring_supplier" required placeholder="Supplier"/>
+              v-model="monitoringStore.monitoringForm.monitoring_supplier" required placeholder="Supplier" />
           </label>
           <label for="" class="flex flex-col w-full">
             Part Number
             <input @change="inputPartNumber" type="text"
               class="border-2 p-2 flex text-center w-full rounded border-black text-black"
-              v-model="monitoringStore.monitoringForm.monitoring_part_number" required placeholder="Part Number"/>
+              v-model="monitoringStore.monitoringForm.monitoring_part_number" required placeholder="Part Number" />
           </label>
           <div class="flex gap-5 mt-5">
-            <button type="submit"
+            <button type="button" @click="exportFile" :disabled="select_item.length === 0"
               class="bg-green-500 text-black p-1 w-[10rem] h-[2.5rem] rounded border-2 hover:bg-green-600 border-green-700">
               <font-awesome-icon icon="download" /> <b>EXPORT</b>
             </button>
@@ -44,7 +46,8 @@
               <font-awesome-icon icon="magnifying-glass" /> <b>SEARCH</b>
             </button>
           </div>
-        </form>
+        </div>
+        <!-- </form> -->
       </div>
     </div>
     <div class="lg:col-span-6 min-[100px]:col-span-9 h-[85vh] mt-[2.3rem]">
@@ -503,54 +506,55 @@ const edit_monitoring_item = (data) => {
 };
 
 const exportFile = () => {
-  // if (monitoringStore.monitoringForm.monitoring_unit_name) {
-  //   if (monitoringStore.monitoringForm.monitoring_supplier) {
-  //     if (monitoringStore.monitoringForm.monitoring_part_number) {
-  swal({
-    icon: "question",
-    title: "Export File?",
-    text: "Please make sure before to proceed!",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes",
-  }).then((response) => {
-    if (response.value === true) {
-      monitoringStore.setExportMonitoringList(select_item.value)
-      select_item.value = []
-    } else {
-      toast.add({
-        severity: "error",
-        summary: "Warning",
-        detail: "Cancelled.",
-        life: 2000,
-      });
-    }
-  });
-  //     } else {
-  //       toast.add({
-  //         severity: "error",
-  //         summary: "Warning",
-  //         detail: "Please input Part Number.",
-  //         life: 2000,
-  //       });
-  //     }
-  //   } else {
-  //     toast.add({
-  //       severity: "error",
-  //       summary: "Warning",
-  //       detail: "Please input Supplier",
-  //       life: 2000,
-  //     });
-  //   }
-  // } else {
-  //   toast.add({
-  //     severity: "error",
-  //     summary: "Warning",
-  //     detail: "Please select Unit Name.",
-  //     life: 2000,
-  //   });
-  // }
+  if (select_item.value.length === 1 && select_item.value != 0) {
+    // if (monitoringStore.monitoringForm.monitoring_unit_name) {
+    //   if (monitoringStore.monitoringForm.monitoring_supplier) {
+    //     if (monitoringStore.monitoringForm.monitoring_part_number) {
+    swal({
+      icon: "question",
+      title: "Export File?",
+      text: "Please make sure before to proceed!",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((response) => {
+      if (response.value === true) {
+        monitoringStore.setExportMonitoringList(select_item.value)
+        select_item.value = []
+      } else {
+        toast.add({
+          severity: "error",
+          summary: "Warning",
+          detail: "Cancelled.",
+          life: 2000,
+        });
+      }
+    });
+    //     } else {
+    //       toast.add({
+    //         severity: "error",
+    //         summary: "Warning",
+    //         detail: "Please input Part Number.",
+    //         life: 2000,
+    //       });
+    //     }
+    //   } else {
+    //     toast.add({
+    //       severity: "error",
+    //       summary: "Warning",
+    //       detail: "Please input Supplier",
+    //       life: 2000,
+    //     });
+    //   }
+  } else {
+    toast.add({
+      severity: "error",
+      summary: "Warning",
+      detail: "Select must be 1 only.",
+      life: 2000,
+    });
+  }
 };
 
 const openModal = (modal) => {
