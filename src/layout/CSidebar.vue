@@ -107,7 +107,7 @@
         </div>
         <div
           class="flex items-center space-x-3 group bg-gradient-to-r dark:from-cyan-500 dark:to-blue-500 from-[#EBC1C3] via-[#B54A4E] to-[#A10E13] pl-10 pr-2 py-1 rounded-full text-white">
-          <div class="transform ease-in-out duration-300 mr-12 w-[4.8rem] text-right">
+          <div class="transform ease-in-out duration-300 mr-12 w-[4.8rem] text-center text-xs">
             {{ systemDetails.abbv !== undefined ? systemDetails.abbv : "FDTP-AT" }}
           </div>
         </div>

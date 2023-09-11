@@ -25,7 +25,7 @@ const systemDetails = {
   class: "text-rose-600",
   version: "Version 1.0.0",
   logo: "@/assets/images/fujitsuICO.png",
-  abbv: "HLAL",
+  abbv: "Agreement List",
 };
 
 
@@ -80,7 +80,12 @@ const links = [
         fa: 'tags',
         role: 'ADMIN'
       },
-
+      // {
+      //   title: 'Unit Management',
+      //   name: 'unitmanagement',
+      //   fa: 'toolbox',
+      //   role: 'ADMIN',
+      // },
     ]
   },
   {

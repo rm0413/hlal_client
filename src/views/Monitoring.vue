@@ -1,59 +1,31 @@
 <template>
-  <div class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
-    <div class="lg:col-span-3 min-[100px]:col-span-9 h-full flex flex-col">
-      <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono">
-        <font-awesome-icon class="h-6 w-6 text-black" icon="desktop" /> Hinsei &
-        LSA Monitoring List
-      </label>
-      <div class="flex flex-col bg-gray-100 rounded h-[36vh] min-[100px]:overflow-y-scroll shadow-md">
-        <div class="flex justify-center items-center p-2 bg-[#A10E13] text-white rounded">
-          Search Filters
+  <div class="flex flex-col">
+    <div class="h-full w-full">
+      <div class="h-[80vh] w-full mt-3 overflow-y-scroll">
+        <div class="flex justify-between">
+          <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono">
+            <font-awesome-icon class="h-6 w-6 text-black" icon="desktop" /> Hinsei &
+            LSA Monitoring List
+          </label>
         </div>
-        <!-- <form method="post" @submit.prevent="exportFile" > -->
-
-        <div class="flex flex-col items-center gap-2 px-[10%]">
-          <label for="" class="flex flex-col mt-3 w-full">
-            Unit Name
-            <select class="h-[2.7rem] rounded border-black border-2 text-center"
-              v-model="monitoringStore.monitoringForm.monitoring_unit_name" required>
-              <option value="" disabled>Select Unit</option>
-              <option v-for="(i, key) in units" :key="key" :value="i.unit_id">
-                {{ i.text }}
-              </option>
-            </select>
-            <!-- <c-select class="text-center border-black outline-green-600"
-              :options="units"
-              v-model="monitoringStore.monitoringForm.monitoring_unit_name"></c-select> -->
-          </label>
-          <label for="" class="flex flex-col w-full">
-            Supplier
-            <input type="text" class="border-2 p-2 flex text-center rounded border-black"
-              v-model="monitoringStore.monitoringForm.monitoring_supplier" required placeholder="Supplier" />
-          </label>
-          <label for="" class="flex flex-col w-full">
-            Part Number
-            <input @change="inputPartNumber" type="text"
-              class="border-2 p-2 flex text-center w-full rounded border-black text-black"
-              v-model="monitoringStore.monitoringForm.monitoring_part_number" required placeholder="Part Number" />
-          </label>
-          <div class="flex gap-5 mt-5">
-            <button type="button" @click="exportFile" :disabled="select_item.length === 0"
-              class="bg-green-500 text-black p-1 w-[10rem] h-[2.5rem] rounded border-2 hover:bg-green-600 border-green-700">
-              <font-awesome-icon icon="download" /> <b>EXPORT</b>
-            </button>
-            <button type="button" @click="searchButton"
-              class="bg-gray-500 text-white p-1 w-[10rem] h-[2.5rem] border-2 rounded hover:bg-gray-600 border-gray-700">
-              <font-awesome-icon icon="magnifying-glass" /> <b>SEARCH</b>
+        <div class="flex justify-end">
+          <div class="relative">
+            <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
+                icon="magnifying-glass"></font-awesome-icon></i>
+            <input v-model="monitoringStore.search_filter"
+              class="text-center p-1 border-2 rounded-l-md h-[2.8rem] border-gray-600 hover:border-blue-300 outline-green-600" />
+            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md rounded-l-none">
+              <b>Search</b>
             </button>
           </div>
         </div>
-        <!-- </form> -->
-      </div>
-    </div>
-    <div class="lg:col-span-6 min-[100px]:col-span-9 h-[85vh] mt-[2.3rem]">
-      <div class="border rounded-[5px] overflow-y-scroll h-full">
         <c-table :items="monitoringStore.getLoadMonitoring" :fields="monitoringStore.getMonitoringFields"
-          :thStyle="'bg-[#A10E13] text-white p-2'">
+          :thStyle="'bg-[#A10E13] text-white p-2'" class="mt-1" :filter="monitoringStore.search_filter">
+          <template #cell(export)="data">
+            <button v-tooltip.top="'Export File'" @click="exportFile(data.item)">
+              <font-awesome-icon icon="file-export" class="hover:scale-125 text-green-700"/>
+            </button>
+          </template>
           <template #cell(#)="data">
             {{ data.index + 1 }}
           </template>
@@ -397,15 +369,16 @@ const attachmentModal = ref(null);
 const viewDesignerModal = ref(null);
 const role = sessionStorage.getItem("role_access");
 const select_item = ref([]);
-const ctable = ref();
 
 onMounted(() => {
   loadUnits();
+  monitoringStore.setLoadMonitoring()
 });
 
 const designer_unit_name = ref(null);
 
 const designerOpenModal = (data) => {
+  // console.log(data)
   designer_unit_name.value = data.unit_name;
   monitoringStore.setEditMonitoringList(data);
 };
@@ -425,9 +398,9 @@ const loadUnits = () => {
   });
 };
 
-const searchButton = () => {
-  monitoringStore.setLoadMonitoring();
-};
+// const searchButton = () => {
+//   monitoringStore.setLoadMonitoring();
+// };
 const delete_monitoring_item = (data) => {
   viewEditModal.value.close();
   swal({
@@ -505,8 +478,8 @@ const edit_monitoring_item = (data) => {
   };
 };
 
-const exportFile = () => {
-  if (select_item.value.length === 1 && select_item.value != 0) {
+const exportFile = (data) => {
+  // if (select_item.value.length === 1 && select_item.value != 0) {
     // if (monitoringStore.monitoringForm.monitoring_unit_name) {
     //   if (monitoringStore.monitoringForm.monitoring_supplier) {
     //     if (monitoringStore.monitoringForm.monitoring_part_number) {
@@ -520,7 +493,7 @@ const exportFile = () => {
       confirmButtonText: "Yes",
     }).then((response) => {
       if (response.value === true) {
-        monitoringStore.setExportMonitoringList(select_item.value)
+        monitoringStore.setExportMonitoringList(data)
         select_item.value = []
       } else {
         toast.add({
@@ -547,14 +520,14 @@ const exportFile = () => {
     //       life: 2000,
     //     });
     //   }
-  } else {
-    toast.add({
-      severity: "error",
-      summary: "Warning",
-      detail: "Select must be 1 only.",
-      life: 2000,
-    });
-  }
+  // } else {
+  //   toast.add({
+  //     severity: "error",
+  //     summary: "Warning",
+  //     detail: "Select must be 1 only.",
+  //     life: 2000,
+  //   });
+  // }
 };
 
 const openModal = (modal) => {

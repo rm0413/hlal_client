@@ -6,8 +6,9 @@ export const useMonitoringStore = defineStore({
   state: () => ({
     monitoring: [],
     inputStatus: true,
+    search_filter: '',
     monitoringFields: [
-      { label: "Selected", key: "selected" },
+      { label: "Export", key: "export" },
       { label: "Action", key: "action" },
       { label: "Item No.", key: "#" },
       { label: "Unit Name", key: "unit_name" },
@@ -189,8 +190,9 @@ export const useMonitoringStore = defineStore({
     setLoadMonitoring() {
       return new Promise((resolve, reject) => {
         axios
+        // `show-monitoring-list`, this.monitoringForm.monitoring_part_number
           .get(
-            `show-monitoring-list/${this.monitoringForm.monitoring_part_number}`
+            'load-monitoring-list'
           )
           .then((response) => {
             resolve(response.data);
@@ -232,8 +234,7 @@ export const useMonitoringStore = defineStore({
       });
     },
     setExportMonitoringList(data) {
-      var datastorage = JSON.parse(data)
-      window.location.href = `http://10.164.58.62/hinsei/server/public/export/${datastorage.unit_id}/${datastorage.supplier_name}/${datastorage.part_number}`
+      window.location.href = `http://10.164.58.62/hinsei/server/public/export/${data.unit_id}/${data.supplier_name}/${data.part_number.replace('/', ' ' )}`
     },
   },
   getters: {

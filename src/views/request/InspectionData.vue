@@ -53,10 +53,7 @@
             {{ data.index + 1 }}
           </template>
           <template #cell(selected)="data">
-            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data"
-              v-if="data.item.cpk_data !== null" hidden>
-            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data" class="h-5 w-5"
-              v-else>
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data">
           </template>
           <template #cell(action)="data">
             <button v-tooltip.top="'Edit Cpk Data'"

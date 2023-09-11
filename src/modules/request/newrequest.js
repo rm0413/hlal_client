@@ -194,15 +194,18 @@ export const useNewRequestStore = defineStore({
           });
       });
     },
-    setShowUnit(unit_id){
+    setShowUnit(unit_id) {
       return new Promise((resolve, reject) => {
         axios.get(`unit/${unit_id}`).then((response) => {
           resolve(response.data)
         })
-        .catch((err) => {
-          reject(err)
-        })
+          .catch((err) => {
+            reject(err)
+          })
       })
+    },
+    setDownloadFormat(unit_name) {
+      window.location.href = `http://10.164.58.62/hinsei/server/public/download/${unit_name}`;
     }
   },
   getters: {
