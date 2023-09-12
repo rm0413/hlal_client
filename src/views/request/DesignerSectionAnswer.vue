@@ -134,7 +134,7 @@
       </div>
     </div>
     <Toast position="bottom-right" group="br"></Toast>
-    <Toast position="bottom-left" group="bl"></Toast>
+    <Toast position="bottom-right" group="bl"></Toast>
   </div>
 </template>
 
@@ -262,6 +262,7 @@ const excelUploadingDesignerAnswer = () => {
                     timer: 1500,
                   });
                   select_item.value = []
+                  designerSectionAnswerStore.onSingle = false;
                 } else {
                   loader.hide()
                   // Object.keys(response.error).forEach((key) => {

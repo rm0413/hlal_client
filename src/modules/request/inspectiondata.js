@@ -86,7 +86,7 @@ export const useInspectionDataStore = defineStore({
                 axios.patch(`inspection-data/${payload.id}`, payload).then(response => {
                     resolve(response.data)
                     this.setInspectionDataRequest()
-                    this.setShowInspectionAnswer()
+                    // this.setShowInspectionAnswer()
                 }).catch(err => {
                     reject(err)
                 })

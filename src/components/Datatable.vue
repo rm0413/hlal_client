@@ -54,7 +54,7 @@ const props = defineProps({
   },
   tdStyle: {
     type: String,
-    default: "mt-3 h-[5vh] hover:bg-gray-300 border-2 border-gray-300",
+    default: "mt-3 h-[4.5vh] hover:bg-gray-300 border-gray-300 text-[13.5px]",
   },
   filter: String,
   isSelectable: Boolean,

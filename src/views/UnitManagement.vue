@@ -56,7 +56,7 @@
                 </c-table>
             </div>
         </div>
-        <Toast position="bottom-left"></Toast>
+        <Toast position="bottom-right"></Toast>
     </div>
 </template>
 <script setup>

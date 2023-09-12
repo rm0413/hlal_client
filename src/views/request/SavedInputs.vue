@@ -44,7 +44,7 @@
                 @click="generateCode">
                 <font-awesome-icon icon="floppy-disk" class="h-5 w-5"></font-awesome-icon> GENERATE</button>
         </div>
-        <Toast position="bottom-left" group="bl"></Toast>
+        <Toast position="bottom-right" group="bl"></Toast>
     </div>
 </template>
 <script setup>

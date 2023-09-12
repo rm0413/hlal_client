@@ -65,7 +65,7 @@ export const useMonitoringStore = defineStore({
       { label: "Supplier", key: "supplier_name" },
       { label: "Part Number", key: "part_number" },
       { label: "Sub Part Number", key: "sub_part_number" },
-      { label: "Revision", key: "revision" },
+      { label: "Rev.", key: "revision" },
       { label: "Coordinates", key: "coordinates" },
       { label: "Dimension", key: "dimension" },
       { label: "Actual Value", key: "actual_value" },

@@ -15,7 +15,7 @@ export const useAttachmentsStore = defineStore({
       { label: "Part Number", key: "part_number" },
       { label: "Revision", key: "revision" },
       { label: "Dimension", key: "dimension" },
-      { label: "File Path", key: "file_path_attachment" },
+      // { label: "File Path", key: "file_path_attachment" },
     ],
     part_number_select: "",
     search_filter: "",

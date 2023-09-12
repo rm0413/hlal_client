@@ -7,7 +7,20 @@
         class="logo ml-12 dark:text-white transform ease-in-out duration-500 flex-none h-full flex items-center justify-center text-black">
       </div>
       <!-- SPACER -->
-      <div class="grow h-full flex items-center justify-center"></div>
+      <div class="grow h-full flex items-center justify-center"></div> <label class="
+            flex
+            col-span-1
+            text-center
+            items-center
+            justify-end
+            italic
+            mr-6
+            lg:text-[16px]
+            min-[100px]:text-[14px]
+          ">
+        <font-awesome-icon class="h-5 w-5 max-lg:h-4 max-lg:w-4 mr-1 text-gray-700" icon="clock" />
+        {{ today }}
+      </label>
       <div ref="asideProfile" @click="openAside()" style="cursor: pointer"
         :class="`bg-gradient-to-r duration-500 bg-${themeStore.theme[themeStore.theme_select]._navbar
           } border-2 shadow-lg flex-none rounded-2xl h-full text-center flex item-center justify-center -mr-24 w-72 z-50`">
@@ -223,7 +236,9 @@
 import { ref, onMounted } from "vue";
 import { useThemeStore } from "@/modules/alpha";
 import GTooltip from "@/components/GTooltip.vue";
+import moment from "moment";
 
+const today = moment().format("[Today is ]dddd, MMMM Do YYYY");
 const themeStore = useThemeStore();
 const props = defineProps({
   links: Array,

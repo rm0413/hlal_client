@@ -53,7 +53,8 @@
             {{ data.index + 1 }}
           </template>
           <template #cell(selected)="data">
-            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data" class="h-5 w-5">
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data" class="h-5 w-5" v-if="data.item.cpk_data !== null" hidden>
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data" class="h-5 w-5" v-else>
           </template>
           <template #cell(action)="data">
             <button v-tooltip.top="'Edit Cpk Data'"
@@ -76,28 +77,28 @@
             <i class="text-black">100% of Inspection Data or CPK Data</i>
             <textarea style="resize:none"
               class="border-2 rounded w-full h-[10rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
-              :disabled="select_item.length === 0" v-model="inspectionDataStore.inspectionDataForm.cpk_data"
+               v-model="inspectionDataStore.inspectionDataForm.cpk_data"
               required></textarea>
           </label>
           <label class="flex flex-col items-center">
             <i class="text-black">Inspection after Rework</i>
-            <input type="text" :disabled="select_item.length === 0"
+            <input type="text" 
               class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600"
               v-model="inspectionDataStore.inspectionDataForm.inspection_rework" />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-black">Revised Date of IGM</i>
-            <input type="date" :disabled="select_item.length === 0"
+            <input type="date" 
               class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
               v-model="inspectionDataStore.inspectionDataForm.revised_date" required />
           </label>
           <label class="flex flex-col items-center">
             <i class="text-black">Sent Date of IGM</i>
-            <input type="date" :disabled="select_item.length === 0"
+            <input type="date" 
               class="border-2 rounded w-full h-[3rem] text-center border-gray-600 hover:border-blue-300 outline-green-600 "
               v-model="inspectionDataStore.inspectionDataForm.send_date" required />
           </label>
-          <button type="submit" v-if="!inspectionDataStore.onEdit" :disabled="select_item.length === 0"
+          <button type="submit" v-if="!inspectionDataStore.onEdit" 
             class="flex gap-2 bg-red-500 border-2 border-red-900 hover:bg-red-600 p-3 text-white rounded justify-center items-center w-full mt-2"><font-awesome-icon
               icon="floppy-disk"></font-awesome-icon><b>SAVE</b></button>
           <button type="button" v-else @click="updateInspectionData"
@@ -109,7 +110,7 @@
         </form>
       </div>
     </div>
-    <Toast position="bottom-left" group="bl"></Toast>
+    <Toast position="bottom-right" group="bl"></Toast>
   </div>
 </template>
 <script setup>
@@ -130,7 +131,7 @@ const code_part_number = ref(false);
 const select_item = ref([])
 
 onMounted(() => {
-  inspectionDataStore.setShowInspectionAnswer()
+  // inspectionDataStore.setShowInspectionAnswer()
   inspectionDataStore.setInspectionDataRequest()
   inspectionDataStore.setLoadPartNumber().then((response) => {
     response.data.part_number.forEach((v) => {

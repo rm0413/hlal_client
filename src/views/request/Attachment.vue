@@ -74,8 +74,8 @@
         </CTable>
       </div>
     </div>
-    <Toast position="top-left"></Toast>
-    <Toast position="bottom-left" group="bl"></Toast>
+    <Toast position="bottom-right"></Toast>
+    <Toast position="bottom-right" group="bl"></Toast>
   </div>
 </template>
 

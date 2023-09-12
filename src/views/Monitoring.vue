@@ -323,8 +323,8 @@
         </div>
       </div>
     </dialog>
-    <dialog ref="viewDesignerModal" class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13]">
-      <div class="border-2 col-span-2">
+    <dialog ref="viewDesignerModal" class="p-0 rounded transform duration-300 -translate-y-2 border-2 border-[#A10E13] w-full">
+      <div class="border-2 col-span-2"> 
         <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
           <p>
             <font-awesome-icon icon="table" class="h-5 w-5 mr-2" />{{
@@ -335,7 +335,7 @@
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
-        <div class="flex flex-col overflow-y-auto mx-2 h-[70vh] mt-1">
+        <div class="flex flex-col overflow-y-auto mx-2 h-[73vh] mt-1">
           <c-table :items="monitoringStore.getEditMonitoringItems" :fields="monitoringStore.getDesignerMonitoringFields"
             :thStyle="'bg-[#A10E13] text-white p-2 border-spacing-2'">
             <template #cell(#)="data">

@@ -198,7 +198,7 @@
         </form>
       </div>
     </dialog>
-    <Toast position="bottom-left" group="bl"></Toast>
+    <Toast position="bottom-right" group="bl"></Toast>
   </div>
 </template>
 <script setup>

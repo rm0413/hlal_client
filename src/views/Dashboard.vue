@@ -29,25 +29,6 @@
           />
           Dashboard
         </label>
-        <label
-          class="
-            flex
-            col-span-1
-            text-center
-            items-center
-            justify-end
-            italic
-            mr-6
-            lg:text-[16px]
-            min-[100px]:text-[14px]
-          "
-        >
-          <font-awesome-icon
-            class="h-5 w-5 max-lg:h-4 max-lg:w-4 mr-1 text-gray-700"
-            icon="clock"
-          />
-          {{ today }}
-        </label>
       </div>
       <div
         class="
@@ -308,15 +289,18 @@
                       flex
                       justify-center
                       h-[72%]
-                      lg:text-[35px]
+                      lg:text-[30px]
                       bg-white
                       items-center
                       text-center
                       overflow-hidden
                       break-words break-all
                       min-[100px]:text-[25px]
+                      md:text-sm
                     "
-                    >{{ hinsei_ok }}</span
+                    >
+                    {{ hinsei_ok }}
+                    </span
                   >
                 </div>
               </div>
@@ -348,13 +332,14 @@
                       flex
                       justify-center
                       h-[72%]
-                      lg:text-[35px]
+                      lg:text-[30px]
                       bg-white
                       items-center
                       text-center
                       overflow-hidden
                       break-words break-all
                       min-[100px]:text-[25px]
+                      md:text-sm
                     "
                     >{{ hinsei_ng }}</span
                   >
@@ -388,13 +373,14 @@
                       flex
                       justify-center
                       h-[72%]
-                      lg:text-[35px]
+                      lg:text-[30px]
                       bg-white
                       items-center
                       text-center
                       overflow-hidden
                       break-words break-all
                       min-[100px]:text-[25px]
+                      md:text-sm
                     "
                     >{{ hinsei_pending }}</span
                   >
@@ -495,13 +481,14 @@
                       flex
                       justify-center
                       h-[72%]
-                      lg:text-[35px]
+                      lg:text-[30px]
                       bg-white
                       items-center
                       text-center
                       overflow-hidden
                       break-words break-all
                       min-[100px]:text-[25px]
+                      md:text-sm
                     "
                     >{{ lsa_ok }}</span
                   >
@@ -535,13 +522,14 @@
                       flex
                       justify-center
                       h-[72%]
-                      lg:text-[35px]
+                      lg:text-[30px]
                       bg-white
                       items-center
                       text-center
                       overflow-hidden
                       break-words break-all
                       min-[100px]:text-[25px]
+                      md:text-sm
                     "
                     >{{ lsa_ng }}</span
                   >
@@ -575,13 +563,14 @@
                       flex
                       justify-center
                       h-[72%]
-                      lg:text-[35px]
+                      lg:text-[30px]
                       bg-white
                       items-center
                       text-center
                       overflow-hidden
                       break-words break-all
                       min-[100px]:text-[25px]
+                      md:text-sm
                     "
                     >{{ lsa_pending }}</span
                   >
@@ -1131,7 +1120,7 @@
       </div>
     </div>
 
-    <Toast position="bottom-left"></Toast>
+    <Toast position="bottom-right"></Toast>
   </div>
 
   <!--HINSEI REQUEST COUNT-->
@@ -1357,7 +1346,6 @@ const dashboardStore = useDashboardStore();
 const max_date = moment().format("yyyy-MM-DD");
 const date_today = moment().format("yyyy-MM-DD");
 const startOfMonth = moment().startOf("month").format("yyyy-MM-DD");
-const today = moment().format("[Today is ]dddd, MMMM Do YYYY");
 const hinseiCount = ref();
 const hinsei_ok = ref(null);
 const hinsei_ng = ref(null);
