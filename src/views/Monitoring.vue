@@ -595,7 +595,7 @@ const submitUpdateEditItemMonitoring = () => {
 
 const viewAttachment = (data) => {
   var path = data.file_path_attachment;
-  window.open(`http://10.164.58.82/hinsei/server/public/view-attachment?file_path_attachment=${path}`)
+  window.open(`http://10.164.58.62/hinsei/server/public/view-attachment?file_path_attachment=${path}`)
 };
 
 const downloadAttachment = (data) => {

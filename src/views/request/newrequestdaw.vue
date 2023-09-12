@@ -532,7 +532,7 @@ const downloadFormat = () => {
         if(response.status === "success")
         {
           var unit_name = response.data[0].unit_name
-          window.location.href = `http://10.164.58.82/hinsei/server/public/download-format/${unit_name}`;
+          window.location.href = `http://10.164.58.62/hinsei/server/public/download-format/${unit_name}`;
         }
       })
     } else {

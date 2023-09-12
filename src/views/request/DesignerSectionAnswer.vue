@@ -143,12 +143,9 @@ import CTable from "@/components/Datatable.vue";
 import CSelect from "@/components/CSelect.vue";
 import { onMounted, ref, inject, computed } from "vue";
 import { useDesignerSectionAnswerStore } from "@/modules/request/designersectionanswer";
-import { useEditItemDetailsStore } from "@/modules/request/edititemdetails";
 import { useToast } from "primevue/usetoast";
 import { useLoading } from "vue-loading-overlay";
-import logo from "@/assets/images/space.png"
 
-const editItemDetailsStore = useEditItemDetailsStore();
 const $loading = useLoading()
 const designerSectionAnswerStore = useDesignerSectionAnswerStore();
 const toast = useToast();
@@ -159,13 +156,12 @@ const code_part_number = ref(false);
 const select_item = ref([])
 
 onMounted(() => {
-  // console.log(select_item.value)
   designerSectionAnswerStore.setLoadDesignerSection()
   loadPartNumberCode()
 });
 
 const loadPartNumberCode = () => {
-  editItemDetailsStore.setLoadPartNumber().then((response) => {
+  designerSectionAnswerStore.setLoadPartNumber().then((response) => {
     response.data.part_number.forEach((v) => {
       part_number.value.push({
         text: v,

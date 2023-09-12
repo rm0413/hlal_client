@@ -66,6 +66,7 @@ export const useDesignerSectionAnswerStore = defineStore({
                     resolve(response.data)
                     this.setLoadDesignerSection()
                     this.clearDesignerAnswer()
+                    this.setLoadPartNumber()
                 }).catch(err => {
                     reject(err)
                 })
@@ -95,7 +96,7 @@ export const useDesignerSectionAnswerStore = defineStore({
         },
         setLoadPartNumber() {
             return new Promise((resolve, reject) => {
-                axios.get('load-part-number-with-code').then(response => {
+                axios.get('load-part-number-with-designer').then(response => {
                     resolve(response.data)
                     // console.log(response.data)
                 }).catch(err => {
@@ -125,6 +126,7 @@ export const useDesignerSectionAnswerStore = defineStore({
                     // console.log(response.data)
                     this.setLoadDesignerSection()
                     this.clearDesignerAnswer()
+                    this.setLoadPartNumber()
                 }).catch(err => {
                     reject(err)
                 })

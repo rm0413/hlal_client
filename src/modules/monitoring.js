@@ -207,7 +207,7 @@ export const useMonitoringStore = defineStore({
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `show-monitoring-list-edit/${data.unit_id}/${data.supplier_name}/${data.part_number}`
+            `show-monitoring-list-edit/${data.unit_id}/${data.supplier_name}/${data.part_number.replace('/', ' ' )}`
           )
           .then((response) => {
             resolve(response.data);
@@ -222,7 +222,7 @@ export const useMonitoringStore = defineStore({
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `show-monitoring-list-attachment/${data.unit_id}/${data.supplier_name}/${data.part_number}`
+            `show-monitoring-list-attachment/${data.unit_id}/${data.supplier_name}/${data.part_number.replace('/', ' ' )}`
           )
           .then((response) => {
             resolve(response.data);
@@ -234,7 +234,7 @@ export const useMonitoringStore = defineStore({
       });
     },
     setExportMonitoringList(data) {
-      window.location.href = `http://10.164.58.82/hinsei/server/public/export/${data.unit_id}/${data.supplier_name}/${data.part_number.replace('/', ' ' )}`
+      window.location.href = `http://10.164.58.62/hinsei/server/public/export/${data.unit_id}/${data.supplier_name}/${data.part_number.replace('/', ' ' )}`
     },
   },
   getters: {
