@@ -1,8 +1,6 @@
 import { defineStore } from "pinia";
 
 import axios from 'axios'
-import { faL } from "@fortawesome/free-solid-svg-icons";
-import { split } from "postcss/lib/list";
 
 export const useDesignerSectionAnswerStore = defineStore({
     id: "designSectionAnswer",
@@ -16,6 +14,7 @@ export const useDesignerSectionAnswerStore = defineStore({
             { label: 'Request Date', key: 'request_date' },
             { label: 'Supplier', key: 'supplier_name' },
             { label: 'Part Number', key: 'part_number' },
+            { label: 'Actual Value', key: 'actual_value' },
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
             { label: 'Critical Dimension', key: 'critical_dimension' },

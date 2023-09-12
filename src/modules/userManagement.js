@@ -74,7 +74,7 @@ export const useUserManagementStore = defineStore({
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://10.164.58.62/FDTP-Portal/public/api/system-request-users/${system_id}`
+            `http://10.164.58.82/FDTP-Portal/public/api/system-request-users/${system_id}`
           )
           .then((response) => {
             resolve(response.data);
@@ -90,7 +90,7 @@ export const useUserManagementStore = defineStore({
       // console.log(data)
       return new Promise((resolve, reject) => {
         axios
-          .post("http://10.164.58.62/FDTP-Portal/public/api/role-access", data)
+          .post("http://10.164.58.82/FDTP-Portal/public/api/role-access", data)
           .then((response) => {
             resolve(response.data);
             this.userRole = response.data;
@@ -135,7 +135,7 @@ export const useUserManagementStore = defineStore({
       return new Promise((resolve, reject) => {
         axios
           .get(
-            `http://10.164.58.62/FDTP-Portal/public/api/system-load-all-users/${system_id}`
+            `http://10.164.58.82/FDTP-Portal/public/api/system-load-all-users/${system_id}`
           )
           .then((response) => {
             // console.log(response.data)
@@ -151,7 +151,7 @@ export const useUserManagementStore = defineStore({
       return new Promise((resolve, reject) => {
         axios
           .delete(
-            `http://10.164.58.62/FDTP-Portal/public/api/role-access/${data}`
+            `http://10.164.58.82/FDTP-Portal/public/api/role-access/${data}`
           )
           .then(function (response) {
             resolve(response.data);
@@ -223,7 +223,7 @@ export const useUserManagementStore = defineStore({
       return new Promise((resolve, reject) => {
         axios
           .put(
-            `http://10.164.58.62/FDTP-Portal/public/api/role-access/${data.id}`,
+            `http://10.164.58.82/FDTP-Portal/public/api/role-access/${data.id}`,
             data
           )
           .then(function (response) {

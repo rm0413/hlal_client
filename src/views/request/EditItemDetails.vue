@@ -40,8 +40,11 @@
         <c-table :items="editItemDetailsStore.getEditItemDetails" :filter="editItemDetailsStore.search_filter"
           class="border-solid border-2 border-[#A10E13]" :fields="editItemDetailsStore.getEditItemDetailsFields"
           :thStyle="'bg-[#A10E13] text-white p-2 text-[13px] border-2 border-solid border-red-900'">
+          <template #cell(#)="data">
+            {{ data.index + 1 }}
+          </template>
           <template #cell(action)="data">
-            <div class="flex justify-center gap-1">
+            <div class="flex justify-center gap-1 p-1">
               <button class="h-8 w-9 rounded bg-orange-400 text-white border-2 border-orange-700 hover:bg-orange-500"
                 @click="openModal(data.item)" data-open-modal v-tooltip.top="'Edit Request'">
                 <font-awesome-icon icon="pen"></font-awesome-icon>

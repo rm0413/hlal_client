@@ -53,7 +53,7 @@
             {{ data.index + 1 }}
           </template>
           <template #cell(selected)="data">
-            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data">
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data" class="h-5 w-5">
           </template>
           <template #cell(action)="data">
             <button v-tooltip.top="'Edit Cpk Data'"
@@ -70,7 +70,7 @@
         </c-table>
       </div>
       <div
-        class="lg:col-span-2 min-[100px]:col-span-9 h-[53vh] min-[100px]:overflow-y-scroll flex flex-col mt-2 gap-2 px-10 bg-gray-100 rounded shadow-md">
+        class="lg:col-span-2 min-[100px]:col-span-9 h-[55vh] min-[100px]:overflow-y-scroll flex flex-col mt-2 gap-2 px-10 bg-gray-100 rounded shadow-md">
         <form method="post" @submit.prevent="submitInspectionData">
           <label class="flex flex-col items-center">
             <i class="text-black">100% of Inspection Data or CPK Data</i>

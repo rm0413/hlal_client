@@ -1,11 +1,27 @@
 <template>
   <div
-    class="h-[89vh] w-full grid grid-cols-12 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2 select-none"
+    class="
+      h-[89vh]
+      w-full
+      grid grid-cols-12
+      min-[100px]:overflow-y-scroll
+      lg:overflow-y-hidden
+      gap-2
+      select-none
+    "
   >
     <div class="lg:col-span-10 min-[100px]:col-span-12 h-full flex flex-col">
       <div class="grid grid-cols-2">
         <label
-          class="col-span-1 lg:text-[24px] tracking-widest font-bold text-gray-600 font-mono min-[100px]:text-[18px]"
+          class="
+            col-span-1
+            lg:text-[24px]
+            tracking-widest
+            font-bold
+            text-gray-600
+            font-mono
+            min-[100px]:text-[18px]
+          "
         >
           <font-awesome-icon
             class="h-6 w-6 max-lg:h-4 max-lg:w-4 text-black"
@@ -14,7 +30,17 @@
           Dashboard
         </label>
         <label
-          class="flex col-span-1 text-center items-center justify-end italic mr-6 lg:text-[16px] min-[100px]:text-[14px]"
+          class="
+            flex
+            col-span-1
+            text-center
+            items-center
+            justify-end
+            italic
+            mr-6
+            lg:text-[16px]
+            min-[100px]:text-[14px]
+          "
         >
           <font-awesome-icon
             class="h-5 w-5 max-lg:h-4 max-lg:w-4 mr-1 text-gray-700"
@@ -24,7 +50,15 @@
         </label>
       </div>
       <div
-        class="flex flex-col justify-center py-4 px-16 bg-[#A10E13] rounded-full text-white"
+        class="
+          flex flex-col
+          justify-center
+          py-4
+          px-16
+          bg-[#A10E13]
+          rounded-full
+          text-white
+        "
       >
         <span class="flex-col-2 lg:text-[1.5rem] min-[100px]:text-[1rem]"
           >Hello, <strong>{{ first_name }}</strong></span
@@ -35,7 +69,14 @@
       </div>
       <div class="grid grid-cols-2 h-[5vh]">
         <div
-          class="col-span-1 py-3 px-12 font-bold lg:text-[22px] min-[100px]:text-[18px]"
+          class="
+            col-span-1
+            py-3
+            px-12
+            font-bold
+            lg:text-[22px]
+            min-[100px]:text-[18px]
+          "
         >
           <font-awesome-icon icon="chart-simple" /> Request Status
         </div>
@@ -47,39 +88,102 @@
           >
             <div class="grid grid-cols-7 h-full gap-2">
               <div
-                class="flex col-span-3 items-center justify-center text-white rounded-l"
+                class="
+                  flex
+                  col-span-3
+                  items-center
+                  justify-center
+                  text-white
+                  rounded-l
+                "
               >
                 <label
-                  class="flex w-[30%] justify-center bg-gray-500 h-full items-center rounded-l max-lg:text-[13px]"
+                  class="
+                    flex
+                    w-[30%]
+                    justify-center
+                    bg-gray-500
+                    h-full
+                    items-center
+                    rounded-l
+                    max-lg:text-[13px]
+                  "
                   >From:</label
                 >
                 <input
                   type="date"
                   v-model="dashboardStore.date_from"
                   required
-                  class="rounded border-2 hover:border-red-600 outline-green-600 w-[70%] h-full text-center px-3 text-black max-lg:text-[13px]"
+                  class="
+                    rounded
+                    border-2
+                    hover:border-red-600
+                    outline-green-600
+                    w-[70%]
+                    h-full
+                    text-center
+                    px-3
+                    text-black
+                    max-lg:text-[13px]
+                  "
                   :max="max_date"
                 />
               </div>
               <div
-                class="flex col-span-3 items-center justify-center text-white rounded-l"
+                class="
+                  flex
+                  col-span-3
+                  items-center
+                  justify-center
+                  text-white
+                  rounded-l
+                "
               >
                 <label
-                  class="flex w-[30%] justify-center bg-gray-500 h-full items-center rounded-l max-lg:text-[13px]"
+                  class="
+                    flex
+                    w-[30%]
+                    justify-center
+                    bg-gray-500
+                    h-full
+                    items-center
+                    rounded-l
+                    max-lg:text-[13px]
+                  "
                   >To:</label
                 >
                 <input
                   type="date"
                   v-model="dashboardStore.date_to"
                   required
-                  class="rounded border-2 hover:border-red-600 outline-green-600 w-[70%] h-full text-center px-3 text-black max-lg:text-[13px]"
+                  class="
+                    rounded
+                    border-2
+                    hover:border-red-600
+                    outline-green-600
+                    w-[70%]
+                    h-full
+                    text-center
+                    px-3
+                    text-black
+                    max-lg:text-[13px]
+                  "
                   :max="max_date"
                 />
               </div>
               <div class="col-span-1 bg-pink-200">
                 <button
                   type="submit"
-                  class="w-[100%] h-[100%] bg-red-800 rounded text-white hover:bg-red-700 justify-center max-lg:text-[13px]"
+                  class="
+                    w-[100%]
+                    h-[100%]
+                    bg-red-800
+                    rounded
+                    text-white
+                    hover:bg-red-700
+                    justify-center
+                    max-lg:text-[13px]
+                  "
                 >
                   Search
                 </button>
@@ -119,7 +223,12 @@
           </div>
           <label
             for=""
-            class="ml-[5rem] text-gray-500 lg:text-[14px] min-[100px]:text-[12px]"
+            class="
+              ml-[5rem]
+              text-gray-500
+              lg:text-[14px]
+              min-[100px]:text-[12px]
+            "
             ><b
               ><i
                 >{{ dashboardStore.chartData.lsa_request }} Total LSA Request as
@@ -130,10 +239,27 @@
           >
         </div>
         <div
-          class="col-span-1 grid grid-rows-2 justify-center items-center place-items-center"
+          class="
+            col-span-1
+            grid grid-rows-2
+            justify-center
+            items-center
+            place-items-center
+          "
         >
           <div
-            class="row-span-1 shadow-lg h-[27vh] w-[25vw] text-center p-3 bg-gray-100 border-t-2 border-[#A10A13] max-lg:w-[40vw] max-lg:h-[22vh] min-[100px]:shadow-md"
+            class="
+              row-span-1
+              shadow-lg
+              h-[27vh]
+              w-[25vw]
+              text-center
+              p-3
+              bg-gray-100
+              border-t-2 border-[#A10A13]
+              max-lg:w-[40vw] max-lg:h-[22vh]
+              min-[100px]:shadow-md
+            "
           >
             <span
               class="font-bold lg:text-[18px] min-[100px]:text-[15px] uppercase"
@@ -156,62 +282,166 @@
             <div class="grid grid-cols-3">
               <div class="flex col-span-1 justify-center items-center">
                 <div
-                  id="outer"
-                  class="rounded-md bg-gray-100 lg:w-[130px] lg:h-[120px] border border-[#a10a13] min-[100px]:w-[90px] min-[100px]:h-[90px]"
+                  class="
+                    rounded-md
+                    bg-gray-100
+                    lg:w-[130px]
+                    lg:h-[120px]
+                    border border-[#a10a13]
+                    min-[100px]:w-[90px] min-[100px]:h-[90px]
+                  "
                 >
                   <label
                     for=""
-                    class="flex lg:text-[20px] bg-[#A10A13] text-white justify-center min-[100px]:text-[15px]"
+                    class="
+                      flex
+                      lg:text-[20px]
+                      bg-[#A10A13]
+                      text-white
+                      justify-center
+                      min-[100px]:text-[15px]
+                    "
                     >OK</label
                   >
                   <span
-                    class="flex justify-center h-[72%] lg:text-[35px] bg-white items-center text-center overflow-hidden break-words break-all min-[100px]:text-[25px]"
+                    class="
+                      flex
+                      justify-center
+                      h-[72%]
+                      lg:text-[35px]
+                      bg-white
+                      items-center
+                      text-center
+                      overflow-hidden
+                      break-words break-all
+                      min-[100px]:text-[25px]
+                    "
                     >{{ hinsei_ok }}</span
                   >
                 </div>
               </div>
               <div class="flex col-span-1 justify-center items-center">
                 <div
-                  class="rounded-md bg-gray-100 lg:w-[130px] lg:h-[120px] border border-[#a10a13] min-[100px]:w-[90px] min-[100px]:h-[90px]"
+                  class="
+                    rounded-md
+                    bg-gray-100
+                    lg:w-[130px]
+                    lg:h-[120px]
+                    border border-[#a10a13]
+                    min-[100px]:w-[90px] min-[100px]:h-[90px]
+                  "
                 >
                   <label
                     for=""
-                    class="flex lg:text-[20px] bg-[#A10A13] text-white justify-center min-[100px]:text-[15px]"
+                    class="
+                      flex
+                      lg:text-[20px]
+                      bg-[#A10A13]
+                      text-white
+                      justify-center
+                      min-[100px]:text-[15px]
+                    "
                     >NG</label
                   >
                   <span
-                    class="flex justify-center h-[72%] lg:text-[35px] bg-white items-center text-center overflow-hidden break-words break-all min-[100px]:text-[25px]"
+                    class="
+                      flex
+                      justify-center
+                      h-[72%]
+                      lg:text-[35px]
+                      bg-white
+                      items-center
+                      text-center
+                      overflow-hidden
+                      break-words break-all
+                      min-[100px]:text-[25px]
+                    "
                     >{{ hinsei_ng }}</span
                   >
                 </div>
               </div>
               <div class="flex col-span-1 justify-center items-center">
                 <div
-                  class="rounded-md bg-gray-100 lg:w-[130px] lg:h-[120px] border border-[#a10a13] min-[100px]:w-[90px] min-[100px]:h-[90px]"
+                  class="
+                    rounded-md
+                    bg-gray-100
+                    lg:w-[130px]
+                    lg:h-[120px]
+                    border border-[#a10a13]
+                    min-[100px]:w-[90px] min-[100px]:h-[90px]
+                  "
                 >
                   <label
                     for=""
-                    class="flex lg:text-[20px] bg-[#A10A13] text-white justify-center min-[100px]:text-[15px]"
+                    class="
+                      flex
+                      lg:text-[20px]
+                      bg-[#A10A13]
+                      text-white
+                      justify-center
+                      min-[100px]:text-[15px]
+                    "
                     >PENDING</label
                   >
                   <span
-                    class="flex justify-center h-[72%] lg:text-[35px] bg-white items-center text-center overflow-hidden break-words break-all min-[100px]:text-[25px]"
+                    class="
+                      flex
+                      justify-center
+                      h-[72%]
+                      lg:text-[35px]
+                      bg-white
+                      items-center
+                      text-center
+                      overflow-hidden
+                      break-words break-all
+                      min-[100px]:text-[25px]
+                    "
                     >{{ hinsei_pending }}</span
                   >
                 </div>
               </div>
               <div
-                class="col-span-3 mt-3 bg-white w-full h-[6vh] rounded-full shadow-lg max-lg:h-[5vh]"
+                class="
+                  col-span-3
+                  mt-3
+                  bg-white
+                  w-full
+                  h-[6vh]
+                  rounded-full
+                  shadow-lg
+                  max-lg:h-[5vh]
+                "
               >
                 <div class="grid grid-cols-2">
                   <div
-                    class="flex col-span-1 h-[6vh] justify-center items-center max-lg:h-[5vh] max-lg:text-[12px]"
+                    class="
+                      flex
+                      col-span-1
+                      h-[6vh]
+                      justify-center
+                      items-center
+                      max-lg:h-[5vh] max-lg:text-[12px]
+                    "
                   >
                     Total Hinsei Request:
                   </div>
                   <button
                     @click="openModal('hinseiCount')"
-                    class="flex col-span-1 h-[6vh] justify-center items-center font-bold lg:text-[30px] text-white bg-[#A10A13] rounded-r-full hover:bg-red-600 min-[100px]:text-[23px] max-lg:h-[5vh]"
+                    class="
+                      flex
+                      col-span-1
+                      h-[6vh]
+                      justify-center
+                      items-center
+                      font-bold
+                      lg:text-[30px]
+                      text-white
+                      bg-[#A10A13]
+                      rounded-r-full
+                      hover:bg-red-600
+                      min-[100px]:text-[23px]
+                      max-lg:h-[5vh]
+                    "
                   >
                     {{ hinsei_count }}
                   </button>
@@ -220,7 +450,18 @@
             </div>
           </div>
           <div
-            class="row-span-1 shadow-lg h-[27vh] w-[25vw] text-center p-3 bg-gray-100 border-t-2 border-[#A10A13] max-lg:w-[40vw] max-lg:h-[22vh] min-[100px]:shadow-md"
+            class="
+              row-span-1
+              shadow-lg
+              h-[27vh]
+              w-[25vw]
+              text-center
+              p-3
+              bg-gray-100
+              border-t-2 border-[#A10A13]
+              max-lg:w-[40vw] max-lg:h-[22vh]
+              min-[100px]:shadow-md
+            "
           >
             <span class="font-bold lg:text-[18px] md:text-[15px] uppercase"
               >LSA Request</span
@@ -228,61 +469,166 @@
             <div class="grid grid-cols-3">
               <div class="flex col-span-1 justify-center items-center">
                 <div
-                  class="rounded-md bg-gray-100 lg:w-[130px] lg:h-[120px] border border-[#a10a13] min-[100px]:w-[90px] min-[100px]:h-[90px]"
+                  class="
+                    rounded-md
+                    bg-gray-100
+                    lg:w-[130px]
+                    lg:h-[120px]
+                    border border-[#a10a13]
+                    min-[100px]:w-[90px] min-[100px]:h-[90px]
+                  "
                 >
                   <label
                     for=""
-                    class="flex lg:text-[20px] bg-[#A10A13] text-white justify-center md:text-[15px]"
+                    class="
+                      flex
+                      lg:text-[20px]
+                      bg-[#A10A13]
+                      text-white
+                      justify-center
+                      md:text-[15px]
+                    "
                     >OK</label
                   >
                   <span
-                    class="flex justify-center h-[72%] lg:text-[35px] bg-white items-center text-center overflow-hidden break-words break-all min-[100px]:text-[25px]"
+                    class="
+                      flex
+                      justify-center
+                      h-[72%]
+                      lg:text-[35px]
+                      bg-white
+                      items-center
+                      text-center
+                      overflow-hidden
+                      break-words break-all
+                      min-[100px]:text-[25px]
+                    "
                     >{{ lsa_ok }}</span
                   >
                 </div>
               </div>
               <div class="flex col-span-1 justify-center items-center">
                 <div
-                  class="rounded-md bg-gray-100 lg:w-[130px] lg:h-[120px] border border-[#a10a13] min-[100px]:w-[90px] min-[100px]:h-[90px]"
+                  class="
+                    rounded-md
+                    bg-gray-100
+                    lg:w-[130px]
+                    lg:h-[120px]
+                    border border-[#a10a13]
+                    min-[100px]:w-[90px] min-[100px]:h-[90px]
+                  "
                 >
                   <label
                     for=""
-                    class="flex lg:text-[20px] bg-[#A10A13] text-white justify-center md:text-[15px]"
+                    class="
+                      flex
+                      lg:text-[20px]
+                      bg-[#A10A13]
+                      text-white
+                      justify-center
+                      md:text-[15px]
+                    "
                     >NG</label
                   >
                   <span
-                    class="flex justify-center h-[72%] lg:text-[35px] bg-white items-center text-center overflow-hidden break-words break-all min-[100px]:text-[25px]"
+                    class="
+                      flex
+                      justify-center
+                      h-[72%]
+                      lg:text-[35px]
+                      bg-white
+                      items-center
+                      text-center
+                      overflow-hidden
+                      break-words break-all
+                      min-[100px]:text-[25px]
+                    "
                     >{{ lsa_ng }}</span
                   >
                 </div>
               </div>
               <div class="flex col-span-1 justify-center items-center">
                 <div
-                  class="rounded-md bg-gray-100 lg:w-[130px] lg:h-[120px] border border-[#a10a13] min-[100px]:w-[90px] min-[100px]:h-[90px]"
+                  class="
+                    rounded-md
+                    bg-gray-100
+                    lg:w-[130px]
+                    lg:h-[120px]
+                    border border-[#a10a13]
+                    min-[100px]:w-[90px] min-[100px]:h-[90px]
+                  "
                 >
                   <label
                     for=""
-                    class="flex lg:text-[20px] bg-[#A10A13] text-white justify-center md:text-[15px]"
+                    class="
+                      flex
+                      lg:text-[20px]
+                      bg-[#A10A13]
+                      text-white
+                      justify-center
+                      md:text-[15px]
+                    "
                     >PENDING</label
                   >
                   <span
-                    class="flex justify-center h-[72%] lg:text-[35px] bg-white items-center text-center overflow-hidden break-words break-all min-[100px]:text-[25px]"
+                    class="
+                      flex
+                      justify-center
+                      h-[72%]
+                      lg:text-[35px]
+                      bg-white
+                      items-center
+                      text-center
+                      overflow-hidden
+                      break-words break-all
+                      min-[100px]:text-[25px]
+                    "
                     >{{ lsa_pending }}</span
                   >
                 </div>
               </div>
               <div
-                class="col-span-3 mt-3 bg-white w-full h-[6vh] rounded-full shadow-lg max-lg:h-[5vh]"
+                class="
+                  col-span-3
+                  mt-3
+                  bg-white
+                  w-full
+                  h-[6vh]
+                  rounded-full
+                  shadow-lg
+                  max-lg:h-[5vh]
+                "
               >
                 <div class="grid grid-cols-2">
                   <div
-                    class="flex col-span-1 h-[6vh] justify-center items-center max-lg:h-[5vh] max-lg:text-[12px]"
+                    class="
+                      flex
+                      col-span-1
+                      h-[6vh]
+                      justify-center
+                      items-center
+                      max-lg:h-[5vh] max-lg:text-[12px]
+                    "
                   >
                     Total LSA Request:
                   </div>
                   <button
                     @click="openModal('lsaCount')"
-                    class="flex col-span-1 h-[6vh] justify-center items-center font-bold lg:text-[30px] text-white bg-[#A10A13] rounded-r-full hover:bg-red-600 min-[100px]:text-[23px] max-lg:h-[5vh]"
+                    class="
+                      flex
+                      col-span-1
+                      h-[6vh]
+                      justify-center
+                      items-center
+                      font-bold
+                      lg:text-[30px]
+                      text-white
+                      bg-[#A10A13]
+                      rounded-r-full
+                      hover:bg-red-600
+                      min-[100px]:text-[23px]
+                      max-lg:h-[5vh]
+                    "
                   >
                     {{ lsa_count }}
                   </button>
@@ -294,10 +640,24 @@
       </div>
     </div>
     <div
-      class="lg:col-span-2 min-[100px]:col-span-12 border-2 rounded-md flex flex-col h-[88vh]"
+      class="
+        lg:col-span-2
+        min-[100px]:col-span-12
+        border-2
+        rounded-md
+        flex flex-col
+        h-[88vh]
+      "
     >
       <div
-        class="font-bold bg-[#A10E13] p-3 drop-shadow-xl text-white rounded-t-md"
+        class="
+          font-bold
+          bg-[#A10E13]
+          p-3
+          drop-shadow-xl
+          text-white
+          rounded-t-md
+        "
       >
         <font-awesome-icon icon="bookmark" class="w-[15px] h-[17px]" />
         Task to Do!
@@ -307,20 +667,55 @@
       >
         <div class="flex flex-col space-y-3">
           <div
-            class="grid grid-cols-7 rounded-lg border-t-4 border-gray-800 shadow-xl select-none text-center h-[12vh] max-lg:w-full"
+            class="
+              grid grid-cols-7
+              rounded-lg
+              border-t-4 border-gray-800
+              shadow-xl
+              select-none
+              text-center
+              h-[12vh]
+              max-lg:w-full
+            "
           >
             <dialog
               ref="request_generate_data_dialog"
-              class="h-[30%] w-[20%] ml-[64%] mt-[7.6%] border-2 border-[#A10A13] p-0 select-none max-lg:ml-[42%] max-lg:mt-[35%] max-lg:w-[40%]"
+              class="
+                h-[30%]
+                w-[20%]
+                ml-[64%]
+                mt-[7.6%]
+                border-2 border-[#A10A13]
+                p-0
+                select-none
+                max-lg:ml-[42%] max-lg:mt-[35%] max-lg:w-[40%]
+              "
             >
               <div
-                class="flex bg-[#A10A13] h-[13%] pl-2 items-center text-white text-[16px] justify-between sticky top-0"
+                class="
+                  flex
+                  bg-[#A10A13]
+                  h-[13%]
+                  pl-2
+                  items-center
+                  text-white text-[16px]
+                  justify-between
+                  sticky
+                  top-0
+                "
               >
                 {{ requestGenerateData.total_count }} Request(s)
                 <button @click="closeModal('request_generate_data_dialog')">
                   <font-awesome-icon
                     icon="xmark"
-                    class="flex px-3 py-2 rounded-full hover:bg-red-500 text-white"
+                    class="
+                      flex
+                      px-3
+                      py-2
+                      rounded-full
+                      hover:bg-red-500
+                      text-white
+                    "
                   />
                 </button>
               </div>
@@ -350,12 +745,31 @@
               </div>
             </dialog>
             <div
-              class="flex col-span-1 justify-center bg-gray-800 rounded-l-md select-none cursor-pointer hover:bg-gray-500 max-lg:w-11 max-lg:h-15"
+              class="
+                flex
+                col-span-1
+                justify-center
+                bg-gray-800
+                rounded-l-md
+                select-none
+                cursor-pointer
+                hover:bg-gray-500
+                max-lg:w-11 max-lg:h-15
+              "
               @click="openModal('request_generate_data_dialog')"
             >
               <div
                 ref="forGenerate"
-                class="flex justify-center items-center rotate-360 transition transform ease-in-out duration-700"
+                class="
+                  flex
+                  justify-center
+                  items-center
+                  rotate-360
+                  transition
+                  transform
+                  ease-in-out
+                  duration-700
+                "
               >
                 <font-awesome-icon
                   icon="circle-arrow-right"
@@ -363,31 +777,83 @@
                 />
               </div>
             </div>
-            <div class="col-span-6 self-center h-full max-lg:text-[18px]">
+            <div
+              class="
+                flex flex-col
+                col-span-6
+                self-center
+                justify-center
+                h-full
+                text-[13px]
+                max-lg:text-[18px]
+              "
+            >
               <span
-                class="flex flex-col justify-center items-center h-[50%] text-[20px] font-bold"
+                class="
+                  flex flex-col
+                  justify-center
+                  items-center
+                  h-[20%]
+                  text-[3vh]
+                  font-bold
+                "
                 >{{ requestGenerateData.total_count }}</span
               >
-              <span class="flex flex-col justify-center items-center h-[20%]"
-                >Request needs to have CODE</span
+              <span class="flex flex-col justify-center items-center h-[40%]"
+                >Request needs to GENERATE CODE</span
               >
             </div>
           </div>
           <div
-            class="grid grid-cols-7 rounded-lg border-t-4 border-gray-800 shadow-xl select-none text-center h-[12vh] max-lg:w-full"
+            class="
+              grid grid-cols-7
+              rounded-lg
+              border-t-4 border-gray-800
+              shadow-xl
+              select-none
+              text-center
+              h-[12vh]
+              max-lg:w-full
+            "
           >
             <dialog
               ref="designer_data_dialog"
-              class="h-[30%] w-[20%] ml-[64%] mt-[14.5%] border-2 border-[#A10A13] p-0 select-none max-lg:ml-[42%] max-lg:mt-[35%] max-lg:w-[40%]"
+              class="
+                h-[30%]
+                w-[20%]
+                ml-[64%]
+                mt-[14.5%]
+                border-2 border-[#A10A13]
+                p-0
+                select-none
+                max-lg:ml-[42%] max-lg:mt-[35%] max-lg:w-[40%]
+              "
             >
               <div
-                class="flex bg-[#A10A13] h-[13%] pl-2 items-center text-white text-[16px] justify-between sticky top-0"
+                class="
+                  flex
+                  bg-[#A10A13]
+                  h-[13%]
+                  pl-2
+                  items-center
+                  text-white text-[16px]
+                  justify-between
+                  sticky
+                  top-0
+                "
               >
                 {{ designerData.total_count }} Request(s)
                 <button @click="closeModal('designer_data_dialog')">
                   <font-awesome-icon
                     icon="xmark"
-                    class="flex px-3 py-2 rounded-full hover:bg-red-500 text-white"
+                    class="
+                      flex
+                      px-3
+                      py-2
+                      rounded-full
+                      hover:bg-red-500
+                      text-white
+                    "
                   />
                 </button>
               </div>
@@ -417,12 +883,31 @@
               </div>
             </dialog>
             <div
-              class="flex col-span-1 justify-center bg-gray-800 rounded-l-md select-none cursor-pointer hover:bg-gray-500 max-lg:w-11 max-lg:h-15"
+              class="
+                flex
+                col-span-1
+                justify-center
+                bg-gray-800
+                rounded-l-md
+                select-none
+                cursor-pointer
+                hover:bg-gray-500
+                max-lg:w-11 max-lg:h-15
+              "
               @click="openModal('designer_data_dialog')"
             >
               <div
                 ref="forDesigner"
-                class="flex flex-col justify-center items-center rotate-360 transition transform ease-in-out duration-700"
+                class="
+                  flex flex-col
+                  justify-center
+                  items-center
+                  rotate-360
+                  transition
+                  transform
+                  ease-in-out
+                  duration-700
+                "
               >
                 <font-awesome-icon
                   icon="circle-arrow-right"
@@ -430,35 +915,85 @@
                 />
               </div>
             </div>
-            <div class="col-span-6 self-center">
-              <div
-                class="col-span-6 self-center h-full lg:text-[13px] max-lg:text-[18px]"
+            <div
+              class="
+                flex flex-col
+                col-span-6
+                self-center
+                justify-center
+                h-full
+                text-[13px]
+                max-lg:text-[18px]
+              "
+            >
+              <span
+                class="
+                  flex flex-col
+                  justify-center
+                  items-center
+                  h-[20%]
+                  text-[3vh]
+                  font-bold
+                "
+                >{{ designerData.total_count }}</span
               >
-                <span
-                  class="flex flex-col justify-center items-center h-[20%] text-[20px] font-bold"
-                  >{{ designerData.total_count }}</span
-                >
-                <span class="flex flex-col justify-center items-center h-[40%]"
-                  >Request needs to have DESIGNER ANSWER</span
-                >
-              </div>
+              <span class="flex flex-col justify-center items-center h-[40%]"
+                >Request needs to have DESIGNER ANSWER</span
+              >
             </div>
           </div>
           <div
-            class="grid grid-cols-7 rounded-lg border-t-4 border-gray-800 shadow-xl select-none text-center h-[12vh] max-lg:w-full"
+            class="
+              grid grid-cols-7
+              rounded-lg
+              border-t-4 border-gray-800
+              shadow-xl
+              select-none
+              text-center
+              h-[12vh]
+              max-lg:w-full
+            "
           >
             <dialog
               ref="inspection_data_dialog"
-              class="h-[30%] w-[20%] ml-[64%] mt-[21.2%] border-2 border-[#A10A13] p-0 select-none max-lg:ml-[42%] max-lg:mt-[35%] max-lg:w-[40%]"
+              class="
+                h-[30%]
+                w-[20%]
+                ml-[64%]
+                mt-[21.2%]
+                border-2 border-[#A10A13]
+                p-0
+                select-none
+                max-lg:ml-[42%] max-lg:mt-[35%] max-lg:w-[40%]
+              "
             >
               <div
-                class="flex bg-[#A10A13] h-[13%] pl-2 items-center text-white lg:text-[16px] justify-between sticky top-0 min-[100px]:text-[14px]"
+                class="
+                  flex
+                  bg-[#A10A13]
+                  h-[13%]
+                  pl-2
+                  items-center
+                  text-white
+                  lg:text-[16px]
+                  justify-between
+                  sticky
+                  top-0
+                  min-[100px]:text-[14px]
+                "
               >
                 {{ inspectionData.total_count }} Request(s)
                 <button @click="closeModal('inspection_data_dialog')">
                   <font-awesome-icon
                     icon="xmark"
-                    class="flex px-3 py-2 rounded-full hover:bg-red-500 text-white"
+                    class="
+                      flex
+                      px-3
+                      py-2
+                      rounded-full
+                      hover:bg-red-500
+                      text-white
+                    "
                   />
                 </button>
               </div>
@@ -488,12 +1023,31 @@
               </div>
             </dialog>
             <div
-              class="flex col-span-1 justify-center bg-gray-800 rounded-l-md select-none cursor-pointer hover:bg-gray-500 max-lg:w-11 max-lg:h-15"
+              class="
+                flex
+                col-span-1
+                justify-center
+                bg-gray-800
+                rounded-l-md
+                select-none
+                cursor-pointer
+                hover:bg-gray-500
+                max-lg:w-11 max-lg:h-15
+              "
               @click="openModal('inspection_data_dialog')"
             >
               <div
                 ref="forInspection"
-                class="flex justify-center items-center rotate-360 transition transform ease-in-out duration-700"
+                class="
+                  flex
+                  justify-center
+                  items-center
+                  rotate-360
+                  transition
+                  transform
+                  ease-in-out
+                  duration-700
+                "
               >
                 <font-awesome-icon
                   icon="circle-arrow-right"
@@ -501,20 +1055,44 @@
                 />
               </div>
             </div>
-            <div class="col-span-6 self-center h-full lg:text-[14px] max-lg:text-[18px]">
+            <div
+              class="
+                flex flex-col
+                col-span-6
+                self-center
+                justify-center
+                h-full
+                text-[13px]
+                max-lg:text-[18px]
+              "
+            >
               <span
-                class="flex flex-col justify-center items-center h-[40%] text-[20px] font-bold"
+                class="
+                  flex flex-col
+                  justify-center
+                  items-center
+                  h-[20%]
+                  text-[3vh]
+                  font-bold
+                "
                 >{{ inspectionData.total_count }}</span
               >
-              <span class="flex flex-col justify-center items-center h-[30%]"
-                >Request that have CRITICAL PARTS</span
+              <span class="flex flex-col justify-center items-center h-[40%]"
+                >Request with CRITICAL PARTS</span
               >
             </div>
           </div>
         </div>
       </div>
       <div
-        class="font-bold outline-1 bg-[#A10E13] p-3 drop-shadow-xl text-white text-[15px]"
+        class="
+          font-bold
+          outline-1
+          bg-[#A10E13]
+          p-3
+          drop-shadow-xl
+          text-white text-[15px]
+        "
       >
         <font-awesome-icon icon="table-list" class="w-5 h-[17px]" />
         Activity Logs!
@@ -529,7 +1107,13 @@
               escape: true,
               class: 'custom-error',
             }"
-            class="rounded-lg border border-black shadow-xl select-none text-center"
+            class="
+              rounded-lg
+              border border-black
+              shadow-xl
+              select-none
+              text-center
+            "
           >
             <span class="text-[13.5px] p-2 rounded font-mono font-bold">
               {{ i.subject }}</span
@@ -553,7 +1137,14 @@
   <!--HINSEI REQUEST COUNT-->
   <dialog
     ref="hinseiCount"
-    class="w-[70vh] h-[25vh] rounded-lg p-0 select-none border-2 border-[#A10A13]"
+    class="
+      w-[70vh]
+      h-[25vh]
+      rounded-lg
+      p-0
+      select-none
+      border-2 border-[#A10A13]
+    "
   >
     <div class="flex p-2 items-center justify-between bg-[#A10E13]">
       <span class="text-white"
@@ -574,7 +1165,16 @@
     <div class="h-[77%]">
       <div class="grid grid-cols-3 h-[70%] gap-2 p-3">
         <div
-          class="grid justify-end h-full bg-green-700 rounded-xl place-content-end border-4 border-green-600 p-2"
+          class="
+            grid
+            justify-end
+            h-full
+            bg-green-700
+            rounded-xl
+            place-content-end
+            border-4 border-green-600
+            p-2
+          "
         >
           <font-awesome-icon
             icon="thumbs-up"
@@ -583,7 +1183,16 @@
         </div>
 
         <div
-          class="grid justify-end h-full bg-red-700 rounded-xl place-content-end border-4 border-red-600 p-2"
+          class="
+            grid
+            justify-end
+            h-full
+            bg-red-700
+            rounded-xl
+            place-content-end
+            border-4 border-red-600
+            p-2
+          "
         >
           <font-awesome-icon
             icon="thumbs-down"
@@ -592,7 +1201,16 @@
         </div>
 
         <div
-          class="grid justify-end h-full bg-yellow-500 rounded-xl place-content-end border-4 border-yellow-600 p-2"
+          class="
+            grid
+            justify-end
+            h-full
+            bg-yellow-500
+            rounded-xl
+            place-content-end
+            border-4 border-yellow-600
+            p-2
+          "
         >
           <font-awesome-icon
             icon="hourglass-half"
@@ -624,7 +1242,14 @@
   <!--LSA REQUEST COUNT-->
   <dialog
     ref="lsaCount"
-    class="w-[70vh] h-[25vh] rounded-lg p-0 select-none border-2 border-[#A10A13]"
+    class="
+      w-[70vh]
+      h-[25vh]
+      rounded-lg
+      p-0
+      select-none
+      border-2 border-[#A10A13]
+    "
   >
     <div class="flex p-2 items-center justify-between bg-[#A10E13]">
       <span class="text-white"
@@ -645,7 +1270,16 @@
     <div class="h-[77%]">
       <div class="grid grid-cols-3 h-[70%] gap-2 p-3">
         <div
-          class="grid justify-end h-full bg-green-700 rounded-xl place-content-end border-4 border-green-600 p-2"
+          class="
+            grid
+            justify-end
+            h-full
+            bg-green-700
+            rounded-xl
+            place-content-end
+            border-4 border-green-600
+            p-2
+          "
         >
           <font-awesome-icon
             icon="thumbs-up"
@@ -654,7 +1288,16 @@
         </div>
 
         <div
-          class="grid justify-end h-full bg-red-700 rounded-xl place-content-end border-4 border-red-600 p-2"
+          class="
+            grid
+            justify-end
+            h-full
+            bg-red-700
+            rounded-xl
+            place-content-end
+            border-4 border-red-600
+            p-2
+          "
         >
           <font-awesome-icon
             icon="thumbs-down"
@@ -663,7 +1306,16 @@
         </div>
 
         <div
-          class="grid justify-end h-full bg-yellow-500 rounded-xl place-content-end border-4 border-yellow-600 p-2"
+          class="
+            grid
+            justify-end
+            h-full
+            bg-yellow-500
+            rounded-xl
+            place-content-end
+            border-4 border-yellow-600
+            p-2
+          "
         >
           <font-awesome-icon
             icon="hourglass-half"

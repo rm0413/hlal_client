@@ -71,7 +71,7 @@
         </c-table>
       </div>
       <div
-        class="lg:col-span-2 min-[100px]:col-span-9 h-[53vh] min-[100px]:overflow-y-scroll flex flex-col mt-2 gap-2 px-10 bg-gray-100 rounded shadow-md">
+        class="lg:col-span-2 min-[100px]:col-span-9 h-[56vh] min-[100px]:overflow-y-scroll flex flex-col mt-2 gap-2 px-10 bg-gray-100 rounded shadow-md">
         <form method="post" @submit.prevent="submitDesignerSectionAnswer">
           <label class="flex flex-col items-center mt-3">
             <i class="text-white bg-[#A10E13] w-full flex justify-center rounded">Request Result</i>
@@ -217,6 +217,7 @@ const excelUploadingDesignerAnswer = () => {
           const name = "data";
           const data_storage = []
           select_item.value.forEach(v => {
+            console.log(v)
             data_storage.push(JSON.parse(v))
           })
           const formData = new FormData();
