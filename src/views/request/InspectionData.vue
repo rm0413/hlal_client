@@ -157,7 +157,7 @@ const selectAll = () => {
   var selected_checkbox = document.querySelectorAll(
     "input[type='checkbox']"
   );
-  if (select_item.value.length === filterPartNumber.value.length) {
+  if (select_item.value.length === inspectionDataStore.getInspectionData.length) {
     selected_checkbox.forEach((v) => {
       v.checked = false
     })
