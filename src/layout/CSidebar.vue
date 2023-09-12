@@ -103,12 +103,12 @@
         } shadow-lg absolute top-2 rounded-full h-12`">
         <div class="flex pl-4 items-center space-x-2">
           <div>
-            <div @click="themeStore.darkMode(), openNav()" v-if="themeStore.theme_select === 0" class="cursor-pointer">
+            <!-- <div @click="themeStore.darkMode(), openNav()" v-if="themeStore.theme_select === 0" class="cursor-pointer">
               <font-awesome-icon icon="moon"></font-awesome-icon>
-            </div>
-            <div v-else @click="themeStore.onDefault(), openNav()" class="cursor-pointer">
+            </div> -->
+            <!-- <div v-else @click="themeStore.onDefault(), openNav()" class="cursor-pointer">
               <font-awesome-icon icon="sun" class="text-white"></font-awesome-icon>
-            </div>
+            </div> -->
           </div>
           <div class="text-black hover:text-blue-500 dark:hover:text-[#38BDF8] hidden">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="{3}"
