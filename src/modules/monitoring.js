@@ -234,7 +234,7 @@ export const useMonitoringStore = defineStore({
       });
     },
     setExportMonitoringList(data) {
-      window.location.href = `http://10.164.58.62/hinsei/server/public/export/${data.unit_id}/${data.supplier_name}/${data.part_number.replace('/', ' ' )}`
+      window.location.href = `http://10.164.58.82/hinsei/server/public/export/${data.unit_id}/${data.supplier_name}/${data.part_number.replace('/', ' ' )}`
     },
   },
   getters: {

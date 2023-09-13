@@ -1,50 +1,158 @@
 <template>
-  <div class="h-[89vh] w-full grid grid-cols-9 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2">
-    <div class="lg:col-span-2 min-[100px]:col-span-9 h-[89vh] flex flex-col">
-      <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono"><font-awesome-icon
-          class="h-6 w-6 text-black" icon="users-gear" /> User
-        Management</label>
-      <div class="flex flex-col justify-center py-3 px-16 bg-[#A10E13] rounded shadow-md text-white mt-4 text-center">
+  <div
+    class="
+      h-[89vh]
+      w-full
+      grid grid-cols-9
+      min-[100px]:overflow-y-scroll
+      lg:overflow-y-hidden
+      gap-2
+    "
+  >
+    <div
+      class="
+        lg:col-span-2
+        min-[100px]:col-span-9
+        lg:h-[89vh]
+        min-[100px]:h-[36vh]
+        flex flex-col
+      "
+    >
+      <label
+        class="
+          text-[24px]
+          tracking-widest
+          font-bold
+          text-gray-600
+          font-mono
+          max-lg:text-[20px]
+        "
+        ><font-awesome-icon class="h-6 w-6 text-black" icon="users-gear" /> User
+        Management</label
+      >
+      <div
+        class="
+          flex flex-col
+          justify-center
+          py-3
+          px-16
+          bg-[#A10E13]
+          rounded
+          shadow-md
+          text-white
+          mt-4
+          text-center
+        "
+      >
         Add User
       </div>
       <form method="post" @submit.prevent="addHinseiUser">
-        <div class="mt-2">
-          <label class="">Employee Name</label>
-          <!-- <c-select ref="empSelectComponent" v-model="userManagementStore.employeeForm.system_access_id"
+        <div class="border-2 border-gray-100 shadow-lg p-2">
+          <div class="mt-2">
+            <label class="">Employee Name</label>
+            <!-- <c-select ref="empSelectComponent" v-model="userManagementStore.employeeForm.system_access_id"
           :options="userManagementStore.options_employee_name" class="text-center"></c-select> -->
-          <select
-            class="h-[2.5rem] border-2 rounded text-center w-full border-gray-600 hover:border-blue-300 outline-green-600"
-            v-model="userManagementStore.employeeForm.system_access_id" required>
-            <option value="" disabled>Select Name</option>
-            <option v-for="(i, key) in userManagementStore.options_employee_name" :key="key" :value="i">
-              {{ i.text }}
-            </option>
-          </select>
-        </div>
-        <div class="mt-2">
-          <label class="">Employee Role</label>
-          <!-- <c-select ref="roleSelectComponent" v-model="userManagementStore.employeeForm.role_id"
+            <select
+              class="
+                h-[2.5rem]
+                border-2
+                rounded
+                text-center
+                w-full
+                border-gray-600
+                hover:border-blue-300
+                outline-green-600
+              "
+              v-model="userManagementStore.employeeForm.system_access_id"
+              required
+            >
+              <option value="" disabled>Select Name</option>
+              <option
+                v-for="(i, key) in userManagementStore.options_employee_name"
+                :key="key"
+                :value="i"
+              >
+                {{ i.text }}
+              </option>
+            </select>
+          </div>
+          <div class="mt-2">
+            <label class="">Employee Role</label>
+            <!-- <c-select ref="roleSelectComponent" v-model="userManagementStore.employeeForm.role_id"
           :options="userManagementStore.role_options" class="text-center"></c-select> -->
-          <select
-            class="h-[2.5rem] border-2 rounded text-center w-full border-gray-600 hover:border-blue-300 outline-green-600"
-            v-model="userManagementStore.employeeForm.role_id" required>
-            <option value="" disabled>Select Role</option>
-            <option v-for="(i, key) in userManagementStore.role_options" :key="key" :value="i">
-              {{ i.text }}
-            </option>
-          </select>
-        </div>
-        <div class="card flex justify-content-center items-center justify-center mt-5 w-full gap-3">
-          <button type="submit"
-            class="w-[10rem] bg-red-500 hover:bg-red-600 border-2 border-red-800 p-3 text-white rounded">
-            <font-awesome-icon icon="floppy-disk" /> <b>SAVE</b>
-          </button>
-          <button type="button"
-            class="gap-2 w-[10rem] bg-gray-500 rounded hover:bg-gray-600 p-3 text-white border-2 border-gray-700" @click="
-              userManagementStore.clearUser()
-              ">
-            <font-awesome-icon icon="eraser" /> <b>CLEAR</b>
-          </button>
+            <select
+              class="
+                h-[2.5rem]
+                border-2
+                rounded
+                text-center
+                w-full
+                border-gray-600
+                hover:border-blue-300
+                outline-green-600
+              "
+              v-model="userManagementStore.employeeForm.role_id"
+              required
+            >
+              <option value="" disabled>Select Role</option>
+              <option
+                v-for="(i, key) in userManagementStore.role_options"
+                :key="key"
+                :value="i"
+              >
+                {{ i.text }}
+              </option>
+            </select>
+          </div>
+          <div
+            class="
+              flex
+              lg:flex-col
+              min-[100px]:flex-row
+              lg:gap-0
+              min-[100px]:gap-2
+            "
+          >
+            <button
+              type="submit"
+              class="
+                w-full
+                flex
+                gap-2
+                bg-red-500
+                p-3
+                hover:bg-red-700
+                border-2 border-red-800
+                rounded
+                justify-center
+                items-center
+                mt-2
+                text-white
+              "
+            >
+              <font-awesome-icon icon="floppy-disk" /> <b>SAVE</b>
+            </button>
+            <button
+              type="button"
+              class="
+                w-full
+                flex
+                gap-2
+                bg-gray-500
+                border-2 border-gray-800
+                hover:bg-gray-600
+                p-3
+                text-white
+                rounded
+                justify-center
+                items-center
+                mt-2
+              "
+              @click="userManagementStore.clearUser()"
+            >
+              <font-awesome-icon icon="eraser" /> <b>CLEAR</b>
+            </button>
+          </div>
         </div>
       </form>
       <!-- <div
@@ -60,17 +168,87 @@
         </div>
       </div> -->
     </div>
-    <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col h-[89vh]">
-      <div class="flex items-end justify-end">
+    <div
+      class="
+        lg:col-span-7
+        min-[100px]:col-span-9
+        flex flex-col
+        lg:h-[89vh]
+        min-[100px]:h-[52vh]
+      "
+    >
+      <div class="relative flex justify-end">
+        <i
+          class="
+            h-full
+            z-50
+            text-gray-400
+            top-[2px]
+            py-1
+            px-3
+            rounded
+            absolute
+            lg:right-[15.5rem]
+            min-[100px]:right-[10.5rem]
+          "
+          ><font-awesome-icon icon="magnifying-glass"></font-awesome-icon
+        ></i>
+        <input
+          class="
+            w-[13rem]
+            text-center
+            p-1
+            border-2
+            rounded-l-md
+            h-[2.5rem]
+            border-gray-600
+            hover:border-red-500
+            outline-green-600
+            lg:w-[13rem]
+            min-[100px]:w-[10rem]
+          "
+          v-model="userManagementStore.search_filter"
+        />
+        <button
+          type="button"
+          class="
+            flex
+            justify-center
+            items-center
+            h-[2.5rem]
+            lg:w-[5rem]
+            min-[100px]:w-[3rem]
+            bg-gray-700
+            text-white
+            py-1
+            px-3
+            rounded-r-md
+            font-bold
+            lg:text-[16px]
+            min-[100px]:text-[13px]
+          "
+          @click="openModal('search')"
+        >
+          Search
+        </button>
+      </div>
+      <!-- <div class="flex items-end justify-end">
         <span class="p-input-icon-left">
           <font-awesome-icon icon="magnifying-glass" />
-          <input-text v-model="userManagementStore.search_filter" placeholder="Search"
-            class="w-[17rem] h-[4.5vh] rounded-md border-2 border-black" />
+          <input-text
+            v-model="userManagementStore.search_filter"
+            placeholder="Search"
+            class="w-[17rem] h-[4.5vh] rounded-md border-2 border-black"
+          />
         </span>
-      </div>
+      </div> -->
       <div class="border rounded-[5px] overflow-y-scroll h-full mt-2">
-        <c-table :filter="userManagementStore.search_filter" :fields="userManagementStore.getUserManagementFields"
-          :thStyle="'bg-[#A10E13] text-white p-3'" :items="userManagementStore.getUserManagement">
+        <c-table
+          :filter="userManagementStore.search_filter"
+          :fields="userManagementStore.getUserManagementFields"
+          :thStyle="'bg-[#A10E13] text-white p-3'"
+          :items="userManagementStore.getUserManagement"
+        >
           <template #cell(#)="data">
             <div class="flex items-center justify-center">
               {{ data.index + 1 }}
@@ -78,7 +256,11 @@
           </template>
           <template #cell(photo)="data">
             <div class="flex items-center justify-center">
-              <Avatar size="large" :image="data.item.emp_photo" shape="circle"></Avatar>
+              <Avatar
+                size="large"
+                :image="data.item.emp_photo"
+                shape="circle"
+              ></Avatar>
             </div>
           </template>
           <template #cell(fullname)="data">
@@ -88,24 +270,56 @@
           </template>
           <template #cell(email_notif)="data">
             <div class="w-full h-full flex justify-center items-center">
-              <button @click="updateEmailNotification(data.item)" :class="`w-20 h-8 rounded-full border-2 flex items-center justify-center transform duration-500 ${data.item.email_notification ? 'bg-green-900' : 'bg-[#a10e13]'
-                } px-1 border-gray-600 relative`">
-                <div :class="`transform duration-200 absolute ${data.item.email_notification
-                    ? 'translate-x-5'
-                    : '-translate-x-5'
-                  } h-6 w-6 rounded-full bg-white border-4 border-stone-200`"></div>
+              <button
+                @click="updateEmailNotification(data.item)"
+                :class="`w-20 h-8 rounded-full border-2 flex items-center justify-center transform duration-500 ${
+                  data.item.email_notification ? 'bg-green-900' : 'bg-[#a10e13]'
+                } px-1 border-gray-600 relative`"
+              >
+                <div
+                  :class="`transform duration-200 absolute ${
+                    data.item.email_notification
+                      ? 'translate-x-5'
+                      : '-translate-x-5'
+                  } h-6 w-6 rounded-full bg-white border-4 border-stone-200`"
+                ></div>
               </button>
             </div>
           </template>
           <template #cell(action)="data">
             <div class="flex items-center justify-center gap-1">
-              <button v-tooltip.top="'Update User Role'" @click="edit_user_modal(data)"
-                class="h-8 w-9 rounded items-center justify-center text-black bg-yellow-400 border-2 border-yellow-700 hover:bg-yellow-500">
+              <button
+                v-tooltip.top="'Update User Role'"
+                @click="edit_user_modal(data)"
+                class="
+                  h-8
+                  w-9
+                  rounded
+                  items-center
+                  justify-center
+                  text-black
+                  bg-yellow-400
+                  border-2 border-yellow-700
+                  hover:bg-yellow-500
+                "
+              >
                 <font-awesome-icon icon="gear"></font-awesome-icon>
               </button>
-              <button v-tooltip.top="'Delete User'"
-                class="h-8 w-9 rounded items-center justify-center text-white bg-red-400 border-2 border-red-700 hover:bg-red-500"
-                @click="removeUser(data.item)">
+              <button
+                v-tooltip.top="'Delete User'"
+                class="
+                  h-8
+                  w-9
+                  rounded
+                  items-center
+                  justify-center
+                  text-white
+                  bg-red-400
+                  border-2 border-red-700
+                  hover:bg-red-500
+                "
+                @click="removeUser(data.item)"
+              >
                 <font-awesome-icon icon="xmark"></font-awesome-icon>
               </button>
             </div>
@@ -113,13 +327,32 @@
         </c-table>
       </div>
     </div>
-    <dialog ref="edit_modal" class="p-0 rounded transform duration-300 -translate-y-5">
+    <dialog
+      ref="edit_modal"
+      class="p-0 rounded transform duration-300 -translate-y-5"
+    >
       <div class="flex flex-col">
-        <div class="flex justify-between items-center h-[5vh] px-3 text-white bg-[#A10E13]">
+        <div
+          class="
+            flex
+            justify-between
+            items-center
+            h-[5vh]
+            px-3
+            text-white
+            bg-[#A10E13]
+          "
+        >
           <span>
             <font-awesome-icon icon="gear"></font-awesome-icon> Action |
-            <strong><code>{{ edit_user_form.item.emp_last_name }}</code></strong></span>
-          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="edit_user_close_modal()">
+            <strong
+              ><code>{{ edit_user_form.item.emp_last_name }}</code></strong
+            ></span
+          >
+          <button
+            class="px-3 py-2 rounded-full hover:bg-red-600"
+            @click="edit_user_close_modal()"
+          >
             <font-awesome-icon icon="xmark" />
           </button>
         </div>
@@ -129,8 +362,8 @@
               <span><b>Current Role:</b> </span>
               <i class="text-[18px]">{{
                 !edit_user_form.item.role_access
-                ? "No role"
-                : edit_user_form.item.role_access
+                  ? "No role"
+                  : edit_user_form.item.role_access
               }}</i>
             </label>
             <div class="flex flex-col px-5">
@@ -138,20 +371,34 @@
               <div class="ml-3 flex justify-between mt-2">
                 <!-- <c-select ref="editSelectComponent" :selected="edit_user_form.item.role_access" class="text-center"
                   :options="userManagementStore.role_options" v-model="role_selected"></c-select> -->
-                <select class="h-[2.5rem] border-2 rounded text-center w-full" v-model="role_selected" required>
+                <select
+                  class="h-[2.5rem] border-2 rounded text-center w-full"
+                  v-model="role_selected"
+                  required
+                >
                   <option value="" disabled>Select Role</option>
-                  <option v-for="(i, key) in userManagementStore.role_options" :key="key" :value="i">
+                  <option
+                    v-for="(i, key) in userManagementStore.role_options"
+                    :key="key"
+                    :value="i"
+                  >
                     {{ i.text }}
                   </option>
                 </select>
               </div>
             </div>
           </div>
-          <button type="submit" class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white">
+          <button
+            type="submit"
+            class="w-full bg-[#A10E13] rounded hover:bg-red-600 p-3 text-white"
+          >
             <font-awesome-icon icon="floppy-disk" /> <b>SAVE</b>
           </button>
-          <button type="button" @click="edit_user_close_modal()"
-            class="w-full bg-gray-600 rounded hover:bg-gray-500 p-3 text-white">
+          <button
+            type="button"
+            @click="edit_user_close_modal()"
+            class="w-full bg-gray-600 rounded hover:bg-gray-500 p-3 text-white"
+          >
             <font-awesome-icon icon="ban" /> <b>CANCEL</b>
           </button>
         </form>
@@ -272,9 +519,9 @@ const updateEmailNotification = (data) => {
     setTimeout(() => {
       console.log(response);
       loadAll();
-      loader.hide()
+      loader.hide();
     }, 2000);
-  })
+  });
   // console.log(data);
 };
 

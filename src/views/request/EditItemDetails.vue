@@ -2,7 +2,7 @@
   <div class="flex flex-col">
     <div class="h-full w-full">
       <div class="flex justify-between">
-        <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono">
+        <label class="text-[24px] tracking-widest font-bold text-gray-600 font-mono max-lg:text-[20px]">
           <font-awesome-icon class="h-6 w-6 " icon="eraser" />
           Edit Item Details
         </label>
@@ -24,13 +24,43 @@
               :options="code_part_number ? code : part_number"
               v-model="editItemDetailsStore.part_number_select"></c-select>
           </div> -->
-          <div class="relative">
-            <i class="h-full z-50 text-gray-400 top-[2px] py-1 px-3 rounded absolute"><font-awesome-icon
+          <div class="relative flex">
+            <i class="h-full
+              z-50
+              text-gray-400
+              top-[2px]
+              py-1
+              px-3
+              rounded
+              absolute"><font-awesome-icon
                 icon="magnifying-glass"></font-awesome-icon></i>
             <input
-              class="text-center p-1 border-2 rounded-l-md h-[2.8rem] border-gray-600 hover:border-blue-300 outline-green-600"
+              class="w-[13rem]
+              text-center
+              p-1
+              border-2
+              rounded-l-md
+              h-[2.5rem]
+              border-gray-600
+              hover:border-red-500
+              outline-green-600
+              lg:w-[13rem]
+              min-[100px]:w-[10rem]"
               v-model="editItemDetailsStore.search_filter" />
-            <button class="h-full bg-gray-400 text-white py-1 px-3 rounded-r-md rounded-l-none">
+            <button class="flex
+              justify-center
+              items-center
+              h-[2.5rem]
+              lg:w-[5rem]
+              min-[100px]:w-[3rem]
+              bg-gray-700
+              text-white
+              py-1
+              px-3
+              rounded-r-md
+              font-bold
+              lg:text-[16px]
+              min-[100px]:text-[13px]">
               <b>Search</b>
             </button>
           </div>

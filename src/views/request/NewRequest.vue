@@ -607,7 +607,7 @@
           <font-awesome-icon icon="floppy-disk" class="h-5 w-5" /> GENERATE
         </button>
       </div>
-      <div class="flex flex-col h-[45vh] mt-2 max-lg:h-[18vh]">
+      <div class="flex flex-col h-[45vh] mt-2 max-lg:h-[17vh]">
         <div
           class="
             lg:h-[41vh]
