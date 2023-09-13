@@ -1,5 +1,15 @@
 <template>
-  <div class="h-[89vh] w-full grid grid-cols-12 min-[100px]:overflow-y-scroll lg:overflow-y-hidden gap-2 select-none">
+  <div
+    class="
+      h-[89vh]
+      w-full
+      grid grid-cols-12
+      min-[100px]:overflow-y-scroll
+      lg:overflow-y-hidden
+      gap-2
+      select-none
+    "
+  >
     <div class="lg:col-span-12 min-[100px]:col-span-12 h-[2vh] flex flex-col">
       <label
         class="
@@ -27,17 +37,21 @@
             rounded
             hover:bg-red-700
             border-2 border-red-900
+            gap-2
+            lg:w-[15rem]
+            min-[100px]:w-[10rem]
           "
           data-open-modal
         >
           <font-awesome-icon icon="file-import" class="h-5 w-5" />
-          <p class="ml-3"><b>MULTIPLE INPUT</b></p>
+          <p class="lg:text-[16px] min-[100px]:text-[14px]">
+            <b>MULTIPLE INPUT</b>
+          </p>
         </button>
-        <div class="flex flex-row w-[15rem]">
+        <div class="flex flex-row lg:w-[15rem] min-[100px]:w-[10rem]">
           <p
             class="
               flex
-              w-[15rem
               text-white
               bg-[#A10E13]
               h-[2.5rem]
@@ -45,9 +59,12 @@
               items-center
               justify-center
               rounded-l-md rounded-r-none
+              font-bold
+              lg:text-[16px]
+              min-[100px]:text-[14px]
             "
           >
-            <b>Unit</b>
+            Unit
           </p>
           <select
             class="
@@ -95,20 +112,28 @@
               border-gray-600
               hover:border-red-500
               outline-green-600
+              lg:w-[13rem]
+              min-[100px]:w-[10rem]
             "
             v-model="newRequestStore.search_filter"
           />
           <button
             type="button"
             class="
+              flex
+              justify-center
+              items-center
               h-[2.5rem]
-              w-[5rem]
-              bg-gray-400
+              lg:w-[5rem]
+              min-[100px]:w-[3rem]
+              bg-gray-700
               text-white
               py-1
               px-3
               rounded-r-md
               font-bold
+              lg:text-[16px]
+              min-[100px]:text-[13px]
             "
             @click="openModal('search')"
           >
@@ -131,374 +156,363 @@
           "
         >
           <div class="lg:col-span-2 p-2 min-[100px]:col-span-4">
-            <label class="flex flex-col gap-2">
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Trial No.
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.trial_number"
-                required
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.trial_number"
+              required
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Request Date
-              <input
-                type="date"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.request_date"
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="date"
+              class="
+                w-full
+                border-2
+                rounded
+                p-1
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.request_date"
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Additional Request Qty Date
-              <input
-                type="date"
-                class="
-                  w-full
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                "
-                v-model="newRequestStore.agreementForm.additional_request_date"
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="date"
+              class="
+                w-full
+                text-center
+                p-1
+                h-[2.5rem]
+                outline-green-600
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+              "
+              v-model="newRequestStore.agreementForm.additional_request_date"
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               TRI No.
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-              />
             </label>
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+            />
           </div>
           <div class="lg:col-span-2 p-2 min-[100px]:col-span-4">
-            <label class="flex flex-col gap-2">
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               TRI Quantity
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.tri_number"
-                required
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.tri_number"
+              required
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Request Person
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.request_person"
-                required
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.request_person"
+              required
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Superior Approval
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.supperior_approval"
-                required
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.supperior_approval"
+              required
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Supplier
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.supplier_name"
-                required
-              />
             </label>
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.supplier_name"
+              required
+            />
           </div>
           <div class="lg:col-span-2 p-2 min-[100px]:col-span-4">
-            <label class="flex flex-col gap-2">
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Part Number
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.part_number"
-                required
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.part_number"
+              required
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Sub Part Number
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.sub_part_number"
-                required
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.sub_part_number"
+              required
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Revision
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.revision"
-                required
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.revision"
+              required
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Coordinates
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.coordinates"
-                required
-              />
             </label>
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.coordinates"
+              required
+            />
           </div>
           <div class="lg:col-span-2 p-2 min-[100px]:col-span-4">
-            <label class="flex flex-col gap-2">
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Dimension
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.dimension"
-                required
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.dimension"
+              required
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Actual Value
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.actual_value"
-                required
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.actual_value"
+              required
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Critical Parts
-              <select
-                class="
-                  border-2
-                  rounded
-                  text-center
-                  h-[2.5rem]
-                  hover:border-blue-300
-                  border-gray-600
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.critical_parts"
-                required
-              >
-                <option value="" disabled>Select Critical Parts</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
             </label>
-            <label class="flex flex-col gap-2">
+            <select
+              class="
+                w-full
+                border-2
+                rounded
+                text-center
+                h-[2.5rem]
+                hover:border-blue-300
+                border-gray-600
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.critical_parts"
+              required
+            >
+              <option value="" disabled>Select Critical Parts</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Critical Dimension
-              <select
-                class="
-                  border-2
-                  rounded
-                  text-center
-                  h-[2.5rem]
-                  hover:border-blue-300
-                  border-gray-600
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.critical_dimension"
-                required
-              >
-                <option value="" disabled>Select Critical Dimension</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
             </label>
+            <select
+              class="
+                w-full
+                border-2
+                rounded
+                text-center
+                h-[2.5rem]
+                hover:border-blue-300
+                border-gray-600
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.critical_dimension"
+              required
+            >
+              <option value="" disabled>Select Critical Dimension</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
           </div>
           <div class="lg:col-span-2 p-2 min-[100px]:col-span-4">
-            <label class="flex flex-col gap-2">
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Kind of Request
-              <select
-                class="
-                  border-2
-                  rounded
-                  text-center
-                  h-[2.5rem]
-                  hover:border-blue-300
-                  border-gray-600
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.kind_request"
-                required
-              >
-                <option value="" disabled>Select Kind of Request</option>
-                <option value="LSA Request">LSA Request</option>
-                <option value="Hinsei Request">Hinsei Request</option>
-              </select>
             </label>
-            <label class="flex flex-col gap-2">
+            <select
+              class="
+                w-full
+                border-2
+                rounded
+                text-center
+                h-[2.5rem]
+                hover:border-blue-300
+                border-gray-600
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.kind_request"
+              required
+            >
+              <option value="" disabled>Select Kind of Request</option>
+              <option value="LSA Request">LSA Request</option>
+              <option value="Hinsei Request">Hinsei Request</option>
+            </select>
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Request Value
-              <textarea
-                style="resize: none"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[7rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.request_value"
-                required
-              />
             </label>
-            <label class="flex flex-col gap-2">
+            <textarea
+              style="resize: none"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[6.1rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.request_value"
+              required
+            />
+            <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Request Quantity
-              <input
-                type="text"
-                class="
-                  w-full
-                  border-2
-                  rounded
-                  p-1
-                  hover:border-blue-300
-                  border-gray-600
-                  text-center
-                  h-[2.5rem]
-                  outline-green-600
-                "
-                v-model="newRequestStore.agreementForm.request_quantity"
-                required
-              />
             </label>
+            <input
+              type="text"
+              class="
+                w-full
+                border-2
+                rounded
+                hover:border-blue-300
+                border-gray-600
+                text-center
+                h-[2.5rem]
+                outline-green-600
+              "
+              v-model="newRequestStore.agreementForm.request_quantity"
+              required
+            />
           </div>
           <div
             class="
@@ -519,14 +533,12 @@
                 border-2 border-red-900
                 text-white
                 p-1
-                lg:w-[15rem]
-                lg:h-[4rem]
+                lg:w-[10rem]
+                h-[4rem]
                 rounded
                 hover:bg-red-600
-                lg:text-[18px]
-                min-[100px]:w-[13rem]
-                min-[100px]:h-[4rem]
-                min-[100px]:text-[14px]
+                text-[18px]
+                min-[100px]:w-[12rem]
               "
             >
               <font-awesome-icon icon="arrow-turn-right" /> <b>ENTER</b>
@@ -538,14 +550,12 @@
                 border-2 border-gray-900
                 text-white
                 p-1
-                lg:w-[15rem]
-                lg:h-[4rem]
+                lg:w-[10rem]
+                h-[4rem]
                 rounded
                 hover:bg-gray-600
-                lg:text-[18px]
-                min-[100px]:w-[13rem]
-                min-[100px]:h-[4rem]
-                min-[100px]:text-[14px]
+                text-[18px]
+                min-[100px]:w-[12rem]
               "
               @click="newRequestStore.setClearAgreementList"
             >
@@ -555,79 +565,84 @@
         </div>
       </form>
     </div>
-    <div class="lg:col-span-12 min-[100px]:col-span-12 h-[7vh] flex flex-col max-lg:mt-[38rem]">
-        <div class="flex gap-2 mr-2 justify-end">
-          <button
-            @click="selectAll"
-            class="
-              bg-[#A10E13]
-              text-white
-              rounded
-              justify-center
-              items-center
-              h-[2.5rem]
-              w-[12rem]
-              p-2
-              hover:bg-red-600
-            "
+    <div
+      class="
+        lg:col-span-12
+        min-[100px]:col-span-12
+        max-lg:mt-[38rem]
+        mt-[23rem]
+      "
+    >
+      <div class="flex gap-2 mr-2 justify-end">
+        <button
+          @click="selectAll"
+          class="
+            bg-[#A10E13]
+            text-white
+            rounded
+            justify-center
+            items-center
+            h-[2.5rem]
+            w-[12rem]
+            hover:bg-red-600
+          "
+        >
+          Select All
+        </button>
+        <button
+          :disabled="select_item.length === 0"
+          class="
+            bg-[#A10E13]
+            text-white
+            rounded
+            justify-center
+            items-center
+            h-[2.5rem]
+            w-[12rem]
+            hover:bg-red-600
+            cursor-pointer
+          "
+          @click="generateCode"
+        >
+          <font-awesome-icon icon="floppy-disk" class="h-5 w-5" /> GENERATE
+        </button>
+      </div>
+      <div class="flex flex-col h-[45vh] mt-2 max-lg:h-[18vh]">
+        <div
+          class="
+            lg:h-[41vh]
+            overflow-y-scroll
+            max-lg:overflow-x-scroll
+            mx-2
+            border border-gray-300
+            rounded-md
+            shadow-xl
+            min-[100px]:h-[30vh]
+          "
+        >
+          <CTable
+            :filter="newRequestStore.search_filter"
+            :fields="newRequestStore.getViewItemDetailsFields"
+            :items="newRequestStore.getNoCode"
+            :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'"
           >
-            Select All
-          </button>
-          <button
-            :disabled="select_item.length === 0"
-            class="
-              bg-[#A10E13]
-              text-white
-              rounded
-              justify-center
-              items-center
-              h-[2.5rem]
-              w-[12rem]
-              p-2
-              hover:bg-red-600
-              cursor-pointer
-            "
-            @click="generateCode"
-          >
-            <font-awesome-icon icon="floppy-disk" class="h-5 w-5" /> GENERATE
-          </button>
+            <template #cell(#)="data">
+              <div class="flex items-center justify-center">
+                {{ data.index + 1 }}
+              </div>
+            </template>
+            <template #cell(selected)="data">
+              <input
+                type="checkbox"
+                :value="JSON.stringify(data.item)"
+                v-model="select_item"
+                id="cb_data"
+                class="h-5 w-5"
+              />
+            </template>
+          </CTable>
         </div>
-        <div class="flex flex-col h-[45vh] mt-2 max-lg:h-[35vh]">
-          <div
-            class="
-              lg:h-[41vh]
-              overflow-y-scroll
-              max-lg:overflow-x-scroll
-              mx-2
-              border border-gray-300
-              rounded-md
-              shadow-xl
-              min-[100px]:h-[30vh]
-            "
-          >
-            <CTable
-              :filter="newRequestStore.search_filter"
-              :fields="newRequestStore.getViewItemDetailsFields"
-              :items="newRequestStore.getNoCode"
-              :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'"
-            >
-              <template #cell(#)="data">
-                <div class="flex items-center justify-center">
-                  {{ data.index + 1 }}
-                </div>
-              </template>
-              <template #cell(selected)="data">
-                <input
-                  type="checkbox"
-                  :value="JSON.stringify(data.item)"
-                  v-model="select_item"
-                  id="cb_data"
-                  class="h-5 w-5"
-                />
-              </template>
-            </CTable>
-          </div>
-        </div>
+      </div>
     </div>
     <!--Multiple Input-->
     <dialog
@@ -1038,10 +1053,9 @@ const downloadFormat = () => {
     if (response.value === true) {
       var unit_id = newRequestStore.agreementForm.unit;
       newRequestStore.setShowUnit(unit_id).then((response) => {
-        if(response.status === "success")
-        {
-          var unit_name = response.data[0].unit_name
-          newRequestStore.setDownloadFormat(unit_name)
+        if (response.status === "success") {
+          var unit_name = response.data[0].unit_name;
+          newRequestStore.setDownloadFormat(unit_name);
         }
       });
     } else {
