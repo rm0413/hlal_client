@@ -54,7 +54,7 @@
             @click="code_part_number = true"
             :class="`${
               code_part_number ? 'bg-red-700 text-white' : 'bg-gray-300'
-            } select-none cursor-pointer h-[2.5rem] border border-gray-600 py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center font-bold`"
+            } cursor-pointer h-[2.5rem] border border-gray-600 py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center font-bold`"
           >
             Code
           </div>
@@ -62,7 +62,7 @@
             @click="code_part_number = false"
             :class="`${
               code_part_number ? 'bg-gray-300 ' : 'bg-red-700 text-white '
-            }cursor-pointer text-center select-none p-1 border rounded-r-md h-[2.5rem] w-[8rem] border-gray-600 flex flex-col justify-center items-center font-bold`"
+            }cursor-pointer text-center p-1 border rounded-r-md h-[2.5rem] w-[8rem] border-gray-600 flex flex-col justify-center items-center font-bold`"
           >
             Part Number
           </div>
@@ -154,7 +154,8 @@
           flex flex-col
           mt-2
           overflow-y-scroll
-          h-[27vh]
+          lg:h-[75vh]
+          min-[100px]:h-[27vh]
         "
       >
         <c-table
@@ -537,7 +538,7 @@ const excelUploadingDesignerAnswer = () => {
           const name = "data";
           const data_storage = [];
           select_item.value.forEach((v) => {
-            console.log(v);
+            // console.log(v);
             data_storage.push(JSON.parse(v));
           });
           const formData = new FormData();
@@ -698,7 +699,7 @@ const submitDesignerSectionAnswer = () => {
         designerSectionAnswerStore
           .setInsertSingleMultipleDesigner(select_item.value)
           .then((response) => {
-            console.log(response);
+            // console.log(response);
             if (response.status === "success") {
               loader.hide();
               swal({

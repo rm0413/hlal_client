@@ -163,7 +163,7 @@ const onSelectedFiles = (event) => {
 
 const uploadEvent = (callback) => {
   totalSizePercent.value = totalSize.value / 10;
-  console.log(callback)
+  // console.log(callback)
   callback();
 };
 

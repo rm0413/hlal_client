@@ -141,7 +141,62 @@
       </form>
     </div>
     <div class="lg:col-span-7 min-[100px]:col-span-9 flex flex-col lg:h-[89vh] min-[100px]:h-[60vh]">
-      <div class="flex items-end justify-end">
+      <div class="relative flex justify-end">
+        <i
+          class="
+            h-full
+            z-50
+            text-gray-400
+            top-[2px]
+            py-1
+            px-3
+            rounded
+            absolute
+            lg:right-[15.5rem]
+            min-[100px]:right-[10.5rem]
+          "
+          ><font-awesome-icon icon="magnifying-glass"></font-awesome-icon
+        ></i>
+        <input
+          class="
+            w-[13rem]
+            text-center
+            p-1
+            border-2
+            rounded-l-md
+            h-[2.5rem]
+            border-gray-600
+            hover:border-red-500
+            outline-green-600
+            lg:w-[13rem]
+            min-[100px]:w-[10rem]
+          "
+          v-model="unitManagementStore.search_filter"
+        />
+        <button
+          type="button"
+          class="
+            flex
+            justify-center
+            items-center
+            h-[2.5rem]
+            lg:w-[5rem]
+            min-[100px]:w-[3rem]
+            bg-gray-700
+            text-white
+            py-1
+            px-3
+            rounded-r-md
+            font-bold
+            lg:text-[16px]
+            min-[100px]:text-[13px]
+          "
+          @click="openModal('search')"
+        >
+          Search
+        </button>
+      </div>
+      <!-- <div class="flex items-end justify-end">
         <span class="p-input-icon-left">
           <font-awesome-icon icon="magnifying-glass" />
           <input-text
@@ -150,7 +205,7 @@
             v-model="unitManagementStore.search_filter"
           />
         </span>
-      </div>
+      </div> -->
       <div class="border rounded-[5px] overflow-y-scroll lg:h-full min-[100px]:h-[53vh] mt-2">
         <c-table
           :fields="unitManagementStore.unitManagementFields"

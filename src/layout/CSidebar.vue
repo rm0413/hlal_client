@@ -260,6 +260,10 @@ const props = defineProps({
 //   console.log(props.section)
 // })
 
+const signOut = (() => {
+window.close()
+})
+
 //User Information
 const userprofile = ref({
   full_name: `${sessionStorage.getItem("last_name")}, ${sessionStorage.getItem("first_name")}`,

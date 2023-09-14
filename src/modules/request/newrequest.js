@@ -128,7 +128,7 @@ export const useNewRequestStore = defineStore({
           .post("agreement-list", agreement_data)
           .then((response) => {
             resolve(response.data);
-            this.setClearAgreementList();
+            // this.setClearAgreementList();
             this.setNoCodeAgreementList();
             this.setAgreementList()
           })
@@ -187,7 +187,7 @@ export const useNewRequestStore = defineStore({
             this.setNoCodeAgreementList();
             this.setClearAgreementList();
             resolve(response.data);
-            console.log(response.data);
+            // console.log(response.data);
           })
           .catch((err) => {
             reject(err);

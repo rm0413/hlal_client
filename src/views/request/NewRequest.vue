@@ -7,7 +7,7 @@
       min-[100px]:overflow-y-scroll
       lg:overflow-y-hidden
       gap-2
-      select-none
+      
     "
   >
     <div class="lg:col-span-12 min-[100px]:col-span-12 h-[2vh] flex flex-col">
@@ -225,6 +225,7 @@
                 h-[2.5rem]
                 outline-green-600
               "
+              v-model="newRequestStore.agreementForm.tri_number"
             />
           </div>
           <div class="lg:col-span-2 p-2 min-[100px]:col-span-4">
@@ -243,7 +244,7 @@
                 h-[2.5rem]
                 outline-green-600
               "
-              v-model="newRequestStore.agreementForm.tri_number"
+              v-model="newRequestStore.agreementForm.tri_quantity"
               required
             />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
@@ -952,6 +953,7 @@ const submitAgreementList = () => {
       setTimeout(() => {
         newRequestStore.setInsertAgreementList().then((response) => {
           if (response.status === "success") {
+            newRequestStore.setClearAgreementList();
             newRequestStore.search_filter = "";
             loader.hide();
             swal({

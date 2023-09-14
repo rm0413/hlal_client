@@ -14,11 +14,12 @@ onMounted(() => {
   }
 })
 
-const signOut = () => {
-  localStorage.clear()
-  sessionStorage.clear()
-  window.location.href = "http://10.164.58.82/FDTP-Portal/public/";
-}
+// const signOut = () => {
+//   window.closed()
+//   // localStorage.clear()
+//   // sessionStorage.clear()
+//   // window.location.href = "http://10.164.58.82/FDTP-Portal/public/";
+// }
 
 const systemDetails = {
   name: "Hinsei & LSA Agreement List",
@@ -120,7 +121,7 @@ const links = [
 <template>
   <div class="h-screen">
     <CSidebar :systemDetails="systemDetails" :links="links"
-      :signOut="signOut" v-if="route.name !== 'login'">
+       v-if="route.name !== 'login'">
       <template #page>
         <router-view />
       </template>

@@ -959,11 +959,69 @@
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
+        <div class="relative flex justify-end mt-1">
+        <i
+          class="
+            h-full
+            z-50
+            text-gray-400
+            top-[2px]
+            py-1
+            px-3
+            rounded
+            absolute
+            lg:right-[15rem]
+            min-[100px]:right-[10.5rem]
+          "
+          ><font-awesome-icon icon="magnifying-glass"></font-awesome-icon
+        ></i>
+        <input
+          class="
+            w-[13rem]
+            text-center
+            p-1
+            border-2
+            rounded-l-md
+            h-[2.5rem]
+            border-gray-600
+            hover:border-red-500
+            outline-green-600
+            lg:w-[13rem]
+            min-[100px]:w-[10rem]
+          "
+          v-model="monitoringStore.search_filter_designer"
+        />
+        <button
+          type="button"
+          class="
+            flex
+            justify-center
+            items-center
+            h-[2.5rem]
+            lg:w-[4rem]
+            min-[100px]:w-[2rem]
+            bg-gray-700
+            mr-2
+            text-white
+            py-1
+            px-3
+            rounded-r-md
+            font-bold
+            lg:text-[16px]
+            min-[100px]:text-[13px]
+          "
+          @click="openModal('search')"
+        >
+          Search
+        </button>
+      </div>
         <div class="flex flex-col overflow-y-auto mx-2 h-[73vh] mt-1">
           <c-table
             :items="monitoringStore.getEditMonitoringItems"
             :fields="monitoringStore.getDesignerMonitoringFields"
             :thStyle="'bg-[#A10E13] text-white p-2 border-spacing-2'"
+            :filter="monitoringStore.search_filter_designer"
+            :table_class="'w-[110vw]'"
           >
             <template #cell(#)="data">
               {{ data.index + 1 }}

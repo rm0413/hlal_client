@@ -105,7 +105,7 @@ export const useInspectionDataStore = defineStore({
             return new Promise((resolve, reject) => {
                 axios.get('inspection-data').then((response) =>{
                     resolve(response.data)
-                    console.log(response.data)
+                    // console.log(response.data)
                     this.inspectionDataAnswer = response.data.data
                 }).catch(err => {
                     reject(err)

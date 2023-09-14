@@ -7,6 +7,7 @@ export const useMonitoringStore = defineStore({
     monitoring: [],
     inputStatus: true,
     search_filter: '',
+    search_filter_designer: '',
     monitoringFields: [
       { label: "Export", key: "export" },
       { label: "Action", key: "action" },
@@ -183,9 +184,6 @@ export const useMonitoringStore = defineStore({
             reject(err);
           });
       });
-    },
-    setUnit() {
-      console.log(this.monitoringForm.monitoring_unit_name);
     },
     setLoadMonitoring() {
       return new Promise((resolve, reject) => {

@@ -1,5 +1,5 @@
 <template>
-  <table :class="`${table_class} select-none`">
+  <table :class="`${table_class}`">
     <thead class="sticky top-0 z-50">
       <tr>
         <th :class="thStyle" v-for="(column, t) in fields" :key="t">
@@ -39,7 +39,7 @@ import { computed, ref } from "vue";
 const props = defineProps({
   table_class: {
     type: String,
-    default: "table-auto w-full",
+    default: "table-auto w-full overflow-y-scroll-auto",
   },
   items: Array,
   fields: Array,
@@ -108,7 +108,7 @@ const getData = (data, id, idx) => {
     record.classList.remove("hover:bg-gray-300");
     selected_value.value.push(data);
     emit("selectable", selected_value.value);
-    console.log(selected_value.value)
+    // console.log(selected_value.value)
     if (record.classList.contains("bg-gray-200")) {
       record.classList.remove("bg-gray-200")
     } else {
