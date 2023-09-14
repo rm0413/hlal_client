@@ -94,7 +94,7 @@ onMounted(() => {
                 showConfirmButton: false,
                 timer: 2000,
               }).then(() => {
-                window.location.href = "http://10.164.58.82/FDTP-Portal/public/";
+                window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
               });
             }
           });
@@ -106,7 +106,7 @@ onMounted(() => {
             showConfirmButton: false,
             timer: 2000,
           }).then(() => {
-            window.location.href = "http://10.164.58.82/FDTP-Portal/public/";
+            window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
           });
         }
       });
@@ -117,7 +117,7 @@ onMounted(() => {
         text: "Redirecting to FDTP-Portal!!",
         timer: 2000,
       }).then(() => {
-        window.location.href = "http://10.164.58.82/FDTP-Portal/public/";
+        window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
       });
     }
   });
@@ -128,7 +128,7 @@ onMounted(() => {
         text: "Redirecting to FDTP-Portal!!",
         timer: 2000,
       }).then(() => {
-        window.location.href = "http://10.164.58.82/FDTP-Portal/public/";
+        window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
       });
 }
 });

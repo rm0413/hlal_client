@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="
+  <div class="
       h-[89vh]
       w-full
       grid grid-cols-12
@@ -8,26 +7,21 @@
       lg:overflow-y-hidden
       gap-2
       
-    "
-  >
+    ">
     <div class="lg:col-span-12 min-[100px]:col-span-12 h-[2vh] flex flex-col">
-      <label
-        class="
+      <label class="
           text-[24px]
           tracking-widest
           font-bold
           text-gray-600
           font-mono
           max-lg:text-[20px]
-        "
-      >
+        ">
         <font-awesome-icon class="h-6 w-6 text-black" icon="file-lines" /> New
         Request
       </label>
       <div class="flex gap-2 p-2 justify-end">
-        <button
-          @click="openModal('multiple_input')"
-          class="
+        <button @click="openModal('multiple_input')" class="
             w-[15rem]
             flex
             justify-center
@@ -40,17 +34,14 @@
             gap-2
             lg:w-[15rem]
             min-[100px]:w-[10rem]
-          "
-          data-open-modal
-        >
+          " data-open-modal>
           <font-awesome-icon icon="file-import" class="h-5 w-5" />
           <p class="lg:text-[16px] min-[100px]:text-[14px]">
             <b>MULTIPLE INPUT</b>
           </p>
         </button>
         <div class="flex flex-row lg:w-[15rem] min-[100px]:w-[10rem]">
-          <p
-            class="
+          <p class="
               flex
               text-white
               bg-[#A10E13]
@@ -62,12 +53,10 @@
               font-bold
               lg:text-[16px]
               min-[100px]:text-[14px]
-            "
-          >
+            ">
             Unit
           </p>
-          <select
-            class="
+          <select class="
               h-[2.5rem]
               border-2
               rounded
@@ -77,10 +66,7 @@
               border-gray-600
               hover:border-blue-300
               outline-green-600
-            "
-            v-model="newRequestStore.agreementForm.unit"
-            required
-          >
+            " v-model="newRequestStore.agreementForm.unit" required>
             <option value="" disabled>Select Unit</option>
             <option v-for="(i, key) in units" :key="key" :value="i.unit_id">
               {{ i.text }}
@@ -88,8 +74,7 @@
           </select>
         </div>
         <div class="relative flex">
-          <i
-            class="
+          <i class="
               h-full
               z-50
               text-gray-400
@@ -98,11 +83,8 @@
               px-3
               rounded
               absolute
-            "
-            ><font-awesome-icon icon="magnifying-glass"></font-awesome-icon
-          ></i>
-          <input
-            class="
+            "><font-awesome-icon icon="magnifying-glass"></font-awesome-icon></i>
+          <input class="
               w-[13rem]
               text-center
               p-1
@@ -114,12 +96,8 @@
               outline-green-600
               lg:w-[13rem]
               min-[100px]:w-[10rem]
-            "
-            v-model="newRequestStore.search_filter"
-          />
-          <button
-            type="button"
-            class="
+            " v-model="newRequestStore.search_filter" />
+          <button type="button" class="
               flex
               justify-center
               items-center
@@ -134,34 +112,24 @@
               font-bold
               lg:text-[16px]
               min-[100px]:text-[13px]
-            "
-            @click="openModal('search')"
-          >
+            " @click="openModal('search')">
             Search
           </button>
         </div>
       </div>
-      <form
-        action="post"
-        @submit.prevent="submitAgreementList"
-        class="flex justify-center"
-      >
-        <div
-          class="
+      <form action="post" @submit.prevent="submitAgreementList" class="flex justify-center">
+        <div class="
             grid grid-cols-12
             shadow-lg
             border border-gray-300
             rounded-md
             w-[94.3vw]
-          "
-        >
+          ">
           <div class="lg:col-span-2 p-2 min-[100px]:col-span-4">
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Trial No.
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -170,16 +138,11 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.trial_number"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.trial_number" required />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Request Date
             </label>
-            <input
-              type="date"
-              class="
+            <input type="date" class="
                 w-full
                 border-2
                 rounded
@@ -189,15 +152,11 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.request_date"
-            />
+              " v-model="newRequestStore.agreementForm.request_date" />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Additional Request Qty Date
             </label>
-            <input
-              type="date"
-              class="
+            <input type="date" class="
                 w-full
                 text-center
                 p-1
@@ -207,15 +166,11 @@
                 rounded
                 hover:border-blue-300
                 border-gray-600
-              "
-              v-model="newRequestStore.agreementForm.additional_request_date"
-            />
+              " v-model="newRequestStore.agreementForm.additional_request_date" />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               TRI No.
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -224,17 +179,13 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.tri_number"
-            />
+              " v-model="newRequestStore.agreementForm.tri_number" />
           </div>
           <div class="lg:col-span-2 p-2 min-[100px]:col-span-4">
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               TRI Quantity
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -243,16 +194,11 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.tri_quantity"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.tri_quantity" required />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Request Person
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -261,16 +207,11 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.request_person"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.request_person" required />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Superior Approval
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -279,16 +220,11 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.supperior_approval"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.supperior_approval" required />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Supplier
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -297,18 +233,13 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.supplier_name"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.supplier_name" required />
           </div>
           <div class="lg:col-span-2 p-2 min-[100px]:col-span-4">
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Part Number
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -317,16 +248,11 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.part_number"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.part_number" required />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Sub Part Number
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -335,16 +261,11 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.sub_part_number"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.sub_part_number" required />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Revision
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -353,16 +274,11 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.revision"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.revision" required />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Coordinates
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -371,18 +287,13 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.coordinates"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.coordinates" required />
           </div>
           <div class="lg:col-span-2 p-2 min-[100px]:col-span-4">
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Dimension
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -391,16 +302,11 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.dimension"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.dimension" required />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Actual Value
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -409,15 +315,11 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.actual_value"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.actual_value" required />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Critical Parts
             </label>
-            <select
-              class="
+            <select class="
                 w-full
                 border-2
                 rounded
@@ -426,10 +328,7 @@
                 hover:border-blue-300
                 border-gray-600
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.critical_parts"
-              required
-            >
+              " v-model="newRequestStore.agreementForm.critical_parts" required>
               <option value="" disabled>Select Critical Parts</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
@@ -437,8 +336,7 @@
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Critical Dimension
             </label>
-            <select
-              class="
+            <select class="
                 w-full
                 border-2
                 rounded
@@ -447,10 +345,7 @@
                 hover:border-blue-300
                 border-gray-600
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.critical_dimension"
-              required
-            >
+              " v-model="newRequestStore.agreementForm.critical_dimension" required>
               <option value="" disabled>Select Critical Dimension</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
@@ -460,8 +355,7 @@
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Kind of Request
             </label>
-            <select
-              class="
+            <select class="
                 w-full
                 border-2
                 rounded
@@ -470,10 +364,7 @@
                 hover:border-blue-300
                 border-gray-600
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.kind_request"
-              required
-            >
+              " v-model="newRequestStore.agreementForm.kind_request" required>
               <option value="" disabled>Select Kind of Request</option>
               <option value="LSA Request">LSA Request</option>
               <option value="Hinsei Request">Hinsei Request</option>
@@ -481,9 +372,7 @@
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Request Value
             </label>
-            <textarea
-              style="resize: none"
-              class="
+            <textarea style="resize: none" class="
                 w-full
                 border-2
                 rounded
@@ -492,16 +381,11 @@
                 text-center
                 h-[6.1rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.request_value"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.request_value" required />
             <label class="flex lg:text-[16px] min-[100px]:text-[14px]">
               Request Quantity
             </label>
-            <input
-              type="text"
-              class="
+            <input type="text" class="
                 w-full
                 border-2
                 rounded
@@ -510,13 +394,9 @@
                 text-center
                 h-[2.5rem]
                 outline-green-600
-              "
-              v-model="newRequestStore.agreementForm.request_quantity"
-              required
-            />
+              " v-model="newRequestStore.agreementForm.request_quantity" required />
           </div>
-          <div
-            class="
+          <div class="
               col-span-2
               flex flex-col
               gap-5
@@ -525,11 +405,8 @@
               lg:col-span-2
               p-2
               min-[100px]:col-span-4
-            "
-          >
-            <button
-              type="submit"
-              class="
+            ">
+            <button type="submit" class="
                 bg-red-500
                 border-2 border-red-900
                 text-white
@@ -540,13 +417,10 @@
                 hover:bg-red-600
                 text-[18px]
                 min-[100px]:w-[12rem]
-              "
-            >
+              ">
               <font-awesome-icon icon="arrow-turn-right" /> <b>ENTER</b>
             </button>
-            <button
-              type="button"
-              class="
+            <button type="button" class="
                 bg-gray-500
                 border-2 border-gray-900
                 text-white
@@ -557,27 +431,21 @@
                 hover:bg-gray-600
                 text-[18px]
                 min-[100px]:w-[12rem]
-              "
-              @click="newRequestStore.setClearAgreementList"
-            >
+              " @click="newRequestStore.setClearAgreementList">
               <font-awesome-icon icon="eraser" /> <b>CLEAR</b>
             </button>
           </div>
         </div>
       </form>
     </div>
-    <div
-      class="
+    <div class="
         lg:col-span-12
         min-[100px]:col-span-12
         max-lg:mt-[38rem]
         mt-[23rem]
-      "
-    >
+      ">
       <div class="flex gap-2 mr-2 justify-end">
-        <button
-          @click="selectAll"
-          class="
+        <button @click="selectAll" class="
             bg-[#A10E13]
             text-white
             rounded
@@ -586,13 +454,10 @@
             h-[2.5rem]
             w-[12rem]
             hover:bg-red-600
-          "
-        >
+          ">
           Select All
         </button>
-        <button
-          :disabled="select_item.length === 0"
-          class="
+        <button :disabled="select_item.length === 0" class="
             bg-[#A10E13]
             text-white
             rounded
@@ -602,15 +467,12 @@
             w-[12rem]
             hover:bg-red-600
             cursor-pointer
-          "
-          @click="generateCode"
-        >
+          " @click="generateCode">
           <font-awesome-icon icon="floppy-disk" class="h-5 w-5" /> GENERATE
         </button>
       </div>
       <div class="flex flex-col h-[45vh] mt-2 max-lg:h-[17vh]">
-        <div
-          class="
+        <div class="
             lg:h-[41vh]
             overflow-y-scroll
             max-lg:overflow-x-scroll
@@ -619,47 +481,34 @@
             rounded-md
             shadow-xl
             min-[100px]:h-[30vh]
-          "
-        >
-          <CTable
-            :filter="newRequestStore.search_filter"
-            :fields="newRequestStore.getViewItemDetailsFields"
+          ">
+          <CTable :filter="newRequestStore.search_filter" :fields="newRequestStore.getViewItemDetailsFields"
             :items="newRequestStore.getNoCode"
-            :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'"
-          >
+            :thStyle="'bg-[#A10E13] p-2 text-white border-2 border-solid border-red-900'">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
               </div>
             </template>
             <template #cell(selected)="data">
-              <input
-                type="checkbox"
-                :value="JSON.stringify(data.item)"
-                v-model="select_item"
-                id="cb_data"
-                class="h-5 w-5"
-              />
+              <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data"
+                class="h-5 w-5" />
             </template>
           </CTable>
         </div>
       </div>
     </div>
     <!--Multiple Input-->
-    <dialog
-      ref="multiple_input"
-      class="
+    <dialog ref="multiple_input" class="
         p-0
         rounded
         transform
         duration-300
         -translate-y-5
         border-2 border-[#A10E13]
-      "
-    >
+      ">
       <div class="flex flex-col">
-        <div
-          class="
+        <div class="
             flex
             justify-between
             items-center
@@ -667,26 +516,18 @@
             px-3
             text-white
             bg-[#A10E13]
-          "
-        >
+          ">
           <p>
-            <font-awesome-icon
-              icon="file-import"
-              class="h-5 w-5 mr-2"
-            />Multiple Input
+            <font-awesome-icon icon="file-import" class="h-5 w-5 mr-2" />Multiple Input
           </p>
-          <button
-            class="px-3 py-2 rounded-full hover:bg-red-600"
-            @click="closeModal('multiple_input')"
-          >
+          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('multiple_input')">
             <font-awesome-icon icon="xmark"></font-awesome-icon>
           </button>
         </div>
         <form method="post" @submit.prevent="submitMultipleRequest">
           <div class="flex p-5">
             <!-- <FileUploader></FileUploader> -->
-            <div
-              class="
+            <div class="
                 flex flex-col
                 items-center
                 justify-center
@@ -694,15 +535,8 @@
                 border-2 border-black
                 rounded-xl
                 border-dashed
-              "
-            >
-              <input
-                id="input-file"
-                type="file"
-                accept=".xlsx"
-                @change="uploadFile"
-                :draggable="true"
-                class="
+              ">
+              <input id="input-file" type="file" accept=".xlsx" @change="uploadFile" :draggable="true" class="
                   cursor-pointer
                   text-sm text-grey-500
                   w-[25rem]
@@ -720,32 +554,21 @@
                   hover:file:cursor-pointer
                   hover:file:bg-amber-50
                   hover:file:text-amber-700
-                "
-                required
-              />
+                " required />
               <span class="file-msg">or drag and drop Excel file here</span>
             </div>
           </div>
-          <button
-            type="button"
-            class="p-3 bg-green-600 text-white hover:bg-green-500 w-full"
-            @click="downloadFormat"
-          >
+          <button type="button" class="p-3 bg-green-600 text-white hover:bg-green-500 w-full" @click="downloadFormat">
             <font-awesome-icon icon="download" /> Download Format
           </button>
-          <button
-            type="submit"
-            class="w-full p-3 bg-[#A10E13] text-white hover:bg-red-600"
-          >
+          <button type="submit" class="w-full p-3 bg-[#A10E13] text-white hover:bg-red-600">
             <font-awesome-icon icon="cloud-arrow-up" /> Upload
           </button>
         </form>
       </div>
     </dialog>
 
-    <dialog
-      ref="search"
-      class="
+    <dialog ref="search" class="
         p-0
         rounded
         transform
@@ -753,11 +576,9 @@
         -translate-y-5
         w-full
         border-2 border-[#A10E13]
-      "
-    >
+      ">
       <div class="flex flex-col">
-        <div
-          class="
+        <div class="
             flex
             justify-between
             items-center
@@ -765,46 +586,30 @@
             px-3
             text-white
             bg-[#A10E13]
-          "
-        >
-          <span
-            ><font-awesome-icon
-              icon="magnifying-glass"
-              class="h-5 w-5 mr-2"
-            />Search</span
-          >
-          <button
-            class="px-3 py-2 rounded-full hover:bg-red-600"
-            @click="closeModal('search')"
-          >
+          ">
+          <span><font-awesome-icon icon="magnifying-glass" class="h-5 w-5 mr-2" />Search</span>
+          <button class="px-3 py-2 rounded-full hover:bg-red-600" @click="closeModal('search')">
             <font-awesome-icon icon="xmark" />
           </button>
         </div>
         <div class="flex overflow-y-scroll h-[73vh] mx-1">
-          <CTable
-            :filter="newRequestStore.search_filter"
-            :fields="newRequestStore.search_fields"
+          <CTable :filter="newRequestStore.search_filter" :fields="newRequestStore.search_fields"
             :items="newRequestStore.getAgreementList"
-            :thStyle="'bg-[#A10E13] text-white p-2 text-[13px] border-2 border-solid border-red-900'"
-          >
+            :thStyle="'bg-[#A10E13] text-white p-2 text-[13px] border-2 border-solid border-red-900'">
             <template #cell(#)="data">
               <div class="flex items-center justify-center">
                 {{ data.index + 1 }}
               </div>
             </template>
             <template #cell(action)="data">
-              <button
-                type="button"
-                class="
+              <button type="button" class="
                   bg-[#A10E13]
                   text-white
                   hover:bg-red-600
                   rounded
                   w-[4rem]
                   h-[2rem]
-                "
-                @click="autoAdd(data.item)"
-              >
+                " @click="autoAdd(data.item)">
                 ADD
               </button>
             </template>
@@ -1079,67 +884,80 @@ const uploadFile = (event) => {
 };
 
 const submitMultipleRequest = () => {
-  multiple_input.value.close();
-  const formData = new FormData();
-  formData.append("uploaded_file", file.value);
-  formData.append("unit_id", newRequestStore.agreementForm.unit);
-  formData.append("requestor_employee_id", employee_id.value);
-  if (newRequestStore.agreementForm.unit !== null) {
-    swal({
-      icon: "question",
-      title: "Upload File?",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((response) => {
-      if (response.value === true) {
-        const loader = $loading.show();
-        setTimeout(() => {
-          newRequestStore
-            .setUploadMultipleRequest(formData)
-            .then((response) => {
-              if (response.status === "success") {
-                document.getElementById("input-file").value = null;
-                multiple_input.value.close();
-                loader.hide();
-                swal({
-                  icon: response.status,
-                  title: response.message,
-                  timer: 1500,
-                });
-              } else {
-                loader.hide();
-                // Object.keys(response.error).forEach((key) => {
-                toast.add({
-                  severity: response.status,
-                  summary: "Warning",
-                  detail: response.message,
-                  life: 5000,
-                  group: "bl",
-                });
-                // })
-              }
-            });
-        });
-      } else {
-        multiple_input.value.showModal();
-        toast.add({
-          severity: "error",
-          summary: "Warning",
-          detail: "Cancelled.",
-          life: 2000,
-          group: "bl",
-        });
-      }
-    });
+  if (
+    file.value.type ===
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  ) {
+    multiple_input.value.close();
+    const formData = new FormData();
+    formData.append("uploaded_file", file.value);
+    formData.append("unit_id", newRequestStore.agreementForm.unit);
+    formData.append("requestor_employee_id", employee_id.value);
+    if (newRequestStore.agreementForm.unit !== null) {
+      swal({
+        icon: "question",
+        title: "Upload File?",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes",
+      }).then((response) => {
+        if (response.value === true) {
+          const loader = $loading.show();
+          setTimeout(() => {
+            newRequestStore
+              .setUploadMultipleRequest(formData)
+              .then((response) => {
+                if (response.status === "success") {
+                  document.getElementById("input-file").value = null;
+                  multiple_input.value.close();
+                  loader.hide();
+                  swal({
+                    icon: response.status,
+                    title: response.message,
+                    timer: 1500,
+                  });
+                } else {
+                  loader.hide();
+                  // Object.keys(response.error).forEach((key) => {
+                  toast.add({
+                    severity: response.status,
+                    summary: "Warning",
+                    detail: response.message,
+                    life: 5000,
+                    group: "bl",
+                  });
+                  // })
+                }
+              });
+          });
+        } else {
+          multiple_input.value.showModal();
+          toast.add({
+            severity: "error",
+            summary: "Warning",
+            detail: "Cancelled.",
+            life: 2000,
+            group: "bl",
+          });
+        }
+      });
+    } else {
+      multiple_input.value.showModal();
+      toast.add({
+        severity: "error",
+        summary: "Warning",
+        detail: "Please select Unit Name",
+        life: 2000,
+        group: "bl",
+      });
+    }
   } else {
-    multiple_input.value.showModal();
     toast.add({
       severity: "error",
       summary: "Warning",
-      detail: "Please select Unit Name",
-      life: 2000,
+      detail: "Only Excel File Allowed",
+      life: 1500,
       group: "bl",
     });
   }
