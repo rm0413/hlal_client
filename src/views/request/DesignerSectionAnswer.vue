@@ -2,16 +2,14 @@
   <div class="flex flex-col">
     <div class="h-full w-full">
       <div class="flex justify-between">
-        <label
-          class="
+        <label class="
             text-[24px]
             tracking-widest
             font-bold
             text-gray-600
             font-mono
             max-lg:text-[20px]
-          "
-        >
+          ">
           <font-awesome-icon class="h-6 w-6 text-black" icon="puzzle-piece" />
           Designer Section Answer
         </label>
@@ -19,9 +17,7 @@
     </div>
     <div class="flex justify-between">
       <div>
-        <button
-          @click="selectAll"
-          class="
+        <button @click="selectAll" class="
             bg-[#A10E13]
             text-white
             rounded
@@ -32,44 +28,34 @@
             lg:w-[10rem]
             min-[100px]:w-[7rem]
             p-2
-          "
-        >
+          ">
           Select All
         </button>
       </div>
       <div class="flex gap-2">
         <div class="flex">
-          <label
-            class="
+          <label class="
               flex flex-col
               items-center
               justify-center
               lg:text-[16px]
               min-[100px]:text-[14px]
-            "
-            >Search by:
+            ">Search by:
           </label>
           <!-- <button :class="``"></button> -->
-          <div
-            @click="code_part_number = true"
-            :class="`${
-              code_part_number ? 'bg-red-700 text-white' : 'bg-gray-300'
-            } cursor-pointer h-[2.5rem] border border-gray-600 py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center font-bold`"
-          >
+          <div @click="code_part_number = true"
+            :class="`${code_part_number ? 'bg-red-700 text-white' : 'bg-gray-300'
+              } cursor-pointer h-[2.5rem] border border-gray-600 py-1 px-3 rounded-l-md ml-3 flex flex-col justify-center items-center font-bold`">
             Code
           </div>
-          <div
-            @click="code_part_number = false"
-            :class="`${
-              code_part_number ? 'bg-gray-300 ' : 'bg-red-700 text-white '
-            }cursor-pointer text-center p-1 border rounded-r-md h-[2.5rem] w-[8rem] border-gray-600 flex flex-col justify-center items-center font-bold`"
-          >
+          <div @click="code_part_number = false"
+            :class="`${code_part_number ? 'bg-gray-300 ' : 'bg-red-700 text-white '
+              }cursor-pointer text-center p-1 border rounded-r-md h-[2.5rem] w-[8rem] border-gray-600 flex flex-col justify-center items-center font-bold`">
             Part Number
           </div>
         </div>
         <div>
-          <c-select
-            class="
+          <c-select class="
               text-center
               w-[18rem]
               h-[2.5rem]
@@ -78,15 +64,11 @@
               border-black
               hover:border-blue-300
               outline-green-600
-            "
-            :options="code_part_number ? code : part_number"
-            @change="selectPartNumber"
-            v-model="designerSectionAnswerStore.part_number_select"
-          ></c-select>
+            " :options="code_part_number ? code : part_number" @change="selectPartNumber"
+            v-model="designerSectionAnswerStore.part_number_select"></c-select>
         </div>
         <div class="relative flex">
-          <i
-            class="
+          <i class="
               h-full
               z-50
               text-gray-400
@@ -95,11 +77,8 @@
               px-3
               rounded
               absolute
-            "
-            ><font-awesome-icon icon="magnifying-glass"
-          /></i>
-          <input
-            class="
+            "><font-awesome-icon icon="magnifying-glass" /></i>
+          <input class="
               w-[13rem]
               text-center
               p-1
@@ -111,11 +90,8 @@
               outline-green-600
               lg:w-[13rem]
               min-[100px]:w-[10rem]
-            "
-            v-model="designerSectionAnswerStore.search_filter"
-          />
-          <button
-            class="
+            " v-model="designerSectionAnswerStore.search_filter" />
+          <button class="
               flex
               justify-center
               items-center
@@ -130,25 +106,21 @@
               font-bold
               lg:text-[16px]
               min-[100px]:text-[13px]
-            "
-          >
+            ">
             <b>Search</b>
           </button>
         </div>
       </div>
     </div>
-    <div
-      class="
+    <div class="
         h-[80vh]
         w-full
         grid grid-cols-9
         min-[100px]:overflow-y-scroll
         lg:overflow-y-hidden
         gap-2
-      "
-    >
-      <div
-        class="
+      ">
+      <div class="
           lg:col-span-7
           min-[100px]:col-span-9
           flex flex-col
@@ -156,31 +128,20 @@
           overflow-y-scroll
           lg:h-[75vh]
           min-[100px]:h-[27vh]
-        "
-      >
-        <c-table
-          :filter="designerSectionAnswerStore.search_filter"
-          :items="filterPartNumber"
+        ">
+        <c-table :filter="designerSectionAnswerStore.search_filter" :items="filterPartNumber"
           :fields="designerSectionAnswerStore.getDesignerSectionAnswerFields"
           :thStyle="'bg-[#A10E13] p-2 text-white text-[13px] border-2 border-solid border-red-900'"
-        >
+          :table_class="'w-[78vw]'">
           <template #cell(#)="data">
             {{ data.index + 1 }}
           </template>
           <template #cell(selected)="data">
-            <input
-              type="checkbox"
-              :value="JSON.stringify(data.item)"
-              v-model="select_item"
-              id="cb_data"
-              class="h-5 w-5"
-            />
+            <input type="checkbox" :value="JSON.stringify(data.item)" v-model="select_item" id="cb_data"
+              class="h-5 w-5" />
           </template>
           <template #cell(action)="data">
-            <button
-              @click="editDesignerSection(data.item)"
-              v-if="data.item.request_result !== null"
-              class="
+            <button @click="editDesignerSection(data.item)" v-if="data.item.request_result !== null" class="
                 h-8
                 w-9
                 rounded
@@ -188,25 +149,17 @@
                 text-white
                 border-2 border-yellow-700
                 hover:bg-yellow-600
-              "
-              v-tooltip.top="'Edit Designer Section Answer'"
-            >
+              " v-tooltip.top="'Edit Designer Section Answer'">
               <font-awesome-icon icon="pen"></font-awesome-icon>
             </button>
-            <button
-              @click="editDesignerSection(data.item)"
-              v-else
-              class="h-8 w-9 rounded bg-yellow-500 text-white"
-              v-tooltip.top="'Edit Designer Section Answer'"
-              hidden
-            >
+            <button @click="editDesignerSection(data.item)" v-else class="h-8 w-9 rounded bg-yellow-500 text-white"
+              v-tooltip.top="'Edit Designer Section Answer'" hidden>
               <font-awesome-icon icon="pen"></font-awesome-icon>
             </button>
           </template>
         </c-table>
       </div>
-      <div
-        class="
+      <div class="
           lg:col-span-2
           min-[100px]:col-span-9
           lg:h-[56vh]
@@ -219,17 +172,11 @@
           bg-gray-100
           rounded
           shadow-md
-        "
-      >
+        ">
         <form method="post" @submit.prevent="submitDesignerSectionAnswer">
           <label class="flex flex-col items-center mt-3">
-            <i
-              class="text-white bg-[#A10E13] w-full flex justify-center rounded"
-              >Request Result</i
-            >
-            <select
-              :disabled="select_item.length === 0"
-              class="
+            <i class="text-white bg-[#A10E13] w-full flex justify-center rounded">Request Result</i>
+            <select :disabled="select_item.length === 0" class="
                 border-2
                 rounded
                 w-full
@@ -238,13 +185,9 @@
                 border-gray-600
                 hover:border-blue-300
                 outline-green-600
-              "
-              v-model="
-                designerSectionAnswerStore.designerSectionAnswerForm
+              " v-model="designerSectionAnswerStore.designerSectionAnswerForm
                   .request_result
-              "
-              required
-            >
+                " required>
               <option value="" disabled>Select Request Result</option>
               <option value="LSA OK">LSA OK</option>
               <option value="LSA NG">LSA NG</option>
@@ -253,21 +196,12 @@
             </select>
           </label>
           <label class="flex flex-col items-center mt-1">
-            <i
-              class="text-white bg-[#A10E13] w-full flex justify-center rounded"
-              >Input Designer Answers</i
-            >
+            <i class="text-white bg-[#A10E13] w-full flex justify-center rounded">Input Designer Answers</i>
             <div class="w-full">
               <p class="text-[13px]">Designer section's answer</p>
-              <textarea
-                style="resize: none"
-                v-model="
-                  designerSectionAnswerStore.designerSectionAnswerForm
-                    .designer_section_answer
-                "
-                :disabled="select_item.length === 0"
-                required
-                class="
+              <textarea style="resize: none" v-model="designerSectionAnswerStore.designerSectionAnswerForm
+                  .designer_section_answer
+                " :disabled="select_item.length === 0" required class="
                   border-2
                   rounded
                   w-full
@@ -276,17 +210,11 @@
                   border-gray-600
                   hover:border-blue-300
                   outline-green-600
-                "
-              />
+                " />
               <p class="text-[13px]">Designer In-charge</p>
-              <input
-                type="text"
-                v-model="
-                  designerSectionAnswerStore.designerSectionAnswerForm
-                    .designer_in_charge
-                "
-                :disabled="select_item.length === 0"
-                class="
+              <input type="text" v-model="designerSectionAnswerStore.designerSectionAnswerForm
+                  .designer_in_charge
+                " :disabled="select_item.length === 0" class="
                   border-2
                   rounded
                   w-full
@@ -295,18 +223,11 @@
                   hover:border-blue-300
                   outline-green-600
                   h-[2.5rem]
-                "
-                required
-              />
+                " required />
               <p class="text-[13px]">Answer Date:</p>
-              <input
-                type="date"
-                v-model="
-                  designerSectionAnswerStore.designerSectionAnswerForm
-                    .answer_date
-                "
-                :disabled="select_item.length === 0"
-                class="
+              <input type="date" v-model="designerSectionAnswerStore.designerSectionAnswerForm
+                  .answer_date
+                " :disabled="select_item.length === 0" class="
                   border-2
                   rounded
                   text-center
@@ -315,14 +236,11 @@
                   outline-green-600
                   w-full
                   h-[2.5rem]
-                "
-                required
-              />
+                " required />
             </div>
           </label>
           <label class="flex flex-col items-center mt-2">
-            <i
-              class="
+            <i class="
                 text-white
                 bg-[#A10E13]
                 w-full
@@ -330,17 +248,9 @@
                 justify-center
                 rounded
                 mb-2
-              "
-              >Upload Designer Answer</i
-            >
-            <input
-              type="file"
-              id="file-designer"
-              accept=".xlsx"
-              @change="uploadFile"
-              :draggable="true"
-              :disabled="select_item.length === 0"
-              class="
+              ">Upload Designer Answer</i>
+            <input type="file" id="file-designer" accept=".xlsx" @change="uploadFile" :draggable="true"
+              :disabled="select_item.length === 0" class="
                 bg-white
                 border-2 border-gray-300
                 rounded-md
@@ -360,23 +270,16 @@
                 hover:file:cursor-pointer
                 hover:file:bg-amber-50
                 hover:file:text-amber-700
-              "
-            />
+              " />
           </label>
-          <div
-            class="
+          <div class="
               flex
               lg:flex-col
               min-[100px]:flex-row
               lg:gap-0
               min-[100px]:gap-2
-            "
-          >
-            <button
-              type="submit"
-              v-if="!designerSectionAnswerStore.onSingle"
-              :disabled="select_item.length === 0"
-              class="
+            ">
+            <button type="submit" v-if="!designerSectionAnswerStore.onSingle" :disabled="select_item.length === 0" class="
                 w-full
                 flex
                 gap-2
@@ -388,14 +291,10 @@
                 justify-center
                 items-center
                 mt-2
-              "
-            >
+              ">
               <font-awesome-icon icon="floppy-disk" /><b>SAVE INPUTS</b>
             </button>
-            <button
-              type="button"
-              @click="excelUploadingDesignerAnswer"
-              v-else-if="designerSectionAnswerStore.onUploading"
+            <button type="button" @click="excelUploadingDesignerAnswer" v-else-if="designerSectionAnswerStore.onUploading"
               class="
                 w-full
                 flex
@@ -409,14 +308,10 @@
                 justify-center
                 items-center
                 mt-2
-              "
-            >
+              ">
               <font-awesome-icon icon="floppy-disk" /><b>SUBMIT FILE</b>
             </button>
-            <button
-              type="button"
-              @click="updateDesignerSectionAnswer"
-              v-else-if="designerSectionAnswerStore.onEdit"
+            <button type="button" @click="updateDesignerSectionAnswer" v-else-if="designerSectionAnswerStore.onEdit"
               class="
                 w-full
                 flex
@@ -430,14 +325,10 @@
                 justify-center
                 items-center
                 mt-2
-              "
-            >
+              ">
               <font-awesome-icon icon="floppy-disk" />Update
             </button>
-            <button
-              type="button"
-              @click="clearInputs"
-              class="
+            <button type="button" @click="clearInputs" class="
                 w-full
                 flex
                 gap-2
@@ -450,8 +341,7 @@
                 justify-center
                 items-center
                 mt-2
-              "
-            >
+              ">
               <font-awesome-icon icon="eraser" /><b>CLEAR</b>
             </button>
           </div>

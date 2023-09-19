@@ -18,7 +18,7 @@ onMounted(() => {
 //   window.closed()
 //   // localStorage.clear()
 //   // sessionStorage.clear()
-//   // window.location.href = "http://10.164.58.62/FDTP-Portal/public/";
+//   // window.location.href = "http://10.164.30.174/FDTP-Portal/public/";
 // }
 
 const systemDetails = {

@@ -205,7 +205,7 @@ export const useNewRequestStore = defineStore({
       })
     },
     setDownloadFormat(unit_name) {
-      window.location.href = `http://10.164.58.62/hinsei/server/public/download/${unit_name}`;
+      window.location.href = `http://10.164.30.174/HLAL/server/public/download/${unit_name}`;
     }
   },
   getters: {

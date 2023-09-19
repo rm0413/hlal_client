@@ -140,6 +140,7 @@ export const useMonitoringStore = defineStore({
           .then((response) => {
             resolve(response.data);
             this.setEditMonitoringList()
+            this.setLoadMonitoring()
           })
           .catch((err) => {
             reject(err);
@@ -232,7 +233,7 @@ export const useMonitoringStore = defineStore({
       });
     },
     setExportMonitoringList(data) {
-      window.location.href = `http://10.164.58.62/hinsei/server/public/export/${data.unit_id}/${data.supplier_name}/${data.part_number.replace('/', ' ' )}`
+      window.location.href = `http://10.164.30.174/HLAL/server/public/export/${data.unit_id}/${data.supplier_name}/${data.part_number.replace('/', ' ' )}`
     },
   },
   getters: {

@@ -18,6 +18,7 @@ export const useDesignerSectionAnswerStore = defineStore({
             { label: 'Revision', key: 'revision' },
             { label: 'Dimension', key: 'dimension' },
             { label: 'Critical Dimension', key: 'critical_dimension' },
+            { label: 'Kind of Request', key: 'request_type' },
             // { label: 'Action', key: 'action' },
         ],
         designerSectionAnswerForm: {
