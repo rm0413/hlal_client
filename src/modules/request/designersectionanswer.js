@@ -8,7 +8,7 @@ export const useDesignerSectionAnswerStore = defineStore({
         designerSectionAnswer: [],
         designerSectionAnswerFields: [
             { label: 'Selected', key: 'selected' },
-            { label: '#', key: '#' },
+            { label: 'No.', key: '#' },
             { label: 'Code', key: 'code' },
             { label: 'Trial No.', key: 'trial_number' },
             { label: 'Request Date', key: 'request_date' },

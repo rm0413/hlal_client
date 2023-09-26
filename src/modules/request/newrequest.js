@@ -35,7 +35,7 @@ export const useNewRequestStore = defineStore({
     },
     view_item_details_fields: [
       { label: 'Selected', key: 'selected' },
-      { label: "#", key: "#" },
+      { label: "No.", key: "#" },
       { label: "Trial Number", key: "trial_number" },
       { label: "Request Date", key: "request_date" },
       { label: "TRI No.", key: "tri_number" },

@@ -8,7 +8,7 @@ export const useInspectionDataStore = defineStore({
         inspectionDataAnswer: [],
         inspectionDataFields: [
             { label: 'Selected', key: 'selected' },
-            { label: '#', key: '#' },
+            { label: 'No.', key: '#' },
             { label: 'Code', key: 'code' },
             { label: 'Trial Number', key: 'trial_number' },
             { label: 'Request Date', key: 'request_date' },

@@ -7,7 +7,7 @@ export const useUnitManagementStore = defineStore({
         unitManagement: [],
         units: [],
         unitManagementFields: [
-            { label: '#', key: '#' },
+            { label: 'No.', key: '#' },
             { label: 'Unit Name', key: 'unit_name' },
             { label: 'Created By', key: 'emp_full_name' },
             { label: 'Date Created', key: 'unit_created_date' },

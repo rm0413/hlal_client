@@ -7,7 +7,7 @@ export const useEditItemDetailsStore = defineStore({
     editItemDetails: [],
     editItemDetailsFields: [
       { label: "Action", key: "action" },
-      { label: "#", key: "#" },
+      { label: "No.", key: "#" },
       { label: "Code", key: "code" },
       { label: "Trial No.", key: "trial_number" },
       { label: "Request Date", key: "request_date" },

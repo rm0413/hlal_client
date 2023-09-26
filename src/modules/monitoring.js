@@ -40,7 +40,7 @@ export const useMonitoringStore = defineStore({
       unit_id: null,
     },
     monitoringEditFields: [
-      { label: "No", key: "#" },
+      { label: "No.", key: "#" },
       { label: "Code", key: "code" },
       { label: "Trial Number.", key: "trial_number" },
       { label: "Request Date", key: "request_date" },
