@@ -184,6 +184,7 @@
           ></b
         ></label
       >
+
       <div class="grid grid-cols-2 h-[73%] mt-2">
         <div class="col-span-1 grid grid-rows-2">
           <div class="row-span-1">
@@ -194,30 +195,33 @@
               class="h-full max-lg:h-[95%] max-lg:w-[95%]"
             />
           </div>
+          <div class="flex flex-col">
+            <label
+              for=""
+              class="
+                ml-[5rem]
+                text-gray-500
+                lg:text-[14px]
+                min-[100px]:text-[12px]
+              "
+              ><b
+                ><i
+                  >{{ dashboardStore.chartData.lsa_request }} Total LSA Request
+                  as of {{ dashboardStore.date_from }} to
+                  {{ dashboardStore.date_to }}</i
+                ></b
+              ></label
+            >
+          
           <div class="row-span-1">
             <Chart
               type="bar"
               :data="chartData2"
               :options="chartOptions"
-              class="h-full max-lg:h-[95%] max-lg:w-[95%]"
+              class="h-[31vh] max-lg:h-[95%] max-lg:w-[95%]"
             />
           </div>
-          <label
-            for=""
-            class="
-              ml-[5rem]
-              text-gray-500
-              lg:text-[14px]
-              min-[100px]:text-[12px]
-            "
-            ><b
-              ><i
-                >{{ dashboardStore.chartData.lsa_request }} Total LSA Request as
-                of {{ dashboardStore.date_from }} to
-                {{ dashboardStore.date_to }}</i
-              ></b
-            ></label
-          >
+          </div>
         </div>
         <div
           class="
@@ -298,10 +302,9 @@
                       min-[100px]:text-[25px]
                       md:text-sm
                     "
-                    >
-                    {{ hinsei_ok }}
-                    </span
                   >
+                    {{ hinsei_ok }}
+                  </span>
                 </div>
               </div>
               <div class="flex col-span-1 justify-center items-center">
@@ -671,8 +674,8 @@
               ref="request_generate_data_dialog"
               class="
                 h-[30%]
-                w-[20%]
-                ml-[64%]
+                w-[25%]
+                ml-[59%]
                 mt-[7.6%]
                 border-2 border-[#A10A13]
                 p-0
@@ -708,7 +711,7 @@
                   />
                 </button>
               </div>
-              <div class="grid grid-cols-2 sticky top-9">
+              <div class="grid grid-cols-3 sticky top-9">
                 <span
                   class="col-span-1 bg-gray-900 text-white border border-white"
                   >PART NUMBER</span
@@ -717,18 +720,25 @@
                   class="col-span-1 bg-gray-900 text-white border border-white"
                   >SUPPLIER</span
                 >
+                <span
+                  class="col-span-1 bg-gray-900 text-white border border-white"
+                  >REQUEST TYPE</span
+                >
               </div>
               <div
                 v-for="(i, key) in task_to_do_generate"
                 :key="key"
                 class="pb-0.5"
               >
-                <div class="grid grid-cols-2">
+                <div class="grid grid-cols-3">
                   <span class="col-span-1 border border-gray-900">{{
                     i.part_number
                   }}</span>
                   <span class="col-span-1 border border-gray-900">{{
                     i.supplier_name
+                  }}</span>
+                  <span class="col-span-1 border border-gray-900">{{
+                    i.request_type
                   }}</span>
                 </div>
               </div>
@@ -809,8 +819,8 @@
               ref="designer_data_dialog"
               class="
                 h-[30%]
-                w-[20%]
-                ml-[64%]
+                w-[25%]
+                ml-[59%]
                 mt-[14.5%]
                 border-2 border-[#A10A13]
                 p-0
@@ -846,7 +856,7 @@
                   />
                 </button>
               </div>
-              <div class="grid grid-cols-2 sticky top-9">
+              <div class="grid grid-cols-3 sticky top-9">
                 <span
                   class="col-span-1 bg-gray-900 text-white border border-white"
                   >PART NUMBER</span
@@ -855,18 +865,25 @@
                   class="col-span-1 bg-gray-900 text-white border border-white"
                   >SUPPLIER</span
                 >
+                <span
+                  class="col-span-1 bg-gray-900 text-white border border-white"
+                  >REQUEST TYPE</span
+                >
               </div>
               <div
                 v-for="(i, key) in task_to_do_designer"
                 :key="key"
                 class="pb-0.5"
               >
-                <div class="grid grid-cols-2">
+                <div class="grid grid-cols-3">
                   <span class="col-span-1 border border-gray-900">{{
                     i.part_number
                   }}</span>
                   <span class="col-span-1 border border-gray-900">{{
                     i.supplier_name
+                  }}</span>
+                  <span class="col-span-1 border border-gray-900">{{
+                    i.request_type
                   }}</span>
                 </div>
               </div>
@@ -947,8 +964,8 @@
               ref="inspection_data_dialog"
               class="
                 h-[30%]
-                w-[20%]
-                ml-[64%]
+                w-[25%]
+                ml-[59%]
                 mt-[21.2%]
                 border-2 border-[#A10A13]
                 p-0
@@ -986,7 +1003,7 @@
                   />
                 </button>
               </div>
-              <div class="grid grid-cols-2 sticky top-9">
+              <div class="grid grid-cols-3 sticky top-9">
                 <span
                   class="col-span-1 bg-gray-900 text-white border border-white"
                   >PART NUMBER</span
@@ -995,18 +1012,25 @@
                   class="col-span-1 bg-gray-900 text-white border border-white"
                   >SUPPLIER</span
                 >
+                <span
+                  class="col-span-1 bg-gray-900 text-white border border-white"
+                  >REQUEST TYPE</span
+                >
               </div>
               <div
                 v-for="(i, key) in task_to_do_inspection"
                 :key="key"
                 class="pb-0.5"
               >
-                <div class="grid grid-cols-2">
+                <div class="grid grid-cols-3">
                   <span class="col-span-1 border border-gray-900">{{
                     i.part_number
                   }}</span>
                   <span class="col-span-1 border border-gray-900">{{
                     i.supplier_name
+                  }}</span>
+                  <span class="col-span-1 border border-gray-900">{{
+                    i.request_type
                   }}</span>
                 </div>
               </div>
@@ -1438,6 +1462,7 @@ const taskToDo = () => {
       var datastorage = {
         part_number: v.part_number,
         supplier_name: v.supplier_name,
+        request_type: v.request_type,
       };
       task_to_do_designer.value.push(datastorage);
     });
@@ -1447,6 +1472,7 @@ const taskToDo = () => {
       var datastorage1 = {
         part_number: v.part_number,
         supplier_name: v.supplier_name,
+        request_type: v.request_type,
       };
       task_to_do_generate.value.push(datastorage1);
     });
@@ -1456,6 +1482,7 @@ const taskToDo = () => {
       var datastorage2 = {
         part_number: v.part_number,
         supplier_name: v.supplier_name,
+        request_type: v.request_type,
       };
       task_to_do_inspection.value.push(datastorage2);
     });

@@ -65,7 +65,7 @@ export const useDashboardStore = defineStore({
                 axios.get('load-task-to-do').then(response => {
                     resolve(response.data)
                     this.task_list = response.data.data
-                    // console.log(response.data.data)
+                    console.log(response.data.data)
                 }).catch(err => {
                     reject(err)
                 })
