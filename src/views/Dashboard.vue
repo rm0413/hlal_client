@@ -722,7 +722,7 @@
                 >
                 <span
                   class="col-span-1 bg-gray-900 text-white border border-white"
-                  >REQUEST TYPE</span
+                  >KIND OF REQUEST</span
                 >
               </div>
               <div
@@ -867,7 +867,7 @@
                 >
                 <span
                   class="col-span-1 bg-gray-900 text-white border border-white"
-                  >REQUEST TYPE</span
+                  >KIND OF REQUEST</span
                 >
               </div>
               <div
@@ -1014,7 +1014,7 @@
                 >
                 <span
                   class="col-span-1 bg-gray-900 text-white border border-white"
-                  >REQUEST TYPE</span
+                >KIND OF REQUEST</span
                 >
               </div>
               <div

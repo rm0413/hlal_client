@@ -14,9 +14,7 @@ import { LoadingPlugin } from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 
 import axios from 'axios'
-// axios.defaults.baseURL = 'http://10.164.30.174/hinsei/server/public/api/'; //local
-// axios.defaults.baseURL = 'http://10.164.30.174/HLAL_testing/server/public/api/'; //testing
-axios.defaults.baseURL = 'http://10.164.30.174/HLAL/server/public/api/'; //prod
+axios.defaults.baseURL = 'http://10.164.30.174/HLAL/server/public/api/'; 
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {

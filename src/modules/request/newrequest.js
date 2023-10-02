@@ -157,6 +157,7 @@ export const useNewRequestStore = defineStore({
           .then((response) => {
             resolve(response.data);
             this.setNoCodeAgreementList();
+            this.setAgreementList();
           })
           .catch((err) => {
             reject(err);
