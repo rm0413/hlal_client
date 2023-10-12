@@ -116,10 +116,12 @@ export const useDesignerSectionAnswerStore = defineStore({
                 designer_in_charge: this.designerSectionAnswerForm.designer_in_charge,
                 request_result: this.designerSectionAnswerForm.request_result,
                 answer_date: this.designerSectionAnswerForm.answer_date,
-                emp_id: sessionStorage.getItem('employee_id')
+                emp_id: sessionStorage.getItem('employee_id'),
+                selected_datastorage: []
             }
             datastorage.forEach(v => {
                 payload.agreement_request_id.push(v.agreement_id_pk)
+                payload.selected_datastorage.push(v)
             });
             return new Promise((resolve, reject) => {
                 axios.post('insert-designer-answer', payload).then(response => {

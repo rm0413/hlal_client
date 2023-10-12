@@ -994,7 +994,7 @@ const submitUpdateEditItemMonitoring = () => {
       const loader = $loading.show();
       setTimeout(() => {
         monitoringStore.setUpdateMonitoring().then((response) => {
-          monitoringStore.setEditMonitoringList();
+          // monitoringStore.setEditMonitoringList();
           loader.hide();
           swal({
             icon: "success",
